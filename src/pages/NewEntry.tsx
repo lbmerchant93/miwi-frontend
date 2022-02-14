@@ -1,9 +1,9 @@
 import React from 'react'
 
-const NewEntry = () => {
+const NewEntryForm = () => {
   return (
-    <div>NewEntry</div>
+    <div>NewEntryForm</div>
   )
 }
 
-export default NewEntry
+export default NewEntryForm;
