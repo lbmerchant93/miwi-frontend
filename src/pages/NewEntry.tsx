@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
+import './NewEntry.css';
 
 export interface IJournalEntryData {
   date: string;
@@ -43,13 +44,13 @@ const NewEntryForm: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(formData)
   }
 
   return (
     <main>
-      <h2>Create a new journal entry!</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className="page-title">Create a new journal entry!</h2>
+      <form className="form" onSubmit={handleSubmit}>
                 <label>Date: </label>
                 <input 
                     type='date' 
@@ -63,6 +64,7 @@ const NewEntryForm: React.FC = () => {
                     name='waterIntake' 
                     placeholder='0' 
                     min='0' 
+                    className="number-input"
                     onChange={handleChange}
                     required
                 />
@@ -72,6 +74,7 @@ const NewEntryForm: React.FC = () => {
                     name='proteinIntake' 
                     placeholder='0' 
                     min='0' 
+                    className="number-input"
                     onChange={handleChange}
                     required
                 />
@@ -81,6 +84,7 @@ const NewEntryForm: React.FC = () => {
                     name='exercise' 
                     placeholder='0' 
                     min='0' 
+                    className="number-input"
                     onChange={handleChange}
                     required
                 />
@@ -90,6 +94,7 @@ const NewEntryForm: React.FC = () => {
                     name='kegels' 
                     placeholder='0' 
                     min='0' 
+                    className="number-input"
                     onChange={handleChange}
                     required
                 />
@@ -99,6 +104,7 @@ const NewEntryForm: React.FC = () => {
                     name='garlandPose' 
                     placeholder='0' 
                     min='0' 
+                    className="number-input"
                     onChange={handleChange} 
                     required
                 />
