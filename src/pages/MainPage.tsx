@@ -2,7 +2,9 @@ import React from 'react'
 
 const MainPage:React.FC = () => {
   return (
-    <div>MainPage</div>
+    <main>
+      <div>Main Page</div>
+    </main>
   )
 }
 

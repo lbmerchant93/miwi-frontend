@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PossibleRoutes } from '../../utils/constants';
 import Button from '@mui/material/Button';
@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -55,11 +56,19 @@ const AppBar: React.FC = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
-                <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                {isLoggedIn && 
+                <>
+                    <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
+                    <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
+                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </>}
+                {!isLoggedIn &&
+                <>
+                    <MenuItem onClick={handleClose}>Login</MenuItem>
+                </>
+                }
             </Menu>
-            </div>
+            </div>    
         </header>
     );
 };
