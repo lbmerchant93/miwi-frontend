@@ -1,0 +1,30 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0.5rem;
+}
+
+.title-link {
+    text-decoration: none;
+    color: black;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+.nav-options{
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: black;
+}
+
+.menu-button {
+    color: black;
+}
