@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PossibleRoutes } from '../../utils/constants';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AuthContext } from '../../shared/auth-context';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => setAnchorEl(null);
+
     const onListItemClick = (callback: () => void) => {
         return () => {
             handleClose();
@@ -56,15 +59,15 @@ const AppBar: React.FC = () => {
                     horizontal: 'right',
                 }}
             >
-                {isLoggedIn && 
+                {user.userId && 
                 <>
                     <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
                     <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={user.logout}>Logout</MenuItem>
                 </>}
-                {!isLoggedIn &&
+                {!user.userId &&
                 <>
-                    <MenuItem onClick={handleClose}>Login</MenuItem>
+                    <MenuItem onClick={user.login}>Login</MenuItem>
                 </>
                 }
             </Menu>
