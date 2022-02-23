@@ -1,5 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
 import { AuthContext } from '../shared/auth-context';
+import MessagePage from '../components/MessagePage';
 import './NewEntry.css';
 
 export interface IJournalEntryData {
@@ -156,9 +157,7 @@ const NewEntryForm: React.FC = () => {
             </form> 
         </main>
     ) : (
-        <main>
-            <h2>Uh oh, looks you're not authorized for this page.</h2>
-        </main>
+        <MessagePage />
     )
 }
 
