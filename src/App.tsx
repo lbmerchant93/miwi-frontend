@@ -17,11 +17,17 @@ initializeApp(firebaseConfig);
 const App = () => {
   const auth = getAuth();
   const [userId, setUserId] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState<string | null>('');
+  const [photoURL, setPhotoURL] = useState<string | null>('');
 
   const login = useCallback(async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
-        setUserId(response.user.uid)
+        setUserId(response.user.uid);
+        setIsLoggedIn(true);
+        setDisplayName(response.user.displayName)
+        setPhotoURL(response.user.photoURL)
       })
       .catch((error) => {
         console.log(error);
@@ -31,6 +37,7 @@ const App = () => {
   const logout = useCallback(() => {
     signOut(auth)
     setUserId('')
+    setIsLoggedIn(false);
   }, [auth])
 
   let routes = (
@@ -43,9 +50,10 @@ const App = () => {
   return (
       <AuthContext.Provider 
         value={{
-          isLoggedIn: false,
-          token: null,
+          isLoggedIn: isLoggedIn,
           userId: userId,
+          displayName: displayName,
+          photoURL: photoURL,
           login: login,
           logout: logout
         }}

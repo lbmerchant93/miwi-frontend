@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../shared/auth-context';
 import './AppBar.css'
 
@@ -33,17 +34,33 @@ const AppBar: React.FC = () => {
                 <h1 className="title">MiWi</h1>
             </Link>
             <div>
-            <Button
-                id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                variant="outlined"
-                color="inherit"
-            >
-                <MenuIcon />
-            </Button>
+            {!user.isLoggedIn ? (
+                <Button
+                    onClick={user.login}
+                    variant="outlined"
+                    color="inherit"
+                >
+                    Log In
+                </Button>
+            ) : (
+                <Button
+                    id="demo-positioned-button"
+                    aria-controls={open ? 'demo-positioned-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                    variant="outlined"
+                    color="inherit"
+                >
+                    <Avatar
+                        src={user.photoURL ?? undefined}
+                        alt="User Photo"
+                        style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
+                        {user.displayName?.toUpperCase()[0]}
+                    </Avatar>
+                    <MenuIcon />
+                </Button>
+            )}
             <Menu
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"
@@ -59,17 +76,9 @@ const AppBar: React.FC = () => {
                     horizontal: 'right',
                 }}
             >
-                {user.userId && 
-                <>
-                    <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
-                    <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
-                    <MenuItem onClick={user.logout}>Logout</MenuItem>
-                </>}
-                {!user.userId &&
-                <>
-                    <MenuItem onClick={user.login}>Login</MenuItem>
-                </>
-                }
+                <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
+                <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
+                <MenuItem onClick={onListItemClick(() => user.logout())}>Logout</MenuItem>
             </Menu>
             </div>    
         </header>
