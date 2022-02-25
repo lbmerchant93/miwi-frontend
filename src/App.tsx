@@ -16,7 +16,7 @@ initializeApp(firebaseConfig);
 
 const App = () => {
   const auth = getAuth();
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
@@ -36,17 +36,18 @@ const App = () => {
 
   const logout = useCallback(() => {
     signOut(auth)
-    setUserId('')
+    setUserId(null)
     setIsLoggedIn(false);
   }, [auth])
 
-  let routes = (
-    <Routes>
-      <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
-      <Route path={`${PossibleRoutes.ALL_ENTRIES}`} element={<MainPage />} />
-      <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryForm />} />
-    </Routes>
-  )
+  const routes = (
+      <Routes>
+        <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
+        <Route path={`${PossibleRoutes.ALL_ENTRIES}`} element={<MainPage />} />
+        <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryForm />} />
+      </Routes>
+    )
+  
   return (
       <AuthContext.Provider 
         value={{

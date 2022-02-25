@@ -76,9 +76,18 @@ const AppBar: React.FC = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
-                <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
-                <MenuItem onClick={onListItemClick(() => user.logout())}>Logout</MenuItem>
+                <MenuItem 
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>
+                        New Entry
+                </MenuItem>
+                <MenuItem 
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>
+                        My account
+                </MenuItem>
+                <MenuItem 
+                    onClick={onListItemClick(() => user.logout())}>
+                        <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">Log out</Link>
+                </MenuItem>
             </Menu>
             </div>    
         </header>

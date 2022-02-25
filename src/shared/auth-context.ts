@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 interface User {
     isLoggedIn: boolean;
-    userId: string;
+    userId: string | null;
     displayName: string | null;
     photoURL: string | null;
     login: any;
@@ -11,7 +11,7 @@ interface User {
 
 export const AuthContext = createContext<User>({ 
     isLoggedIn: false, 
-    userId: '',
+    userId: null,
     displayName: '',
     photoURL: '',
     login: () => {},
