@@ -84,10 +84,12 @@ const AppBar: React.FC = () => {
                     onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>
                         New Journal Entry
                 </MenuItem>
-                <MenuItem 
-                    onClick={onListItemClick(() => user.logout())}>
-                        <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">Log out</Link>
-                </MenuItem>
+                <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
+                    <MenuItem 
+                        onClick={onListItemClick(() => user.logout())}>
+                            Log out
+                    </MenuItem>
+                </Link>
             </Menu>
             </div>    
         </header>
