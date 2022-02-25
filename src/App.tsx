@@ -6,6 +6,7 @@ import { AuthContext } from './shared/auth-context';
 import { PossibleRoutes } from './utils/constants';
 import MainPage from './pages/MainPage';
 import NewEntryFormPage from './pages/NewEntryFormPage';
+import DashboardPage from './pages/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
@@ -43,7 +44,7 @@ const App = () => {
   const routes = (
       <Routes>
         <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
-        <Route path={`${PossibleRoutes.ALL_ENTRIES}`} element={<MainPage />} />
+        <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
         <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
       </Routes>
     )
