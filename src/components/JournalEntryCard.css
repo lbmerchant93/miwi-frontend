@@ -1,0 +1,11 @@
+.journal-entry-card {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.journal-entry-card-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
