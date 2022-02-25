@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 const MainPage:React.FC = () => {
+
   return (
     <main>
-      <div>Main Page</div>
+      <div>Welcome to MiWi! Your personal Midwifery App!</div>
     </main>
   )
 }

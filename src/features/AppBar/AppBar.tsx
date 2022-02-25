@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PossibleRoutes } from '../../utils/constants';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import Avatar from '@mui/material/Avatar';
+import { AuthContext } from '../../shared/auth-context';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => setAnchorEl(null);
+
     const onListItemClick = (callback: () => void) => {
         return () => {
             handleClose();
@@ -30,17 +34,33 @@ const AppBar: React.FC = () => {
                 <h1 className="title">MiWi</h1>
             </Link>
             <div>
-            <Button
-                id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                variant="outlined"
-                color="inherit"
-            >
-                <MenuIcon />
-            </Button>
+            {!user.isLoggedIn ? (
+                <Button
+                    onClick={user.login}
+                    variant="outlined"
+                    color="inherit"
+                >
+                    Log In
+                </Button>
+            ) : (
+                <Button
+                    id="demo-positioned-button"
+                    aria-controls={open ? 'demo-positioned-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                    variant="outlined"
+                    color="inherit"
+                >
+                    <Avatar
+                        src={user.photoURL ?? undefined}
+                        alt="User Photo"
+                        style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
+                        {user.displayName?.toUpperCase()[0]}
+                    </Avatar>
+                    <MenuIcon />
+                </Button>
+            )}
             <Menu
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"
@@ -56,17 +76,18 @@ const AppBar: React.FC = () => {
                     horizontal: 'right',
                 }}
             >
-                {isLoggedIn && 
-                <>
-                    <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>New Entry</MenuItem>
-                    <MenuItem onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </>}
-                {!isLoggedIn &&
-                <>
-                    <MenuItem onClick={handleClose}>Login</MenuItem>
-                </>
-                }
+                <MenuItem 
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>
+                        New Entry
+                </MenuItem>
+                <MenuItem 
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>
+                        My account
+                </MenuItem>
+                <MenuItem 
+                    onClick={onListItemClick(() => user.logout())}>
+                        <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">Log out</Link>
+                </MenuItem>
             </Menu>
             </div>    
         </header>

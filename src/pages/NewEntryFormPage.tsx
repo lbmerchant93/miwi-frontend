@@ -1,4 +1,6 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
+import { AuthContext } from '../shared/auth-context';
+import MessagePage from '../components/MessagePage';
 import './NewEntry.css';
 
 export interface IJournalEntryData {
@@ -13,44 +15,45 @@ export interface IJournalEntryData {
   userId: string;
 }
 
-const NewEntryForm: React.FC = () => {
-  const [formData, setFormData] = useState<IJournalEntryData>({
-    date: '',
-    waterIntake: 0,
-    proteinIntake: 0,
-    exercise: 0,
-    kegels: 0,
-    garlandPose: 0,
-    prenatalVitamins: false,
-    probiotics: false,
-    userId: "1"
-  })
+const NewEntryFormPage: React.FC = () => {
+    const user = useContext(AuthContext);
+    const [formData, setFormData] = useState<IJournalEntryData>({
+        date: '',
+        waterIntake: 0,
+        proteinIntake: 0,
+        exercise: 0,
+        kegels: 0,
+        garlandPose: 0,
+        prenatalVitamins: false,
+        probiotics: false,
+        userId: "1"
+    })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let newInput: string | number | boolean;
-    let numberInputs = ['waterIntake', 'proteinIntake', 'exercise', 'kegels', 'garlandPose'];
-    let booleanInputs = ['prenatalVitamins', 'probiotics']
-    if (numberInputs.includes(e.currentTarget.name)) {
-        newInput = parseInt(e.currentTarget.value)
-    } else if (booleanInputs.includes(e.currentTarget.name) && e.currentTarget.value === "true") {
-        newInput = true
-    } else if (booleanInputs.includes(e.currentTarget.name) && e.currentTarget.value === "false") {
-        newInput = false
-    } else {
-        newInput = e.currentTarget.value
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        let newInput: string | number | boolean;
+        let numberInputs = ['waterIntake', 'proteinIntake', 'exercise', 'kegels', 'garlandPose'];
+        let booleanInputs = ['prenatalVitamins', 'probiotics']
+        if (numberInputs.includes(e.currentTarget.name)) {
+            newInput = parseInt(e.currentTarget.value)
+        } else if (booleanInputs.includes(e.currentTarget.name) && e.currentTarget.value === "true") {
+            newInput = true
+        } else if (booleanInputs.includes(e.currentTarget.name) && e.currentTarget.value === "false") {
+            newInput = false
+        } else {
+            newInput = e.currentTarget.value
+        }
+        setFormData({...formData, [e.currentTarget.name]: newInput})
     }
-    setFormData({...formData, [e.currentTarget.name]: newInput})
-}
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(formData)
-  }
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(formData)
+    }
 
-  return (
-    <main>
-      <h2 className="page-title">Create a new journal entry!</h2>
-      <form className="form" onSubmit={handleSubmit}>
+    return user.isLoggedIn ? (
+        <main>
+        <h2 className="page-title">Create a new journal entry!</h2>
+            <form className="form" onSubmit={handleSubmit}>
                 <label>Date: </label>
                 <input 
                     type='date' 
@@ -152,8 +155,13 @@ const NewEntryForm: React.FC = () => {
                 </label>
                 <button type='submit'>Submit</button>
             </form> 
-    </main>
-  )
+        </main>
+    ) : (
+        <MessagePage 
+            title="Uh oh, looks like you're not logged in."
+            subtitle="You must be logged-in to view this page."
+        />
+    )
 }
 
-export default NewEntryForm;
+export default NewEntryFormPage;
