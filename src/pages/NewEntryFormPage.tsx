@@ -15,7 +15,7 @@ export interface IJournalEntryData {
   userId: string;
 }
 
-const NewEntryForm: React.FC = () => {
+const NewEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
     const [formData, setFormData] = useState<IJournalEntryData>({
         date: '',
@@ -164,4 +164,4 @@ const NewEntryForm: React.FC = () => {
     )
 }
 
-export default NewEntryForm;
+export default NewEntryFormPage;

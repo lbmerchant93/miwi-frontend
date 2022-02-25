@@ -5,7 +5,7 @@ import AppFooter from './features/AppFooter/AppFooter';
 import { AuthContext } from './shared/auth-context';
 import { PossibleRoutes } from './utils/constants';
 import MainPage from './pages/MainPage';
-import NewEntryForm from './pages/NewEntry';
+import NewEntryFormPage from './pages/NewEntryFormPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
@@ -44,7 +44,7 @@ const App = () => {
       <Routes>
         <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
         <Route path={`${PossibleRoutes.ALL_ENTRIES}`} element={<MainPage />} />
-        <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryForm />} />
+        <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
       </Routes>
     )
   
