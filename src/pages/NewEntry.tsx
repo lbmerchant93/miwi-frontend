@@ -157,7 +157,10 @@ const NewEntryForm: React.FC = () => {
             </form> 
         </main>
     ) : (
-        <MessagePage />
+        <MessagePage 
+            title="Uh oh, looks like you're not logged in."
+            subtitle="You must be logged-in to view this page."
+        />
     )
 }
 
