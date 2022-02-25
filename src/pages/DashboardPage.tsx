@@ -8,7 +8,9 @@ const DashboardPage = () => {
     const user = useContext(AuthContext);
 
     return user.isLoggedIn ? (
-        <div>DashboardPage</div>
+        <main className="dashboard-main">
+            DashboardPage
+        </main>
     ) : (
         <MessagePage 
             title="Uh oh, looks like you're not logged in."
