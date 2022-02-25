@@ -77,12 +77,12 @@ const AppBar: React.FC = () => {
                 }}
             >
                 <MenuItem 
-                    onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>
-                        New Entry
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>
+                        My Dashboard
                 </MenuItem>
                 <MenuItem 
-                    onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>
-                        My account
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>
+                        New Journal Entry
                 </MenuItem>
                 <MenuItem 
                     onClick={onListItemClick(() => user.logout())}>

@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
 import { AuthContext } from '../shared/auth-context';
 import MessagePage from '../components/MessagePage';
-import './NewEntry.css';
+import './NewEntryFormPage.css';
 
 export interface IJournalEntryData {
   date: string;
