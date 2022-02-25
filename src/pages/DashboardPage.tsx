@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../shared/auth-context';
 import MessagePage from '../components/MessagePage';
+import JournalEntryCard from '../components/JournalEntryCard';
 
 import './DashboardPage.css';
 
@@ -9,7 +10,7 @@ const DashboardPage = () => {
 
     return user.isLoggedIn ? (
         <main className="dashboard-main">
-            DashboardPage
+            <JournalEntryCard />
         </main>
     ) : (
         <MessagePage 
