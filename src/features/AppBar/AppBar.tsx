@@ -77,7 +77,7 @@ const AppBar: React.FC = () => {
                 }}
             >
                 <MenuItem 
-                    onClick={onListItemClick(() => navigate(PossibleRoutes.ALL_ENTRIES))}>
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.DASHBOARD))}>
                         My Dashboard
                 </MenuItem>
                 <MenuItem 
