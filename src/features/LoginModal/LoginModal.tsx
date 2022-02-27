@@ -5,13 +5,14 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import ProviderLoginButton from '../../components/ProviderLoginButton/ProviderLoginButton';
+import { User } from '../../shared/auth-context';
 
 import './LoginModal.css';
 
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
-    user: any;
+    user: User;
   }
 
 const LoginModal: React.FC<LoginModalProps> = (props) => {

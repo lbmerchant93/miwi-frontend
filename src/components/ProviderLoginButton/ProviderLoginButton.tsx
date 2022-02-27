@@ -3,10 +3,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import GoogleIcon from '../../shared/Google.icon';
+import { User } from '../../shared/auth-context';
 import './ProviderLoginButton.css'
 
 interface ProviderLoginButtonsProps {
-    user: any;
+    user: User;
     onClose: () => void;
 }
 
