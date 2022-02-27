@@ -1,0 +1,12 @@
+.login-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-modal-container {
+    max-width: 712px;
+    background-color: white;
+    border-radius: 5px;
+}
