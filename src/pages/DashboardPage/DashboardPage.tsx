@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../shared/auth-context';
-import MessagePage from '../components/MessagePage';
-import JournalEntryCard from '../components/JournalEntryCard';
+import { AuthContext } from '../../shared/auth-context';
+import MessagePage from '../../components/MessagePage/MessagePage';
+import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 
 import './DashboardPage.css';
 

@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
-import { AuthContext } from '../shared/auth-context';
-import MessagePage from '../components/MessagePage';
+import { AuthContext } from '../../shared/auth-context';
+import MessagePage from '../../components/MessagePage/MessagePage';
 import './NewEntryFormPage.css';
 
 export interface IJournalEntryData {

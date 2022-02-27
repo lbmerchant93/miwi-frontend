@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import Typography from '@mui/material/Typography';
-import { PossibleRoutes } from '../utils/constants';
+import { PossibleRoutes } from '../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import './MessagePage.css';
