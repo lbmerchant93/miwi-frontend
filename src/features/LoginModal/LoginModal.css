@@ -3,11 +3,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .login-modal-container {
-    padding: 15px;
+    max-width: 712px;
+    padding: 25px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -15,7 +15,7 @@
 }
 
 .login-modal-title {
-    text-align: center;
+    text-align: left;
     margin-bottom: 25px;
 }
 
@@ -26,6 +26,7 @@
 }
 
 .login-modal-form {
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-content: space-between;

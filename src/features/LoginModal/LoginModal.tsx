@@ -6,9 +6,9 @@ import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import ProviderLoginButton from '../../components/ProviderLoginButton/ProviderLoginButton';
 import { User } from '../../shared/auth-context';
+import Button from '@mui/material/Button';
 
 import './LoginModal.css';
-
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -28,6 +28,10 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
         }
     };
 
+    const signIn = () => {
+        console.log(email, "email", password, "password")
+    }
+
     return (
         <Modal
             open={isOpen}
@@ -41,14 +45,20 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                     <Typography variant="h5">
                         Please log in to access your dashboard!
                     </Typography>
+                    <Typography variant="body1">
+                        Enter your email/password or you can log in through Google to access your dashboard.
+                    </Typography>
                 </Box>
                 <Box className="login-modal-options">
                     <form className="login-modal-form">
                         <Box className="login-modal-form-input">
-                            <TextField label="Email" id="Email" variant="outlined" value={email} onChange={handleChange} />
+                            <TextField label="Email" id="Email" variant="outlined" value={email} onChange={handleChange} fullWidth={true}/>
                         </Box>
                         <Box className="login-modal-form-input">
-                            <TextField label="Password" id="Password" variant="outlined" type="password" value={password} onChange={handleChange} />
+                            <TextField label="Password" id="Password" variant="outlined" type="password" value={password} onChange={handleChange} fullWidth={true}/>
+                        </Box>
+                        <Box>
+                            <Button variant="outlined" color="inherit" onClick={signIn}>Submit</Button>  
                         </Box>
                     </form>
                     <Divider orientation="vertical" />
