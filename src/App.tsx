@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './configs/firebase.configs';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut  } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut  } from 'firebase/auth';
 
 initializeApp(firebaseConfig);
 
@@ -22,7 +22,7 @@ const App = () => {
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
 
-  const login = useCallback(async () => {
+  const loginWithGoogle = useCallback(async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
         setUserId(response.user.uid);
@@ -34,6 +34,19 @@ const App = () => {
         console.log(error);
       })
   }, [auth]);
+
+  const loginWithEmail = useCallback(async (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((response) => {
+          setUserId(response.user.uid);
+          setIsLoggedIn(true);
+          setDisplayName(response.user.displayName)
+          setPhotoURL(response.user.photoURL)
+        })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [auth])
 
   const logout = useCallback(() => {
     signOut(auth)
@@ -56,7 +69,8 @@ const App = () => {
           userId: userId,
           displayName: displayName,
           photoURL: photoURL,
-          login: login,
+          loginWithGoogle: loginWithGoogle,
+          loginWithEmail: loginWithEmail,
           logout: logout
         }}
       >

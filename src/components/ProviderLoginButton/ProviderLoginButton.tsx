@@ -22,7 +22,7 @@ const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
     
     return (
         <Box className="provider-login-button">
-            <Button variant="outlined" onClick={user.login} color="inherit" >
+            <Button variant="outlined" onClick={user.loginWithGoogle} color="inherit" >
                 <GoogleIcon />
                 <Box className="provider-login-text-wrapper">
                     <Typography variant="body1">Sign in with Google</Typography>

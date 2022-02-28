@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -29,8 +29,14 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
     };
 
     const signIn = () => {
-        console.log(email, "email", password, "password")
+        user.loginWithEmail(email, password)
     }
+
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            onClose()
+        }
+    }, [user, onClose])
 
     return (
         <Modal
