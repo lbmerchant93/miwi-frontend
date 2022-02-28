@@ -64,7 +64,10 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                     />
                 )}
                 {formState === FormState.Creation && (
-                    <CreateAccountForm />
+                    <CreateAccountForm 
+                        user={user} 
+                        goBack={() => setFormState(FormState.Login)}
+                    />
                 )}
             </Box>
         </Modal>

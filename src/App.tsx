@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './configs/firebase.configs';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut  } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword  } from 'firebase/auth';
 
 initializeApp(firebaseConfig);
 
@@ -21,6 +21,19 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
+
+  const createAccount = useCallback(async (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        setUserId(response.user.uid);
+        setIsLoggedIn(true);
+        setDisplayName(response.user.displayName)
+        setPhotoURL(response.user.photoURL)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+}, [auth]);
 
   const loginWithGoogle = useCallback(async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
@@ -37,53 +50,54 @@ const App = () => {
 
   const loginWithEmail = useCallback(async (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
-        .then((response) => {
-          setUserId(response.user.uid);
-          setIsLoggedIn(true);
-          setDisplayName(response.user.displayName)
-          setPhotoURL(response.user.photoURL)
-        })
+      .then((response) => {
+        setUserId(response.user.uid);
+        setIsLoggedIn(true);
+        setDisplayName(response.user.displayName)
+        setPhotoURL(response.user.photoURL)
+      })
       .catch((error) => {
         console.log(error);
       })
-  }, [auth])
+  }, [auth]);
 
   const logout = useCallback(() => {
     signOut(auth)
     setUserId(null)
     setIsLoggedIn(false);
-  }, [auth])
+  }, [auth]);
 
   const routes = (
-      <Routes>
-        <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
-        <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
-        <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
-      </Routes>
-    )
+    <Routes>
+      <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
+      <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
+      <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
+    </Routes>
+  )
   
   return (
-      <AuthContext.Provider 
-        value={{
-          isLoggedIn: isLoggedIn,
-          userId: userId,
-          displayName: displayName,
-          photoURL: photoURL,
-          loginWithGoogle: loginWithGoogle,
-          loginWithEmail: loginWithEmail,
-          logout: logout
-        }}
-      >
-        <ThemeProvider theme={theme}>
-          <Router>
-            <AppBar />
-            <main>
-              {routes}
-            </main>
-            <AppFooter />
-          </Router>
-        </ThemeProvider>
-      </AuthContext.Provider>
+    <AuthContext.Provider 
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        displayName: displayName,
+        photoURL: photoURL,
+        createAccount: createAccount,
+        loginWithGoogle: loginWithGoogle,
+        loginWithEmail: loginWithEmail,
+        logout: logout
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <Router>
+          <AppBar />
+          <main>
+            {routes}
+          </main>
+          <AppFooter />
+        </Router>
+      </ThemeProvider>
+    </AuthContext.Provider>
   );
 }
 
