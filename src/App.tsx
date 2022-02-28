@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './configs/firebase.configs';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword  } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, updateProfile  } from 'firebase/auth';
 
 initializeApp(firebaseConfig);
 
@@ -22,13 +22,19 @@ const App = () => {
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
 
-  const createAccount = useCallback(async (email, password) => {
+  const createAccount = useCallback(async (email, password, displayName) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((response) => {
-        setUserId(response.user.uid);
-        setIsLoggedIn(true);
-        setDisplayName(response.user.displayName)
-        setPhotoURL(response.user.photoURL)
+        updateProfile(response.user, {displayName: displayName})
+          .then(() => {
+            setUserId(response.user.uid);
+            setIsLoggedIn(true);
+            setDisplayName(displayName);
+            setPhotoURL(response.user.photoURL);
+          })
+          .catch(err => {
+            console.log(err)
+          })
       })
       .catch((error) => {
         console.log(error);
@@ -40,8 +46,8 @@ const App = () => {
       .then((response) => {
         setUserId(response.user.uid);
         setIsLoggedIn(true);
-        setDisplayName(response.user.displayName)
-        setPhotoURL(response.user.photoURL)
+        setDisplayName(response.user.displayName);
+        setPhotoURL(response.user.photoURL);
       })
       .catch((error) => {
         console.log(error);
@@ -53,8 +59,8 @@ const App = () => {
       .then((response) => {
         setUserId(response.user.uid);
         setIsLoggedIn(true);
-        setDisplayName(response.user.displayName)
-        setPhotoURL(response.user.photoURL)
+        setDisplayName(response.user.displayName);
+        setPhotoURL(response.user.photoURL);
       })
       .catch((error) => {
         console.log(error);
@@ -62,8 +68,8 @@ const App = () => {
   }, [auth]);
 
   const logout = useCallback(() => {
-    signOut(auth)
-    setUserId(null)
+    signOut(auth);
+    setUserId(null);
     setIsLoggedIn(false);
   }, [auth]);
 

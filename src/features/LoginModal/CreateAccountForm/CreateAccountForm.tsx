@@ -15,22 +15,35 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     const { user, goBack } = props;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.id === "Email") {
             setEmail(e.currentTarget.value)
         } else if (e.currentTarget.id === "Password") {
             setPassword(e.currentTarget.value)
+        } else if (e.currentTarget.id === "FirstName") {
+            setFirstName(e.currentTarget.value)
+        } else if (e.currentTarget.id === "LastName") {
+            setLastName(e.currentTarget.value)
         }
     };
 
     const onCreateAccount = () => {
-        user.createAccount(email, password)
+        const displayName = firstName + ' ' + lastName
+        user.createAccount(email, password, displayName)
     }
 
     return (
         <Box>
             <form className="login-form">
+                <Box className="login-form-input">
+                    <TextField label="First Name" id="FirstName" variant="outlined" value={firstName} onChange={handleChange} fullWidth={true}/>
+                </Box>
+                <Box className="login-form-input">
+                    <TextField label="Last Name" id="LastName" variant="outlined" value={lastName} onChange={handleChange} fullWidth={true}/>
+                </Box>
                 <Box className="login-form-input">
                     <TextField label="Email" id="Email" variant="outlined" value={email} onChange={handleChange} fullWidth={true}/>
                 </Box>
