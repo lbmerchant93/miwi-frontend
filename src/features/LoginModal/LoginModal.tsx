@@ -2,35 +2,36 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Divider from '@mui/material/Divider';
-import ProviderLoginButton from '../../components/ProviderLoginButton/ProviderLoginButton';
 import { User } from '../../shared/auth-context';
-import Button from '@mui/material/Button';
-
+import LoginForm from './LoginForm/LoginForm';
+import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import './LoginModal.css';
+
+enum FormState {
+    Login = 'Login',
+    Creation = 'Creation',
+}
+
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
     user: User;
-  }
+};
+
+const modalState = {
+    [FormState.Creation]: {
+      title: 'Create an account',
+      description: `Please fill out this form so we can create a dashboard for you.`,
+    },
+    [FormState.Login]: {
+      title: 'Welcome back!',
+      description: `Please log in to access your dashboard! You can log in through your Google account or enter your email/password to access your dashboard.`,
+    }
+  };
 
 const LoginModal: React.FC<LoginModalProps> = (props) => {
     const { isOpen, onClose, user } = props;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.id === "Email") {
-            setEmail(e.currentTarget.value)
-        } else if (e.currentTarget.id === "Password") {
-            setPassword(e.currentTarget.value)
-        }
-    };
-
-    const signIn = () => {
-        user.loginWithEmail(email, password)
-    }
+    const [formState, setFormState] = useState<FormState>(FormState.Login);
 
     useEffect(() => {
         if (user.isLoggedIn) {
@@ -49,27 +50,22 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
             <Box className="login-modal-container">
                 <Box className="login-modal-title">
                     <Typography variant="h5">
-                        Please log in to access your dashboard!
+                        {modalState[formState].title}
                     </Typography>
                     <Typography variant="body1">
-                        Enter your email/password or you can log in through Google to access your dashboard.
+                        {modalState[formState].description}
                     </Typography>
                 </Box>
-                <Box className="login-modal-options">
-                    <form className="login-modal-form">
-                        <Box className="login-modal-form-input">
-                            <TextField label="Email" id="Email" variant="outlined" value={email} onChange={handleChange} fullWidth={true}/>
-                        </Box>
-                        <Box className="login-modal-form-input">
-                            <TextField label="Password" id="Password" variant="outlined" type="password" value={password} onChange={handleChange} fullWidth={true}/>
-                        </Box>
-                        <Box>
-                            <Button variant="outlined" color="inherit" onClick={signIn}>Submit</Button>  
-                        </Box>
-                    </form>
-                    <Divider orientation="vertical" />
-                    <ProviderLoginButton user={user} onClose={onClose}/>
-                </Box>
+                {formState === FormState.Login && (
+                    <LoginForm 
+                        user={user} 
+                        onClose={onClose} 
+                        onRegisterClick={() => setFormState(FormState.Creation)} 
+                    />
+                )}
+                {formState === FormState.Creation && (
+                    <CreateAccountForm />
+                )}
             </Box>
         </Modal>
     )
