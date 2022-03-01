@@ -11,16 +11,43 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './configs/firebase.configs';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, updateProfile  } from 'firebase/auth';
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  createUserWithEmailAndPassword, 
+  updateProfile, 
+  setPersistence, 
+  browserLocalPersistence, 
+  onAuthStateChanged
+} from 'firebase/auth';
 
 initializeApp(firebaseConfig);
 
 const App = () => {
   const auth = getAuth();
+  setPersistence(auth, browserLocalPersistence);
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUserId(user.uid);
+      setIsLoggedIn(true);
+      setDisplayName(user.displayName);
+      setPhotoURL(user.photoURL);
+    } else {
+      setUserId(null);
+      setIsLoggedIn(false);
+      setDisplayName('');
+      setPhotoURL('');
+      signOut(auth);
+    }
+  })
 
   const createAccount = useCallback(async (email, password, displayName) => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -39,7 +66,7 @@ const App = () => {
       .catch((error) => {
         console.log(error);
       })
-}, [auth]);
+  }, [auth]);
 
   const loginWithGoogle = useCallback(async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
@@ -71,6 +98,8 @@ const App = () => {
     signOut(auth);
     setUserId(null);
     setIsLoggedIn(false);
+    setDisplayName('');
+    setPhotoURL('');
   }, [auth]);
 
   const routes = (
@@ -79,7 +108,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
     </Routes>
-  )
+  );
   
   return (
     <AuthContext.Provider 

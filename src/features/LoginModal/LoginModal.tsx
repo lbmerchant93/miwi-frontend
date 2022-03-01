@@ -54,12 +54,11 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
         >
             <Box className="login-modal-container">
                 <Box className="login-modal-close-button" >
-                        <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
-                            <CloseIcon />
-                        </IconButton>
-                    </Box>
+                    <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
                 <Box className="login-modal-title">
-                    
                     <Typography variant="h5">
                         {modalState[formState].title}
                     </Typography>
