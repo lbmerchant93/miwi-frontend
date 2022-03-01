@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import { User } from '../../shared/auth-context';
 import LoginForm from './LoginForm/LoginForm';
 import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import './LoginModal.css';
 
 enum FormState {
@@ -34,10 +36,13 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
     const [formState, setFormState] = useState<FormState>(FormState.Login);
 
     useEffect(() => {
+        if (isOpen) {
+            setFormState(FormState.Login);
+        }
         if (user.isLoggedIn) {
             onClose()
         }
-    }, [user, onClose])
+    }, [user, onClose, isOpen])
 
     return (
         <Modal
@@ -48,7 +53,13 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
             className="login-modal"
         >
             <Box className="login-modal-container">
+                <Box className="login-modal-close-button" >
+                        <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
                 <Box className="login-modal-title">
+                    
                     <Typography variant="h5">
                         {modalState[formState].title}
                     </Typography>

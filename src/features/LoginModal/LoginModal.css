@@ -7,33 +7,19 @@
 
 .login-modal-container {
     max-width: 712px;
-    padding: 25px;
+    padding: 15px 25px 25px;
     background-color: white;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
 }
 
+.login-modal-close-button {
+    /* position: absolute; */
+    align-self: flex-end;
+}
+
 .login-modal-title {
     text-align: left;
     margin-bottom: 25px;
-}
-
-.login-modal-options {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.login-modal-form {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    margin-right: 15px;
-    margin-bottom: 10px;
-}
-
-.login-modal-form-input {
-    margin-bottom: 10px;
 }
