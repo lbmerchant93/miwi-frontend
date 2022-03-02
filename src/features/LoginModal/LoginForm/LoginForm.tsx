@@ -52,8 +52,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Typography>
             </Box>
             <Divider orientation="vertical" />
-            <ProviderLoginButton user={user} />
-            <GuestLoginButton user={user}/>
+            <Box className="login-form-buttons">
+                <ProviderLoginButton user={user} />
+                <Typography variant="caption" my={3}>
+                    OR
+                </Typography>
+                <GuestLoginButton user={user}/>
+            </Box>
         </Box>
     )
 }

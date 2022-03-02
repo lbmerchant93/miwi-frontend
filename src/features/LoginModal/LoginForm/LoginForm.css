@@ -16,3 +16,9 @@
 .login-form-input {
     margin-bottom: 10px;
 }
+
+.login-form-buttons {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}

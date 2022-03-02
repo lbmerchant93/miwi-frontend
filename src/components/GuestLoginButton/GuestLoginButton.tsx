@@ -13,8 +13,8 @@ const GuestLoginButton: React.FC<GuestLoginButtonsProps> = (props) => {
     const { user } = props;
     
     return (
-        <Box className="guest-login-button">
-            <Button variant="outlined" onClick={() => user.loginWithEmail('test@test.com', 'testing')} color="inherit" >
+        <Box className="guest-login-button-wrapper">
+            <Button variant="outlined" onClick={() => user.loginWithEmail('test@test.com', 'testing')} color="inherit" className="guest-login-button">
                 <Box className="guest-login-text-wrapper">
                     <Typography variant="body1">Sign in as guest</Typography>
                 </Box>

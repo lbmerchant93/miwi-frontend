@@ -1,7 +1,14 @@
-.guest-login-button {
+.guest-login-button-wrapper {
     margin-left: 10px;
 }
 
+.guest-login-button {
+    width: 100%;
+}
+
 .guest-login-text-wrapper {
+    display: flex;
+    align-items: center;
+    height: 30px;
     margin-left: 5px;
 }
