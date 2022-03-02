@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
+import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { User } from '../../../shared/auth-context';
 
 import './LoginForm.css';
@@ -52,6 +53,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             </Box>
             <Divider orientation="vertical" />
             <ProviderLoginButton user={user} />
+            <GuestLoginButton user={user}/>
         </Box>
     )
 }
