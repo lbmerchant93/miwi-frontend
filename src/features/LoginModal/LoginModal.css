@@ -1,0 +1,25 @@
+.login-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-modal-container {
+    max-width: 712px;
+    padding: 15px 25px 25px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-modal-close-button {
+    /* position: absolute; */
+    align-self: flex-end;
+}
+
+.login-modal-title {
+    text-align: left;
+    margin-bottom: 25px;
+}

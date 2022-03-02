@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PossibleRoutes } from '../../utils/constants';
 import Button from '@mui/material/Button';
@@ -7,12 +7,14 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../shared/auth-context';
+import LoginModal from '../LoginModal/LoginModal';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -36,7 +38,7 @@ const AppBar: React.FC = () => {
             <div>
             {!user.isLoggedIn ? (
                 <Button
-                    onClick={user.login}
+                    onClick={() => setIsLoginOpen(true)}
                     variant="outlined"
                     color="inherit"
                 >
@@ -61,6 +63,7 @@ const AppBar: React.FC = () => {
                     <MenuIcon />
                 </Button>
             )}
+            <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} user={user}/>
             <Menu
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"

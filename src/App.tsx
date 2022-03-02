@@ -11,24 +11,83 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './configs/firebase.configs';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut  } from 'firebase/auth';
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  createUserWithEmailAndPassword, 
+  updateProfile, 
+  setPersistence, 
+  browserLocalPersistence, 
+  onAuthStateChanged
+} from 'firebase/auth';
 
 initializeApp(firebaseConfig);
 
 const App = () => {
   const auth = getAuth();
+  setPersistence(auth, browserLocalPersistence);
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUserId(user.uid);
+      setIsLoggedIn(true);
+      setDisplayName(user.displayName);
+      setPhotoURL(user.photoURL);
+    } else {
+      setUserId(null);
+      setIsLoggedIn(false);
+      setDisplayName('');
+      setPhotoURL('');
+      signOut(auth);
+    }
+  })
 
-  const login = useCallback(async () => {
+  const createAccount = useCallback(async (email, password, displayName) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        updateProfile(response.user, {displayName: displayName})
+          .then(() => {
+            setUserId(response.user.uid);
+            setIsLoggedIn(true);
+            setDisplayName(displayName);
+            setPhotoURL(response.user.photoURL);
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [auth]);
+
+  const loginWithGoogle = useCallback(async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
         setUserId(response.user.uid);
         setIsLoggedIn(true);
-        setDisplayName(response.user.displayName)
-        setPhotoURL(response.user.photoURL)
+        setDisplayName(response.user.displayName);
+        setPhotoURL(response.user.photoURL);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [auth]);
+
+  const loginWithEmail = useCallback(async (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        setUserId(response.user.uid);
+        setIsLoggedIn(true);
+        setDisplayName(response.user.displayName);
+        setPhotoURL(response.user.photoURL);
       })
       .catch((error) => {
         console.log(error);
@@ -36,40 +95,44 @@ const App = () => {
   }, [auth]);
 
   const logout = useCallback(() => {
-    signOut(auth)
-    setUserId(null)
+    signOut(auth);
+    setUserId(null);
     setIsLoggedIn(false);
-  }, [auth])
+    setDisplayName('');
+    setPhotoURL('');
+  }, [auth]);
 
   const routes = (
-      <Routes>
-        <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
-        <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
-        <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
-      </Routes>
-    )
+    <Routes>
+      <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
+      <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
+      <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
+    </Routes>
+  );
   
   return (
-      <AuthContext.Provider 
-        value={{
-          isLoggedIn: isLoggedIn,
-          userId: userId,
-          displayName: displayName,
-          photoURL: photoURL,
-          login: login,
-          logout: logout
-        }}
-      >
-        <ThemeProvider theme={theme}>
-          <Router>
-            <AppBar />
-            <main>
-              {routes}
-            </main>
-            <AppFooter />
-          </Router>
-        </ThemeProvider>
-      </AuthContext.Provider>
+    <AuthContext.Provider 
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        displayName: displayName,
+        photoURL: photoURL,
+        createAccount: createAccount,
+        loginWithGoogle: loginWithGoogle,
+        loginWithEmail: loginWithEmail,
+        logout: logout
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <Router>
+          <AppBar />
+          <main>
+            {routes}
+          </main>
+          <AppFooter />
+        </Router>
+      </ThemeProvider>
+    </AuthContext.Provider>
   );
 }
 
