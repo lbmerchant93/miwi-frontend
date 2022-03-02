@@ -6,18 +6,18 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
+import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { User } from '../../../shared/auth-context';
 
 import './LoginForm.css';
 
 interface LoginFormProps {
     user: User;
-    onClose: () => void;
     onRegisterClick: () => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const { user, onClose, onRegisterClick } = props;
+    const { user,  onRegisterClick } = props;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -52,7 +52,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Typography>
             </Box>
             <Divider orientation="vertical" />
-            <ProviderLoginButton user={user} onClose={onClose}/>
+            <Box className="login-form-buttons">
+                <ProviderLoginButton user={user} />
+                <Typography variant="caption" my={3}>
+                    OR
+                </Typography>
+                <GuestLoginButton user={user}/>
+            </Box>
         </Box>
     )
 }

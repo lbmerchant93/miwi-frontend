@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -8,17 +8,10 @@ import './ProviderLoginButton.css'
 
 interface ProviderLoginButtonsProps {
     user: User;
-    onClose: () => void;
 }
 
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
-    const { user, onClose } = props;
-
-    useEffect(() => {
-        if (user.isLoggedIn) {
-            onClose()
-        }
-    }, [user, onClose])
+    const { user } = props;
     
     return (
         <Box className="provider-login-button">
