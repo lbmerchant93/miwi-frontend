@@ -12,12 +12,11 @@ import './LoginForm.css';
 
 interface LoginFormProps {
     user: User;
-    onClose: () => void;
     onRegisterClick: () => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const { user, onClose, onRegisterClick } = props;
+    const { user,  onRegisterClick } = props;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -52,7 +51,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Typography>
             </Box>
             <Divider orientation="vertical" />
-            <ProviderLoginButton user={user} onClose={onClose}/>
+            <ProviderLoginButton user={user} />
         </Box>
     )
 }

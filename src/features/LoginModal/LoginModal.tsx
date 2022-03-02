@@ -69,7 +69,6 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                 {formState === FormState.Login && (
                     <LoginForm 
                         user={user} 
-                        onClose={onClose} 
                         onRegisterClick={() => setFormState(FormState.Creation)} 
                     />
                 )}
