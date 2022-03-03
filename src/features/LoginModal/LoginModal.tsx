@@ -7,6 +7,7 @@ import LoginForm from './LoginForm/LoginForm';
 import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import { getAuth } from 'firebase/auth';
 import './LoginModal.css';
 
 enum FormState {
@@ -32,6 +33,7 @@ const modalState = {
   };
 
 const LoginModal: React.FC<LoginModalProps> = (props) => {
+    const auth = getAuth();
     const { isOpen, onClose, user } = props;
     const [formState, setFormState] = useState<FormState>(FormState.Login);
 
@@ -68,6 +70,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                 </Box>
                 {formState === FormState.Login && (
                     <LoginForm 
+                        auth={auth}
                         user={user} 
                         onRegisterClick={() => setFormState(FormState.Creation)} 
                     />
