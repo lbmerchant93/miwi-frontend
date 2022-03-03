@@ -61,7 +61,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             </Box>
             <Divider orientation="vertical" />
             <Box className="login-form-buttons">
-                <ProviderLoginButton user={user} />
+                <ProviderLoginButton auth={auth} />
                 <Typography variant="caption" my={3}>
                     OR
                 </Typography>
