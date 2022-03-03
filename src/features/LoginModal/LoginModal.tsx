@@ -76,7 +76,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                 )}
                 {formState === FormState.Creation && (
                     <CreateAccountForm 
-                        user={user} 
+                        auth={auth}
                         goBack={() => setFormState(FormState.Login)}
                     />
                 )}

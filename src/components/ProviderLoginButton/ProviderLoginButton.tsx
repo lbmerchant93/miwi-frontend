@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -12,11 +12,11 @@ interface ProviderLoginButtonsProps {
 
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
     const { auth } = props;
-    const [error, setError] = React.useState('');
+    const [error, setError] = useState<string>('');
 
     const loginWithGoogle = async () => {
         try {
-            signInWithPopup(auth, new GoogleAuthProvider())
+            await signInWithPopup(auth, new GoogleAuthProvider())
         } catch (error: any) {
             setError(error.message);
             console.log('error signing in', error.message);

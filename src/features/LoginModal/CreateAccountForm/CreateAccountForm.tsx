@@ -4,54 +4,84 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
-import { User } from '../../../shared/auth-context';
+import { Auth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 interface CreateAccountFormProps {
-    user: User;
+    auth: Auth;
     goBack: () => void;
 }
 
 const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
-    const { user, goBack } = props;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const { auth, goBack } = props;
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [error, setError] = useState<string>('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.id === "Email") {
-            setEmail(e.currentTarget.value)
-        } else if (e.currentTarget.id === "Password") {
-            setPassword(e.currentTarget.value)
-        } else if (e.currentTarget.id === "FirstName") {
-            setFirstName(e.currentTarget.value)
-        } else if (e.currentTarget.id === "LastName") {
-            setLastName(e.currentTarget.value)
-        }
-    };
-
-    const onCreateAccount = () => {
+    const createAccount = async (email: string, password: string, firstName: string, lastName: string) => {
         const displayName = firstName + ' ' + lastName
-        user.createAccount(email, password, displayName)
-    }
+        try {
+            const createdUser = await createUserWithEmailAndPassword(auth, email, password)
+            updateProfile(createdUser.user, {displayName: displayName})
+        } catch (error: any) {
+            setError(error.message);
+            console.log('error signing in', error.message);
+        }    
+    };
 
     return (
         <Box>
             <form className="login-form">
                 <Box className="login-form-input">
-                    <TextField label="First Name" id="FirstName" variant="outlined" value={firstName} onChange={handleChange} fullWidth={true}/>
+                    <TextField 
+                        label="First Name" 
+                        id="FirstName" 
+                        variant="outlined" 
+                        value={firstName} 
+                        onChange={(e) => setFirstName(e.currentTarget.value)} 
+                        fullWidth={true}
+                    />
                 </Box>
                 <Box className="login-form-input">
-                    <TextField label="Last Name" id="LastName" variant="outlined" value={lastName} onChange={handleChange} fullWidth={true}/>
+                    <TextField 
+                        label="Last Name" 
+                        id="LastName" 
+                        variant="outlined" 
+                        value={lastName} 
+                        onChange={(e) => setLastName(e.currentTarget.value)} 
+                        fullWidth={true}
+                    />
                 </Box>
                 <Box className="login-form-input">
-                    <TextField label="Email" id="Email" variant="outlined" value={email} onChange={handleChange} fullWidth={true}/>
+                    <TextField 
+                        label="Email" 
+                        id="Email" 
+                        variant="outlined" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.currentTarget.value)} 
+                        fullWidth={true}
+                    />
                 </Box>
                 <Box className="login-form-input">
-                    <TextField label="Password" id="Password" variant="outlined" type="password" value={password} onChange={handleChange} fullWidth={true}/>
+                    <TextField 
+                        label="Password" 
+                        id="Password" 
+                        variant="outlined" 
+                        type="password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.currentTarget.value)} 
+                        fullWidth={true}
+                    />
                 </Box>
                 <Box>
-                    <Button variant="outlined" color="inherit" onClick={onCreateAccount}>Create Account</Button>  
+                    <Button 
+                        variant="outlined" 
+                        color="inherit" 
+                        onClick={() => createAccount(email, password, firstName, lastName)}
+                    >
+                            Create Account
+                    </Button>  
                 </Box>
             </form>
             <Typography variant="caption">

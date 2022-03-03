@@ -44,10 +44,25 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             <Box>
                 <form className="login-form">
                     <Box className="login-form-input">
-                        <TextField label="Email" id="Email" variant="outlined" value={email} onChange={handleChange} fullWidth={true}/>
+                        <TextField 
+                            label="Email" 
+                            id="Email" 
+                            variant="outlined" 
+                            value={email} 
+                            onChange={handleChange} 
+                            fullWidth={true}
+                        />
                     </Box>
                     <Box className="login-form-input">
-                        <TextField label="Password" id="Password" variant="outlined" type="password" value={password} onChange={handleChange} fullWidth={true}/>
+                        <TextField 
+                            label="Password" 
+                            id="Password" 
+                            variant="outlined" 
+                            type="password" 
+                            value={password} 
+                            onChange={handleChange} 
+                            fullWidth={true}
+                        />
                     </Box>
                     <Box>
                         <Button variant="outlined" color="inherit" onClick={() => loginWithEmailAndPassword(email, password)}>Submit</Button>  
