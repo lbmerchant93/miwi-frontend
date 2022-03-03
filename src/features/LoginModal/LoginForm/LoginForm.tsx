@@ -7,19 +7,17 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
-import { User } from '../../../shared/auth-context';
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import './LoginForm.css';
 
 interface LoginFormProps {
     auth: Auth;
-    user: User;
     onRegisterClick: () => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const { auth, user,  onRegisterClick } = props;
+    const { auth, onRegisterClick } = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = React.useState('');
@@ -65,7 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 <Typography variant="caption" my={3}>
                     OR
                 </Typography>
-                <GuestLoginButton user={user}/>
+                <GuestLoginButton loginWithEmailAndPassword={loginWithEmailAndPassword}/>
             </Box>
         </Box>
     )
