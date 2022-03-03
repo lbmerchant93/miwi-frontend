@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppBar from './features/AppBar/AppBar';
 import AppFooter from './features/AppFooter/AppFooter';
