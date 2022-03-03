@@ -5,9 +5,6 @@ export interface User {
     userId: string | null;
     displayName: string | null;
     photoURL: string | null;
-    createAccount: any;
-    loginWithGoogle: any;
-    loginWithEmail: any;
     logout: any;
 }
 
@@ -16,8 +13,5 @@ export const AuthContext = createContext<User>({
     userId: null,
     displayName: '',
     photoURL: '',
-    createAccount: () => {},
-    loginWithGoogle: () => {},
-    loginWithEmail: () => {},
     logout: () => {}
 })
