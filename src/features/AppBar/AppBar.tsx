@@ -65,7 +65,12 @@ const AppBar: React.FC = () => {
                     <MenuIcon />
                 </Button>
             )}
-            <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} user={user}/>
+            <LoginModal 
+                isOpen={isLoginOpen} 
+                onClose={() => setIsLoginOpen(false)} 
+                user={user} 
+                auth={auth}
+            />
             <Menu
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"
