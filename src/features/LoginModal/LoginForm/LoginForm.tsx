@@ -22,14 +22,6 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = React.useState('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.id === "Email") {
-            setEmail(e.currentTarget.value)
-        } else if (e.currentTarget.id === "Password") {
-            setPassword(e.currentTarget.value)
-        }
-    };
-
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         try {
             await signInWithEmailAndPassword(auth, email, password)
@@ -49,7 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                             id="Email" 
                             variant="outlined" 
                             value={email} 
-                            onChange={handleChange} 
+                            onChange={(e) => setEmail(e.currentTarget.value)} 
                             fullWidth={true}
                         />
                     </Box>
@@ -60,7 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                             variant="outlined" 
                             type="password" 
                             value={password} 
-                            onChange={handleChange} 
+                            onChange={(e) => setPassword(e.currentTarget.value)} 
                             fullWidth={true}
                         />
                     </Box>
