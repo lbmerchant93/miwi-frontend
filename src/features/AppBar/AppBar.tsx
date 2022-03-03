@@ -8,10 +8,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../shared/auth-context';
 import LoginModal from '../LoginModal/LoginModal';
+import { getAuth, signOut } from 'firebase/auth';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
     const user = useContext(AuthContext);
+    const auth = getAuth();
     const navigate = useNavigate();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -89,7 +91,7 @@ const AppBar: React.FC = () => {
                 </MenuItem>
                 <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
                     <MenuItem 
-                        onClick={onListItemClick(() => user.logout())}>
+                        onClick={onListItemClick(() => signOut(auth))}>
                             Log out
                     </MenuItem>
                 </Link>

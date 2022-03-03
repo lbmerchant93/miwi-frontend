@@ -5,13 +5,11 @@ export interface User {
     userId: string | null;
     displayName: string | null;
     photoURL: string | null;
-    logout: any;
 }
 
 export const AuthContext = createContext<User>({ 
     isLoggedIn: false, 
     userId: null,
     displayName: '',
-    photoURL: '',
-    logout: () => {}
+    photoURL: ''
 })

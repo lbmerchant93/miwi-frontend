@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppBar from './features/AppBar/AppBar';
 import AppFooter from './features/AppFooter/AppFooter';
@@ -44,14 +44,6 @@ const App = () => {
     }
   })
 
-  const logout = useCallback(() => {
-    signOut(auth);
-    setUserId(null);
-    setIsLoggedIn(false);
-    setDisplayName('');
-    setPhotoURL('');
-  }, [auth]);
-
   const routes = (
     <Routes>
       <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
@@ -66,8 +58,7 @@ const App = () => {
         isLoggedIn: isLoggedIn,
         userId: userId,
         displayName: displayName,
-        photoURL: photoURL,
-        logout: logout
+        photoURL: photoURL
       }}
     >
       <ThemeProvider theme={theme}>
