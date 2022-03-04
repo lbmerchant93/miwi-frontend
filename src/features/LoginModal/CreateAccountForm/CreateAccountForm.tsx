@@ -26,7 +26,6 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
             updateProfile(createdUser.user, {displayName: displayName})
         } catch (error: any) {
             setError(error.message);
-            console.log('error signing in', error.message);
         }    
     };
 
@@ -70,6 +69,8 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                         variant="outlined" 
                         type="password" 
                         value={password} 
+                        error={!!error}
+                        helperText={error}
                         onChange={(e) => setPassword(e.currentTarget.value)} 
                         fullWidth={true}
                     />

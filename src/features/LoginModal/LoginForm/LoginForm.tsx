@@ -9,9 +9,8 @@ import ProviderLoginButton from '../../../components/ProviderLoginButton/Provide
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
 import { SnackBar, SnackBarDetails } from '../../../components/SnackBar/SnackBar';
-
-import './LoginForm.css';
 import { Alert } from '@mui/material';
+import './LoginForm.css';
 
 interface LoginFormProps {
     auth: Auth;
@@ -22,13 +21,14 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const { auth, onRegisterClick } = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         try {
             await signInWithEmailAndPassword(auth, email, password)
         } catch (error: any) {
-            setSnackBarDetails({error: true, show: true, message: `Sign in error: ${error.message}`});
+            setError(error.message)
         }
     };
 
@@ -52,6 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 id="Email" 
                                 variant="outlined" 
                                 value={email} 
+                                error={!!error}
                                 onChange={(e) => setEmail(e.currentTarget.value)} 
                                 fullWidth={true}
                             />
@@ -63,6 +64,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 variant="outlined" 
                                 type="password" 
                                 value={password} 
+                                error={!!error}
+                                helperText={error}
                                 onChange={(e) => setPassword(e.currentTarget.value)} 
                                 fullWidth={true}
                             />
