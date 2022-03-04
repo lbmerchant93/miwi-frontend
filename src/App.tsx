@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppBar from './features/AppBar/AppBar';
 import AppFooter from './features/AppFooter/AppFooter';
@@ -13,12 +13,7 @@ import { initializeApp } from 'firebase/app';
 import firebaseConfig from './configs/firebase.configs';
 import { 
   getAuth, 
-  GoogleAuthProvider, 
-  signInWithPopup, 
-  signInWithEmailAndPassword, 
   signOut, 
-  createUserWithEmailAndPassword, 
-  updateProfile, 
   setPersistence, 
   browserLocalPersistence, 
   onAuthStateChanged
@@ -49,59 +44,6 @@ const App = () => {
     }
   })
 
-  const createAccount = useCallback(async (email, password, displayName) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        updateProfile(response.user, {displayName: displayName})
-          .then(() => {
-            setUserId(response.user.uid);
-            setIsLoggedIn(true);
-            setDisplayName(displayName);
-            setPhotoURL(response.user.photoURL);
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, [auth]);
-
-  const loginWithGoogle = useCallback(async () => {
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
-        setUserId(response.user.uid);
-        setIsLoggedIn(true);
-        setDisplayName(response.user.displayName);
-        setPhotoURL(response.user.photoURL);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, [auth]);
-
-  const loginWithEmail = useCallback(async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        setUserId(response.user.uid);
-        setIsLoggedIn(true);
-        setDisplayName(response.user.displayName);
-        setPhotoURL(response.user.photoURL);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, [auth]);
-
-  const logout = useCallback(() => {
-    signOut(auth);
-    setUserId(null);
-    setIsLoggedIn(false);
-    setDisplayName('');
-    setPhotoURL('');
-  }, [auth]);
-
   const routes = (
     <Routes>
       <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
@@ -116,11 +58,7 @@ const App = () => {
         isLoggedIn: isLoggedIn,
         userId: userId,
         displayName: displayName,
-        photoURL: photoURL,
-        createAccount: createAccount,
-        loginWithGoogle: loginWithGoogle,
-        loginWithEmail: loginWithEmail,
-        logout: logout
+        photoURL: photoURL
       }}
     >
       <ThemeProvider theme={theme}>
