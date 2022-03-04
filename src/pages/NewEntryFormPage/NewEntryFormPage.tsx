@@ -1,7 +1,6 @@
-import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
+import React, { useState, FormEvent, useContext } from 'react';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
@@ -10,52 +9,30 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import './NewEntryFormPage.css';
 
-export interface IJournalEntryData {
-  date: string;
-  prenatalVitamins: boolean;
-  probiotics: boolean;
-  waterIntake: number;
-  proteinIntake: number;
-  exercise: number;
-  kegels: number;
-  garlandPose: number;
-  userId: string;
-}
-
 const NewEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
-    const [formData, setFormData] = useState<IJournalEntryData>({
-        date: '',
-        waterIntake: 0,
-        proteinIntake: 0,
-        exercise: 0,
-        kegels: 0,
-        garlandPose: 0,
-        prenatalVitamins: false,
-        probiotics: false,
-        userId: "1"
-    })
+    const [date, setDate] = useState<string | null>(null);
+    const [waterIntake, setWaterIntake] = useState<number>(0);
+    const [proteinIntake, setProteinIntake] = useState<number>(0);
+    const [exercise, setExercise] = useState<number>(0);
+    const [kegels, setKegels] = useState<number>(0);
+    const [garlandPose, setGarlandPose] = useState<number>(0);
     const [prenatalVitamins, setPrenatalVitamins] = useState<string | null>(null);
     const [probiotics, setProbiotics] = useState<string | null>(null);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData({...formData, [e.currentTarget.name]: e.currentTarget.value})
-    }
-
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData)
     }
 
     return user.isLoggedIn ? (
         <main>
-            <Typography variant='h2' className="page-title">Create a new journal entry!</Typography>
+            <Typography variant='h3' className="page-title">Create a new journal entry!</Typography>
             <form className="form" onSubmit={handleSubmit}>
                 <label>Date: </label>
                 <input 
                     type='date' 
                     name='date' 
-                    onChange={handleChange} 
+                    onChange={(e) => setDate(e.currentTarget.value)} 
                     required
                 />
                 <label>How many ounces of water did you drink?</label>
@@ -65,7 +42,7 @@ const NewEntryFormPage: React.FC = () => {
                     placeholder='0' 
                     min='0' 
                     className="number-input"
-                    onChange={handleChange}
+                    onChange={(e) => setWaterIntake(parseInt(`${e.currentTarget.value}`))}
                     required
                 />
                 <label>How many grams of protein did you have?</label>
@@ -75,7 +52,7 @@ const NewEntryFormPage: React.FC = () => {
                     placeholder='0' 
                     min='0' 
                     className="number-input"
-                    onChange={handleChange}
+                    onChange={(e) => setProteinIntake(parseInt(`${e.currentTarget.value}`))}
                     required
                 />
                 <label>How many minutes did you exercise for?</label>
@@ -85,7 +62,7 @@ const NewEntryFormPage: React.FC = () => {
                     placeholder='0' 
                     min='0' 
                     className="number-input"
-                    onChange={handleChange}
+                    onChange={(e) => setExercise(parseInt(`${e.currentTarget.value}`))}
                     required
                 />
                 <label>How many kegels did you do?</label>
@@ -95,7 +72,7 @@ const NewEntryFormPage: React.FC = () => {
                     placeholder='0' 
                     min='0' 
                     className="number-input"
-                    onChange={handleChange}
+                    onChange={(e) => setKegels(parseInt(`${e.currentTarget.value}`))}
                     required
                 />
                 <label>How many minutes did you do garland pose for?</label>
@@ -105,7 +82,7 @@ const NewEntryFormPage: React.FC = () => {
                     placeholder='0' 
                     min='0' 
                     className="number-input"
-                    onChange={handleChange} 
+                    onChange={(e) => setGarlandPose(parseInt(`${e.currentTarget.value}`))} 
                     required
                 />
                 <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your prenatal vitamins? </FormLabel>
@@ -116,8 +93,8 @@ const NewEntryFormPage: React.FC = () => {
                     value={prenatalVitamins}
                     onChange={(e) => setPrenatalVitamins(e.currentTarget.value)}
                 >
-                    <FormControlLabel value="true" control={<Radio color="default" />} label="Yes" />
-                    <FormControlLabel value="false" control={<Radio color="default" />} label="No" />
+                    <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
+                    <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
                 </RadioGroup>
                 <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your probiotics? </FormLabel>
                 <RadioGroup
@@ -127,8 +104,8 @@ const NewEntryFormPage: React.FC = () => {
                     value={probiotics}
                     onChange={(e) => setProbiotics(e.currentTarget.value)}
                 >
-                    <FormControlLabel value="true" control={<Radio color="default" />} label="Yes" />
-                    <FormControlLabel value="false" control={<Radio color="default" />} label="No" />
+                    <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
+                    <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
                 </RadioGroup>
                 <Button type='submit' variant='outlined' color='inherit'>Submit</Button>
             </form> 
