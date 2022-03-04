@@ -35,7 +35,8 @@ const NewEntryFormPage: React.FC = () => {
         probiotics: false,
         userId: "1"
     })
-    const [probiotics, setProbiotics] = useState<string | null>(null)
+    const [prenatalVitamins, setPrenatalVitamins] = useState<string | null>(null);
+    const [probiotics, setProbiotics] = useState<string | null>(null);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.currentTarget.name]: e.currentTarget.value})
@@ -107,27 +108,17 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={handleChange} 
                     required
                 />
-                <label>
-                    Did you take prenatal vitamins?  
-                    <label>
-                        Yes
-                        <input 
-                            name='prenatalVitamins' 
-                            type='radio' 
-                            value='true' 
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        No
-                        <input 
-                            name='prenatalVitamins' 
-                            type='radio' 
-                            value='false' 
-                            onChange={handleChange}
-                        />
-                    </label>
-                </label>
+                <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your prenatal vitamins? </FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={prenatalVitamins}
+                    onChange={(e) => setPrenatalVitamins(e.currentTarget.value)}
+                >
+                    <FormControlLabel value="true" control={<Radio color="default" />} label="Yes" />
+                    <FormControlLabel value="false" control={<Radio color="default" />} label="No" />
+                </RadioGroup>
                 <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your probiotics? </FormLabel>
                 <RadioGroup
                     row
