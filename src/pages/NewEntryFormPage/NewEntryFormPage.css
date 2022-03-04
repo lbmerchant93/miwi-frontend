@@ -19,6 +19,7 @@
 .form input {
     text-align: center;
     margin-bottom: 15px;
+    margin: 0;
 }
 
 .number-input {

@@ -7,6 +7,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
+import TextField from '@mui/material/TextField';
 import './NewEntryFormPage.css';
 
 const NewEntryFormPage: React.FC = () => {
@@ -35,72 +36,62 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={(e) => setDate(e.currentTarget.value)} 
                     required
                 />
-                <label>How many ounces of water did you drink?</label>
-                <input 
-                    type='number' 
-                    name='waterIntake' 
-                    placeholder='0' 
-                    min='0' 
-                    className="number-input"
+                <FormLabel id="water-intake-label">How many ounces of water did you drink?</FormLabel>
+                <TextField
+                    id="water-intake-input"
+                    type="number"
+                    value={waterIntake}
                     onChange={(e) => setWaterIntake(parseInt(`${e.currentTarget.value}`))}
-                    required
+                    InputProps={{ inputProps: { min: 0 } }}
                 />
-                <label>How many grams of protein did you have?</label>
-                <input 
-                    type='number' 
-                    name='proteinIntake' 
-                    placeholder='0' 
-                    min='0' 
-                    className="number-input"
+                <FormLabel id="water-intake-label">How many grams of protein did you have?</FormLabel>
+                <TextField
+                    id="water-intake-input"
+                    type="number"
+                    value={proteinIntake}
                     onChange={(e) => setProteinIntake(parseInt(`${e.currentTarget.value}`))}
-                    required
+                    InputProps={{ inputProps: { min: 0 } }}
                 />
-                <label>How many minutes did you exercise for?</label>
-                <input 
-                    type='number' 
-                    name='exercise' 
-                    placeholder='0' 
-                    min='0' 
-                    className="number-input"
+                <FormLabel id="water-intake-label">How many minutes did you exercise for?</FormLabel>
+                <TextField
+                    id="water-intake-input"
+                    type="number"
+                    value={exercise}
                     onChange={(e) => setExercise(parseInt(`${e.currentTarget.value}`))}
-                    required
+                    InputProps={{ inputProps: { min: 0 } }}
                 />
-                <label>How many kegels did you do?</label>
-                <input 
-                    type='number' 
-                    name='kegels' 
-                    placeholder='0' 
-                    min='0' 
-                    className="number-input"
+                <FormLabel id="water-intake-label">How many kegels did you do?</FormLabel>
+                <TextField
+                    id="water-intake-input"
+                    type="number"
+                    value={kegels}
                     onChange={(e) => setKegels(parseInt(`${e.currentTarget.value}`))}
-                    required
+                    InputProps={{ inputProps: { min: 0 } }}
                 />
-                <label>How many minutes did you do garland pose for?</label>
-                <input 
-                    type='number' 
-                    name='garlandPose' 
-                    placeholder='0' 
-                    min='0' 
-                    className="number-input"
-                    onChange={(e) => setGarlandPose(parseInt(`${e.currentTarget.value}`))} 
-                    required
+                <FormLabel id="water-intake-label">How many minutes did you do garland pose for?</FormLabel>
+                <TextField
+                    id="water-intake-input"
+                    type="number"
+                    value={garlandPose}
+                    onChange={(e) => setGarlandPose(parseInt(`${e.currentTarget.value}`))}
+                    InputProps={{ inputProps: { min: 0 } }}
                 />
-                <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your prenatal vitamins? </FormLabel>
+                <FormLabel id="prenatal-vitamins-label" >Did you take your prenatal vitamins? </FormLabel>
                 <RadioGroup
                     row
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
+                    aria-labelledby="prenatal-vitamins-input"
+                    name="prenatal-vitamins-input"
                     value={prenatalVitamins}
                     onChange={(e) => setPrenatalVitamins(e.currentTarget.value)}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
                 </RadioGroup>
-                <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your probiotics? </FormLabel>
+                <FormLabel id="probiotics-label" >Did you take your probiotics? </FormLabel>
                 <RadioGroup
                     row
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
+                    aria-labelledby="probiotics-input"
+                    name="probiotics-input"
                     value={probiotics}
                     onChange={(e) => setProbiotics(e.currentTarget.value)}
                 >
