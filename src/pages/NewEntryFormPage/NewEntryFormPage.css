@@ -1,5 +1,4 @@
 .page-title {
-    font-weight: lighter;
     text-align: center;
 }
 
@@ -13,7 +12,7 @@
     text-align: center;
     margin: 0 0 5px 5px;
     font-size: large;
-    font-weight: lighter;
+    color: #000000
 }
 
 .form input {

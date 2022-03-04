@@ -1,6 +1,13 @@
 import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
 import './NewEntryFormPage.css';
 
 export interface IJournalEntryData {
@@ -28,31 +35,20 @@ const NewEntryFormPage: React.FC = () => {
         probiotics: false,
         userId: "1"
     })
+    const [probiotics, setProbiotics] = useState<string | null>(null)
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        let newInput: string | number | boolean;
-        let numberInputs = ['waterIntake', 'proteinIntake', 'exercise', 'kegels', 'garlandPose'];
-        let booleanInputs = ['prenatalVitamins', 'probiotics']
-        if (numberInputs.includes(e.currentTarget.name)) {
-            newInput = parseInt(e.currentTarget.value)
-        } else if (booleanInputs.includes(e.currentTarget.name) && e.currentTarget.value === "true") {
-            newInput = true
-        } else if (booleanInputs.includes(e.currentTarget.name) && e.currentTarget.value === "false") {
-            newInput = false
-        } else {
-            newInput = e.currentTarget.value
-        }
-        setFormData({...formData, [e.currentTarget.name]: newInput})
+        setFormData({...formData, [e.currentTarget.name]: e.currentTarget.value})
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // console.log(formData)
+        console.log(formData)
     }
 
     return user.isLoggedIn ? (
         <main>
-        <h2 className="page-title">Create a new journal entry!</h2>
+            <Typography variant='h2' className="page-title">Create a new journal entry!</Typography>
             <form className="form" onSubmit={handleSubmit}>
                 <label>Date: </label>
                 <input 
@@ -132,28 +128,18 @@ const NewEntryFormPage: React.FC = () => {
                         />
                     </label>
                 </label>
-                <label>
-                    Did you take probiotics? 
-                    <label>
-                        Yes
-                        <input 
-                            name='probiotics' 
-                            type='radio' 
-                            value='true' 
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        No
-                        <input 
-                            name='probiotics' 
-                            type='radio' 
-                            value='false' 
-                            onChange={handleChange}
-                        />
-                    </label>
-                </label>
-                <button type='submit'>Submit</button>
+                <FormLabel id="demo-controlled-radio-buttons-group" >Did you take your probiotics? </FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={probiotics}
+                    onChange={(e) => setProbiotics(e.currentTarget.value)}
+                >
+                    <FormControlLabel value="true" control={<Radio color="default" />} label="Yes" />
+                    <FormControlLabel value="false" control={<Radio color="default" />} label="No" />
+                </RadioGroup>
+                <Button type='submit' variant='outlined' color='inherit'>Submit</Button>
             </form> 
         </main>
     ) : (
