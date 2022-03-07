@@ -53,6 +53,7 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={(e) => setWaterIntake(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
                     required
+                    size='small'
                 />
                 <FormLabel id="water-intake-label">How many grams of protein did you have?</FormLabel>
                 <TextField
@@ -62,6 +63,7 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={(e) => setProteinIntake(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
                     required
+                    size='small'
                 />
                 <FormLabel id="water-intake-label">How many minutes did you exercise for?</FormLabel>
                 <TextField
@@ -71,6 +73,7 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={(e) => setExercise(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
                     required
+                    size='small'
                 />
                 <FormLabel id="water-intake-label">How many kegels did you do?</FormLabel>
                 <TextField
@@ -80,6 +83,7 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={(e) => setKegels(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
                     required
+                    size='small'
                 />
                 <FormLabel id="water-intake-label">How many minutes did you do garland pose for?</FormLabel>
                 <TextField
@@ -89,6 +93,7 @@ const NewEntryFormPage: React.FC = () => {
                     onChange={(e) => setGarlandPose(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
                     required
+                    size='small'
                 />
                 <FormLabel id="prenatal-vitamins-label" >Did you take your prenatal vitamins? </FormLabel>
                 <RadioGroup
