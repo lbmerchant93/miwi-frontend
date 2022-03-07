@@ -8,6 +8,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import './NewEntryFormPage.css';
 
 const NewEntryFormPage: React.FC = () => {
@@ -35,16 +38,16 @@ const NewEntryFormPage: React.FC = () => {
 
     return user.isLoggedIn ? (
         <main>
-            {/* <Typography variant='h3' className="page-title">Create a new journal entry for </Typography> */}
             <form className="form" onSubmit={handleSubmit}>
-                <Typography variant='h4' className="page-title">Create a new journal entry</Typography>
-                <label>Entry date: </label>
-                <input 
-                    type='date' 
-                    name='date' 
-                    onChange={(e) => setDate(e.currentTarget.value)} 
-                    required
-                />
+                <Typography variant='h5' className="page-title">Create a new journal entry</Typography>
+                <FormLabel id="date-input-label">Entry date:</FormLabel>
+                <LocalizationProvider dateAdapter={DateAdapter}>
+                    <DatePicker
+                        value={date}
+                        onChange={(newDate) => setDate(newDate)}
+                        renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
+                    />
+                </LocalizationProvider>
                 <FormLabel id="water-intake-label">How many ounces of water did you drink?</FormLabel>
                 <TextField
                     id="water-intake-input"
