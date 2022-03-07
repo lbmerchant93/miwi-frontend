@@ -4,7 +4,6 @@ import MessagePage from '../../components/MessagePage/MessagePage';
 import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import moment from 'moment';
 
 import './DashboardPage.css';
 
@@ -68,8 +67,10 @@ const DashboardPage = () => {
     return user.isLoggedIn ? (
         <main className="dashboard-main">
             <Typography variant="h5">Welcome back {user.displayName}!</Typography>
-            <Box>
-                <JournalEntryCard />
+            <Box className='dashboard-journal-entries-container'>
+                {mockEntries.map((entry: mockData) => {
+                   return <JournalEntryCard entry={entry} key={entry.waterIntake}/>
+                })}  
             </Box>
         </main>
     ) : (
