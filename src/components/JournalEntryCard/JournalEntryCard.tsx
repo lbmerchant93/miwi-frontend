@@ -1,8 +1,10 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import './JournalEntryCard.css';
 
 interface mockData {
@@ -21,20 +23,22 @@ interface JournalEntryCardProps {
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry } = props;
+
   return (
     <Box className="journal-entry-card">
-        <Typography variant="h5">Entry Date: {moment(entry.date).format("MMMM Do YYYY")}</Typography>
-        <Typography variant="body1">Amount of water you drank: {entry.waterIntake}oz</Typography>
-        <Typography variant="body1">Amount of protein you had: {entry.proteinIntake}g</Typography>
-        <Typography variant="body1">How long you exercised for: {entry.exercise}min</Typography>
-        <Typography variant="body1">How many kegels you did: {entry.kegels}</Typography>
-        <Typography variant="body1">How long you did garland pose for: {entry.garlandPose}min</Typography>
-        <Typography variant="body1">Did you take your prenatal vitamins? {entry.prenatalVitamins ? 'yes' : 'no'}</Typography>
-        <Typography variant="body1">Did you take your probiotics? {entry.probiotics ? 'yes' : 'no'}</Typography>
-        <Box className="journal-entry-card-options">
-            <Button color="inherit" variant="outlined">Delete Entry</Button>
-            <Button color="inherit" variant="outlined">Edit Entry</Button> 
-        </Box>
+        
+      <Typography variant="h5">{moment(entry.date).format("MMMM Do YYYY")}</Typography>
+      <Typography variant="body1">You drank <b>{entry.waterIntake}oz</b> of water</Typography>
+      <Typography variant="body1">You had <b>{entry.proteinIntake}g</b> of protein</Typography>
+      <Typography variant="body1">You exercised for <b>{entry.exercise} minute{entry.exercise === 1 ? '' : 's'}</b></Typography>
+      <Typography variant="body1">You did <b>{entry.kegels} kegel{entry.kegels === 1 ? '' : 's'}</b></Typography>
+      <Typography variant="body1">You did garland pose for <b>{entry.garlandPose} minute{entry.garlandPose === 1 ? '' : 's'}</b></Typography>
+      <Typography variant="body1">You <b>{entry.prenatalVitamins ? 'did' : 'did not'}</b> take your prenatal vitamins </Typography>
+      <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
+      <Box className="journal-entry-card-options">
+          <IconButton color="warning"><DeleteIcon /></IconButton>
+          <IconButton color="default"><EditIcon /></IconButton> 
+      </Box>
     </Box>
   )
 }

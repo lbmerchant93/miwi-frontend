@@ -66,7 +66,7 @@ const DashboardPage = () => {
 
     return user.isLoggedIn ? (
         <main className="dashboard-main">
-            <Typography variant="h5">Welcome back {user.displayName}!</Typography>
+            <Typography variant="h2">Welcome back {user.displayName}!</Typography>
             <Box className='dashboard-journal-entries-container'>
                 {mockEntries.map((entry: mockData) => {
                    return <JournalEntryCard entry={entry} key={entry.waterIntake}/>
