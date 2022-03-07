@@ -13,23 +13,32 @@ import './NewEntryFormPage.css';
 const NewEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
     const [date, setDate] = useState<string | null>(null);
-    const [waterIntake, setWaterIntake] = useState<number>(0);
-    const [proteinIntake, setProteinIntake] = useState<number>(0);
-    const [exercise, setExercise] = useState<number>(0);
-    const [kegels, setKegels] = useState<number>(0);
-    const [garlandPose, setGarlandPose] = useState<number>(0);
+    const [waterIntake, setWaterIntake] = useState<number | string>('');
+    const [proteinIntake, setProteinIntake] = useState<number | string>('');
+    const [exercise, setExercise] = useState<number | string>('');
+    const [kegels, setKegels] = useState<number | string>('');
+    const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<string | null>(null);
     const [probiotics, setProbiotics] = useState<string | null>(null);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(date)
+        console.log(waterIntake)
+        console.log(proteinIntake)
+        console.log(exercise)
+        console.log(kegels)
+        console.log(garlandPose)
+        console.log(prenatalVitamins)
+        console.log(probiotics)
     }
 
     return user.isLoggedIn ? (
         <main>
-            <Typography variant='h3' className="page-title">Create a new journal entry!</Typography>
+            {/* <Typography variant='h3' className="page-title">Create a new journal entry for </Typography> */}
             <form className="form" onSubmit={handleSubmit}>
-                <label>Date: </label>
+                <Typography variant='h4' className="page-title">Create a new journal entry</Typography>
+                <label>Entry date: </label>
                 <input 
                     type='date' 
                     name='date' 
@@ -43,38 +52,43 @@ const NewEntryFormPage: React.FC = () => {
                     value={waterIntake}
                     onChange={(e) => setWaterIntake(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
+                    required
                 />
                 <FormLabel id="water-intake-label">How many grams of protein did you have?</FormLabel>
                 <TextField
-                    id="water-intake-input"
+                    id="protein-intake-input"
                     type="number"
                     value={proteinIntake}
                     onChange={(e) => setProteinIntake(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
+                    required
                 />
                 <FormLabel id="water-intake-label">How many minutes did you exercise for?</FormLabel>
                 <TextField
-                    id="water-intake-input"
+                    id="exercise-input"
                     type="number"
                     value={exercise}
                     onChange={(e) => setExercise(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
+                    required
                 />
                 <FormLabel id="water-intake-label">How many kegels did you do?</FormLabel>
                 <TextField
-                    id="water-intake-input"
+                    id="kegels-input"
                     type="number"
                     value={kegels}
                     onChange={(e) => setKegels(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
+                    required
                 />
                 <FormLabel id="water-intake-label">How many minutes did you do garland pose for?</FormLabel>
                 <TextField
-                    id="water-intake-input"
+                    id="garland-pose-input"
                     type="number"
                     value={garlandPose}
                     onChange={(e) => setGarlandPose(parseInt(`${e.currentTarget.value}`))}
                     InputProps={{ inputProps: { min: 0 } }}
+                    required
                 />
                 <FormLabel id="prenatal-vitamins-label" >Did you take your prenatal vitamins? </FormLabel>
                 <RadioGroup
