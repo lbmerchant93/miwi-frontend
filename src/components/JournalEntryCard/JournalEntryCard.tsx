@@ -27,7 +27,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   return (
     <Box className="journal-entry-card">
         
-      <Typography variant="h5">{moment(entry.date).format("MMMM Do YYYY")}</Typography>
+      <Typography variant="h5"><b>{moment(entry.date).format("MMMM Do YYYY")}</b></Typography>
       <Typography variant="body1">You drank <b>{entry.waterIntake}oz</b> of water</Typography>
       <Typography variant="body1">You had <b>{entry.proteinIntake}g</b> of protein</Typography>
       <Typography variant="body1">You exercised for <b>{entry.exercise} minute{entry.exercise === 1 ? '' : 's'}</b></Typography>
