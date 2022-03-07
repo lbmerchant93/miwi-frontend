@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import moment from 'moment';
 import './NewEntryFormPage.css';
 
 const NewEntryFormPage: React.FC = () => {
@@ -26,7 +27,7 @@ const NewEntryFormPage: React.FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(date)
+        console.log(moment(date).toString())
         console.log(waterIntake)
         console.log(proteinIntake)
         console.log(exercise)
