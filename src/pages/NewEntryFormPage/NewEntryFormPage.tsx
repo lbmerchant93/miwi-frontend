@@ -27,14 +27,14 @@ const NewEntryFormPage: React.FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(moment(date).toString())
-        console.log(waterIntake)
-        console.log(proteinIntake)
-        console.log(exercise)
-        console.log(kegels)
-        console.log(garlandPose)
-        console.log(prenatalVitamins)
-        console.log(probiotics)
+        console.log(moment(date).toISOString())
+        // console.log(waterIntake)
+        // console.log(proteinIntake)
+        // console.log(exercise)
+        // console.log(kegels)
+        // console.log(garlandPose)
+        // console.log(prenatalVitamins)
+        // console.log(probiotics)
     }
 
     return user.isLoggedIn ? (

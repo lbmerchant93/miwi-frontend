@@ -1,4 +1,12 @@
 .dashboard-main {
     display: flex;
-    
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.dashboard-journal-entries-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
