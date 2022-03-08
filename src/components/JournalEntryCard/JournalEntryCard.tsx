@@ -27,7 +27,7 @@ interface JournalEntryCardProps {
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry } = props;
-  const [isWarningOpen, setIsWarningOpen] = useState(false);
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
   const [error, setError] = useState(false)
 
@@ -42,7 +42,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const onDeleteClick = () => {
     console.log('Delete')
     setSnackBarDetails({ error, show: true, message: "Journal entry deleted!" })
-    setIsWarningOpen(false);
+    setIsWarningModalOpen(false);
   }
 
   return (
@@ -63,12 +63,12 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
         <Box className="journal-entry-card-options">
             <IconButton onClick={onEditClick} color="default"><EditIcon /></IconButton> 
-            <IconButton onClick={() => setIsWarningOpen(true)} color="warning"><DeleteIcon /></IconButton>
+            <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning"><DeleteIcon /></IconButton>
         </Box>
       </Box>
       <WarningModal 
-        isOpen={isWarningOpen} 
-        onClose={() => setIsWarningOpen(false)} 
+        isOpen={isWarningModalOpen} 
+        onClose={() => setIsWarningModalOpen(false)} 
         modalTitle="Delete journal entry modal" 
         modalDescription="Confirm journal entry delete or go back to the dashboard."
         modalMessage="Are you sure you want to delete this entry? This action is irreversible."
