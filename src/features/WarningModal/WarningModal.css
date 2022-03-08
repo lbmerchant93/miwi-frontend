@@ -6,8 +6,8 @@
 }
 
 .warning-modal-container {
-    max-width: 500px;
-    padding: 15px 25px 25px;
+    max-width: 400px;
+    padding: 30px;
     background-color: white;
     border-radius: 5px;
     display: flex;

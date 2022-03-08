@@ -34,13 +34,26 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
             className="warning-modal"
         >
             <Box className="warning-modal-container">
-                <Typography variant="h5">{modalMessage}</Typography>
+                <Typography variant="h4" color="warning.main">Warning!</Typography>
+                <Typography variant="h6">{modalMessage}</Typography>
                 <Box className="warning-action-container">
                     <Box className="warning-action-button">
-                       <Button onClick={onClose} variant="contained" color="inherit">No, Go back</Button>  
+                       <Button 
+                            onClick={onClose} 
+                            variant="contained" 
+                            color="inherit"
+                        >
+                                No, Go back
+                        </Button>  
                     </Box>
                     <Box className="warning-action-button">
-                       <Button onClick={verifiedAction} variant="contained" color="warning">Yes, I'm sure</Button> 
+                       <Button 
+                            onClick={verifiedAction} 
+                            variant="contained" 
+                            color="warning"
+                        >
+                                Yes, I'm sure
+                        </Button> 
                     </Box>
                 </Box>
             </Box>
