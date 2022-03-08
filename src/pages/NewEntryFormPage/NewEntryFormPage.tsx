@@ -41,6 +41,7 @@ const NewEntryFormPage: React.FC = () => {
         <main>
             <form className="form" onSubmit={handleSubmit}>
                 <Typography variant='h5' className="page-title">Create a new journal entry</Typography>
+                <Typography variant="body1">Fill out the form below and save changes to create a new journal entry.</Typography>
                 <FormLabel id="date-input-label">Entry date:</FormLabel>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                     <DatePicker

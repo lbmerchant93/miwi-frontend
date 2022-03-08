@@ -39,7 +39,6 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
 
   const onEditClick = (callback: () => void) => {
     return () => {
-      console.log("Edit button clicked")
       callback()
     }
   }
