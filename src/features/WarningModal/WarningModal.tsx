@@ -16,7 +16,14 @@ interface WarningModalProps {
 };
 
 const WarningModal: React.FC<WarningModalProps> = (props) => {
-    const { isOpen, onClose, modalTitle, modalDescription, modalMessage, verifiedAction } = props;
+    const { 
+        isOpen, 
+        onClose, 
+        modalTitle, 
+        modalDescription, 
+        modalMessage, 
+        verifiedAction 
+    } = props;
 
     return (
         <Modal
@@ -24,13 +31,18 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
             onClose={onClose}
             aria-labelledby={`${modalTitle}`}
             aria-describedby={`${modalDescription}`}
-            className="login-modal"
+            className="warning-modal"
         >
-            <Box>
-                <Typography variant="h5">{modalTitle}</Typography>
-                <Typography variant="body1">{modalMessage}</Typography>
-                <Button onClick={verifiedAction}>Yes I'm sure</Button>
-                <Button onClick={onClose}>No go back</Button>
+            <Box className="warning-modal-container">
+                <Typography variant="h5">{modalMessage}</Typography>
+                <Box className="warning-action-container">
+                    <Box className="warning-action-button">
+                       <Button onClick={onClose} variant="contained" color="inherit">No, Go back</Button>  
+                    </Box>
+                    <Box className="warning-action-button">
+                       <Button onClick={verifiedAction} variant="contained" color="warning">Yes, I'm sure</Button> 
+                    </Box>
+                </Box>
             </Box>
         </Modal>
     );
