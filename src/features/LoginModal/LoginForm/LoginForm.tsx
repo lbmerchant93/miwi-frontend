@@ -8,8 +8,6 @@ import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
-import { SnackBar, SnackBarDetails } from '../../../components/SnackBar/SnackBar';
-import { Alert } from '@mui/material';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -22,7 +20,6 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-    const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         try {
@@ -32,17 +29,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         }
     };
 
-    const dismissSnackBar = () => {
-        setSnackBarDetails({ ...snackBarDetails, show: false });
-    };
-
     return (
         <>
-            <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
-                <Alert onClose={dismissSnackBar} severity="error" variant="filled">
-                    {snackBarDetails.message}
-                </Alert>
-            </SnackBar>
             <Box className="login-form-options">
                 <Box>
                     <form className="login-form">
