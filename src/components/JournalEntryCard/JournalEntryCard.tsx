@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import WarningModal from '../../features/WarningModal/WarningModal';
+import WarningModal from '../WarningModal/WarningModal';
 import { SnackBar, SnackBarDetails } from '../SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import './JournalEntryCard.css';
@@ -73,7 +73,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalDescription="Confirm journal entry delete or go back to the dashboard."
         modalMessage="Are you sure you want to delete this entry? This action is irreversible."
         verifiedAction={onDeleteClick}
-        />
+      />
     </>
     
   )
