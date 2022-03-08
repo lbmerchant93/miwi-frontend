@@ -24,6 +24,14 @@ interface JournalEntryCardProps {
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry } = props;
 
+  const onEditClick = () => {
+    console.log("Edit button clicked")
+  }
+
+  const onDeleteClick = () => {
+    console.log("Delete button clicked")
+  }
+
   return (
     <Box className="journal-entry-card">
         
@@ -36,8 +44,8 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       <Typography variant="body1">You <b>{entry.prenatalVitamins ? 'did' : 'did not'}</b> take your prenatal vitamins </Typography>
       <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
       <Box className="journal-entry-card-options">
-          <IconButton color="warning"><DeleteIcon /></IconButton>
-          <IconButton color="default"><EditIcon /></IconButton> 
+          <IconButton onClick={onEditClick} color="default"><EditIcon /></IconButton> 
+          <IconButton onClick={onDeleteClick} color="warning"><DeleteIcon /></IconButton>
       </Box>
     </Box>
   )
