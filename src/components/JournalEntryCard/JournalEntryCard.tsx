@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import WarningModal from '../WarningModal/WarningModal';
 import { SnackBar, SnackBarDetails } from '../SnackBar/SnackBar';
 import { Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import './JournalEntryCard.css';
 
 interface mockData {
@@ -27,6 +28,7 @@ interface JournalEntryCardProps {
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry } = props;
+  const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
   const [error, setError] = useState(false)
@@ -35,8 +37,11 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     setSnackBarDetails({ ...snackBarDetails, show: false });
 };
 
-  const onEditClick = () => {
-    console.log("Edit button clicked")
+  const onEditClick = (callback: () => void) => {
+    return () => {
+      console.log("Edit button clicked")
+      callback()
+    }
   }
 
   const onDeleteClick = () => {
@@ -62,7 +67,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         <Typography variant="body1">You <b>{entry.prenatalVitamins ? 'did' : 'did not'}</b> take your prenatal vitamins </Typography>
         <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
         <Box className="journal-entry-card-options">
-            <IconButton onClick={onEditClick} color="default"><EditIcon /></IconButton> 
+            <IconButton onClick={onEditClick(() => navigate(`/update_entry_form/${entry.id}`))} color="default"><EditIcon /></IconButton> 
             <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning"><DeleteIcon /></IconButton>
         </Box>
       </Box>
