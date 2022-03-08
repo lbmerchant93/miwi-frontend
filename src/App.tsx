@@ -18,6 +18,7 @@ import {
   browserLocalPersistence, 
   onAuthStateChanged
 } from 'firebase/auth';
+import UpdateEntryFormPage from './pages/UpdateEntryFormPage/UpdateEntryFormPage';
 
 initializeApp(firebaseConfig);
 
@@ -49,6 +50,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.NEW_ENTRY_FORM}`} element={<NewEntryFormPage />} />
+      <Route path={`${PossibleRoutes.UPDATE_ENTRY_FORM}`} element={<UpdateEntryFormPage />} />
     </Routes>
   );
   
