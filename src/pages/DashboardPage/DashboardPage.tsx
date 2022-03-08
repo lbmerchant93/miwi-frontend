@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import './DashboardPage.css';
 
 interface mockData {
+    id: number;
     date: string;
     waterIntake: number;
     proteinIntake: number;
@@ -20,6 +21,7 @@ interface mockData {
 
 const mockEntries: mockData[]= [
     {
+        "id": 1,
        "date": "2022-03-07T19:58:57.000Z",
        "waterIntake": 1,
        "proteinIntake": 1,
@@ -30,6 +32,7 @@ const mockEntries: mockData[]= [
        "probiotics": true 
     },
     {
+        "id": 2,
         "date": "2022-03-08T19:58:57.000Z",
         "waterIntake": 2,
         "proteinIntake": 2,
@@ -40,6 +43,7 @@ const mockEntries: mockData[]= [
         "probiotics": false
      },
      {
+        "id": 3,
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 3,
         "proteinIntake": 3,
@@ -50,6 +54,7 @@ const mockEntries: mockData[]= [
         "probiotics": false
      },
      {
+        "id": 4,
         "date": "2022-03-10T19:58:57.000Z",
         "waterIntake": 4,
         "proteinIntake": 4,
@@ -69,7 +74,7 @@ const DashboardPage = () => {
             <Typography variant="h2">Welcome back {user.displayName}!</Typography>
             <Box className='dashboard-journal-entries-container'>
                 {mockEntries.map((entry: mockData) => {
-                   return <JournalEntryCard entry={entry} key={entry.waterIntake}/>
+                   return <JournalEntryCard entry={entry} key={entry.id}/>
                 })}  
             </Box>
         </main>

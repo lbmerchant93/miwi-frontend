@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import './JournalEntryCard.css';
 
 interface mockData {
+  id: number;
   date: string;
   waterIntake: number;
   proteinIntake: number;
@@ -33,8 +34,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   }
 
   return (
-    <Box className="journal-entry-card">
-        
+    <Box className="journal-entry-card"> 
       <Typography variant="h5"><b>{moment(entry.date).format("MMMM Do YYYY")}</b></Typography>
       <Typography variant="body1">You drank <b>{entry.waterIntake}oz</b> of water</Typography>
       <Typography variant="body1">You had <b>{entry.proteinIntake}g</b> of protein</Typography>
