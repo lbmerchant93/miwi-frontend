@@ -1,5 +1,6 @@
 export enum PossibleRoutes {
     ROOT = '/',
-    NEW_ENTRY_FORM = '/new_entry_form',
     DASHBOARD = '/dashboard',
+    JOURNAL_ENTRY_FORM = '/journal_entry_form',
+    UPDATE_JOURNAL_ENTRY_FORM = '/journal_entry_form/:entryId'
 }

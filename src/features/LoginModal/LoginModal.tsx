@@ -50,8 +50,8 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
         <Modal
             open={isOpen}
             onClose={onClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            aria-labelledby="Login Modal"
+            aria-describedby="Login modal where you can log in or create an account."
             className="login-modal"
         >
             <Box className="login-modal-container">

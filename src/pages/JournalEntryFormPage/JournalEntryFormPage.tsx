@@ -1,4 +1,5 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import React, { useState, FormEvent, useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
 import Typography from '@mui/material/Typography';
@@ -12,18 +13,26 @@ import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import moment from 'moment';
-import './NewEntryFormPage.css';
+import Box from '@mui/material/Box';
+import { mockEntries } from '../DashboardPage/DashboardPage';
+import { useNavigate } from 'react-router-dom';
+import { PossibleRoutes } from '../../utils/constants';
+import './JournalEntryFormPage.css';
 
-const NewEntryFormPage: React.FC = () => {
+const JournalEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
+    const navigate = useNavigate();
+    const { entryId } = useParams();
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
     const [proteinIntake, setProteinIntake] = useState<number | string>('');
     const [exercise, setExercise] = useState<number | string>('');
     const [kegels, setKegels] = useState<number | string>('');
     const [garlandPose, setGarlandPose] = useState<number | string>('');
-    const [prenatalVitamins, setPrenatalVitamins] = useState<string | null>(null);
-    const [probiotics, setProbiotics] = useState<string | null>(null);
+    const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
+    const [probiotics, setProbiotics] = useState<boolean | null>(null);
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -37,10 +46,46 @@ const NewEntryFormPage: React.FC = () => {
         // console.log(probiotics)
     }
 
+    const handleCancelUpdateEntryClick = (callback: () => void) => {
+        return () => {
+            callback()
+        }
+    }
+
+    useEffect(() => {
+        if (entryId) {
+            const foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
+            if (foundEntry) {
+                setDate(foundEntry.date)
+                setWaterIntake(foundEntry.waterIntake)
+                setProteinIntake(foundEntry.proteinIntake)
+                setExercise(foundEntry.exercise)
+                setKegels(foundEntry.kegels)
+                setGarlandPose(foundEntry.garlandPose)
+                setPrenatalVitamins(foundEntry.prenatalVitamins)
+                setProbiotics(foundEntry.probiotics)
+                setTitle('Update Journal Entry')
+                setDescription('Update the form below and save changes to your journal entry.')
+            }
+        } else {
+            setDate(null)
+            setWaterIntake('')
+            setProteinIntake('')
+            setExercise('')
+            setKegels('')
+            setGarlandPose('')
+            setPrenatalVitamins(null)
+            setProbiotics(null)
+            setTitle('Create A New Journal Entry')
+            setDescription('Fill out the form below and save changes to create a new journal entry.')
+        }
+    }, [entryId])
+
     return user.isLoggedIn ? (
         <main>
             <form className="form" onSubmit={handleSubmit}>
-                <Typography variant='h5' className="page-title">Create a new journal entry</Typography>
+                <Typography variant='h5' className="page-title">{title}</Typography>
+                <Typography variant="body1">{description}</Typography>
                 <FormLabel id="date-input-label">Entry date:</FormLabel>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                     <DatePicker
@@ -105,7 +150,7 @@ const NewEntryFormPage: React.FC = () => {
                     aria-labelledby="prenatal-vitamins-input"
                     name="prenatal-vitamins-input"
                     value={prenatalVitamins}
-                    onChange={(e) => setPrenatalVitamins(e.currentTarget.value)}
+                    onChange={(e) => setPrenatalVitamins(e.currentTarget.value === "true" ? true : false)}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
@@ -116,12 +161,24 @@ const NewEntryFormPage: React.FC = () => {
                     aria-labelledby="probiotics-input"
                     name="probiotics-input"
                     value={probiotics}
-                    onChange={(e) => setProbiotics(e.currentTarget.value)}
+                    onChange={(e) => setProbiotics(e.currentTarget.value === "true" ? true : false)}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
                 </RadioGroup>
-                <Button type='submit' variant='outlined' color='inherit'>Submit</Button>
+                {entryId === undefined ? (
+                    <Button type='submit' variant='outlined' color='inherit'>Submit</Button>
+                    ) : (
+                        <Box className="update-entry-form-button-container">
+                            <Box className="update-entry-form-button">
+                                <Button type='submit' variant='contained' color='success'>Update</Button>
+                            </Box>
+                            <Box className="update-entry-form-button">
+                                <Button onClick={handleCancelUpdateEntryClick(() => navigate(PossibleRoutes.DASHBOARD))} variant='contained' color='inherit'>Cancel</Button>
+                            </Box>
+                        </Box>
+                    )
+                }
             </form> 
         </main>
     ) : (
@@ -132,4 +189,4 @@ const NewEntryFormPage: React.FC = () => {
     )
 }
 
-export default NewEntryFormPage;
+export default JournalEntryFormPage;

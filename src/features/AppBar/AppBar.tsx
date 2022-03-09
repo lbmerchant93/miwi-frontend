@@ -91,7 +91,7 @@ const AppBar: React.FC = () => {
                         My Dashboard
                 </MenuItem>
                 <MenuItem 
-                    onClick={onListItemClick(() => navigate(PossibleRoutes.NEW_ENTRY_FORM))}>
+                    onClick={onListItemClick(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))}>
                         New Journal Entry
                 </MenuItem>
                 <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
