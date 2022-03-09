@@ -66,7 +66,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         <Typography variant="body1">You <b>{entry.prenatalVitamins ? 'did' : 'did not'}</b> take your prenatal vitamins </Typography>
         <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
         <Box className="journal-entry-card-options">
-            <IconButton onClick={onEditClick(() => navigate(`/update_entry_form/${entry.id}`))} color="default"><EditIcon /></IconButton> 
+            <IconButton onClick={onEditClick(() => navigate(`/journal_entry_form/${entry.id}`))} color="default"><EditIcon /></IconButton> 
             <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning"><DeleteIcon /></IconButton>
         </Box>
       </Box>
