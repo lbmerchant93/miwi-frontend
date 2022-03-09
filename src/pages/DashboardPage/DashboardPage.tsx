@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import './DashboardPage.css';
 
-interface mockData {
+export interface mockData {
     id: number;
     date: string;
     waterIntake: number;
@@ -19,7 +19,7 @@ interface mockData {
     probiotics: boolean;
 }
 
-const mockEntries: mockData[]= [
+export const mockEntries: mockData[]= [
     {
         "id": 1,
        "date": "2022-03-07T19:58:57.000Z",

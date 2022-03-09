@@ -22,8 +22,8 @@ const NewEntryFormPage: React.FC = () => {
     const [exercise, setExercise] = useState<number | string>('');
     const [kegels, setKegels] = useState<number | string>('');
     const [garlandPose, setGarlandPose] = useState<number | string>('');
-    const [prenatalVitamins, setPrenatalVitamins] = useState<string | null>(null);
-    const [probiotics, setProbiotics] = useState<string | null>(null);
+    const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
+    const [probiotics, setProbiotics] = useState<boolean | null>(null);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -106,7 +106,7 @@ const NewEntryFormPage: React.FC = () => {
                     aria-labelledby="prenatal-vitamins-input"
                     name="prenatal-vitamins-input"
                     value={prenatalVitamins}
-                    onChange={(e) => setPrenatalVitamins(e.currentTarget.value)}
+                    onChange={(e) => setPrenatalVitamins(e.currentTarget.value === "true" ? true : false)}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
@@ -117,7 +117,7 @@ const NewEntryFormPage: React.FC = () => {
                     aria-labelledby="probiotics-input"
                     name="probiotics-input"
                     value={probiotics}
-                    onChange={(e) => setProbiotics(e.currentTarget.value)}
+                    onChange={(e) => setProbiotics(e.currentTarget.value === "true" ? true : false)}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />

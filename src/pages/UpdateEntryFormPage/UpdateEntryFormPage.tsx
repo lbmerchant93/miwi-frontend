@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
@@ -14,6 +14,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import moment from 'moment';
 import Box from '@mui/material/Box';
+import { mockEntries } from '../DashboardPage/DashboardPage';
 import './UpdateEntryFormPage.css';
 
 const UpdateEntryFormPage: React.FC = () => {
@@ -25,9 +26,25 @@ const UpdateEntryFormPage: React.FC = () => {
     const [exercise, setExercise] = useState<number | string>('');
     const [kegels, setKegels] = useState<number | string>('');
     const [garlandPose, setGarlandPose] = useState<number | string>('');
-    const [prenatalVitamins, setPrenatalVitamins] = useState<string | null>(null);
-    const [probiotics, setProbiotics] = useState<string | null>(null);
-    // will eventually check to make sure the entry belongs to the user!!! 
+    const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
+    const [probiotics, setProbiotics] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        if (entryId) {
+            const foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
+            console.log(foundEntry)
+            if (foundEntry) {
+                setDate(foundEntry.date)
+                setWaterIntake(foundEntry.waterIntake)
+                setProteinIntake(foundEntry.proteinIntake)
+                setExercise(foundEntry.exercise)
+                setKegels(foundEntry.kegels)
+                setGarlandPose(foundEntry.garlandPose)
+                setPrenatalVitamins(foundEntry.prenatalVitamins)
+                setProbiotics(foundEntry.probiotics)
+            }
+        }
+    }, [entryId])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -110,7 +127,7 @@ const UpdateEntryFormPage: React.FC = () => {
                     aria-labelledby="prenatal-vitamins-input"
                     name="prenatal-vitamins-input"
                     value={prenatalVitamins}
-                    onChange={(e) => setPrenatalVitamins(e.currentTarget.value)}
+                    onChange={(e) => {setPrenatalVitamins(e.currentTarget.value === "true" ? true : false)}}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
@@ -121,7 +138,7 @@ const UpdateEntryFormPage: React.FC = () => {
                     aria-labelledby="probiotics-input"
                     name="probiotics-input"
                     value={probiotics}
-                    onChange={(e) => setProbiotics(e.currentTarget.value)}
+                    onChange={(e) => setProbiotics(e.currentTarget.value === "true" ? true : false)}
                 >
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
