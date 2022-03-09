@@ -15,10 +15,13 @@ import DatePicker from '@mui/lab/DatePicker';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import { mockEntries } from '../DashboardPage/DashboardPage';
+import { useNavigate } from 'react-router-dom';
+import { PossibleRoutes } from '../../utils/constants';
 import './UpdateEntryFormPage.css';
 
 const UpdateEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
+    const navigate = useNavigate();
     const { entryId } = useParams();
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
@@ -32,7 +35,6 @@ const UpdateEntryFormPage: React.FC = () => {
     useEffect(() => {
         if (entryId) {
             const foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
-            console.log(foundEntry)
             if (foundEntry) {
                 setDate(foundEntry.date)
                 setWaterIntake(foundEntry.waterIntake)
@@ -56,6 +58,12 @@ const UpdateEntryFormPage: React.FC = () => {
         // console.log(garlandPose)
         // console.log(prenatalVitamins)
         // console.log(probiotics)
+    }
+
+    const handleCancelUpdateEntryClick = (callback: () => void) => {
+        return () => {
+            callback()
+        }
     }
 
     return user.isLoggedIn ? (
@@ -148,7 +156,7 @@ const UpdateEntryFormPage: React.FC = () => {
                         <Button type='submit' variant='contained' color='success'>Update</Button>
                     </Box>
                     <Box className="update-entry-form-button">
-                        <Button variant='contained' color='inherit'>Cancel</Button>
+                        <Button onClick={handleCancelUpdateEntryClick(() => navigate(PossibleRoutes.DASHBOARD))} variant='contained' color='inherit'>Cancel</Button>
                     </Box>
                 </Box>
             </form>
