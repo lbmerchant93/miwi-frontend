@@ -17,6 +17,8 @@ import Box from '@mui/material/Box';
 import { mockEntries } from '../DashboardPage/DashboardPage';
 import { useNavigate } from 'react-router-dom';
 import { PossibleRoutes } from '../../utils/constants';
+import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
+import { Alert } from '@mui/material';
 import './JournalEntryFormPage.css';
 
 const JournalEntryFormPage: React.FC = () => {
@@ -34,10 +36,18 @@ const JournalEntryFormPage: React.FC = () => {
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const [error, setError] = useState<boolean>(false);
+    const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
+
+    const dismissSnackBar = () => {
+        setSnackBarDetails({ ...snackBarDetails, show: false });
+    };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(moment(date).toISOString())
+        setSnackBarDetails({ error, show: true, message: `Journal entry ${entryUserId ? 'updated' : 'created'}!` })
+        // When connected to the backend, can use try catch and if its successful then navigate the user to their dashboard
         // console.log(waterIntake)
         // console.log(proteinIntake)
         // console.log(exercise)
@@ -87,6 +97,11 @@ const JournalEntryFormPage: React.FC = () => {
 
     return (user.id === entryUserId || entryId === undefined) ? (
         <main>
+            <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
+                <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "error" : "success"} variant="filled">
+                    {snackBarDetails.message}
+                </Alert>
+            </SnackBar>
             <form className="form" onSubmit={handleSubmit}>
                 <Typography variant='h5' className="page-title">{title}</Typography>
                 <Typography variant="body1">{description}</Typography>
