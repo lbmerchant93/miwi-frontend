@@ -47,6 +47,7 @@ const JournalEntryFormPage: React.FC = () => {
         e.preventDefault();
         console.log(moment(date).toISOString())
         setSnackBarDetails({ error, show: true, message: `Journal entry ${entryUserId ? 'updated' : 'created'}!` })
+        // When connected to the backend, can use try catch and if its successful then navigate the user to their dashboard
         // console.log(waterIntake)
         // console.log(proteinIntake)
         // console.log(exercise)
