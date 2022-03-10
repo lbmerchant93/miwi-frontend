@@ -59,7 +59,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 4,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "userId": "DRYvbhpN9UPqJPcbKV21TH3Yp8N2",
         "date": "2022-03-10T19:58:57.000Z",
         "waterIntake": 4,
         "proteinIntake": 4,
