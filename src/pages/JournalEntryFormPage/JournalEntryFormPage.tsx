@@ -58,7 +58,7 @@ const JournalEntryFormPage: React.FC = () => {
         if (entryId) {
             foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
         } 
-        if (foundEntry && user.userId === foundEntry.userId) {
+        if (foundEntry && user.id === foundEntry.userId) {
             setDate(foundEntry.date)
             setEntryUserId(foundEntry.userId)
             setWaterIntake(foundEntry.waterIntake)
@@ -83,9 +83,9 @@ const JournalEntryFormPage: React.FC = () => {
             setTitle('Create A New Journal Entry')
             setDescription('Fill out the form below and save changes to create a new journal entry.')
         }
-    }, [entryId, user.userId])
+    }, [entryId, user.id])
 
-    return (user.userId === entryUserId || entryId === undefined) ? (
+    return (user.id === entryUserId || entryId === undefined) ? (
         <main>
             <form className="form" onSubmit={handleSubmit}>
                 <Typography variant='h5' className="page-title">{title}</Typography>
