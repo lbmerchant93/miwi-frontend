@@ -187,8 +187,8 @@ const JournalEntryFormPage: React.FC = () => {
         </main>
     ) : (
         <MessagePage 
-            title="Uh oh, looks like you're not logged in."
-            subtitle="You must be logged-in to view this page."
+            title="Uh oh, looks like you don't have the right credentials for this page."
+            subtitle="You must be logged-in to the correct account to view this page."
         />
     )
 }
