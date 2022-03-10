@@ -23,6 +23,7 @@ const JournalEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
     const { entryId } = useParams();
+    const [entryUserId, setEntryUserId] = useState<string | null>(null)
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
     const [proteinIntake, setProteinIntake] = useState<number | string>('');
@@ -53,22 +54,25 @@ const JournalEntryFormPage: React.FC = () => {
     }
 
     useEffect(() => {
+        let foundEntry;
         if (entryId) {
-            const foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
-            if (foundEntry) {
-                setDate(foundEntry.date)
-                setWaterIntake(foundEntry.waterIntake)
-                setProteinIntake(foundEntry.proteinIntake)
-                setExercise(foundEntry.exercise)
-                setKegels(foundEntry.kegels)
-                setGarlandPose(foundEntry.garlandPose)
-                setPrenatalVitamins(foundEntry.prenatalVitamins)
-                setProbiotics(foundEntry.probiotics)
-                setTitle('Update Journal Entry')
-                setDescription('Update the form below and save changes to your journal entry.')
-            }
+            foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
+        } 
+        if (foundEntry && user.id === foundEntry.userId) {
+            setDate(foundEntry.date)
+            setEntryUserId(foundEntry.userId)
+            setWaterIntake(foundEntry.waterIntake)
+            setProteinIntake(foundEntry.proteinIntake)
+            setExercise(foundEntry.exercise)
+            setKegels(foundEntry.kegels)
+            setGarlandPose(foundEntry.garlandPose)
+            setPrenatalVitamins(foundEntry.prenatalVitamins)
+            setProbiotics(foundEntry.probiotics)
+            setTitle('Update Journal Entry')
+            setDescription('Update the form below and save changes to your journal entry.')
         } else {
             setDate(null)
+            setEntryUserId(null)
             setWaterIntake('')
             setProteinIntake('')
             setExercise('')
@@ -79,9 +83,9 @@ const JournalEntryFormPage: React.FC = () => {
             setTitle('Create A New Journal Entry')
             setDescription('Fill out the form below and save changes to create a new journal entry.')
         }
-    }, [entryId])
+    }, [entryId, user.id])
 
-    return user.isLoggedIn ? (
+    return (user.id === entryUserId || entryId === undefined) ? (
         <main>
             <form className="form" onSubmit={handleSubmit}>
                 <Typography variant='h5' className="page-title">{title}</Typography>
@@ -183,8 +187,8 @@ const JournalEntryFormPage: React.FC = () => {
         </main>
     ) : (
         <MessagePage 
-            title="Uh oh, looks like you're not logged in."
-            subtitle="You must be logged-in to view this page."
+            title="Uh oh, looks like you don't have the right credentials for this page."
+            subtitle="You must be logged-in to the correct account to view this page."
         />
     )
 }

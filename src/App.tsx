@@ -57,7 +57,7 @@ const App = () => {
     <AuthContext.Provider 
       value={{
         isLoggedIn: isLoggedIn,
-        userId: userId,
+        id: userId,
         displayName: displayName,
         photoURL: photoURL
       }}

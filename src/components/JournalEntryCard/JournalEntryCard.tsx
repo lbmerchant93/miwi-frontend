@@ -9,19 +9,9 @@ import WarningModal from '../WarningModal/WarningModal';
 import { SnackBar, SnackBarDetails } from '../SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { mockData } from '../../pages/DashboardPage/DashboardPage';
 import './JournalEntryCard.css';
 
-interface mockData {
-  id: number;
-  date: string;
-  waterIntake: number;
-  proteinIntake: number;
-  exercise: number;
-  kegels: number;
-  garlandPose: number;
-  prenatalVitamins: boolean;
-  probiotics: boolean;
-}
 interface JournalEntryCardProps {
   entry: mockData;
 }

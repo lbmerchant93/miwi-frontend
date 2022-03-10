@@ -4,11 +4,15 @@ import MessagePage from '../../components/MessagePage/MessagePage';
 import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { PossibleRoutes } from '../../utils/constants';
 
 import './DashboardPage.css';
 
 export interface mockData {
     id: number;
+    userId: string;
     date: string;
     waterIntake: number;
     proteinIntake: number;
@@ -22,17 +26,19 @@ export interface mockData {
 export const mockEntries: mockData[]= [
     {
         "id": 1,
-       "date": "2022-03-07T19:58:57.000Z",
-       "waterIntake": 1,
-       "proteinIntake": 1,
-       "exercise": 1,
-       "kegels": 1,
-       "garlandPose": 1,
-       "prenatalVitamins": true,
-       "probiotics": true 
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "date": "2022-03-07T19:58:57.000Z",
+        "waterIntake": 1,
+        "proteinIntake": 1,
+        "exercise": 1,
+        "kegels": 1,
+        "garlandPose": 1,
+        "prenatalVitamins": true,
+        "probiotics": true 
     },
     {
         "id": 2,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-08T19:58:57.000Z",
         "waterIntake": 2,
         "proteinIntake": 2,
@@ -44,6 +50,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 3,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 3,
         "proteinIntake": 3,
@@ -55,6 +62,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 4,
+        "userId": "DRYvbhpN9UPqJPcbKV21TH3Yp8N2",
         "date": "2022-03-10T19:58:57.000Z",
         "waterIntake": 4,
         "proteinIntake": 4,
@@ -68,15 +76,39 @@ export const mockEntries: mockData[]= [
 
 const DashboardPage = () => {
     const user = useContext(AuthContext);
+    const navigate = useNavigate();
+    const foundEntries = 
+        mockEntries.filter((entry: mockData) => {
+            return user.id === entry.userId
+        }
+    )
+
+    const handleNavigateToJournalEntryForm = (callback: () => void) => {
+        return () => {
+            callback()
+        }
+    }
 
     return user.isLoggedIn ? (
         <main className="dashboard-main">
             <Typography variant="h2">Welcome back {user.displayName}!</Typography>
-            <Box className='dashboard-journal-entries-container'>
-                {mockEntries.map((entry: mockData) => {
-                   return <JournalEntryCard entry={entry} key={entry.id}/>
-                })}  
-            </Box>
+            {foundEntries.length ? 
+            (
+                <Box className='dashboard-journal-entries-container'>
+                    {foundEntries.map((entry: mockData) => {
+                        return <JournalEntryCard entry={entry} key={entry.id}/>
+                    })}
+                </Box>
+            ) : (
+                <Box className='dashboard-no-entries-container'>
+                    <Typography variant="h6">Looks like you don't have any journal entries yet. Click the button below to create your first entry!</Typography>
+                    <Box className='dashboard-create-journal-entry-button-container'>
+                        <Button onClick={handleNavigateToJournalEntryForm(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))} variant='contained' color='success'>
+                            <Typography variant="body1">New Journal Entry</Typography>
+                        </Button>
+                    </Box>
+                </Box>
+            )}
         </main>
     ) : (
         <MessagePage 
