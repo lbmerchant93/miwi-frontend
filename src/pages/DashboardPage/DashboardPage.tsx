@@ -9,6 +9,7 @@ import './DashboardPage.css';
 
 export interface mockData {
     id: number;
+    userId: string;
     date: string;
     waterIntake: number;
     proteinIntake: number;
@@ -22,17 +23,19 @@ export interface mockData {
 export const mockEntries: mockData[]= [
     {
         "id": 1,
-       "date": "2022-03-07T19:58:57.000Z",
-       "waterIntake": 1,
-       "proteinIntake": 1,
-       "exercise": 1,
-       "kegels": 1,
-       "garlandPose": 1,
-       "prenatalVitamins": true,
-       "probiotics": true 
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "date": "2022-03-07T19:58:57.000Z",
+        "waterIntake": 1,
+        "proteinIntake": 1,
+        "exercise": 1,
+        "kegels": 1,
+        "garlandPose": 1,
+        "prenatalVitamins": true,
+        "probiotics": true 
     },
     {
         "id": 2,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-08T19:58:57.000Z",
         "waterIntake": 2,
         "proteinIntake": 2,
@@ -44,6 +47,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 3,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 3,
         "proteinIntake": 3,
@@ -55,6 +59,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 4,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-10T19:58:57.000Z",
         "waterIntake": 4,
         "proteinIntake": 4,
