@@ -25,7 +25,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
 
   const dismissSnackBar = () => {
     setSnackBarDetails({ ...snackBarDetails, show: false });
-};
+  };
 
   const onEditClick = (callback: () => void) => {
     return () => {
