@@ -10,7 +10,9 @@ import { AuthContext } from '../../shared/auth-context';
 import LoginModal from '../LoginModal/LoginModal';
 import { getAuth, signOut } from 'firebase/auth';
 import Typography from '@mui/material/Typography';
+import MUIAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
@@ -35,76 +37,80 @@ const AppBar: React.FC = () => {
     };
 
     return (
-        <header>
-            <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
-                <Typography variant="h1" sx={{ fontSize: "3rem", lineHeight: 0.75 }}>MiWi</Typography>
-            </Link>
-            <div>
-            {!user.isLoggedIn ? (
-                <Button
-                    onClick={() => setIsLoginOpen(true)}
-                    variant="outlined"
-                    color="inherit"
-                >
-                    Log In
-                </Button>
-            ) : (
-                <Button
-                    id="demo-positioned-button"
-                    aria-controls={open ? 'demo-positioned-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                    variant="outlined"
-                    color="inherit"
-                >
-                    <Avatar
-                        src={user.photoURL ?? undefined}
-                        alt="User Photo"
-                        style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
-                        {user.displayName?.toUpperCase()[0]}
-                    </Avatar>
-                    <MenuIcon />
-                </Button>
-            )}
-            <LoginModal 
-                isOpen={isLoginOpen} 
-                onClose={() => setIsLoginOpen(false)} 
-                user={user} 
-                auth={auth}
-            />
-            <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuItem 
-                    onClick={onListItemClick(() => navigate(PossibleRoutes.DASHBOARD))}>
-                        My Dashboard
-                </MenuItem>
-                <MenuItem 
-                    onClick={onListItemClick(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))}>
-                        New Journal Entry
-                </MenuItem>
-                <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
-                    <MenuItem 
-                        onClick={onListItemClick(() => signOut(auth))}>
-                            Log out
-                    </MenuItem>
-                </Link>
-            </Menu>
-            </div>    
-        </header>
+        <Box >
+            <MUIAppBar position="sticky" color="inherit">
+                <Toolbar className='header'>
+                    <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
+                        <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
+                    </Link>
+                    <div>
+                        {!user.isLoggedIn ? (
+                            <Button
+                                onClick={() => setIsLoginOpen(true)}
+                                variant="outlined"
+                                color="inherit"
+                            >
+                                Log In
+                            </Button>
+                        ) : (
+                            <Button
+                                id="demo-positioned-button"
+                                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}
+                                variant="outlined"
+                                color="inherit"
+                            >
+                                <Avatar
+                                    src={user.photoURL ?? undefined}
+                                    alt="User Photo"
+                                    style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
+                                    {user.displayName?.toUpperCase()[0]}
+                                </Avatar>
+                                <MenuIcon />
+                            </Button>
+                        )}
+                        <LoginModal 
+                            isOpen={isLoginOpen} 
+                            onClose={() => setIsLoginOpen(false)} 
+                            user={user} 
+                            auth={auth}
+                        />
+                        <Menu
+                            id="demo-positioned-menu"
+                            aria-labelledby="demo-positioned-button"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                        >
+                            <MenuItem 
+                                onClick={onListItemClick(() => navigate(PossibleRoutes.DASHBOARD))}>
+                                    My Dashboard
+                            </MenuItem>
+                            <MenuItem 
+                                onClick={onListItemClick(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))}>
+                                    New Journal Entry
+                            </MenuItem>
+                            <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
+                                <MenuItem 
+                                    onClick={onListItemClick(() => signOut(auth))}>
+                                        Log out
+                                </MenuItem>
+                            </Link>
+                        </Menu>
+                    </div>   
+                </Toolbar> 
+            </MUIAppBar>
+        </Box>
     );
 };
 
