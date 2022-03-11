@@ -9,6 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../shared/auth-context';
 import LoginModal from '../LoginModal/LoginModal';
 import { getAuth, signOut } from 'firebase/auth';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import './AppBar.css'
 
 const AppBar: React.FC = () => {
@@ -35,7 +37,7 @@ const AppBar: React.FC = () => {
     return (
         <header>
             <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
-                <h1 className="title">MiWi</h1>
+                <Typography variant="h1" sx={{ fontSize: "3rem", lineHeight: 0.75 }}>MiWi</Typography>
             </Link>
             <div>
             {!user.isLoggedIn ? (

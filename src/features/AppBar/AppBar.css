@@ -2,16 +2,12 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 0.5rem;
+    padding: 1rem;
 }
 
 .title-link {
     text-decoration: none;
     color: black;
-}
-
-.title {
-    margin-bottom: 0;
 }
 
 .nav-options{
