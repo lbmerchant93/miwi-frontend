@@ -1,8 +1,7 @@
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 0.5rem;
 }
 
 .title-link {
@@ -10,8 +9,9 @@ header {
     color: black;
 }
 
-.title {
-    margin-bottom: 0;
+.title-link :hover {
+    border-radius: 5px;
+    background-color: #e0e0e0;
 }
 
 .nav-options{

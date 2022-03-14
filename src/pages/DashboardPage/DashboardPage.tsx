@@ -72,6 +72,54 @@ export const mockEntries: mockData[]= [
         "prenatalVitamins": true,
         "probiotics": true 
      },
+     {
+        "id": 5,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "date": "2022-03-09T19:58:57.000Z",
+        "waterIntake": 5,
+        "proteinIntake": 5,
+        "exercise": 5,
+        "kegels": 5,
+        "garlandPose": 5,
+        "prenatalVitamins": false,
+        "probiotics": false
+     },
+     {
+        "id": 6,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "date": "2022-03-09T19:58:57.000Z",
+        "waterIntake": 6,
+        "proteinIntake": 6,
+        "exercise": 6,
+        "kegels": 6,
+        "garlandPose": 6,
+        "prenatalVitamins": false,
+        "probiotics": false
+     },
+     {
+        "id": 7,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "date": "2022-03-09T19:58:57.000Z",
+        "waterIntake": 7,
+        "proteinIntake": 7,
+        "exercise": 7,
+        "kegels": 7,
+        "garlandPose": 7,
+        "prenatalVitamins": false,
+        "probiotics": false
+     },
+     {
+        "id": 8,
+        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "date": "2022-03-09T19:58:57.000Z",
+        "waterIntake": 8,
+        "proteinIntake": 8,
+        "exercise": 8,
+        "kegels": 8,
+        "garlandPose": 8,
+        "prenatalVitamins": false,
+        "probiotics": false
+     },
 ]
 
 const DashboardPage = () => {
@@ -90,7 +138,7 @@ const DashboardPage = () => {
     }
 
     return user.isLoggedIn ? (
-        <main className="dashboard-main">
+        <div className="dashboard">
             <Typography variant="h2">Welcome back {user.displayName}!</Typography>
             {foundEntries.length ? 
             (
@@ -109,7 +157,7 @@ const DashboardPage = () => {
                     </Box>
                 </Box>
             )}
-        </main>
+        </div>
     ) : (
         <MessagePage 
             title="Uh oh, looks like you're not logged in."

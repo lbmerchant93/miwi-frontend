@@ -96,7 +96,7 @@ const JournalEntryFormPage: React.FC = () => {
     }, [entryId, user.id])
 
     return (user.id === entryUserId || entryId === undefined) ? (
-        <main>
+        <>
             <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
                 <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "error" : "success"} variant="filled">
                     {snackBarDetails.message}
@@ -199,7 +199,7 @@ const JournalEntryFormPage: React.FC = () => {
                     )
                 }
             </form> 
-        </main>
+        </>
     ) : (
         <MessagePage 
             title="Uh oh, looks like you don't have the right credentials for this page."
