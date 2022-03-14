@@ -13,7 +13,24 @@ import Typography from '@mui/material/Typography';
 import MUIAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import './AppBar.css'
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import './AppBar.css';
+
+const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
+    const { children } = props;
+  
+    const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 0,
+      target: window,
+    });
+  
+    return React.cloneElement(children, {
+        style: {
+            boxShadow: trigger ? '0px 4px 7px -4px rgb(0 0 0 / 20%)' : 'none'
+        }
+    });
+  };
 
 const AppBar: React.FC = () => {
     const user = useContext(AuthContext);
@@ -37,8 +54,8 @@ const AppBar: React.FC = () => {
     };
 
     return (
-        <Box >
-            <MUIAppBar position="sticky" color="inherit">
+        <ElevationScroll>
+            <MUIAppBar elevation={0} position="sticky" color="inherit">
                 <Toolbar className='header'>
                     <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
                         <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
@@ -110,7 +127,7 @@ const AppBar: React.FC = () => {
                     </div>   
                 </Toolbar> 
             </MUIAppBar>
-        </Box>
+        </ElevationScroll>
     );
 };
 

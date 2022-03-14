@@ -65,9 +65,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <AppBar />
-          <main>
+          <div>
             {routes}
-          </main>
+          </div>
           <AppFooter />
         </Router>
       </ThemeProvider>
