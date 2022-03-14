@@ -11,7 +11,6 @@ import LoginModal from '../LoginModal/LoginModal';
 import { getAuth, signOut } from 'firebase/auth';
 import Typography from '@mui/material/Typography';
 import MUIAppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import './AppBar.css';
