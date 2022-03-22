@@ -18,6 +18,8 @@ import {
   browserLocalPersistence, 
   onAuthStateChanged
 } from 'firebase/auth';
+import apolloClient from './api/apolloClient';
+import { ApolloProvider } from '@apollo/client';
 
 initializeApp(firebaseConfig);
 
@@ -54,25 +56,25 @@ const App = () => {
   );
   
   return (
-    <AuthContext.Provider 
-      value={{
-        isLoggedIn: isLoggedIn,
-        id: userId,
-        displayName: displayName,
-        photoURL: photoURL
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <Router>
-          <AppBar />
-          <div>
+    <ApolloProvider client={apolloClient}>
+      <AuthContext.Provider 
+        value={{
+          isLoggedIn: isLoggedIn,
+          id: userId,
+          displayName: displayName,
+          photoURL: photoURL
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <Router>
+            <AppBar />
             {routes}
-          </div>
-          <AppFooter />
-        </Router>
-      </ThemeProvider>
-    </AuthContext.Provider>
+            <AppFooter />
+          </Router>
+        </ThemeProvider>
+      </AuthContext.Provider>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;
