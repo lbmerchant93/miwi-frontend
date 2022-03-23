@@ -3,8 +3,8 @@ import { gql } from '@apollo/client';
 import { useQuery } from 'react-query';
 
 const journalEntries = gql`
-  query JournalEntries {
-    journalEntries {
+  query JournalEntries($authorId: String) {
+    journalEntries(where: { authorId: { equals: $authorId } }) {
       id
       date
       exercise
@@ -19,10 +19,11 @@ const journalEntries = gql`
   }
 `;
 
-export const useJournalEntries = () => {
+export const useJournalEntries = (authorId: string) => {
     return useQuery(['journalEntries'], async () => {
         const { data } = await API.query<any>({
-            query: journalEntries
+            query: journalEntries,
+            variables: { authorId }
         });
 
         return data.journalEntries;
