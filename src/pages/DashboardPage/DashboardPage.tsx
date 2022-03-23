@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
 import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
@@ -13,7 +13,7 @@ import './DashboardPage.css';
 
 export interface mockData {
     id: number;
-    userId: string;
+    authorId: string;
     date: string;
     waterIntake: number;
     proteinIntake: number;
@@ -27,7 +27,7 @@ export interface mockData {
 export const mockEntries: mockData[]= [
     {
         "id": 1,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-07T19:58:57.000Z",
         "waterIntake": 1,
         "proteinIntake": 1,
@@ -39,7 +39,7 @@ export const mockEntries: mockData[]= [
     },
     {
         "id": 2,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-08T19:58:57.000Z",
         "waterIntake": 2,
         "proteinIntake": 2,
@@ -51,7 +51,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 3,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 3,
         "proteinIntake": 3,
@@ -63,7 +63,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 4,
-        "userId": "DRYvbhpN9UPqJPcbKV21TH3Yp8N2",
+        "authorId": "DRYvbhpN9UPqJPcbKV21TH3Yp8N2",
         "date": "2022-03-10T19:58:57.000Z",
         "waterIntake": 4,
         "proteinIntake": 4,
@@ -75,7 +75,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 5,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 5,
         "proteinIntake": 5,
@@ -87,7 +87,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 6,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 6,
         "proteinIntake": 6,
@@ -99,7 +99,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 7,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 7,
         "proteinIntake": 7,
@@ -111,7 +111,7 @@ export const mockEntries: mockData[]= [
      },
      {
         "id": 8,
-        "userId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
+        "authorId": "fV5De0bivMRqBoHxJuwT4UwFJtT2",
         "date": "2022-03-09T19:58:57.000Z",
         "waterIntake": 8,
         "proteinIntake": 8,
@@ -126,15 +126,7 @@ export const mockEntries: mockData[]= [
 const DashboardPage = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
-    const foundEntries = 
-        mockEntries.filter((entry: mockData) => {
-            return user.id === entry.userId
-        }
-    );
-
-    const { data, isFetching, error } = useJournalEntries();
-
-    console.log(data)
+    const { data } = useJournalEntries("fV5De0bivMRqBoHxJuwT4UwFJtT2");
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
         return () => {
@@ -145,10 +137,10 @@ const DashboardPage = () => {
     return user.isLoggedIn ? (
         <div className="dashboard">
             <Typography variant="h2">Welcome back {user.displayName}!</Typography>
-            {foundEntries.length ? 
+            {data.length ? 
             (
                 <Box className='dashboard-journal-entries-container'>
-                    {foundEntries.map((entry: mockData) => {
+                    {data.map((entry: mockData) => {
                         return <JournalEntryCard entry={entry} key={entry.id}/>
                     })}
                 </Box>

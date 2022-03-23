@@ -68,9 +68,9 @@ const JournalEntryFormPage: React.FC = () => {
         if (entryId) {
             foundEntry = mockEntries.find(entry => entry.id === parseInt(entryId)) 
         } 
-        if (foundEntry && user.id === foundEntry.userId) {
+        if (foundEntry && user.id === foundEntry.authorId) {
             setDate(foundEntry.date)
-            setEntryUserId(foundEntry.userId)
+            setEntryUserId(foundEntry.authorId)
             setWaterIntake(foundEntry.waterIntake)
             setProteinIntake(foundEntry.proteinIntake)
             setExercise(foundEntry.exercise)
