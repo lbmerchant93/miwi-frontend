@@ -29,7 +29,7 @@ initializeApp(firebaseConfig);
 const App = () => {
   const auth = getAuth();
   setPersistence(auth, browserLocalPersistence);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
@@ -41,7 +41,7 @@ const App = () => {
       setDisplayName(user.displayName);
       setPhotoURL(user.photoURL);
     } else {
-      setUserId(null);
+      setUserId(undefined);
       setIsLoggedIn(false);
       setDisplayName('');
       setPhotoURL('');

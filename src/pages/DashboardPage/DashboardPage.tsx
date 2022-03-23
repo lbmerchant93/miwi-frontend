@@ -126,7 +126,7 @@ export const mockEntries: mockData[]= [
 const DashboardPage = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
-    const { data } = useJournalEntries("fV5De0bivMRqBoHxJuwT4UwFJtT2");
+    const { data } = useJournalEntries(user.id);
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
         return () => {

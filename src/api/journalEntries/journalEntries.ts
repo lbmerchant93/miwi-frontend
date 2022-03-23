@@ -19,7 +19,7 @@ const journalEntries = gql`
   }
 `;
 
-export const useJournalEntries = (authorId: string) => {
+export const useJournalEntries = (authorId: string | undefined) => {
     return useQuery(['journalEntries'], async () => {
         const { data } = await API.query<any>({
             query: journalEntries,
