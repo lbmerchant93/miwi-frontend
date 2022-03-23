@@ -20,6 +20,9 @@ import {
 } from 'firebase/auth';
 import apolloClient from './api/apolloClient';
 import { ApolloProvider } from '@apollo/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+export const queryClient = new QueryClient();
 
 initializeApp(firebaseConfig);
 
@@ -57,22 +60,24 @@ const App = () => {
   
   return (
     <ApolloProvider client={apolloClient}>
-      <AuthContext.Provider 
-        value={{
-          isLoggedIn: isLoggedIn,
-          id: userId,
-          displayName: displayName,
-          photoURL: photoURL
-        }}
-      >
-        <ThemeProvider theme={theme}>
-          <Router>
-            <AppBar />
-            {routes}
-            <AppFooter />
-          </Router>
-        </ThemeProvider>
-      </AuthContext.Provider>
+      <QueryClientProvider client={queryClient}>
+        <AuthContext.Provider 
+          value={{
+            isLoggedIn: isLoggedIn,
+            id: userId,
+            displayName: displayName,
+            photoURL: photoURL
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            <Router>
+              <AppBar />
+              {routes}
+              <AppFooter />
+            </Router>
+          </ThemeProvider>
+        </AuthContext.Provider>
+      </QueryClientProvider>
     </ApolloProvider>
   );
 };
