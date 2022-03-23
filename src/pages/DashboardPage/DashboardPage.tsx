@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { PossibleRoutes } from '../../utils/constants';
+import { useJournalEntries } from '../../api/journalEntries/journalEntries';
 
 import './DashboardPage.css';
 
@@ -129,7 +130,11 @@ const DashboardPage = () => {
         mockEntries.filter((entry: mockData) => {
             return user.id === entry.userId
         }
-    )
+    );
+
+    const { data, isFetching, error } = useJournalEntries();
+
+    console.log(data)
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
         return () => {
