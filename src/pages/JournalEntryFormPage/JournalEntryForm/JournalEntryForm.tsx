@@ -9,13 +9,14 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+// import moment from 'moment';
 
 interface JournalEntryFormProps {
-    handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    handleSubmitResults: (results: string) => void;
 }
 
 const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
-    const { handleSubmit } = props;
+    const { handleSubmitResults } = props;
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
     const [proteinIntake, setProteinIntake] = useState<number | string>('');
@@ -24,6 +25,24 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            await console.log(probiotics)
+            handleSubmitResults("success")
+        } catch (e) {
+            handleSubmitResults("error")
+        }
+        // console.log(moment(date).toISOString())
+        // console.log(waterIntake)
+        // console.log(proteinIntake)
+        // console.log(exercise)
+        // console.log(kegels)
+        // console.log(garlandPose)
+        // console.log(prenatalVitamins)
+        // console.log(probiotics)
+    }
 
     return (
         <form className="form" onSubmit={handleSubmit}>

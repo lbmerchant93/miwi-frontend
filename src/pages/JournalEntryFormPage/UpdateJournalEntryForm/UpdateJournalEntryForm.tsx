@@ -14,16 +14,17 @@ import { useNavigate } from 'react-router-dom';
 import { PossibleRoutes } from '../../../utils/constants';
 import MessagePage from '../../../components/MessagePage/MessagePage';
 import { useAuthorJournalEntry } from '../../../api/journalEntries/journalEntries';
+// import moment from 'moment';
 
 
 interface UpdateJournalEntryFormProps {
     entryId: string;
-    handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    handleSubmitResults: (results: string) => void;
     userId: string | undefined;
 }
 
 const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) => {
-    const { entryId, handleSubmit, userId } = props;
+    const { entryId, userId, handleSubmitResults } = props;
     const navigate = useNavigate();
     const { data, isFetching, error } = useAuthorJournalEntry(entryId, userId);
     const [date, setDate] = useState<string | null>(null);
@@ -34,6 +35,23 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        try {
+            await console.log(probiotics)
+            handleSubmitResults("success")
+        } catch (e) {
+            handleSubmitResults("error")
+        }
+        // console.log(moment(date).toISOString())
+        // console.log(waterIntake)
+        // console.log(proteinIntake)
+        // console.log(exercise)
+        // console.log(kegels)
+        // console.log(garlandPose)
+        // console.log(prenatalVitamins)
+        // console.log(probiotics)
+    }
 
     const handleCancelUpdateEntryClick = (callback: () => void) => {
         return () => {
