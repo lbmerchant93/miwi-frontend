@@ -29,3 +29,35 @@ export const useJournalEntries = (authorId: string | undefined) => {
         return data.journalEntries;
     });
 };
+
+const authorJournalEntries = gql`
+  query JournalEntries($id: Int, $authorId: String) {
+    journalEntries(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }]}) {
+      id
+      date
+      exercise
+      garlandPose
+      kegels
+      prenatalVitamins
+      probiotics
+      proteinIntake
+      authorId
+      waterIntake
+    }
+  }
+`;
+
+export const useAuthorJournalEntry = (id: string | undefined, authorId: string | undefined) => {
+    return useQuery(['authorJournalEntries'], async () => {
+        const variables = {
+            id: Number(id), 
+            authorId
+        };
+        const { data } = await API.query<any>({
+            query: authorJournalEntries,
+            variables
+        });
+
+        return data.journalEntries;
+    });
+}
