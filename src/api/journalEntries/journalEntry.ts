@@ -176,5 +176,5 @@ export const deleteJournalEntry = async (id: number) => {
     variables: { where: { id: Number(id) } }
   });
 
-  return data ? 'Deleted successfully' : 'Error while deleting';
+  return data.deleteJournalEntry;
 };
