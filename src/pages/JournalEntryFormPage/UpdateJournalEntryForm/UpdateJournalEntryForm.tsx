@@ -37,6 +37,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
             await console.log(probiotics)
             handleSubmitResults("success")

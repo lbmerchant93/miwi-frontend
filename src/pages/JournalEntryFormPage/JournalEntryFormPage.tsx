@@ -30,7 +30,7 @@ const JournalEntryFormPage: React.FC = () => {
                     {snackBarDetails.message}
                 </Alert>
             </SnackBar>
-            {!entryId && <JournalEntryForm handleSubmitResults={handleSubmitResults} />}
+            {(!entryId && user.id) && <JournalEntryForm handleSubmitResults={handleSubmitResults} userId={user.id}/>}
             {(entryId && user.id) && <UpdateJournalEntryForm handleSubmitResults={handleSubmitResults} entryId={entryId} userId={user.id}/>}
         </>
     )
