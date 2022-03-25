@@ -9,11 +9,11 @@ import WarningModal from '../WarningModal/WarningModal';
 import { SnackBar, SnackBarDetails } from '../SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { mockData } from '../../pages/DashboardPage/DashboardPage';
+import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
-  entry: mockData;
+  entry: JournalEntry;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {

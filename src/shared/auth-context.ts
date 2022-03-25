@@ -2,14 +2,14 @@ import { createContext } from "react";
 
 export interface User {
     isLoggedIn: boolean;
-    id: string | null;
+    id: string | undefined;
     displayName: string | null;
     photoURL: string | null;
 }
 
 export const AuthContext = createContext<User>({ 
     isLoggedIn: false, 
-    id: null,
+    id: undefined,
     displayName: '',
     photoURL: ''
 })
