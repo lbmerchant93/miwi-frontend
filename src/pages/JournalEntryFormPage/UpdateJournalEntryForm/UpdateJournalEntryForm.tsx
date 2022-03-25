@@ -14,7 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { PossibleRoutes } from '../../../utils/constants';
 import MessagePage from '../../../components/MessagePage/MessagePage';
 import { useAuthorJournalEntry } from '../../../api/journalEntries/journalEntries';
-// import moment from 'moment';
+import { updateJournalEntry } from '../../../api/journalEntries/journalEntry';
+import moment from 'moment';
 
 
 interface UpdateJournalEntryFormProps {
@@ -38,20 +39,25 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const updatedJournalEntry = {
+            id: entryId,
+            date: date,
+            waterIntake: waterIntake,
+            proteinIntake: proteinIntake,
+            exercise: exercise,
+            kegels: kegels,
+            garlandPose: garlandPose,
+            prenatalVitamins: prenatalVitamins,
+            probiotics: probiotics,
+        }
+
         try {
-            await console.log(probiotics)
+            await updateJournalEntry(updatedJournalEntry)
             handleSubmitResults("success")
-        } catch (e) {
+        } catch (error) {
+            console.log(error)
             handleSubmitResults("error")
         }
-        // console.log(moment(date).toISOString())
-        // console.log(waterIntake)
-        // console.log(proteinIntake)
-        // console.log(exercise)
-        // console.log(kegels)
-        // console.log(garlandPose)
-        // console.log(prenatalVitamins)
-        // console.log(probiotics)
     }
 
     const handleCancelUpdateEntryClick = (callback: () => void) => {
@@ -91,7 +97,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
             <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
                     value={date}
-                    onChange={(newDate) => setDate(newDate)}
+                    onChange={(newDate) => setDate(moment(newDate).toISOString())}
                     renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
                 />
             </LocalizationProvider>

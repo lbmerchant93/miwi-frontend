@@ -96,3 +96,68 @@ export const createJournalEntry = async (createJournalEntryInput: JournalEntryCr
   
   return data.createJournalEntry;
 };
+
+interface JournalEntryUpdate {
+  id: string | undefined;
+  date: string | null;
+  waterIntake: number | string;
+  proteinIntake: number | string;
+  exercise: number | string;
+  kegels: number | string;
+  garlandPose: number | string;
+  prenatalVitamins: boolean | null;
+  probiotics: boolean | null;
+}
+
+const updateJournalEntryQuery = `
+  mutation updateJournalEntry(
+    $data: JournalEntryUpdateInput!
+    $where: JournalEntryWhereUniqueInput!
+  ) { updateJournalEntry(
+    data: $data
+    where: $where
+  ) {
+    date
+      exercise
+      garlandPose
+      kegels
+      prenatalVitamins
+      probiotics
+      proteinIntake
+      waterIntake
+      authorId
+    }
+  }
+`;
+
+export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) => {
+  const { 
+    id,
+    date, 
+    exercise, 
+    garlandPose, 
+    kegels, 
+    prenatalVitamins, 
+    probiotics, 
+    proteinIntake, 
+    waterIntake, 
+  } = updateJournalEntryInput;
+
+  const variables = {
+    "date": { "set": date },
+    "exercise": { "set": exercise },
+    "garlandPose": { "set": garlandPose },
+    "kegels": { "set": kegels },
+    "prenatalVitamins": { "set": prenatalVitamins },
+    "probiotics": { "set": probiotics },
+    "proteinIntake": { "set": proteinIntake },
+    "waterIntake": { "set": waterIntake }
+  };
+
+  const { data } = await API.mutate<any>({
+    mutation: gql(updateJournalEntryQuery),
+    variables: { data: variables, where: { id: Number(id) }}
+  });
+  
+  return data.updateJournalEntry;
+}

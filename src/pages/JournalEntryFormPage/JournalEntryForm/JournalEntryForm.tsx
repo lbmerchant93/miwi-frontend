@@ -10,7 +10,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import { createJournalEntry } from '../../../api/journalEntries/journalEntry';
-// import moment from 'moment';
 
 interface JournalEntryFormProps {
     userId: string | undefined;
