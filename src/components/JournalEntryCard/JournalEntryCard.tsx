@@ -10,6 +10,7 @@ import { SnackBar, SnackBarDetails } from '../SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
+import { deleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
@@ -33,9 +34,15 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     }
   }
 
-  const onDeleteClick = () => {
-    console.log('Delete')
-    setSnackBarDetails({ error, show: true, message: "Journal entry deleted!" })
+  const onDeleteClick = async () => {
+    let deleteResults = '';
+    try {
+      deleteResults = await deleteJournalEntry(entry.id)
+    } catch (error) {
+      console.log(error)
+      setError(true)
+    }
+    setSnackBarDetails({ error, show: true, message: deleteResults })
     setIsWarningModalOpen(false);
   }
 

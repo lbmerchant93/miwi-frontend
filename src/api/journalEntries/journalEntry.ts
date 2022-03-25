@@ -118,14 +118,14 @@ const updateJournalEntryQuery = `
     where: $where
   ) {
     date
-      exercise
-      garlandPose
-      kegels
-      prenatalVitamins
-      probiotics
-      proteinIntake
-      waterIntake
-      authorId
+    exercise
+    garlandPose
+    kegels
+    prenatalVitamins
+    probiotics
+    proteinIntake
+    waterIntake
+    authorId
     }
   }
 `;
@@ -158,6 +158,23 @@ export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUp
     mutation: gql(updateJournalEntryQuery),
     variables: { data: variables, where: { id: Number(id) }}
   });
-  
+
   return data.updateJournalEntry;
 }
+
+const deleteJournalEntryQuery = `
+  mutation deleteJournalEntry($where: JournalEntryWhereUniqueInput!) {
+    deleteJournalEntry(where: $where) {
+      id
+    }
+  }
+`
+
+export const deleteJournalEntry = async (id: number) => {
+  const { data } = await API.mutate<any>({
+    mutation: gql(deleteJournalEntryQuery),
+    variables: { where: { id: Number(id) } }
+  });
+
+  return data ? 'Deleted successfully' : 'Error while deleting';
+};
