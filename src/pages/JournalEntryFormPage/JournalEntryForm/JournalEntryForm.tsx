@@ -10,6 +10,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import { createJournalEntry } from '../../../api/journalEntries/journalEntry';
+import moment from 'moment';
 
 interface JournalEntryFormProps {
     userId: string | undefined;
@@ -61,7 +62,7 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
             <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
                     value={date}
-                    onChange={(newDate) => setDate(newDate)}
+                    onChange={(newDate) => setDate(moment(newDate).toISOString())}
                     renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
                 />
             </LocalizationProvider>
