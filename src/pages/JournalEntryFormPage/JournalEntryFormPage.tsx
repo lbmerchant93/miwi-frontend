@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../shared/auth-context';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
-import JournalEntryForm from './JournalEntryForm/JournalEntryForm';
+import JournalEntryForm from './NewJournalEntryForm/NewJournalEntryForm';
 import UpdateJournalEntryForm from './UpdateJournalEntryForm/UpdateJournalEntryForm';
 
 import './JournalEntryFormPage.css';
