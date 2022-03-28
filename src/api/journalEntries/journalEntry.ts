@@ -164,7 +164,7 @@ export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUp
   return data.updateJournalEntry;
 }
 
-const deleteJournalEntryQuery = gql`
+const deleteJournalEntryMutation = gql`
   mutation deleteJournalEntry($where: JournalEntryWhereUniqueInput!) {
     deleteJournalEntry(where: $where) {
       id
@@ -172,11 +172,22 @@ const deleteJournalEntryQuery = gql`
   }
 `
 
-export const deleteJournalEntryMutation = async (id: number) => {
+const deleteJournalEntry = async (id: number) => {
   const { data } = await API.mutate<any>({
-    mutation: deleteJournalEntryQuery,
+    mutation: deleteJournalEntryMutation,
     variables: { where: { id: Number(id) } }
   });
 
   return data.deleteJournalEntry;
+}
+
+export const useDeleteJournalEntry = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(deleteJournalEntry, {
+    onSuccess: (_, id) => {
+      queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
+    }
+  })
+
 }
