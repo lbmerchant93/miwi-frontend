@@ -8,7 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import WarningModal from '../WarningModal/WarningModal';
 import { useNavigate } from 'react-router-dom';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
-import { deleteJournalEntry } from '../../api/journalEntries/journalEntry';
+import { deleteJournalEntryMutation } from '../../api/journalEntries/journalEntry';
+import { useMutation, useQueryClient } from 'react-query';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
@@ -20,7 +21,14 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry, triggerDeleteSnackBar } = props;
   const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
+  const queryClient = useQueryClient();
+  // console.log(queryClient)
+  const deleteJournalEntryChange = useMutation(deleteJournalEntryMutation, {
+    onSuccess: (_, id) => {
+      queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
+    }
+});
 
   const onEditClick = (callback: () => void) => {
     return () => {
@@ -30,8 +38,8 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
 
   const onDeleteClick = async () => {
     try {
-      const deleteResults = await deleteJournalEntry(entry.id);
-      triggerDeleteSnackBar(deleteResults ? true : false);
+      deleteJournalEntryChange.mutate(entry.id)
+      triggerDeleteSnackBar(true);
     } catch (err) {
       console.log(err);
       triggerDeleteSnackBar(false);

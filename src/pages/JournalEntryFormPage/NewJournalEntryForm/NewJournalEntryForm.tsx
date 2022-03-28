@@ -28,7 +28,7 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
-    const createJournalEntry = useMutation(createJournalEntryMutation)
+    const createJournalEntry = useMutation(createJournalEntryMutation);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

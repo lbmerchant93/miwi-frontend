@@ -1,6 +1,6 @@
 import API from '../apolloClient';
 import { gql } from '@apollo/client';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient  } from 'react-query';
 
 const journalEntry = gql`
   query JournalEntry($id: Int) {
@@ -164,7 +164,7 @@ export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUp
   return data.updateJournalEntry;
 }
 
-const deleteJournalEntryQuery = `
+const deleteJournalEntryQuery = gql`
   mutation deleteJournalEntry($where: JournalEntryWhereUniqueInput!) {
     deleteJournalEntry(where: $where) {
       id
@@ -172,11 +172,11 @@ const deleteJournalEntryQuery = `
   }
 `
 
-export const deleteJournalEntry = async (id: number) => {
+export const deleteJournalEntryMutation = async (id: number) => {
   const { data } = await API.mutate<any>({
-    mutation: gql(deleteJournalEntryQuery),
+    mutation: deleteJournalEntryQuery,
     variables: { where: { id: Number(id) } }
   });
 
   return data.deleteJournalEntry;
-};
+}
