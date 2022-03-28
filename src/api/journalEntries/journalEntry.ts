@@ -30,7 +30,7 @@ export const useJournalEntry = (id: string) => {
   });
 };
 
-const createJournalEntryQuery = `
+const createJournalEntryQuery = gql`
   mutation createJournalEntry($data: JournalEntryCreateInput!){
     createJournalEntry(
       data: $data
@@ -60,7 +60,7 @@ interface JournalEntryCreate {
   probiotics: boolean | null;
 }
 
-export const createJournalEntry = async (createJournalEntryInput: JournalEntryCreate) => {
+export const createJournalEntryMutation = async (createJournalEntryInput: JournalEntryCreate) => {
   const { 
     date, 
     exercise, 
@@ -90,12 +90,14 @@ export const createJournalEntry = async (createJournalEntryInput: JournalEntryCr
   };
 
   const { data } = await API.mutate<any>({
-    mutation: gql(createJournalEntryQuery),
+    mutation: createJournalEntryQuery,
     variables: { data: variables}
   });
+
+  console.log(data)
   
-  return data.createJournalEntry;
-};
+  return data;
+}
 
 interface JournalEntryUpdate {
   id: string | undefined;

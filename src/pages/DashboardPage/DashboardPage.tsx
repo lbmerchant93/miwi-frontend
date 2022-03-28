@@ -29,7 +29,7 @@ export interface JournalEntry {
 const DashboardPage = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
-    const { data, isFetching, refetch } = useJournalEntries(user.id);
+    const { data, isFetching } = useJournalEntries(user.id);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const triggerDeleteSnackBar = (deleteResults: boolean) => {
@@ -42,7 +42,6 @@ const DashboardPage = () => {
 
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
-
     };
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
@@ -50,6 +49,7 @@ const DashboardPage = () => {
             callback()
         }
     }
+
     if (isFetching) {
         return (
             <p>Fetching data...</p>

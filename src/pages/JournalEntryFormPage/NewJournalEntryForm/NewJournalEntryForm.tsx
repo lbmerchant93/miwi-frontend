@@ -9,8 +9,9 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
-import { createJournalEntry } from '../../../api/journalEntries/journalEntry';
+import { createJournalEntryMutation } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
+import { useMutation } from 'react-query';
 
 interface JournalEntryFormProps {
     userId: string | undefined;
@@ -27,8 +28,9 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+    const createJournalEntry = useMutation(createJournalEntryMutation)
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const journalEntry = {
             authorId: userId,
@@ -41,8 +43,9 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
         }
+
         try {
-            await createJournalEntry(journalEntry)
+            createJournalEntry.mutate(journalEntry)
             handleSubmitResults("success")
         } catch (error) {
             console.log(error)
