@@ -8,7 +8,7 @@ export type SnackBarDetails = {
   };
 
 export const SnackBar: React.FC<SnackbarProps> = (props) => {
-    const { open = false, autoHideDuration = 6000, onClose, children, ...rest } = props;
+    const { open = false, autoHideDuration = 2000, onClose, children, ...rest } = props;
 
     return (
         <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={onClose} anchorOrigin={{vertical: 'top', horizontal: 'center'}} {...rest}>

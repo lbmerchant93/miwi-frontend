@@ -6,26 +6,21 @@ import moment from 'moment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import WarningModal from '../WarningModal/WarningModal';
-import { SnackBar, SnackBarDetails } from '../SnackBar/SnackBar';
-import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
+import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
   entry: JournalEntry;
+  triggerDeleteSnackBar: (deleteResults: boolean) => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
-  const { entry } = props;
+  const { entry, triggerDeleteSnackBar } = props;
   const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-  const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
-  const [error, setError] = useState(false)
-
-  const dismissSnackBar = () => {
-    setSnackBarDetails({ ...snackBarDetails, show: false });
-  };
+  const deleteJournalEntry = useDeleteJournalEntry();
 
   const onEditClick = (callback: () => void) => {
     return () => {
@@ -34,18 +29,19 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   }
 
   const onDeleteClick = () => {
-    console.log('Delete')
-    setSnackBarDetails({ error, show: true, message: "Journal entry deleted!" })
+    try {
+      deleteJournalEntry.mutate(entry.id)
+      triggerDeleteSnackBar(true);
+    } catch (err) {
+      console.log(err);
+      triggerDeleteSnackBar(false);
+    };
+    
     setIsWarningModalOpen(false);
   }
 
   return (
     <>
-      <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
-        <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "error" : "success"} variant="filled">
-          {snackBarDetails.message}
-        </Alert>
-      </SnackBar>
       <Box className="journal-entry-card"> 
         <Typography variant="h5"><b>{moment(entry.date).format("MMMM Do YYYY")}</b></Typography>
         <Typography variant="body1">You drank <b>{entry.waterIntake}oz</b> of water</Typography>
