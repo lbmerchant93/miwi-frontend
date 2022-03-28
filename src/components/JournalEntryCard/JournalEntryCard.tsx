@@ -28,7 +28,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     }
   }
 
-  const onDeleteClick = async () => {
+  const onDeleteClick = () => {
     try {
       deleteJournalEntry.mutate(entry.id)
       triggerDeleteSnackBar(true);
