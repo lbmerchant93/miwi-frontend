@@ -36,6 +36,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+    const [previousEntry, setPreviousEntry] = useState<{}>({})
     const updateJournalEntry = useUpdateJournalEntry();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -50,16 +51,20 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
-        }
+        };
 
-        try {
-            updateJournalEntry.mutate(updatedJournalEntry)
-            handleSubmitResults("success")
-        } catch (error) {
-            console.log(error)
-            handleSubmitResults("error")
-        }
-    }
+        if (JSON.stringify(updatedJournalEntry) !== JSON.stringify(previousEntry)) {
+            try {
+                updateJournalEntry.mutate(updatedJournalEntry);
+                handleSubmitResults("success");
+            } catch (error) {
+                console.log(error);
+                handleSubmitResults("error");
+            };
+        } else {
+            handleSubmitResults("error");
+        };
+    };
 
     const handleCancelUpdateEntryClick = (callback: () => void) => {
         return () => {
@@ -77,8 +82,21 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
             setGarlandPose(data[0].garlandPose)
             setPrenatalVitamins(data[0].prenatalVitamins)
             setProbiotics(data[0].probiotics)
+            setPreviousEntry(
+                {
+                    id: entryId,
+                    date: data[0].date,
+                    waterIntake: data[0].waterIntake,
+                    proteinIntake: data[0].proteinIntake,
+                    exercise: data[0].exercise,
+                    kegels: data[0].kegels,
+                    garlandPose: data[0].garlandPose,
+                    prenatalVitamins: data[0].prenatalVitamins,
+                    probiotics: data[0].probiotics,
+                }
+            )
         } 
-    }, [data]);
+    }, [data, entryId]);
 
     if (isFetching) {
         return (
