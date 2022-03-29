@@ -127,6 +127,7 @@ const updateJournalEntryMutation = gql`
     data: $data
     where: $where
   ) {
+    id
     date
     exercise
     garlandPose
@@ -173,7 +174,13 @@ const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) =
 }
 
 export const useUpdateJournalEntry = () => {
-  return useMutation(updateJournalEntry)
+  const queryClient = useQueryClient();
+
+  return useMutation(updateJournalEntry, {
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries("journalEntries")
+    }
+  })
 }
 
 const deleteJournalEntryMutation = gql`
