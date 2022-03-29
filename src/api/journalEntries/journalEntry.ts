@@ -31,7 +31,7 @@ export const useJournalEntry = (id: string) => {
 };
 
 const createJournalEntryMutation = gql`
-  mutation createJournalEntry($data: JournalEntryCreateInput!){
+  mutation createJournalEntry($data: JournalEntryCreateInputData!){
     createJournalEntry(
       data: $data
     ) {
@@ -82,11 +82,7 @@ const createJournalEntry = async (createJournalEntryInput: JournalEntryCreate) =
     "probiotics": probiotics,
     "proteinIntake": proteinIntake,
     "waterIntake": waterIntake,
-    "author": {
-      "connect": {
-        "id": authorId
-      }
-    }
+    "authorId": authorId
   };
 
   const { data } = await API.mutate<any>({
@@ -101,6 +97,7 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
+    // can be moved to NewJournalEntryForm
     onSuccess: async () => {
       await queryClient.invalidateQueries("journalEntries")
     }

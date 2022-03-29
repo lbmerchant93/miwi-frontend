@@ -116,7 +116,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
             <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
                     value={date}
-                    onChange={(newDate) => setDate(moment(newDate).toISOString())}
+                    onChange={(newDate) => setDate(moment(newDate).startOf('day').toISOString(true))}
                     renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
                 />
             </LocalizationProvider>
