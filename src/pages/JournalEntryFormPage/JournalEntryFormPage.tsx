@@ -11,7 +11,6 @@ import './JournalEntryFormPage.css';
 const JournalEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
     const { entryId } = useParams();
-    const [error, setError] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const dismissSnackBar = () => {
@@ -19,8 +18,11 @@ const JournalEntryFormPage: React.FC = () => {
     };
 
     const handleSubmitResults = (results: string) => {
-        results === "success" ? setError(false) : setError(true)
-        setSnackBarDetails({ error, show: true, message: `Journal entry ${entryId ? 'updated' : 'created'}!` })
+        if (results === "success") {
+            setSnackBarDetails({ error: false, show: true, message: `Journal entry ${entryId ? 'updated' : 'created'}!` })
+        } else if (results === "error") {
+            setSnackBarDetails({ error: true, show: true, message: `Something went wrong, please try again` })
+        }
     }
 
     return (
