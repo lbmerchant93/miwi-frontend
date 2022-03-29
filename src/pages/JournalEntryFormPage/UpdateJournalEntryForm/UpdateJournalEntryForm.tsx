@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { PossibleRoutes } from '../../../utils/constants';
 import MessagePage from '../../../components/MessagePage/MessagePage';
 import { useAuthorJournalEntry } from '../../../api/journalEntries/journalEntries';
-import { updateJournalEntry } from '../../../api/journalEntries/journalEntry';
+import { useUpdateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
 
 
@@ -36,8 +36,9 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+    const updateJournalEntry = useUpdateJournalEntry();
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const updatedJournalEntry = {
             id: entryId,
@@ -52,7 +53,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         }
 
         try {
-            await updateJournalEntry(updatedJournalEntry)
+            updateJournalEntry.mutate(updatedJournalEntry)
             handleSubmitResults("success")
         } catch (error) {
             console.log(error)

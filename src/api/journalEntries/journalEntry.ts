@@ -119,7 +119,7 @@ interface JournalEntryUpdate {
   probiotics: boolean | null;
 }
 
-const updateJournalEntryQuery = `
+const updateJournalEntryMutation = gql`
   mutation updateJournalEntry(
     $data: JournalEntryUpdateInput!
     $where: JournalEntryWhereUniqueInput!
@@ -140,7 +140,7 @@ const updateJournalEntryQuery = `
   }
 `;
 
-export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) => {
+const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) => {
   const { 
     id,
     date, 
@@ -165,11 +165,15 @@ export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUp
   };
 
   const { data } = await API.mutate<any>({
-    mutation: gql(updateJournalEntryQuery),
+    mutation: updateJournalEntryMutation,
     variables: { data: variables, where: { id: Number(id) }}
   });
 
   return data.updateJournalEntry;
+}
+
+export const useUpdateJournalEntry = () => {
+  return useMutation(updateJournalEntry)
 }
 
 const deleteJournalEntryMutation = gql`
