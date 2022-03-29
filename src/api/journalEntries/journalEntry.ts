@@ -101,8 +101,8 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("journalEntries")
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("journalEntries")
     }
   })
 }
@@ -119,7 +119,7 @@ interface JournalEntryUpdate {
   probiotics: boolean | null;
 }
 
-const updateJournalEntryQuery = `
+const updateJournalEntryMutation = gql`
   mutation updateJournalEntry(
     $data: JournalEntryUpdateInput!
     $where: JournalEntryWhereUniqueInput!
@@ -127,6 +127,7 @@ const updateJournalEntryQuery = `
     data: $data
     where: $where
   ) {
+    id
     date
     exercise
     garlandPose
@@ -140,7 +141,7 @@ const updateJournalEntryQuery = `
   }
 `;
 
-export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) => {
+const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) => {
   const { 
     id,
     date, 
@@ -165,11 +166,21 @@ export const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUp
   };
 
   const { data } = await API.mutate<any>({
-    mutation: gql(updateJournalEntryQuery),
+    mutation: updateJournalEntryMutation,
     variables: { data: variables, where: { id: Number(id) }}
   });
 
   return data.updateJournalEntry;
+}
+
+export const useUpdateJournalEntry = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(updateJournalEntry, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("journalEntries")
+    }
+  })
 }
 
 const deleteJournalEntryMutation = gql`
@@ -193,8 +204,8 @@ export const useDeleteJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(deleteJournalEntry, {
-    onSuccess: (_, id) => {
-      queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
+    onSuccess: async (_, id) => {
+      await queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
     }
   })
 
