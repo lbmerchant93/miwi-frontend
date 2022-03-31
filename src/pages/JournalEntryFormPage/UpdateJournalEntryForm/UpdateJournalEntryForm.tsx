@@ -16,6 +16,7 @@ import MessagePage from '../../../components/MessagePage/MessagePage';
 import { useAuthorJournalEntry } from '../../../api/journalEntries/journalEntries';
 import { useUpdateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
+import { useQueryClient } from 'react-query';
 
 
 interface UpdateJournalEntryFormProps {
@@ -38,6 +39,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
     const [previousEntry, setPreviousEntry] = useState<{}>({})
     const updateJournalEntry = useUpdateJournalEntry();
+    const queryClient = useQueryClient();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -98,6 +100,11 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         } 
     }, [data, entryId]);
 
+    useEffect(() => {
+        queryClient.removeQueries(["authorJournalEntry"])
+    }, []) // eslint-disable-line 
+    // the above disable is to remove warning of needing queryClient as a dependency but we only want the useEffect to run once
+    
     if (isFetching) {
         return (
             <p>Fetching data...</p>

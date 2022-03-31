@@ -30,7 +30,7 @@ export const useJournalEntries = (authorId: string | undefined) => {
     });
 };
 
-const authorJournalEntries = gql`
+const authorJournalEntry = gql`
   query JournalEntries($id: Int, $authorId: String) {
     journalEntries(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }]}) {
       id
@@ -48,13 +48,13 @@ const authorJournalEntries = gql`
 `;
 
 export const useAuthorJournalEntry = (id: string | undefined, authorId: string | undefined) => {
-    return useQuery(['authorJournalEntries'], async () => {
+    return useQuery(['authorJournalEntry'], async () => {
         const variables = {
             id: Number(id), 
             authorId
         };
         const { data } = await API.query<any>({
-            query: authorJournalEntries,
+            query: authorJournalEntry,
             variables
         });
 
