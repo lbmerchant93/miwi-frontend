@@ -56,13 +56,15 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         };
 
         if (JSON.stringify(updatedJournalEntry) !== JSON.stringify(previousEntry)) {
-            try {
-                updateJournalEntry.mutate(updatedJournalEntry);
-                handleSubmitResults(false);
-            } catch (error) {
-                console.log(error);
-                handleSubmitResults(true);
-            };
+            updateJournalEntry.mutate(updatedJournalEntry, {
+                onError: (err: any) => {
+                    handleSubmitResults(true, err.message)
+                },
+                onSuccess: () => {
+                    handleSubmitResults(false)
+                }
+            });
+            handleSubmitResults(false);
         } else {
             handleSubmitResults(true);
         };
@@ -104,7 +106,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         queryClient.removeQueries(["authorJournalEntry"])
     }, []) // eslint-disable-line 
     // the above disable is to remove warning of needing queryClient as a dependency but we only want the useEffect to run once
-    
+
     if (isFetching) {
         return (
             <p>Fetching data...</p>

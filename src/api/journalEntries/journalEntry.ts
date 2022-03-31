@@ -1,6 +1,7 @@
 import API from '../apolloClient';
 import { gql } from '@apollo/client';
 import { useQuery, useMutation, useQueryClient  } from 'react-query';
+import { journalEntries } from './journalEntries';
 
 const journalEntry = gql`
   query JournalEntry($id: Int) {
@@ -176,10 +177,20 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: (newEntry) => {
-        queryClient.setQueryData(["journalEntries"], (oldData: any) => {
-        const unchangedEntries = oldData.filter((entry: { id: number; }) => entry.id !== newEntry.id)
-        return [...unchangedEntries, newEntry]
+    onSuccess: async (newEntry) => {
+      await queryClient.fetchQuery(["journalEntries"], async () => {
+        const { data } = await API.query<any>({
+            query: journalEntries,
+            variables: { authorId: newEntry.authorId }
+        });
+
+        return data.journalEntries;
+      })
+      queryClient.setQueryData(["journalEntries"], (oldData: any) => {
+        if (oldData.length) {
+          const unchangedEntries = oldData.filter((entry: { id: number; }) => entry.id !== newEntry.id)
+          return [...unchangedEntries, newEntry]
+        }
       })
     }
   })

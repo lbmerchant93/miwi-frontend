@@ -2,7 +2,7 @@ import API from '../apolloClient';
 import { gql } from '@apollo/client';
 import { useQuery } from 'react-query';
 
-const journalEntries = gql`
+export const journalEntries = gql`
   query JournalEntries($authorId: String) {
     journalEntries(where: { authorId: { equals: $authorId } }) {
       id
