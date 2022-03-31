@@ -16,11 +16,12 @@ import MessagePage from '../../../components/MessagePage/MessagePage';
 import { useAuthorJournalEntry } from '../../../api/journalEntries/journalEntries';
 import { useUpdateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
+import { useQueryClient } from 'react-query';
 
 
 interface UpdateJournalEntryFormProps {
     entryId: string;
-    handleSubmitResults: (results: string) => void;
+    handleSubmitResults: (error: boolean, message?: string) => void;
     userId: string | undefined;
 }
 
@@ -38,6 +39,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
     const [previousEntry, setPreviousEntry] = useState<{}>({})
     const updateJournalEntry = useUpdateJournalEntry();
+    const queryClient = useQueryClient();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -54,15 +56,17 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         };
 
         if (JSON.stringify(updatedJournalEntry) !== JSON.stringify(previousEntry)) {
-            try {
-                updateJournalEntry.mutate(updatedJournalEntry);
-                handleSubmitResults("success");
-            } catch (error) {
-                console.log(error);
-                handleSubmitResults("error");
-            };
+            updateJournalEntry.mutate(updatedJournalEntry, {
+                onError: (err: any) => {
+                    handleSubmitResults(true, err.message)
+                },
+                onSuccess: () => {
+                    handleSubmitResults(false)
+                }
+            });
+            handleSubmitResults(false);
         } else {
-            handleSubmitResults("error");
+            handleSubmitResults(true);
         };
     };
 
@@ -98,6 +102,13 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         } 
     }, [data, entryId]);
 
+    useEffect(() => {
+        if (queryClient.getQueryData(["authorJournalEntry"])) {
+            queryClient.removeQueries(["authorJournalEntry"])
+        }
+    }, []) // eslint-disable-line 
+    // the above disable is to remove warning of needing queryClient as a dependency but we only want the useEffect to run once
+
     if (isFetching) {
         return (
             <p>Fetching data...</p>
@@ -116,7 +127,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
             <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
                     value={date}
-                    onChange={(newDate) => setDate(moment(newDate).toISOString())}
+                    onChange={(newDate) => setDate(moment(newDate).startOf('day').toISOString(true))}
                     renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
                 />
             </LocalizationProvider>

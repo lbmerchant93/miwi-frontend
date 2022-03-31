@@ -1,6 +1,7 @@
 import API from '../apolloClient';
 import { gql } from '@apollo/client';
 import { useQuery, useMutation, useQueryClient  } from 'react-query';
+import { journalEntries } from './journalEntries';
 
 const journalEntry = gql`
   query JournalEntry($id: Int) {
@@ -31,10 +32,11 @@ export const useJournalEntry = (id: string) => {
 };
 
 const createJournalEntryMutation = gql`
-  mutation createJournalEntry($data: JournalEntryCreateInput!){
+  mutation createJournalEntry($data: JournalEntryCreateInputData!){
     createJournalEntry(
       data: $data
     ) {
+      id
       date
       exercise
       garlandPose
@@ -82,11 +84,7 @@ const createJournalEntry = async (createJournalEntryInput: JournalEntryCreate) =
     "probiotics": probiotics,
     "proteinIntake": proteinIntake,
     "waterIntake": waterIntake,
-    "author": {
-      "connect": {
-        "id": authorId
-      }
-    }
+    "authorId": authorId
   };
 
   const { data } = await API.mutate<any>({
@@ -101,8 +99,10 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    onSuccess: async () => {
-      await queryClient.invalidateQueries("journalEntries")
+    onSuccess: (newEntry) => {
+      queryClient.setQueryData(["journalEntries"], (oldData: any) => {
+        return [...oldData, newEntry]
+      })
     }
   })
 }
@@ -177,8 +177,16 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: async () => {
-      await queryClient.invalidateQueries("journalEntries")
+    onSuccess: async (newEntry) => {
+      const previousEntries = await queryClient.fetchQuery(["journalEntries"], async () => {
+        const { data } = await API.query<any>({
+            query: journalEntries,
+            variables: { authorId: newEntry.authorId }
+        });
+
+        return data.journalEntries;
+      })
+      return previousEntries
     }
   })
 }
@@ -208,5 +216,4 @@ export const useDeleteJournalEntry = () => {
       await queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
     }
   })
-
 }

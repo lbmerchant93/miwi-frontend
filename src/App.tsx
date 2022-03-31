@@ -21,8 +21,16 @@ import {
 import apolloClient from './api/apolloClient';
 import { ApolloProvider } from '@apollo/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false
+    },
+  },
+});
 
 initializeApp(firebaseConfig);
 
@@ -71,6 +79,7 @@ const App = () => {
         >
           <ThemeProvider theme={theme}>
             <Router>
+              <ReactQueryDevtools initialIsOpen={false} />
               <AppBar />
               {routes}
               <AppFooter />

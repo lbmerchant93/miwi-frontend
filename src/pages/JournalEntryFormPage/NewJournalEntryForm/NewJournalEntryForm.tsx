@@ -14,7 +14,7 @@ import moment from 'moment';
 
 interface JournalEntryFormProps {
     userId: string | undefined;
-    handleSubmitResults: (results: string) => void;
+    handleSubmitResults: (error: boolean, message?: string) => void;
 }
 
 const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
@@ -31,6 +31,7 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const journalEntry = {
             authorId: userId,
             date: date,
@@ -41,16 +42,17 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
-        }
-
-        try {
-            createJournalEntry.mutate(journalEntry)
-            handleSubmitResults("success")
-        } catch (error) {
-            console.log(error)
-            handleSubmitResults("error")
-        }
-    }
+        };
+    
+        createJournalEntry.mutate(journalEntry, {
+            onError: (err: any) => {
+                handleSubmitResults(true, err.message)
+            },
+            onSuccess: () => {
+                handleSubmitResults(false)
+            }
+        });
+    };
 
     return (
         <form className="form" onSubmit={handleSubmit}>
@@ -64,7 +66,7 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
             <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
                     value={date}
-                    onChange={(newDate) => setDate(moment(newDate).toISOString())}
+                    onChange={(newDate) => setDate(moment(newDate).startOf('day').toISOString(true))}
                     renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
                 />
             </LocalizationProvider>

@@ -17,11 +17,11 @@ const JournalEntryFormPage: React.FC = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
 
-    const handleSubmitResults = (results: string) => {
-        if (results === "success") {
+    const handleSubmitResults = (error: boolean, message?: string) => {
+        if (!error) {
             setSnackBarDetails({ error: false, show: true, message: `Journal entry ${entryId ? 'updated' : 'created'}!` })
-        } else if (results === "error") {
-            setSnackBarDetails({ error: true, show: true, message: `Something went wrong, please try again` })
+        } else if (error) {
+            setSnackBarDetails({ error: true, show: true, message: message || `Something went wrong, please try again` })
         }
     }
 
