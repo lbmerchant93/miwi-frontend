@@ -14,7 +14,7 @@ import moment from 'moment';
 
 interface JournalEntryFormProps {
     userId: string | undefined;
-    handleSubmitResults: (results: string) => void;
+    handleSubmitResults: (error: boolean, message?: string) => void;
 }
 
 const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
@@ -31,6 +31,7 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const journalEntry = {
             authorId: userId,
             date: date,
@@ -41,16 +42,17 @@ const JournalEntryForm: React.FC<JournalEntryFormProps> = (props) => {
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
-        }
-
+        };
+    
         createJournalEntry.mutate(journalEntry, {
-            // Working here, can do things with the results!
-            onError: (err) => {
-                console.log(err)
+            onError: (err: any) => {
+                handleSubmitResults(true, err.message)
+            },
+            onSuccess: () => {
+                handleSubmitResults(false)
             }
-        })
-        handleSubmitResults("success")
-    }
+        });
+    };
 
     return (
         <form className="form" onSubmit={handleSubmit}>

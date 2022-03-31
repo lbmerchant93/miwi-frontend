@@ -35,6 +35,7 @@ const createJournalEntryMutation = gql`
     createJournalEntry(
       data: $data
     ) {
+      id
       date
       exercise
       garlandPose
@@ -97,9 +98,10 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    // can be moved to NewJournalEntryForm
-    onSuccess: async () => {
-      await queryClient.invalidateQueries("journalEntries")
+    onSuccess: (newEntry) => {
+      queryClient.setQueryData(["journalEntries"], (oldData: any) => {
+        return [...oldData, newEntry]
+      })
     }
   })
 }
@@ -205,5 +207,4 @@ export const useDeleteJournalEntry = () => {
       await queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
     }
   })
-
 }

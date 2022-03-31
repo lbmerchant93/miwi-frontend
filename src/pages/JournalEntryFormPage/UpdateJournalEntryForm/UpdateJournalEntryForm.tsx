@@ -20,7 +20,7 @@ import moment from 'moment';
 
 interface UpdateJournalEntryFormProps {
     entryId: string;
-    handleSubmitResults: (results: string) => void;
+    handleSubmitResults: (error: boolean, message?: string) => void;
     userId: string | undefined;
 }
 
@@ -56,13 +56,13 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
         if (JSON.stringify(updatedJournalEntry) !== JSON.stringify(previousEntry)) {
             try {
                 updateJournalEntry.mutate(updatedJournalEntry);
-                handleSubmitResults("success");
+                handleSubmitResults(false);
             } catch (error) {
                 console.log(error);
-                handleSubmitResults("error");
+                handleSubmitResults(true);
             };
         } else {
-            handleSubmitResults("error");
+            handleSubmitResults(true);
         };
     };
 
