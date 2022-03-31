@@ -103,7 +103,9 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
     }, [data, entryId]);
 
     useEffect(() => {
-        queryClient.removeQueries(["authorJournalEntry"])
+        if (queryClient.getQueryData(["authorJournalEntry"])) {
+            queryClient.removeQueries(["authorJournalEntry"])
+        }
     }, []) // eslint-disable-line 
     // the above disable is to remove warning of needing queryClient as a dependency but we only want the useEffect to run once
 

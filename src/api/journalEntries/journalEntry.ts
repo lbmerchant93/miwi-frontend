@@ -178,7 +178,7 @@ export const useUpdateJournalEntry = () => {
 
   return useMutation(updateJournalEntry, {
     onSuccess: async (newEntry) => {
-      await queryClient.fetchQuery(["journalEntries"], async () => {
+      const previousEntries = await queryClient.fetchQuery(["journalEntries"], async () => {
         const { data } = await API.query<any>({
             query: journalEntries,
             variables: { authorId: newEntry.authorId }
@@ -186,12 +186,7 @@ export const useUpdateJournalEntry = () => {
 
         return data.journalEntries;
       })
-      queryClient.setQueryData(["journalEntries"], (oldData: any) => {
-        if (oldData.length) {
-          const unchangedEntries = oldData.filter((entry: { id: number; }) => entry.id !== newEntry.id)
-          return [...unchangedEntries, newEntry]
-        }
-      })
+      return previousEntries
     }
   })
 }
