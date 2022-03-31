@@ -176,8 +176,11 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: async () => {
-      await queryClient.invalidateQueries("journalEntries")
+    onSuccess: (newEntry) => {
+        queryClient.setQueryData(["journalEntries"], (oldData: any) => {
+        const unchangedEntries = oldData.filter((entry: { id: number; }) => entry.id !== newEntry.id)
+        return [...unchangedEntries, newEntry]
+      })
     }
   })
 }
