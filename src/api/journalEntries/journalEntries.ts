@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 
 export const journalEntries = gql`
   query JournalEntries($authorId: String) {
-    journalEntries(where: { authorId: { equals: $authorId } }) {
+    journalEntries(orderBy: [ { date: desc } ], where: { authorId: { equals: $authorId } }) {
       id
       date
       exercise
