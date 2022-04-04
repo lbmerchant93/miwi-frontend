@@ -117,15 +117,16 @@ interface JournalEntryUpdate {
   garlandPose: number | string;
   prenatalVitamins: boolean | null;
   probiotics: boolean | null;
+  authorId: string | undefined;
 }
 
 const updateJournalEntryMutation = gql`
   mutation updateJournalEntry(
-    $data: JournalEntryUpdateInput!
-    $where: JournalEntryWhereUniqueInput!
+    $data: JournalEntryCreateInputData!
+    $updateJournalEntryId: Int!
   ) { updateJournalEntry(
     data: $data
-    where: $where
+    id: $updateJournalEntryId
   ) {
     id
     date
@@ -152,22 +153,24 @@ const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) =
     probiotics, 
     proteinIntake, 
     waterIntake, 
+    authorId
   } = updateJournalEntryInput;
 
   const variables = {
-    "date": { "set": date },
-    "exercise": { "set": exercise },
-    "garlandPose": { "set": garlandPose },
-    "kegels": { "set": kegels },
-    "prenatalVitamins": { "set": prenatalVitamins },
-    "probiotics": { "set": probiotics },
-    "proteinIntake": { "set": proteinIntake },
-    "waterIntake": { "set": waterIntake }
+    "date": date,
+    "exercise": exercise,
+    "garlandPose": garlandPose,
+    "kegels": kegels,
+    "prenatalVitamins": prenatalVitamins,
+    "probiotics": probiotics,
+    "proteinIntake": proteinIntake,
+    "waterIntake": waterIntake,
+    "authorId": authorId 
   };
 
   const { data } = await API.mutate<any>({
     mutation: updateJournalEntryMutation,
-    variables: { data: variables, where: { id: Number(id) }}
+    variables: { data: variables, updateJournalEntryId: Number(id) }
   });
 
   return data.updateJournalEntry;

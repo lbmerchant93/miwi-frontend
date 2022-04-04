@@ -53,6 +53,7 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
+            authorId: userId
         };
 
         if (JSON.stringify(updatedJournalEntry) !== JSON.stringify(previousEntry)) {
@@ -97,10 +98,11 @@ const UpdateJournalEntryForm: React.FC<UpdateJournalEntryFormProps> = (props) =>
                     garlandPose: data[0].garlandPose,
                     prenatalVitamins: data[0].prenatalVitamins,
                     probiotics: data[0].probiotics,
+                    authorId: userId
                 }
             )
         } 
-    }, [data, entryId]);
+    }, [data, entryId, userId]);
 
     useEffect(() => {
         if (queryClient.getQueryData(["authorJournalEntry"])) {
