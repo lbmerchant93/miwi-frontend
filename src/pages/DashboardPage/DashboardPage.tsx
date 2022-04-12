@@ -63,7 +63,6 @@ const DashboardPage = () => {
                     {snackBarDetails.message}
                 </Alert>
             </SnackBar>
-            <Typography variant="h2">Welcome back {user.displayName}!</Typography>
             {data.length ? 
             (
                 <Box className='dashboard-journal-entries-container'>
