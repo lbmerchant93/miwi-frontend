@@ -1,16 +1,18 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
-import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
+// import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import { PossibleRoutes } from '../../utils/constants';
+// import Typography from '@mui/material/Typography';
+// import { useNavigate } from 'react-router-dom';
+// import Button from '@mui/material/Button';
+// import { PossibleRoutes } from '../../utils/constants';
 import { useJournalEntries } from '../../api/journalEntries/journalEntries';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import UserAside from "../../features/UserAside/UserAside";
+import DashboardHomePage from './DashboardHomePage/DashboardHomePage';
+import DashboardPanel from '../../features/DashboardPanel/DashboardPanel';
 
 import './DashboardPage.css';
 
@@ -29,7 +31,7 @@ export interface JournalEntry {
 
 const DashboardPage = () => {
     const user = useContext(AuthContext);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { data, isFetching } = useJournalEntries(user.id);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
@@ -45,11 +47,11 @@ const DashboardPage = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
 
-    const handleNavigateToJournalEntryForm = (callback: () => void) => {
-        return () => {
-            callback()
-        }
-    }
+    // const handleNavigateToJournalEntryForm = (callback: () => void) => {
+    //     return () => {
+    //         callback()
+    //     }
+    // }
 
     if (isFetching) {
         return (
@@ -65,7 +67,12 @@ const DashboardPage = () => {
                 </Alert>
             </SnackBar>
             <UserAside />
-            <div className="dashboard">
+            <Box>
+                <DashboardPanel />
+                {data.length && <DashboardHomePage data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} /> }
+            </Box>
+            
+            {/* <div className="dashboard">
                 {data.length ? 
                 (
                     <Box className='dashboard-journal-entries-container'>
@@ -83,7 +90,7 @@ const DashboardPage = () => {
                         </Box>
                     </Box>
                 )}
-            </div>
+            </div> */}
         </>
         
     ) : (
