@@ -10,6 +10,7 @@ import { PossibleRoutes } from '../../utils/constants';
 import { useJournalEntries } from '../../api/journalEntries/journalEntries';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
+import UserAside from "../../features/UserAside/UserAside";
 
 import './DashboardPage.css';
 
@@ -57,30 +58,34 @@ const DashboardPage = () => {
     }
 
     return user.isLoggedIn ? (
-        <div className="dashboard">
+        <>
             <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
                 <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "success" : "error"} variant="filled">
                     {snackBarDetails.message}
                 </Alert>
             </SnackBar>
-            {data.length ? 
-            (
-                <Box className='dashboard-journal-entries-container'>
-                    {data.map((entry: JournalEntry) => {
-                        return <JournalEntryCard entry={entry} key={entry.id} triggerDeleteSnackBar={triggerDeleteSnackBar} />
-                    })}
-                </Box>
-            ) : (
-                <Box className='dashboard-no-entries-container'>
-                    <Typography variant="h6">Looks like you don't have any journal entries yet. Click the button below to create your first entry!</Typography>
-                    <Box className='dashboard-create-journal-entry-button-container'>
-                        <Button onClick={handleNavigateToJournalEntryForm(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))} variant='contained' color='success'>
-                            <Typography variant="body1">New Journal Entry</Typography>
-                        </Button>
+            <UserAside />
+            <div className="dashboard">
+                {data.length ? 
+                (
+                    <Box className='dashboard-journal-entries-container'>
+                        {data.map((entry: JournalEntry) => {
+                            return <JournalEntryCard entry={entry} key={entry.id} triggerDeleteSnackBar={triggerDeleteSnackBar} />
+                        })}
                     </Box>
-                </Box>
-            )}
-        </div>
+                ) : (
+                    <Box className='dashboard-no-entries-container'>
+                        <Typography variant="h6">Looks like you don't have any journal entries yet. Click the button below to create your first entry!</Typography>
+                        <Box className='dashboard-create-journal-entry-button-container'>
+                            <Button onClick={handleNavigateToJournalEntryForm(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))} variant='contained' color='success'>
+                                <Typography variant="body1">New Journal Entry</Typography>
+                            </Button>
+                        </Box>
+                    </Box>
+                )}
+            </div>
+        </>
+        
     ) : (
         <MessagePage 
             title="Uh oh, looks like you're not logged in."

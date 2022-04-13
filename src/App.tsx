@@ -22,7 +22,6 @@ import apolloClient from './api/apolloClient';
 import { ApolloProvider } from '@apollo/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import UserAside from './features/UserAside/UserAside';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -83,7 +82,6 @@ const App = () => {
               <ReactQueryDevtools initialIsOpen={false} />
               <AppBar />
               <main>
-                {isLoggedIn && <UserAside />}
                 {routes}
               </main>
               <AppFooter />
