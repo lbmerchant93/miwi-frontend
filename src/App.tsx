@@ -61,6 +61,7 @@ const App = () => {
     <Routes>
       <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
+      <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.JOURNAL_ENTRY_FORM}`} element={<JournalEntryFormPage />} />
       <Route path={`${PossibleRoutes.UPDATE_JOURNAL_ENTRY_FORM}`} element={<JournalEntryFormPage />} />
     </Routes>
