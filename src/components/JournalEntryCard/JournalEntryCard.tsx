@@ -34,16 +34,13 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     setIsWarningModalOpen(false);
   }
 
-  const onUpdateClick = () => {
-    try {
-
-      triggerSnackBar(false, 'Journal entry update successful!');
-    } catch (err) {
-      console.log(err);
-      triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
-    };
-    
-    setIsUpdateModalOpen(false);
+  const onUpdateClick = (err: boolean, message: string) => {
+    triggerSnackBar(err, message);
+    if (err) {
+      setIsUpdateModalOpen(true);
+    } else {
+      setIsUpdateModalOpen(false);
+    }
   }
 
   return (
@@ -77,7 +74,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalDescription="Update the journal entry or go back to the dashboard."
         modalMessage="Are you sure you want to update this entry? This action is irreversible." 
         entry={entry}
-        handleUpdateResults={onUpdateClick}
+        onUpdateClick={onUpdateClick}
       />
     </>
     

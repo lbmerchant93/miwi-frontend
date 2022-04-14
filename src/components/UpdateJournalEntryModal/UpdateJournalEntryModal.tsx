@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 // import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
-import { useQueryClient } from 'react-query';
+// import { useQueryClient } from 'react-query';
 import Modal from '@mui/material/Modal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 
@@ -26,7 +26,7 @@ interface UpdateJournalEntryFormProps {
     modalDescription: string;
     modalMessage: string;
     entry: JournalEntry;
-    handleUpdateResults: () => void;
+    onUpdateClick: (err: boolean, message: string) => void;
 }
 
 const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) => {
@@ -36,57 +36,63 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         modalTitle, 
         modalDescription, 
         entry,
-        handleUpdateResults
+        onUpdateClick
     } = props;
-    const [date, setDate] = useState<string | null>(entry.date);
-    const [waterIntake, setWaterIntake] = useState<number | string>(entry.waterIntake);
-    const [proteinIntake, setProteinIntake] = useState<number | string>(entry.proteinIntake);
-    const [exercise, setExercise] = useState<number | string>(entry.exercise);
-    const [kegels, setKegels] = useState<number | string>(entry.kegels);
-    const [garlandPose, setGarlandPose] = useState<number | string>(entry.garlandPose);
-    const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(entry.prenatalVitamins);
-    const [probiotics, setProbiotics] = useState<boolean | null>(entry.probiotics);
-    // const [previousEntry, setPreviousEntry] = useState<{}>(entry)
+    const [date, setDate] = useState<string>(entry.date);
+    const [waterIntake, setWaterIntake] = useState<number>(entry.waterIntake);
+    const [proteinIntake, setProteinIntake] = useState<number>(entry.proteinIntake);
+    const [exercise, setExercise] = useState<number>(entry.exercise);
+    const [kegels, setKegels] = useState<number>(entry.kegels);
+    const [garlandPose, setGarlandPose] = useState<number>(entry.garlandPose);
+    const [prenatalVitamins, setPrenatalVitamins] = useState<boolean>(entry.prenatalVitamins);
+    const [probiotics, setProbiotics] = useState<boolean>(entry.probiotics);
     // const updateJournalEntry = useUpdateJournalEntry();
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleUpdateResults()
-        // const updatedJournalEntry = {
-        //     id: entry.id,
-        //     date: date,
-        //     waterIntake: waterIntake,
-        //     proteinIntake: proteinIntake,
-        //     exercise: exercise,
-        //     kegels: kegels,
-        //     garlandPose: garlandPose,
-        //     prenatalVitamins: prenatalVitamins,
-        //     probiotics: probiotics,
-        //     authorId: userId
-        // };
-
-        // if (JSON.stringify(updatedJournalEntry) !== JSON.stringify(previousEntry)) {
-        //     updateJournalEntry.mutate(updatedJournalEntry, {
-        //         onError: (err: any) => {
-        //             handleSubmitResults(true, err.message)
-        //         },
-        //         onSuccess: () => {
-        //             handleSubmitResults(false)
-        //         }
-        //     });
-        //     handleSubmitResults(false);
-        // } else {
-        //     handleSubmitResults(true);
-        // };
-    };
-
-    useEffect(() => {
-        if (queryClient.getQueryData(["authorJournalEntry"])) {
-            queryClient.removeQueries(["authorJournalEntry"])
+        
+        const updatedEntry = {
+            id: entry.id,
+            date: date,
+            waterIntake: waterIntake,
+            proteinIntake: proteinIntake,
+            exercise: exercise,
+            kegels: kegels,
+            garlandPose: garlandPose,
+            prenatalVitamins: prenatalVitamins,
+            probiotics: probiotics,
+            authorId: entry.authorId
+        };
+    
+        const previousEntry = {
+            id: entry.id,
+            date: entry.date,
+            waterIntake: entry.waterIntake,
+            proteinIntake: entry.proteinIntake,
+            exercise: entry.exercise,
+            kegels: entry.kegels,
+            garlandPose: entry.garlandPose,
+            prenatalVitamins: entry.prenatalVitamins,
+            probiotics: entry.probiotics,
+            authorId: entry.authorId
         }
-    }, []) // eslint-disable-line 
-    // the above disable is to remove warning of needing queryClient as a dependency but we only want the useEffect to run once
+    
+        if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
+                // updateJournalEntry.mutate(updatedJournalEntry, {
+                //     onError: (err: any) => {
+                //         // handleSubmitResults(true, err.message)
+                // onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
+                //     },
+                //     onSuccess: () => {
+                //         // handleSubmitResults(false)
+                onUpdateClick(false, 'Journal entry update successful!')
+                //     }
+                // });
+        } else {
+            onUpdateClick(true, 'Please update the form before clicking submit.')
+        };
+    };
 
     return (
         <Modal
