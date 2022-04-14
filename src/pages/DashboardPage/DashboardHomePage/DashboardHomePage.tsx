@@ -11,11 +11,12 @@ import './DashboardHomePage.css'
 
 interface DashboardHomePageProps {
     data: any;
-    triggerDeleteSnackBar: any;
+    triggerDeleteSnackBar: (deleteResults: boolean) => void;
+    triggerUpdateSnackBar: (updateResults: boolean) => void;
 }
 
 const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
-    const { data, triggerDeleteSnackBar } = props
+    const { data, triggerDeleteSnackBar, triggerUpdateSnackBar } = props
     const navigate = useNavigate();
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
@@ -30,7 +31,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
             (
                 <Box className='dashboard-journal-entries-container'>
                     {data.map((entry: JournalEntry) => {
-                        return <JournalEntryCard entry={entry} key={entry.id} triggerDeleteSnackBar={triggerDeleteSnackBar} />
+                        return <JournalEntryCard entry={entry} key={entry.id} triggerDeleteSnackBar={triggerDeleteSnackBar} triggerUpdateSnackBar={triggerUpdateSnackBar}/>
                     })}
                 </Box>
             ) : (

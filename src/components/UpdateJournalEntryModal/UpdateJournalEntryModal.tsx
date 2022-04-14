@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 // import { useNavigate } from 'react-router-dom';
 // import { PossibleRoutes } from '../../utils/constants';
 // import { useAuthorJournalEntry } from '../../api/journalEntries/journalEntries';
-import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
+// import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import { useQueryClient } from 'react-query';
 import Modal from '@mui/material/Modal';
@@ -29,8 +29,7 @@ interface UpdateJournalEntryFormProps {
     modalDescription: string;
     modalMessage: string;
     entry: JournalEntry;
-    // handleSubmitResults: (error: boolean, message?: string) => void;
-    userId: string | undefined;
+    handleUpdateResults: () => void;
 }
 
 const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) => {
@@ -40,8 +39,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         modalTitle, 
         modalDescription, 
         entry,
-        userId,
-        // handleSubmitResults
+        handleUpdateResults
     } = props;
     // const navigate = useNavigate();
     // const { data, isFetching, error } = useAuthorJournalEntry(entry.id, userId);
@@ -59,6 +57,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        handleUpdateResults()
         // const updatedJournalEntry = {
         //     id: entry.id,
         //     date: date,

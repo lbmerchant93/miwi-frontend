@@ -15,10 +15,11 @@ import './JournalEntryCard.css';
 interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerDeleteSnackBar: (deleteResults: boolean) => void;
+  triggerUpdateSnackBar: (updateResults: boolean) => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
-  const { entry, triggerDeleteSnackBar } = props;
+  const { entry, triggerDeleteSnackBar, triggerUpdateSnackBar } = props;
   // const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -40,6 +41,18 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     };
     
     setIsWarningModalOpen(false);
+  }
+
+  const onUpdateClick = () => {
+    try {
+      // deleteJournalEntry.mutate(entry.id)
+      triggerUpdateSnackBar(true);
+    } catch (err) {
+      console.log(err);
+      triggerUpdateSnackBar(false);
+    };
+    
+    setIsUpdateModalOpen(false);
   }
 
   return (
@@ -72,8 +85,8 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalTitle="Update journal entry modal"
         modalDescription="Update the journal entry or go back to the dashboard."
         modalMessage="Are you sure you want to update this entry? This action is irreversible." 
-        entry={entry} 
-        userId={entry.authorId}
+        entry={entry}
+        handleUpdateResults={onUpdateClick}
       />
     </>
     

@@ -84,16 +84,21 @@ const DashboardTabPanel: React.FC<DashboardTabPanelProps> = (props) => {
     )
 }
 
+interface DashboardPanelViewsProps {
+    selectedPanel: string; 
+    data: any; 
+    triggerDeleteSnackBar: (deleteResults: boolean) => void;
+    triggerUpdateSnackBar: (updateResults: boolean) => void;
+}
 
-
-const DashboardPanelViews: React.FC<{ selectedPanel: string; data: any; triggerDeleteSnackBar: any; }> = (props) => {
-    const { selectedPanel, data, triggerDeleteSnackBar } = props;
+const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
+    const { selectedPanel, data, triggerDeleteSnackBar, triggerUpdateSnackBar  } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} />
+                    <Component data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} triggerUpdateSnackBar={triggerUpdateSnackBar}/>
                 </DashboardTabPanel>
             ))}
             
@@ -104,11 +109,12 @@ const DashboardPanelViews: React.FC<{ selectedPanel: string; data: any; triggerD
 
 interface DashboardPanelProps {
     data: any;
-    triggerDeleteSnackBar: any;
+    triggerDeleteSnackBar: (deleteResults: boolean) => void;
+    triggerUpdateSnackBar: (updateResults: boolean) => void;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerDeleteSnackBar } = props;
+    const { data, triggerDeleteSnackBar, triggerUpdateSnackBar } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.label), []);
@@ -125,7 +131,12 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                 <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].label} />
             </Box>
             <Box className='dashboard'>
-                <DashboardPanelViews selectedPanel={tab ? tab : dashboardPageMap[0].label} data={data} triggerDeleteSnackBar={triggerDeleteSnackBar}/>
+                <DashboardPanelViews 
+                    selectedPanel={tab ? tab : dashboardPageMap[0].label} 
+                    data={data} 
+                    triggerDeleteSnackBar={triggerDeleteSnackBar} 
+                    triggerUpdateSnackBar={triggerUpdateSnackBar}
+                />
             </Box>
         </Box>
         

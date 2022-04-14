@@ -36,6 +36,14 @@ const DashboardPage = () => {
         })
     }
 
+    const triggerUpdateSnackBar = (updateResults: boolean) => {
+        setSnackBarDetails({ 
+            error: updateResults, 
+            show: true, 
+            message: updateResults ? 'Journal entry update successful!' : 'Something went wrong, please try again or contact us for help.'
+        })
+    }
+
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
@@ -55,7 +63,7 @@ const DashboardPage = () => {
             </SnackBar>
             <UserAside />
             <Box className='dashboard'>
-                <DashboardPanel data={data} triggerDeleteSnackBar={triggerDeleteSnackBar}/>
+                <DashboardPanel data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} triggerUpdateSnackBar={triggerUpdateSnackBar}/>
             </Box>
         </>
         
