@@ -5,7 +5,7 @@ import AppFooter from './features/AppFooter/AppFooter';
 import { AuthContext } from './shared/auth-context';
 import { PossibleRoutes } from './utils/constants';
 import MainPage from './pages/MainPage/MainPage';
-import JournalEntryFormPage from './pages/JournalEntryFormPage/JournalEntryFormPage';
+import JournalEntryFormPage from './pages/DashboardPage/DashboardNewJournalEntryFormPage/DashboardNewJournalEntryFormPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';

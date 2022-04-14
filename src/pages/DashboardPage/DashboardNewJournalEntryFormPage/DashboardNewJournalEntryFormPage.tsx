@@ -1,6 +1,6 @@
 import React, { useState, useContext, FormEvent } from 'react';
-import { AuthContext } from '../../shared/auth-context';
-import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
+import { AuthContext } from '../../../shared/auth-context';
+import { SnackBar, SnackBarDetails } from '../../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import FormLabel from '@mui/material/FormLabel';
@@ -12,12 +12,12 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
-import { useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useCreateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
 
-import './JournalEntryFormPage.css';
+import './DashboardNewJournalEntryFormPage.css';
 
-const JournalEntryFormPage: React.FC = () => {
+const DashboardNewJournalEntryFormPage: React.FC = () => {
     const user = useContext(AuthContext);
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
@@ -159,4 +159,4 @@ const JournalEntryFormPage: React.FC = () => {
     )
 }
 
-export default JournalEntryFormPage;
+export default DashboardNewJournalEntryFormPage;

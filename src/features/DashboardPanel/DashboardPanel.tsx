@@ -5,7 +5,7 @@ import Home from '../../pages/DashboardPage/DashboardHomePage/DashboardHomePage'
 import Box, { BoxProps } from '@mui/material/Box';
 import { useParams, useNavigate } from 'react-router-dom';
 import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
-import JournalEntryForm from '../../pages/JournalEntryFormPage/JournalEntryFormPage';
+import NewJournalEntryForm from '../../pages/DashboardPage/DashboardNewJournalEntryFormPage/DashboardNewJournalEntryFormPage';
 
 import './DashboardPanel.css';
 
@@ -26,7 +26,7 @@ const dashboardPageMap = [
         route: DashboardPageRoutes.journalEntryForm,
         label: 'journal_entry_form',
         tabName: 'JOURNAL ENTRY FORM',
-        Component: JournalEntryForm
+        Component: NewJournalEntryForm
     }
     ,{
         route: DashboardPageRoutes.profile,
