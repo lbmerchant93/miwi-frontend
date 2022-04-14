@@ -28,19 +28,11 @@ const DashboardPage = () => {
     const { data, isFetching } = useJournalEntries(user.id);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
-    const triggerDeleteSnackBar = (deleteResults: boolean) => {
+    const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
-            error: deleteResults, 
+            error: err, 
             show: true, 
-            message: deleteResults ? 'Journal entry deletion successful!' : 'Something went wrong, please try again or contact us for help.'
-        })
-    }
-
-    const triggerUpdateSnackBar = (updateResults: boolean) => {
-        setSnackBarDetails({ 
-            error: updateResults, 
-            show: true, 
-            message: updateResults ? 'Journal entry update successful!' : 'Something went wrong, please try again or contact us for help.'
+            message: message
         })
     }
 
@@ -57,13 +49,13 @@ const DashboardPage = () => {
     return user.isLoggedIn ? (
         <>
             <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
-                <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "success" : "error"} variant="filled">
+                <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "error" : "success"} variant="filled">
                     {snackBarDetails.message}
                 </Alert>
             </SnackBar>
             <UserAside />
             <Box className='dashboard'>
-                <DashboardPanel data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} triggerUpdateSnackBar={triggerUpdateSnackBar}/>
+                <DashboardPanel data={data} triggerSnackBar={triggerSnackBar}/>
             </Box>
         </>
         

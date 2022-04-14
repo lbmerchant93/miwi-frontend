@@ -14,30 +14,23 @@ import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
   entry: JournalEntry;
-  triggerDeleteSnackBar: (deleteResults: boolean) => void;
-  triggerUpdateSnackBar: (updateResults: boolean) => void;
+  triggerSnackBar: (err: boolean, message: string) => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
-  const { entry, triggerDeleteSnackBar, triggerUpdateSnackBar } = props;
+  const { entry, triggerSnackBar } = props;
   // const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const deleteJournalEntry = useDeleteJournalEntry();
 
-  // const onEditClick = (callback: () => void) => {
-  //   return () => {
-  //     callback()
-  //   }
-  // }
-
   const onDeleteClick = () => {
     try {
       deleteJournalEntry.mutate(entry.id)
-      triggerDeleteSnackBar(true);
+      triggerSnackBar(false, 'Journal entry deletion successful!');
     } catch (err) {
       console.log(err);
-      triggerDeleteSnackBar(false);
+      triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
     };
     
     setIsWarningModalOpen(false);
@@ -45,11 +38,11 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
 
   const onUpdateClick = () => {
     try {
-      // deleteJournalEntry.mutate(entry.id)
-      triggerUpdateSnackBar(true);
+
+      triggerSnackBar(false, 'Journal entry update successful!');
     } catch (err) {
       console.log(err);
-      triggerUpdateSnackBar(false);
+      triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
     };
     
     setIsUpdateModalOpen(false);

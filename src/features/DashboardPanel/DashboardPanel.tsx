@@ -87,18 +87,17 @@ const DashboardTabPanel: React.FC<DashboardTabPanelProps> = (props) => {
 interface DashboardPanelViewsProps {
     selectedPanel: string; 
     data: any; 
-    triggerDeleteSnackBar: (deleteResults: boolean) => void;
-    triggerUpdateSnackBar: (updateResults: boolean) => void;
+    triggerSnackBar: (err: boolean, message: string) => void;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
-    const { selectedPanel, data, triggerDeleteSnackBar, triggerUpdateSnackBar  } = props;
+    const { selectedPanel, data, triggerSnackBar } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} triggerUpdateSnackBar={triggerUpdateSnackBar}/>
+                    <Component data={data} triggerSnackBar={triggerSnackBar} />
                 </DashboardTabPanel>
             ))}
             
@@ -109,12 +108,11 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
 
 interface DashboardPanelProps {
     data: any;
-    triggerDeleteSnackBar: (deleteResults: boolean) => void;
-    triggerUpdateSnackBar: (updateResults: boolean) => void;
+    triggerSnackBar: (err: boolean, message: string) => void;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerDeleteSnackBar, triggerUpdateSnackBar } = props;
+    const { data, triggerSnackBar } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.label), []);
@@ -134,8 +132,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                 <DashboardPanelViews 
                     selectedPanel={tab ? tab : dashboardPageMap[0].label} 
                     data={data} 
-                    triggerDeleteSnackBar={triggerDeleteSnackBar} 
-                    triggerUpdateSnackBar={triggerUpdateSnackBar}
+                    triggerSnackBar={triggerSnackBar}
                 />
             </Box>
         </Box>
