@@ -25,25 +25,25 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
     }
 
     return (
-        <div className="dashboard">
-                {data.length ? 
-                (
-                    <Box className='dashboard-journal-entries-container'>
-                        {data.map((entry: JournalEntry) => {
-                            return <JournalEntryCard entry={entry} key={entry.id} triggerDeleteSnackBar={triggerDeleteSnackBar} />
-                        })}
+        <>
+            {data.length ? 
+            (
+                <Box className='dashboard-journal-entries-container'>
+                    {data.map((entry: JournalEntry) => {
+                        return <JournalEntryCard entry={entry} key={entry.id} triggerDeleteSnackBar={triggerDeleteSnackBar} />
+                    })}
+                </Box>
+            ) : (
+                <Box className='dashboard-no-entries-container'>
+                    <Typography variant="h6">Looks like you don't have any journal entries yet. Click the button below to create your first entry!</Typography>
+                    <Box className='dashboard-create-journal-entry-button-container'>
+                        <Button onClick={handleNavigateToJournalEntryForm(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))} variant='contained' color='success'>
+                            <Typography variant="body1">New Journal Entry</Typography>
+                        </Button>
                     </Box>
-                ) : (
-                    <Box className='dashboard-no-entries-container'>
-                        <Typography variant="h6">Looks like you don't have any journal entries yet. Click the button below to create your first entry!</Typography>
-                        <Box className='dashboard-create-journal-entry-button-container'>
-                            <Button onClick={handleNavigateToJournalEntryForm(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))} variant='contained' color='success'>
-                                <Typography variant="body1">New Journal Entry</Typography>
-                            </Button>
-                        </Box>
-                    </Box>
-                )}
-            </div>
+                </Box>
+            )}
+        </>
     )
 }
 
