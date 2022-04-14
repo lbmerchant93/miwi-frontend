@@ -3,21 +3,6 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
-    padding-top: 3rem;
-}
-
-.dashboard-journal-entries-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.dashboard-no-entries-container {
-    display: flex;
-    flex-direction: column;
-    max-width: min(80ch, 100%);
-}
-
-.dashboard-create-journal-entry-button-container {
-    margin-top: 15px;;
+    padding-top: 1rem;
+    width: 100%;
 }

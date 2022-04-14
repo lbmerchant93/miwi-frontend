@@ -12,24 +12,24 @@ import { getAuth, signOut } from 'firebase/auth';
 import Typography from '@mui/material/Typography';
 import MUIAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
+// import useScrollTrigger from '@mui/material/useScrollTrigger';
 import './AppBar.css';
 
-const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
-    const { children } = props;
+// const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
+//     const { children } = props;
   
-    const trigger = useScrollTrigger({
-      disableHysteresis: true,
-      threshold: 0,
-      target: window,
-    });
+//     const trigger = useScrollTrigger({
+//       disableHysteresis: true,
+//       threshold: 0,
+//       target: window,
+//     });
   
-    return React.cloneElement(children, {
-        style: {
-            boxShadow: trigger ? '0px 4px 7px -4px rgb(0 0 0 / 20%)' : 'none'
-        }
-    });
-  };
+//     return React.cloneElement(children, {
+//         style: {
+//             boxShadow: trigger ? '0px 4px 7px -4px rgb(0 0 0 / 20%)' : 'none'
+//         }
+//     });
+//   };
 
 const AppBar: React.FC = () => {
     const user = useContext(AuthContext);
@@ -53,7 +53,7 @@ const AppBar: React.FC = () => {
     };
 
     return (
-        <ElevationScroll>
+        <>
             <MUIAppBar elevation={0} position="sticky" color="inherit">
                 <Toolbar className='header'>
                     <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
@@ -112,10 +112,6 @@ const AppBar: React.FC = () => {
                                 onClick={onListItemClick(() => navigate(PossibleRoutes.DASHBOARD))}>
                                     My Dashboard
                             </MenuItem>
-                            <MenuItem 
-                                onClick={onListItemClick(() => navigate(PossibleRoutes.JOURNAL_ENTRY_FORM))}>
-                                    New Journal Entry
-                            </MenuItem>
                             <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
                                 <MenuItem 
                                     onClick={onListItemClick(() => signOut(auth))}>
@@ -126,7 +122,7 @@ const AppBar: React.FC = () => {
                     </div>   
                 </Toolbar> 
             </MUIAppBar>
-        </ElevationScroll>
+        </>
     );
 };
 

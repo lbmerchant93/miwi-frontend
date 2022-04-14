@@ -1,0 +1,8 @@
+.user-aside-container {
+    min-width: 250px;
+    max-width: 350px;
+    padding: 1rem 0.5rem 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

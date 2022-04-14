@@ -5,7 +5,6 @@ import AppFooter from './features/AppFooter/AppFooter';
 import { AuthContext } from './shared/auth-context';
 import { PossibleRoutes } from './utils/constants';
 import MainPage from './pages/MainPage/MainPage';
-import JournalEntryFormPage from './pages/JournalEntryFormPage/JournalEntryFormPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
@@ -61,8 +60,7 @@ const App = () => {
     <Routes>
       <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
-      <Route path={`${PossibleRoutes.JOURNAL_ENTRY_FORM}`} element={<JournalEntryFormPage />} />
-      <Route path={`${PossibleRoutes.UPDATE_JOURNAL_ENTRY_FORM}`} element={<JournalEntryFormPage />} />
+      <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
     </Routes>
   );
   
@@ -81,7 +79,9 @@ const App = () => {
             <Router>
               <ReactQueryDevtools initialIsOpen={false} />
               <AppBar />
-              {routes}
+              <main>
+                {routes}
+              </main>
               <AppFooter />
             </Router>
           </ThemeProvider>
