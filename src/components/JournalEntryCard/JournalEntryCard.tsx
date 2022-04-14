@@ -6,9 +6,10 @@ import moment from 'moment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import WarningModal from '../WarningModal/WarningModal';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
+import UpdateJournalEntryModal from '../UpdateJournalEntryModal/UpdateJournalEntryModal';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
@@ -18,15 +19,16 @@ interface JournalEntryCardProps {
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry, triggerDeleteSnackBar } = props;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const deleteJournalEntry = useDeleteJournalEntry();
 
-  const onEditClick = (callback: () => void) => {
-    return () => {
-      callback()
-    }
-  }
+  // const onEditClick = (callback: () => void) => {
+  //   return () => {
+  //     callback()
+  //   }
+  // }
 
   const onDeleteClick = () => {
     try {
@@ -52,7 +54,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         <Typography variant="body1">You <b>{entry.prenatalVitamins ? 'did' : 'did not'}</b> take your prenatal vitamins </Typography>
         <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
         <Box className="journal-entry-card-options">
-            <IconButton onClick={onEditClick(() => navigate(`/journal_entry_form/${entry.id}`))} color="default"><EditIcon /></IconButton> 
+            <IconButton onClick={() => setIsUpdateModalOpen(true)} color="default"><EditIcon /></IconButton> 
             <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning"><DeleteIcon /></IconButton>
         </Box>
       </Box>
@@ -63,6 +65,15 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalDescription="Confirm journal entry delete or go back to the dashboard."
         modalMessage="Are you sure you want to delete this entry? This action is irreversible."
         verifiedAction={onDeleteClick}
+      />
+      <UpdateJournalEntryModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        modalTitle="Update journal entry modal"
+        modalDescription="Update the journal entry or go back to the dashboard."
+        modalMessage="Are you sure you want to update this entry? This action is irreversible." 
+        entry={entry} 
+        userId={entry.authorId}
       />
     </>
     
