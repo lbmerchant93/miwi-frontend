@@ -5,7 +5,6 @@ import AppFooter from './features/AppFooter/AppFooter';
 import { AuthContext } from './shared/auth-context';
 import { PossibleRoutes } from './utils/constants';
 import MainPage from './pages/MainPage/MainPage';
-import JournalEntryFormPage from './pages/DashboardPage/DashboardNewJournalEntryFormPage/DashboardNewJournalEntryFormPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
@@ -62,7 +61,6 @@ const App = () => {
       <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
-      <Route path={`${PossibleRoutes.JOURNAL_ENTRY_FORM}`} element={<JournalEntryFormPage />} />
     </Routes>
   );
   
