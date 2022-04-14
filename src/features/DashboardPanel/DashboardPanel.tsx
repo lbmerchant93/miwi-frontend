@@ -4,12 +4,13 @@ import Tab from '@mui/material/Tab';
 import Home from '../../pages/DashboardPage/DashboardHomePage/DashboardHomePage';
 import Box, { BoxProps } from '@mui/material/Box';
 import { useParams, useNavigate } from 'react-router-dom';
+import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
 
 import './DashboardPanel.css';
 
 export enum DashboardPageRoutes {
     home = 'home',
-    newEntry = 'newEntry',
+    entryForm = 'entryForm',
     profile = 'profile'
 }
 
@@ -20,23 +21,25 @@ const dashboardPageMap = [
         Component: Home
     }
     // ,{
-    //     route: DashboardPageRoutes.newEntry,
-    //     label: 'NewEntry',
-    //     // Component: 
-    // },{
-    //     route: DashboardPageRoutes.profile,
-    //     label: 'Profile',
+    //     route: DashboardPageRoutes.entryForm,
+    //     label: 'entryForm',
     //     // Component: 
     // }
+    ,{
+        route: DashboardPageRoutes.profile,
+        label: 'profile',
+        Component: Profile
+    }
 ]
 
 const DashboardTabs: React.FC<{
     selectedTab: string;
 }> = (props) => {
-    const { selectedTab } = props
-    const handleChange = () => {
-        console.log("change")
-    }
+    const { selectedTab } = props;
+    const navigate = useNavigate();
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: any) => {
+        navigate(`/dashboard/${newValue}`)
+    };
 
     return (
         <Tabs
@@ -79,14 +82,14 @@ const DashboardTabPanel: React.FC<DashboardTabPanelProps> = (props) => {
 
 
 
-const DashboardPanelViews: React.FC<{ selectedPanel: string; }> = (props) => {
-    const { selectedPanel } = props;
+const DashboardPanelViews: React.FC<{ selectedPanel: string; data: any; triggerDeleteSnackBar: any; }> = (props) => {
+    const { selectedPanel, data, triggerDeleteSnackBar } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={undefined} triggerDeleteSnackBar={undefined} />
+                    <Component data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} />
                 </DashboardTabPanel>
             ))}
             
@@ -95,7 +98,13 @@ const DashboardPanelViews: React.FC<{ selectedPanel: string; }> = (props) => {
     )
 }
 
-const DashboardPanel = () => {
+interface DashboardPanelProps {
+    data: any;
+    triggerDeleteSnackBar: any;
+}
+
+const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
+    const { data, triggerDeleteSnackBar } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.label), []);
@@ -107,12 +116,12 @@ const DashboardPanel = () => {
     }, [tab, panelRoutes, navigate])
     
     return (
-        <>
+        <Box className='dashboard-panel'>
             <Box>
                 <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].label} />
             </Box>
-            <DashboardPanelViews selectedPanel={''} />
-        </>
+            <DashboardPanelViews selectedPanel={tab ? tab : dashboardPageMap[0].label} data={data} triggerDeleteSnackBar={triggerDeleteSnackBar}/>
+        </Box>
         
     )
 }

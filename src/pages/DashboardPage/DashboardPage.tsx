@@ -1,17 +1,11 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
-// import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 import Box from '@mui/material/Box';
-// import Typography from '@mui/material/Typography';
-// import { useNavigate } from 'react-router-dom';
-// import Button from '@mui/material/Button';
-// import { PossibleRoutes } from '../../utils/constants';
 import { useJournalEntries } from '../../api/journalEntries/journalEntries';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import UserAside from "../../features/UserAside/UserAside";
-import DashboardHomePage from './DashboardHomePage/DashboardHomePage';
 import DashboardPanel from '../../features/DashboardPanel/DashboardPanel';
 
 import './DashboardPage.css';
@@ -60,9 +54,8 @@ const DashboardPage = () => {
                 </Alert>
             </SnackBar>
             <UserAside />
-            <Box>
-                <DashboardPanel />
-                {data.length && <DashboardHomePage data={data} triggerDeleteSnackBar={triggerDeleteSnackBar} /> }
+            <Box className='dashboard'>
+                <DashboardPanel data={data} triggerDeleteSnackBar={triggerDeleteSnackBar}/>
             </Box>
         </>
         

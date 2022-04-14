@@ -7,6 +7,8 @@ import { JournalEntry } from '../DashboardPage';
 import { useNavigate } from 'react-router-dom';
 import { PossibleRoutes } from '../../../utils/constants';
 
+import './DashboardHomePage.css'
+
 interface DashboardHomePageProps {
     data: any;
     triggerDeleteSnackBar: any;
