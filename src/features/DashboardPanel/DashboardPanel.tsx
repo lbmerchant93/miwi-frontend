@@ -18,20 +18,20 @@ export enum DashboardPageRoutes {
 const dashboardPageMap = [
     {
         route: DashboardPageRoutes.home,
-        label: 'home',
-        tabName: 'HOME',
+        label: 'HOME',
+        tab: 'home',
         Component: Home
     }
     ,{
         route: DashboardPageRoutes.journalEntryForm,
-        label: 'journal_entry_form',
-        tabName: 'JOURNAL ENTRY FORM',
+        label: 'JOURNAL ENTRY FORM',
+        tab: 'journal_entry_form',
         Component: NewJournalEntryForm
     }
     ,{
         route: DashboardPageRoutes.profile,
-        label: 'profile',
-        tabName: 'PROFILE',
+        label: 'PROFILE',
+        tab: 'profile',
         Component: Profile
     }
 ]
@@ -52,10 +52,10 @@ const DashboardTabs: React.FC<{
             textColor="inherit"
             indicatorColor="primary"
         >
-            {dashboardPageMap.map(({ tabName, route }) => (
+            {dashboardPageMap.map(({ label, route }) => (
                 <Tab 
                     key={route}
-                    label={tabName}
+                    label={label}
                     value={route}
                 />
             ))}
@@ -115,7 +115,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
     const { data, triggerSnackBar } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
-    const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.label), []);
+    const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.tab), []);
 
     React.useEffect(() => {
         if (tab && !panelRoutes.includes(tab)) {
@@ -126,11 +126,11 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
     return (
         <Box className='dashboard-panel'>
             <Box>
-                <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].label} />
+                <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].tab} />
             </Box>
             <Box className='dashboard'>
                 <DashboardPanelViews 
-                    selectedPanel={tab ? tab : dashboardPageMap[0].label} 
+                    selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
                     data={data} 
                     triggerSnackBar={triggerSnackBar}
                 />

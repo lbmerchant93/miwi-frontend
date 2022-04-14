@@ -10,9 +10,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-// import { useNavigate } from 'react-router-dom';
-// import { PossibleRoutes } from '../../utils/constants';
-// import { useAuthorJournalEntry } from '../../api/journalEntries/journalEntries';
 // import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import { useQueryClient } from 'react-query';
@@ -41,8 +38,6 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         entry,
         handleUpdateResults
     } = props;
-    // const navigate = useNavigate();
-    // const { data, isFetching, error } = useAuthorJournalEntry(entry.id, userId);
     const [date, setDate] = useState<string | null>(entry.date);
     const [waterIntake, setWaterIntake] = useState<number | string>(entry.waterIntake);
     const [proteinIntake, setProteinIntake] = useState<number | string>(entry.proteinIntake);
@@ -86,51 +81,12 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         // };
     };
 
-    // const handleCancelUpdateEntryClick = (callback: () => void) => {
-    //     return () => {
-    //         callback()
-    //     };
-    // };
-
-    // useEffect(() => {
-    //     if (data && data.length) {
-    //         setDate(data[0].date)
-    //         setWaterIntake(data[0].waterIntake)
-    //         setProteinIntake(data[0].proteinIntake)
-    //         setExercise(data[0].exercise)
-    //         setKegels(data[0].kegels)
-    //         setGarlandPose(data[0].garlandPose)
-    //         setPrenatalVitamins(data[0].prenatalVitamins)
-    //         setProbiotics(data[0].probiotics)
-    //         setPreviousEntry(
-    //             {
-    //                 id: entryId,
-    //                 date: data[0].date,
-    //                 waterIntake: data[0].waterIntake,
-    //                 proteinIntake: data[0].proteinIntake,
-    //                 exercise: data[0].exercise,
-    //                 kegels: data[0].kegels,
-    //                 garlandPose: data[0].garlandPose,
-    //                 prenatalVitamins: data[0].prenatalVitamins,
-    //                 probiotics: data[0].probiotics,
-    //                 authorId: userId
-    //             }
-    //         )
-    //     } 
-    // }, [data, entryId, userId]);
-
     useEffect(() => {
         if (queryClient.getQueryData(["authorJournalEntry"])) {
             queryClient.removeQueries(["authorJournalEntry"])
         }
     }, []) // eslint-disable-line 
     // the above disable is to remove warning of needing queryClient as a dependency but we only want the useEffect to run once
-
-    // if (isFetching) {
-    //     return (
-    //         <p>Fetching data...</p>
-    //     );
-    // };
 
     return (
         <Modal
@@ -238,9 +194,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                     </Box>
                 </form>
             </Box>
-        </Modal>
-    //  {(data && data.length && !error) &&
-        
+        </Modal>   
     )
 }
 

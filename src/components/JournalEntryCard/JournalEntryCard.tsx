@@ -6,7 +6,6 @@ import moment from 'moment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import WarningModal from '../WarningModal/WarningModal';
-// import { useNavigate } from 'react-router-dom';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import UpdateJournalEntryModal from '../UpdateJournalEntryModal/UpdateJournalEntryModal';
@@ -19,7 +18,6 @@ interface JournalEntryCardProps {
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry, triggerSnackBar } = props;
-  // const navigate = useNavigate();
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const deleteJournalEntry = useDeleteJournalEntry();
