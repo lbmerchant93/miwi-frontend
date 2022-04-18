@@ -88,16 +88,17 @@ interface DashboardPanelViewsProps {
     selectedPanel: string; 
     data: any; 
     triggerSnackBar: (err: boolean, message: string) => void;
+    refetch: () => void;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
-    const { selectedPanel, data, triggerSnackBar } = props;
+    const { selectedPanel, data, triggerSnackBar, refetch } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerSnackBar={triggerSnackBar} />
+                    <Component data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} />
                 </DashboardTabPanel>
             ))}
             
@@ -109,10 +110,11 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
 interface DashboardPanelProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
+    refetch: () => void;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerSnackBar } = props;
+    const { data, triggerSnackBar, refetch } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.tab), []);
@@ -133,6 +135,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                     selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
                     data={data} 
                     triggerSnackBar={triggerSnackBar}
+                    refetch={refetch}
                 />
             </Box>
         </Box>

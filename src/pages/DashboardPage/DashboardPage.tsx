@@ -25,7 +25,7 @@ export interface JournalEntry {
 
 const DashboardPage = () => {
     const user = useContext(AuthContext);
-    const { data, isFetching } = useJournalEntries(user.id);
+    const { data, isFetching, refetch } = useJournalEntries(user.id);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const triggerSnackBar = (err: boolean, message: string) => {
@@ -55,7 +55,7 @@ const DashboardPage = () => {
             </SnackBar>
             <UserAside />
             <Box className='dashboard'>
-                <DashboardPanel data={data} triggerSnackBar={triggerSnackBar}/>
+                <DashboardPanel data={data} triggerSnackBar={triggerSnackBar} refetch={refetch}/>
             </Box>
         </>
         

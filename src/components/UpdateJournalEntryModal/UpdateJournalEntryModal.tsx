@@ -10,12 +10,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { JournalEntryUpdate, useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
-// import { useQueryClient } from 'react-query';
 import Modal from '@mui/material/Modal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
-
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import './UpdateJournalEntryModal.css';
 
@@ -26,6 +25,7 @@ interface UpdateJournalEntryFormProps {
     modalDescription: string;
     modalMessage: string;
     entry: JournalEntry;
+    // update: (updatedEntry: JournalEntryUpdate) => void;
     onUpdateClick: (err: boolean, message: string) => void;
 }
 
@@ -36,6 +36,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         modalTitle, 
         modalDescription, 
         entry,
+        // update
         onUpdateClick
     } = props;
     const [date, setDate] = useState<string>(entry.date);
@@ -46,12 +47,12 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
     const [garlandPose, setGarlandPose] = useState<number>(entry.garlandPose);
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean>(entry.prenatalVitamins);
     const [probiotics, setProbiotics] = useState<boolean>(entry.probiotics);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const updateJournalEntry = useUpdateJournalEntry();
-    // const queryClient = useQueryClient();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+        setIsLoading(true)
         const updatedEntry = {
             id: JSON.stringify(entry.id),
             date: date,
@@ -66,7 +67,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         };
     
         const previousEntry = {
-            id: entry.id,
+            id: JSON.stringify(entry.id),
             date: entry.date,
             waterIntake: entry.waterIntake,
             proteinIntake: entry.proteinIntake,
@@ -79,16 +80,20 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         }
     
         if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
+            // update(updatedEntry)
                 updateJournalEntry.mutate(updatedEntry, {
                     onError: (err: any) => {
                         onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
+                        setIsLoading(false)
                     },
                     onSuccess: () => {
                         onUpdateClick(false, 'Journal entry update successful!')
+                        setTimeout(() => setIsLoading(false), 2000)
                     }
                 });
         } else {
             onUpdateClick(true, 'Please update the form before clicking submit.')
+            setIsLoading(false)
         };
     };
 
@@ -190,11 +195,18 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                     </RadioGroup>
                     <Box className="update-entry-form-button-container">
                         <Box className="update-entry-form-button">
-                            <Button type='submit' variant='contained' color='success'>Update</Button>
+                            <LoadingButton 
+                                type='submit' 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
                         </Box>
-                        <Box className="update-entry-form-button">
+                        {!isLoading && <Box className="update-entry-form-button">
                             <Button onClick={onClose} variant='contained' color='inherit'>Cancel</Button>
-                        </Box>
+                        </Box>}
                     </Box>
                 </form>
             </Box>

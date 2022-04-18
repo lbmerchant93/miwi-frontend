@@ -1,7 +1,6 @@
 import API from '../apolloClient';
 import { gql } from '@apollo/client';
 import { useQuery, useMutation, useQueryClient  } from 'react-query';
-import { journalEntries } from './journalEntries';
 
 const journalEntry = gql`
   query JournalEntry($id: Int) {
@@ -107,7 +106,7 @@ export const useCreateJournalEntry = () => {
   })
 }
 
-interface JournalEntryUpdate {
+export interface JournalEntryUpdate {
   id: string | undefined;
   date: string | null;
   waterIntake: number | string;
@@ -180,10 +179,10 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: async (newEntry) => {
-      // working here, the work below instantly updates the dashboard... YAY!!...BUTTTT... needs to be slowed down, should show the snackbar and should got to loading maybe?
-      await queryClient.refetchQueries(['journalEntries'])
-      queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
+    onSuccess: async () => {
+      // working here, the work below instantly updates the dashboard... YAY!!...BUTTTT... needs to be slowed down, should show the snackbar
+      // await queryClient.refetchQueries(['journalEntries'])
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }
   })
 }
