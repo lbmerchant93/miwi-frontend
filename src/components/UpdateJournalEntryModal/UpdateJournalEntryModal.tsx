@@ -10,7 +10,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { JournalEntryUpdate, useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import Modal from '@mui/material/Modal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
@@ -25,7 +25,6 @@ interface UpdateJournalEntryFormProps {
     modalDescription: string;
     modalMessage: string;
     entry: JournalEntry;
-    // update: (updatedEntry: JournalEntryUpdate) => void;
     onUpdateClick: (err: boolean, message: string) => void;
 }
 
@@ -36,7 +35,6 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         modalTitle, 
         modalDescription, 
         entry,
-        // update
         onUpdateClick
     } = props;
     const [date, setDate] = useState<string>(entry.date);
@@ -80,17 +78,17 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         }
     
         if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
-            // update(updatedEntry)
-                updateJournalEntry.mutate(updatedEntry, {
-                    onError: (err: any) => {
-                        onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
-                        setIsLoading(false)
-                    },
-                    onSuccess: () => {
-                        onUpdateClick(false, 'Journal entry update successful!')
-                        setTimeout(() => setIsLoading(false), 2000)
-                    }
-                });
+            updateJournalEntry.mutate(updatedEntry, {
+                onError: (err: any) => {
+                    onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: () => {
+                    onUpdateClick(false, 'Journal entry update successful!')
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
+            });
         } else {
             onUpdateClick(true, 'Please update the form before clicking submit.')
             setIsLoading(false)

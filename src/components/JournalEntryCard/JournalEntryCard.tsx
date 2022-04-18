@@ -9,7 +9,6 @@ import WarningModal from '../WarningModal/WarningModal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import UpdateJournalEntryModal from '../UpdateJournalEntryModal/UpdateJournalEntryModal';
-// import { JournalEntryUpdate, useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
@@ -23,7 +22,6 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const deleteJournalEntry = useDeleteJournalEntry();
-  // const updateJournalEntry = useUpdateJournalEntry();
   
 
   const onDeleteClick = () => {
@@ -38,31 +36,15 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     setIsWarningModalOpen(false);
   }
 
-  // const update = (updatedEntry: JournalEntryUpdate) => {
-  //   updateJournalEntry.mutate(updatedEntry, {
-  //     onError: (err: any) => {
-  //       console.log(err);
-  //       triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');   
-  //     },
-  //     onSuccess: () => {
-  //       triggerSnackBar(false, 'Journal entry update successful!');
-  //     },
-  //     onSettled: () => {
-  //     }
-  //   })
-    
-  // }
-
   const onUpdateClick = (err: boolean, message: string) => {
     triggerSnackBar(err, message);
     if (err) {
       setIsUpdateModalOpen(true);
     } else {
-      triggerSnackBar(err, message);
+      setIsUpdateModalOpen(false)
       setTimeout(() => {
-        setIsUpdateModalOpen(false)
         refetch()
-      }, 2005)
+      }, 1000)
     }
   }
 
@@ -97,7 +79,6 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalDescription="Update the journal entry or go back to the dashboard."
         modalMessage="Are you sure you want to update this entry? This action is irreversible." 
         entry={entry}
-        // update={update}
         onUpdateClick={onUpdateClick}
       />
     </>

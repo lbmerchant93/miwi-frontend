@@ -111,10 +111,11 @@ interface DashboardPanelProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
     refetch: () => void;
+    isFetching: boolean;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerSnackBar, refetch } = props;
+    const { data, triggerSnackBar, refetch, isFetching } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.tab), []);
@@ -130,14 +131,16 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
             <Box>
                 <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].tab} />
             </Box>
-            <Box className='dashboard'>
-                <DashboardPanelViews 
-                    selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
-                    data={data} 
-                    triggerSnackBar={triggerSnackBar}
-                    refetch={refetch}
-                />
-            </Box>
+            {!isFetching && (
+                <Box className='dashboard'>
+                    <DashboardPanelViews 
+                        selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
+                        data={data} 
+                        triggerSnackBar={triggerSnackBar}
+                        refetch={refetch}
+                    />
+                </Box>
+            )}
         </Box>
         
     )

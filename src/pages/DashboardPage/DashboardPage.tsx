@@ -40,12 +40,6 @@ const DashboardPage = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
 
-    if (isFetching) {
-        return (
-            <p>Fetching data...</p>
-        )
-    }
-
     return user.isLoggedIn ? (
         <>
             <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
@@ -55,10 +49,9 @@ const DashboardPage = () => {
             </SnackBar>
             <UserAside />
             <Box className='dashboard'>
-                <DashboardPanel data={data} triggerSnackBar={triggerSnackBar} refetch={refetch}/>
+                <DashboardPanel data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} isFetching={isFetching}/>
             </Box>
         </>
-        
     ) : (
         <MessagePage 
             title="Uh oh, looks like you're not logged in."
