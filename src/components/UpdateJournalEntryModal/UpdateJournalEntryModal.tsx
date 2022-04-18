@@ -10,7 +10,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-// import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
 // import { useQueryClient } from 'react-query';
 import Modal from '@mui/material/Modal';
@@ -46,14 +46,14 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
     const [garlandPose, setGarlandPose] = useState<number>(entry.garlandPose);
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean>(entry.prenatalVitamins);
     const [probiotics, setProbiotics] = useState<boolean>(entry.probiotics);
-    // const updateJournalEntry = useUpdateJournalEntry();
+    const updateJournalEntry = useUpdateJournalEntry();
     // const queryClient = useQueryClient();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         const updatedEntry = {
-            id: entry.id,
+            id: JSON.stringify(entry.id),
             date: date,
             waterIntake: waterIntake,
             proteinIntake: proteinIntake,
@@ -79,16 +79,14 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         }
     
         if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
-                // updateJournalEntry.mutate(updatedJournalEntry, {
-                //     onError: (err: any) => {
-                //         // handleSubmitResults(true, err.message)
-                // onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
-                //     },
-                //     onSuccess: () => {
-                //         // handleSubmitResults(false)
-                onUpdateClick(false, 'Journal entry update successful!')
-                //     }
-                // });
+                updateJournalEntry.mutate(updatedEntry, {
+                    onError: (err: any) => {
+                        onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
+                    },
+                    onSuccess: () => {
+                        onUpdateClick(false, 'Journal entry update successful!')
+                    }
+                });
         } else {
             onUpdateClick(true, 'Please update the form before clicking submit.')
         };

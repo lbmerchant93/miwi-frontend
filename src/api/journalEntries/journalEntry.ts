@@ -181,15 +181,9 @@ export const useUpdateJournalEntry = () => {
 
   return useMutation(updateJournalEntry, {
     onSuccess: async (newEntry) => {
-      const previousEntries = await queryClient.fetchQuery(["journalEntries"], async () => {
-        const { data } = await API.query<any>({
-            query: journalEntries,
-            variables: { authorId: newEntry.authorId }
-        });
-
-        return data.journalEntries;
-      })
-      return previousEntries
+      // working here, the work below instantly updates the dashboard... YAY!!...BUTTTT... needs to be slowed down, should show the snackbar and should got to loading maybe?
+      await queryClient.refetchQueries(['journalEntries'])
+      queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
     }
   })
 }
