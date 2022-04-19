@@ -88,16 +88,18 @@ interface DashboardPanelViewsProps {
     selectedPanel: string; 
     data: any; 
     triggerSnackBar: (err: boolean, message: string) => void;
+    refetch: () => void;
+    isFetching: boolean;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
-    const { selectedPanel, data, triggerSnackBar } = props;
+    const { selectedPanel, data, triggerSnackBar, refetch, isFetching } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerSnackBar={triggerSnackBar} />
+                    <Component data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} isFetching={isFetching} />
                 </DashboardTabPanel>
             ))}
             
@@ -109,10 +111,12 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
 interface DashboardPanelProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
+    refetch: () => void;
+    isFetching: boolean;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerSnackBar } = props;
+    const { data, triggerSnackBar, refetch, isFetching } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.tab), []);
@@ -128,13 +132,19 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
             <Box>
                 <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].tab} />
             </Box>
-            <Box className='dashboard'>
-                <DashboardPanelViews 
-                    selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
-                    data={data} 
-                    triggerSnackBar={triggerSnackBar}
-                />
-            </Box>
+            {!isFetching ? (
+                <Box className='dashboard'>
+                    <DashboardPanelViews 
+                        selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
+                        data={data} 
+                        triggerSnackBar={triggerSnackBar}
+                        refetch={refetch}
+                        isFetching={isFetching}
+                    />
+                </Box>
+            ) : (
+                <p>Fetching...</p>
+            )}
         </Box>
         
     )

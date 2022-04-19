@@ -14,36 +14,36 @@ import './JournalEntryCard.css';
 interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
+  refetch: () => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
-  const { entry, triggerSnackBar } = props;
+  const { entry, triggerSnackBar, refetch } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const deleteJournalEntry = useDeleteJournalEntry();
+  
 
   const onDeleteClick = () => {
     try {
       deleteJournalEntry.mutate(entry.id)
       triggerSnackBar(false, 'Journal entry deletion successful!');
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
+      triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
     };
     
     setIsWarningModalOpen(false);
   }
 
-  const onUpdateClick = () => {
-    try {
-
-      triggerSnackBar(false, 'Journal entry update successful!');
-    } catch (err) {
-      console.log(err);
-      triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
-    };
-    
-    setIsUpdateModalOpen(false);
+  const onUpdateClick = (err: boolean, message: string) => {
+    triggerSnackBar(err, message);
+    if (err) {
+      setIsUpdateModalOpen(true);
+    } else {
+      setIsUpdateModalOpen(false)
+      refetch()
+    }
   }
 
   return (
@@ -77,7 +77,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalDescription="Update the journal entry or go back to the dashboard."
         modalMessage="Are you sure you want to update this entry? This action is irreversible." 
         entry={entry}
-        handleUpdateResults={onUpdateClick}
+        onUpdateClick={onUpdateClick}
       />
     </>
     
