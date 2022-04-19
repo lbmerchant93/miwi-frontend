@@ -25,16 +25,16 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   
 
   const onDeleteClick = () => {
-    try {
-      deleteJournalEntry.mutate(entry.id)
-      triggerSnackBar(false, 'Journal entry deletion successful!');
-    } catch (err: any) {
-      console.log(err);
-      triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
-    };
-    
+    deleteJournalEntry.mutate(entry.id, {
+      onError: (err: any) => {
+        triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
+      },
+      onSuccess: () => {
+        triggerSnackBar(false, 'Journal entry deletion successful!');
+      }
+    });
     setIsWarningModalOpen(false);
-  }
+  };
 
   const onUpdateClick = (err: boolean, message: string) => {
     triggerSnackBar(err, message);
