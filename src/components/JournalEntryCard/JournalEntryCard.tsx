@@ -42,9 +42,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       setIsUpdateModalOpen(true);
     } else {
       setIsUpdateModalOpen(false)
-      setTimeout(() => {
-        refetch()
-      }, 1000)
+      refetch()
     }
   }
 

@@ -1,7 +1,6 @@
 import API from '../apolloClient';
 import { gql } from '@apollo/client';
 import { useQuery, useMutation, useQueryClient  } from 'react-query';
-// import { journalEntries } from './journalEntries';
 
 const journalEntry = gql`
   query JournalEntry($id: Int) {
@@ -180,16 +179,8 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: async (newEntry) => {
-      // await queryClient.prefetchQuery(["journalEntries"], async () => {
-      //   const { data } = await API.query<any>({
-      //       query: journalEntries,
-      //       variables: { authorId: newEntry.authorId }
-      //   });
-
-      //   return data.journalEntries;
-      // })
-      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+    onSuccess: () => {
+      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }
   })
 }

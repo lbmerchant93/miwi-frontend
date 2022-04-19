@@ -89,16 +89,17 @@ interface DashboardPanelViewsProps {
     data: any; 
     triggerSnackBar: (err: boolean, message: string) => void;
     refetch: () => void;
+    isFetching: boolean;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
-    const { selectedPanel, data, triggerSnackBar, refetch } = props;
+    const { selectedPanel, data, triggerSnackBar, refetch, isFetching } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} />
+                    <Component data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} isFetching={isFetching} />
                 </DashboardTabPanel>
             ))}
             
@@ -131,15 +132,18 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
             <Box>
                 <DashboardTabs selectedTab={tab ? tab : dashboardPageMap[0].tab} />
             </Box>
-            {!isFetching && (
+            {!isFetching ? (
                 <Box className='dashboard'>
                     <DashboardPanelViews 
                         selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
                         data={data} 
                         triggerSnackBar={triggerSnackBar}
                         refetch={refetch}
+                        isFetching={isFetching}
                     />
                 </Box>
+            ) : (
+                <p>Fetching...</p>
             )}
         </Box>
         
