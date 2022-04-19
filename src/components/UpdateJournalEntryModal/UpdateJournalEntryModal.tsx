@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
@@ -95,10 +95,33 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         };
     };
 
+    const handleClose = () => {
+        setDate(entry.date)
+        setWaterIntake(entry.waterIntake)
+        setProteinIntake(entry.proteinIntake)
+        setExercise(entry.exercise)
+        setKegels(entry.kegels)
+        setGarlandPose(entry.garlandPose)
+        setPrenatalVitamins(entry.prenatalVitamins)
+        setProbiotics(entry.probiotics)
+        onClose()
+    }
+
+    useEffect(() => {
+        setDate(entry.date)
+        setWaterIntake(entry.waterIntake)
+        setProteinIntake(entry.proteinIntake)
+        setExercise(entry.exercise)
+        setKegels(entry.kegels)
+        setGarlandPose(entry.garlandPose)
+        setPrenatalVitamins(entry.prenatalVitamins)
+        setProbiotics(entry.probiotics)
+    }, [entry])
+
     return (
         <Modal
             open={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             aria-labelledby={`${modalTitle}`}
             aria-describedby={`${modalDescription}`}
             className="update-entry-modal"
@@ -203,7 +226,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                             </LoadingButton>
                         </Box>
                         {!isLoading && <Box className="update-entry-form-button">
-                            <Button onClick={onClose} variant='contained' color='inherit'>Cancel</Button>
+                            <Button onClick={handleClose} variant='contained' color='inherit'>Cancel</Button>
                         </Box>}
                     </Box>
                 </form>
