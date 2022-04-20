@@ -20,8 +20,8 @@ const UserAside = () => {
                 {user.displayName?.toUpperCase()[0]}
             </Avatar>
             <Typography variant="h4">{user.displayName}</Typography>
-            <Typography variant="h6">Estimated due date:</Typography>
-            <Typography variant="h6">April 20th 2022</Typography>
+            {/* <Typography variant="h6">Estimated due date:</Typography>
+            <Typography variant="h6">April 20th 2022</Typography> */}
             {/* <Button 
                 variant="outlined" 
                 onClick={() => console.log("go to edit")}
