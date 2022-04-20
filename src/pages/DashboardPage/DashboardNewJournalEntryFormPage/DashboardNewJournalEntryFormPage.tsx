@@ -11,14 +11,21 @@ import DatePicker from '@mui/lab/DatePicker';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Button from '@mui/material/Button';
 import { useCreateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 
 import './DashboardNewJournalEntryFormPage.css';
 
-const DashboardNewJournalEntryFormPage: React.FC = () => {
+interface DashboardNewJournalEntryFormPageProps {
+    setEntries: any;
+}
+
+const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPageProps> = (props) => {
+    const { setEntries } = props;
     const user = useContext(AuthContext);
+    const navigate = useNavigate();
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
     const [proteinIntake, setProteinIntake] = useState<number | string>('');
@@ -27,8 +34,9 @@ const DashboardNewJournalEntryFormPage: React.FC = () => {
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
-    const createJournalEntry = useCreateJournalEntry();
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const createJournalEntry = useCreateJournalEntry();
 
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
@@ -36,6 +44,7 @@ const DashboardNewJournalEntryFormPage: React.FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true)
 
         const journalEntry = {
             authorId: user.id,
@@ -53,8 +62,14 @@ const DashboardNewJournalEntryFormPage: React.FC = () => {
             onError: (err: any) => {
                 setSnackBarDetails({ error: true, show: true, message: err.message || `Something went wrong, please try again` })
             },
-            onSuccess: () => {
+            onSuccess: (_, entryInput) => {
+                const newEntry = {...entryInput, 'id': _.id}
+                setEntries((prev: any) => [...prev, newEntry])
                 setSnackBarDetails({ error: false, show: true, message: `Journal entry created!` })
+                navigate('/dashboard/home')
+            },
+            onSettled: () => {
+                setIsLoading(false)
             }
         });
     };
@@ -153,7 +168,14 @@ const DashboardNewJournalEntryFormPage: React.FC = () => {
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
                 </RadioGroup>
-                <Button type='submit' variant='outlined' color='inherit'>Submit</Button>
+                <LoadingButton 
+                    type='submit' 
+                    variant='outlined' 
+                    color='inherit'
+                    loading={isLoading}
+                >
+                    Submit
+                </LoadingButton>
             </form> 
         </>
     )

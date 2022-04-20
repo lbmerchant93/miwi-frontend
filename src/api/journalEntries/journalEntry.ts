@@ -98,11 +98,9 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    onSuccess: (newEntry) => {
-      queryClient.setQueryData(["journalEntries"], (oldData: any) => {
-        return [...oldData, newEntry]
-      })
-    }
+    onSuccess: () => {
+      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+    }, 
   })
 }
 
@@ -207,7 +205,7 @@ export const useDeleteJournalEntry = () => {
 
   return useMutation(deleteJournalEntry, {
     onSuccess: async (_, id) => {
-      await queryClient.setQueryData("journalEntries", (oldData: any) => oldData.filter((entry: { id: number; }) => entry.id !== id))
+      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }
   })
 }

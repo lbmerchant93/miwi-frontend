@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Home from '../../pages/DashboardPage/DashboardHomePage/DashboardHomePage';
 import Box, { BoxProps } from '@mui/material/Box';
 import { useParams, useNavigate } from 'react-router-dom';
-import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
+// import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
 import NewJournalEntryForm from '../../pages/DashboardPage/DashboardNewJournalEntryFormPage/DashboardNewJournalEntryFormPage';
 
 import './DashboardPanel.css';
@@ -28,12 +28,12 @@ const dashboardPageMap = [
         tab: 'journal_entry_form',
         Component: NewJournalEntryForm
     }
-    ,{
-        route: DashboardPageRoutes.profile,
-        label: 'PROFILE',
-        tab: 'profile',
-        Component: Profile
-    }
+    // ,{
+    //     route: DashboardPageRoutes.profile,
+    //     label: 'PROFILE',
+    //     tab: 'profile',
+    //     Component: Profile
+    // }
 ]
 
 const DashboardTabs: React.FC<{
@@ -88,18 +88,29 @@ interface DashboardPanelViewsProps {
     selectedPanel: string; 
     data: any; 
     triggerSnackBar: (err: boolean, message: string) => void;
-    refetch: () => void;
     isFetching: boolean;
+    setEntries: any;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
-    const { selectedPanel, data, triggerSnackBar, refetch, isFetching } = props;
+    const { 
+        selectedPanel, 
+        data, 
+        triggerSnackBar, 
+        isFetching, 
+        setEntries 
+    } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} isFetching={isFetching} />
+                    <Component 
+                        data={data} 
+                        triggerSnackBar={triggerSnackBar} 
+                        isFetching={isFetching} 
+                        setEntries={setEntries} 
+                    />
                 </DashboardTabPanel>
             ))}
             
@@ -111,12 +122,17 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
 interface DashboardPanelProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
-    refetch: () => void;
     isFetching: boolean;
+    setEntries: any;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerSnackBar, refetch, isFetching } = props;
+    const { 
+        data, 
+        triggerSnackBar, 
+        isFetching, 
+        setEntries 
+    } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.tab), []);
@@ -138,8 +154,8 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
                         data={data} 
                         triggerSnackBar={triggerSnackBar}
-                        refetch={refetch}
                         isFetching={isFetching}
+                        setEntries={setEntries}
                     />
                 </Box>
             ) : (

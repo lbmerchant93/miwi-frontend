@@ -11,12 +11,17 @@ import './DashboardHomePage.css'
 interface DashboardHomePageProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
-    refetch: () => void;
     isFetching: boolean;
+    setEntries: any;
 }
 
 const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
-    const { data, triggerSnackBar, refetch, isFetching } = props
+    const { 
+        data, 
+        triggerSnackBar, 
+        isFetching,
+        setEntries 
+    } = props
     const navigate = useNavigate();
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
@@ -31,7 +36,13 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
             (
                 <Box className='dashboard-journal-entries-container'>
                     {data.map((entry: JournalEntry) => {
-                        return <JournalEntryCard entry={entry} key={entry.id} triggerSnackBar={triggerSnackBar} refetch={refetch}/>
+                        return (
+                        <JournalEntryCard 
+                            entry={entry} 
+                            key={entry.id} 
+                            triggerSnackBar={triggerSnackBar} 
+                            setEntries={setEntries}
+                        />)
                     })}
                 </Box>
             ) : (

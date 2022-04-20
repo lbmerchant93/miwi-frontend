@@ -19,15 +19,17 @@ export const journalEntries = gql`
   }
 `;
 
-export const useJournalEntries = (authorId: string | undefined) => {
+export const useJournalEntries = (authorId: string | undefined , count: number | undefined) => {
     return useQuery(['journalEntries'], async () => {
         const { data } = await API.query<any>({
             query: journalEntries,
             variables: { authorId }
         });
-
         return data.journalEntries;
-    });
+      }, {
+        enabled: authorId !== undefined
+      }
+    );
 };
 
 const authorJournalEntry = gql`
@@ -60,4 +62,24 @@ export const useAuthorJournalEntry = (id: string | undefined, authorId: string |
 
         return data.journalEntries;
     });
+}
+
+const journalEntriesCount = gql`
+  query JournalEntries($authorId: String) {
+    aggregateJournalEntry(where: { authorId: { equals: $authorId } }) {
+      _count {
+        _all
+      }
+    }
+  }
+`;
+
+export const useJournalEntriesCount = (authorId: string | undefined) => {
+  return useQuery(['journalEntriesCount'], async () => {
+    const { data } = await API.query<any>({
+        query: journalEntriesCount,
+        variables: { authorId }
+    });
+    return data.aggregateJournalEntry._count._all;
+  });
 }
