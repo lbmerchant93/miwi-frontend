@@ -87,7 +87,6 @@ const DashboardPage = () => {
                 <DashboardPanel 
                     data={sortedData} 
                     triggerSnackBar={triggerSnackBar} 
-                    refetch={refetch} 
                     isFetching={isFetching} 
                     setEntries={setEntries}
                 />

@@ -26,6 +26,7 @@ interface UpdateJournalEntryFormProps {
     modalMessage: string;
     entry: JournalEntry;
     onUpdateClick: (err: boolean, message: string) => void;
+    setEntries: any;
 }
 
 const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) => {
@@ -35,7 +36,8 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
         modalTitle, 
         modalDescription, 
         entry,
-        onUpdateClick
+        onUpdateClick,
+        setEntries
     } = props;
     const [date, setDate] = useState<string>(entry.date);
     const [waterIntake, setWaterIntake] = useState<number>(entry.waterIntake);
@@ -84,6 +86,14 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                 },
                 onSuccess: () => {
                     onUpdateClick(false, 'Journal entry update successful!')
+                    setEntries((prev: any) => prev.map((prevEntry: any) => {
+                        if (JSON.stringify(prevEntry.id) === updatedEntry.id) {
+                            console.log('hitting')
+                            return updatedEntry
+                        } else {
+                            return prevEntry
+                        }
+                    }))
                 },
                 onSettled: () => {
                     setIsLoading(false)

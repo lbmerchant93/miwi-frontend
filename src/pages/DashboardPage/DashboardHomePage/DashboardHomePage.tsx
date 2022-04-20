@@ -11,7 +11,6 @@ import './DashboardHomePage.css'
 interface DashboardHomePageProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
-    refetch: () => void;
     isFetching: boolean;
     setEntries: any;
 }
@@ -20,7 +19,6 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
     const { 
         data, 
         triggerSnackBar, 
-        refetch, 
         isFetching,
         setEntries 
     } = props
@@ -43,7 +41,6 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
                             entry={entry} 
                             key={entry.id} 
                             triggerSnackBar={triggerSnackBar} 
-                            refetch={refetch} 
                             setEntries={setEntries}
                         />)
                     })}

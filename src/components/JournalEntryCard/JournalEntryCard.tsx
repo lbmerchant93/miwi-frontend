@@ -14,7 +14,6 @@ import './JournalEntryCard.css';
 interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
-  refetch: () => void;
   setEntries: any;
 }
 
@@ -22,7 +21,6 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { 
     entry, 
     triggerSnackBar, 
-    refetch, 
     setEntries 
   } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -48,8 +46,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     if (err) {
       setIsUpdateModalOpen(true);
     } else {
-      setIsUpdateModalOpen(false)
-      refetch()
+      setIsUpdateModalOpen(false);
     }
   }
 
@@ -85,6 +82,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalMessage="Are you sure you want to update this entry? This action is irreversible." 
         entry={entry}
         onUpdateClick={onUpdateClick}
+        setEntries={setEntries}
       />
     </>
     

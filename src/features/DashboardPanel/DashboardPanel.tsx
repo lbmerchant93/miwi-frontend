@@ -88,7 +88,6 @@ interface DashboardPanelViewsProps {
     selectedPanel: string; 
     data: any; 
     triggerSnackBar: (err: boolean, message: string) => void;
-    refetch: () => void;
     isFetching: boolean;
     setEntries: any;
 }
@@ -98,7 +97,6 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
         selectedPanel, 
         data, 
         triggerSnackBar, 
-        refetch, 
         isFetching, 
         setEntries 
     } = props;
@@ -110,7 +108,6 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
                     <Component 
                         data={data} 
                         triggerSnackBar={triggerSnackBar} 
-                        refetch={refetch} 
                         isFetching={isFetching} 
                         setEntries={setEntries} 
                     />
@@ -125,7 +122,6 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
 interface DashboardPanelProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
-    refetch: () => void;
     isFetching: boolean;
     setEntries: any;
 }
@@ -134,7 +130,6 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
     const { 
         data, 
         triggerSnackBar, 
-        refetch, 
         isFetching, 
         setEntries 
     } = props;
@@ -159,7 +154,6 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         selectedPanel={tab ? tab : dashboardPageMap[0].tab} 
                         data={data} 
                         triggerSnackBar={triggerSnackBar}
-                        refetch={refetch}
                         isFetching={isFetching}
                         setEntries={setEntries}
                     />
