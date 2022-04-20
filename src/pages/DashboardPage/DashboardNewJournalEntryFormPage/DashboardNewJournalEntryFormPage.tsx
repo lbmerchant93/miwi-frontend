@@ -17,7 +17,12 @@ import moment from 'moment';
 
 import './DashboardNewJournalEntryFormPage.css';
 
-const DashboardNewJournalEntryFormPage: React.FC = () => {
+interface DashboardNewJournalEntryFormPageProps {
+    setEntries: any;
+}
+
+const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPageProps> = (props) => {
+    const { setEntries } = props;
     const user = useContext(AuthContext);
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
@@ -53,7 +58,9 @@ const DashboardNewJournalEntryFormPage: React.FC = () => {
             onError: (err: any) => {
                 setSnackBarDetails({ error: true, show: true, message: err.message || `Something went wrong, please try again` })
             },
-            onSuccess: () => {
+            onSuccess: (_, entryInput) => {
+                const newEntry = {...entryInput, 'id': _.id}
+                setEntries((prev: any) => [...prev, newEntry])
                 setSnackBarDetails({ error: false, show: true, message: `Journal entry created!` })
             }
         });

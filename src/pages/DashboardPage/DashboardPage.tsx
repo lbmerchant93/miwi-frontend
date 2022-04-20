@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../shared/auth-context';
 import MessagePage from '../../components/MessagePage/MessagePage';
 import Box from '@mui/material/Box';
-import { useJournalEntries } from '../../api/journalEntries/journalEntries';
+import { useJournalEntries, useJournalEntriesCount } from '../../api/journalEntries/journalEntries';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import UserAside from "../../features/UserAside/UserAside";
@@ -26,9 +26,11 @@ export interface JournalEntry {
 
 const DashboardPage = () => {
     const user = useContext(AuthContext);
-    const { data, isFetching, refetch } = useJournalEntries(user.id);
+    const { data: count, refetch: refetchCount } = useJournalEntriesCount(user.id);
+    const { data, isFetching, refetch } = useJournalEntries(user.id, count);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const [sortedData, setSortedData] = useState<any>([]);
+    const [entries, setEntries] = useState<any>([]);
 
     const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
@@ -44,7 +46,15 @@ const DashboardPage = () => {
 
     useEffect(() => {
         if (data && data.length) {
-            const dataToSort = [...data]
+            setEntries((prev: any) => [...data])
+        } else {
+            setEntries([])
+        }
+    }, [data])
+
+    useEffect(() => {
+        if (entries && entries.length) {
+            const dataToSort = [...entries]
             dataToSort.sort((a: any, b: any) => {
                 if (moment(a.date).isBefore(b.date)) {
                     return 1
@@ -55,8 +65,15 @@ const DashboardPage = () => {
                 return 0 
             })
             setSortedData((prev: any) => [...dataToSort])
+        } else {
+            setSortedData([])
         }
-    }, [data])
+    }, [entries])
+
+    useEffect(() => {
+        refetchCount()
+        refetch()
+    }, []) // eslint-disable-line 
 
     return user.isLoggedIn ? (
         <>
@@ -67,7 +84,13 @@ const DashboardPage = () => {
             </SnackBar>
             <UserAside />
             <Box className='dashboard'>
-                <DashboardPanel data={sortedData} triggerSnackBar={triggerSnackBar} refetch={refetch} isFetching={isFetching} />
+                <DashboardPanel 
+                    data={sortedData} 
+                    triggerSnackBar={triggerSnackBar} 
+                    refetch={refetch} 
+                    isFetching={isFetching} 
+                    setEntries={setEntries}
+                />
             </Box>
         </>
     ) : (

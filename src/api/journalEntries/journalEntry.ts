@@ -98,11 +98,9 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    onSuccess: (newEntry) => {
-      queryClient.setQueryData(["journalEntries"], (oldData: any) => {
-        return [...oldData, newEntry]
-      })
-    }
+    onSuccess: () => {
+      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+    }, 
   })
 }
 

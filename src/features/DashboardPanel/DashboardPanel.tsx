@@ -90,16 +90,30 @@ interface DashboardPanelViewsProps {
     triggerSnackBar: (err: boolean, message: string) => void;
     refetch: () => void;
     isFetching: boolean;
+    setEntries: any;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
-    const { selectedPanel, data, triggerSnackBar, refetch, isFetching } = props;
+    const { 
+        selectedPanel, 
+        data, 
+        triggerSnackBar, 
+        refetch, 
+        isFetching, 
+        setEntries 
+    } = props;
 
     return (
         <>
             {dashboardPageMap.map(({ route, Component }) => (
                 <DashboardTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    <Component data={data} triggerSnackBar={triggerSnackBar} refetch={refetch} isFetching={isFetching} />
+                    <Component 
+                        data={data} 
+                        triggerSnackBar={triggerSnackBar} 
+                        refetch={refetch} 
+                        isFetching={isFetching} 
+                        setEntries={setEntries} 
+                    />
                 </DashboardTabPanel>
             ))}
             
@@ -113,10 +127,17 @@ interface DashboardPanelProps {
     triggerSnackBar: (err: boolean, message: string) => void;
     refetch: () => void;
     isFetching: boolean;
+    setEntries: any;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
-    const { data, triggerSnackBar, refetch, isFetching } = props;
+    const { 
+        data, 
+        triggerSnackBar, 
+        refetch, 
+        isFetching, 
+        setEntries 
+    } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
     const panelRoutes = React.useMemo(() => dashboardPageMap.map(panel => panel.tab), []);
@@ -140,6 +161,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         triggerSnackBar={triggerSnackBar}
                         refetch={refetch}
                         isFetching={isFetching}
+                        setEntries={setEntries}
                     />
                 </Box>
             ) : (
