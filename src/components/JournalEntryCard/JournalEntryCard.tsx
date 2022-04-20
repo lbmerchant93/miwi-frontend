@@ -15,10 +15,16 @@ interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
   refetch: () => void;
+  setEntries: any;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
-  const { entry, triggerSnackBar, refetch } = props;
+  const { 
+    entry, 
+    triggerSnackBar, 
+    refetch, 
+    setEntries 
+  } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const deleteJournalEntry = useDeleteJournalEntry();
@@ -31,6 +37,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       },
       onSuccess: () => {
         triggerSnackBar(false, 'Journal entry deletion successful!');
+        setEntries((prev: any) => prev.filter((prevEntry: any) => prevEntry.id !== entry.id))
       }
     });
     setIsWarningModalOpen(false);
