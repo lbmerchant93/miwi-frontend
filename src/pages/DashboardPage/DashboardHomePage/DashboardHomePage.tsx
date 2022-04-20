@@ -16,7 +16,12 @@ interface DashboardHomePageProps {
 }
 
 const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
-    const { data, triggerSnackBar, refetch, isFetching } = props
+    const { 
+        data, 
+        triggerSnackBar, 
+        refetch, 
+        isFetching 
+    } = props
     const navigate = useNavigate();
 
     const handleNavigateToJournalEntryForm = (callback: () => void) => {
