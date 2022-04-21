@@ -26,8 +26,7 @@ export interface JournalEntry {
 
 const DashboardPage = () => {
     const user = useContext(AuthContext);
-    const { data: count, refetch: refetchCount } = useJournalEntriesCount(user.id);
-    const { data, isFetching, refetch } = useJournalEntries(user.id, count);
+    const [skipCount, setSkipCount] = useState<number>(0);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const [sortedData, setSortedData] = useState<any>([]);
     const [entries, setEntries] = useState<any>([]);
@@ -43,6 +42,10 @@ const DashboardPage = () => {
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
+
+    const { data: count, refetch: refetchCount } = useJournalEntriesCount(user.id);
+
+    const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
 
     useEffect(() => {
         if (data && data.length) {
@@ -89,6 +92,10 @@ const DashboardPage = () => {
                     triggerSnackBar={triggerSnackBar} 
                     isFetching={isFetching} 
                     setEntries={setEntries}
+                    count={count}
+                    skipCount={skipCount}
+                    setSkipCount={setSkipCount}
+                    refetch={refetchCount}
                 />
             </Box>
         </>

@@ -13,6 +13,10 @@ interface DashboardHomePageProps {
     triggerSnackBar: (err: boolean, message: string) => void;
     isFetching: boolean;
     setEntries: any;
+    count: number;
+    skipCount: number;
+    setSkipCount: any;
+    refetch: () => void;
 }
 
 const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
@@ -20,7 +24,11 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
         data, 
         triggerSnackBar, 
         isFetching,
-        setEntries 
+        setEntries,
+        count,
+        skipCount,
+        setSkipCount,
+        refetch
     } = props
     const navigate = useNavigate();
 
@@ -28,23 +36,63 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
         return () => {
             callback()
         }
-    }
+    };
+
+    const onPaginationClick = (direction: string) => {
+        document.body.scroll(0, 0);
+
+        setTimeout(() => {
+            switch (direction) {
+                case 'back':
+                setSkipCount((currVal: number) => currVal - 15);
+                break;
+                case 'forward':
+                setSkipCount((currVal: number) => currVal + 15);
+                break;
+            }
+        });
+    };
 
     return (
         <>
             {(!isFetching && data.length) ? 
             (
-                <Box className='dashboard-journal-entries-container'>
-                    {data.map((entry: JournalEntry) => {
-                        return (
-                        <JournalEntryCard 
-                            entry={entry} 
-                            key={entry.id} 
-                            triggerSnackBar={triggerSnackBar} 
-                            setEntries={setEntries}
-                        />)
-                    })}
+                <>
+                    <Box className='dashboard-journal-entries-container'>
+                        {data.map((entry: JournalEntry) => {
+                            return (
+                            <JournalEntryCard 
+                                entry={entry} 
+                                key={entry.id} 
+                                triggerSnackBar={triggerSnackBar} 
+                                setEntries={setEntries}
+                                refetch={refetch}
+                            />)
+                        })}
+                    </Box>
+                    <Box display="flex" justifyContent="center">
+                    <Box mx={2}>
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            onClick={() => onPaginationClick('back')}
+                            disabled={skipCount === 0}
+                        >
+                            Back
+                        </Button>
+                    </Box>
+                    <Box mx={2}>
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            onClick={() => onPaginationClick('forward')}
+                            disabled={skipCount + 15 >= count}
+                        >
+                            Next
+                        </Button>
+                    </Box>
                 </Box>
+                </>
             ) : (
                 <Box className='dashboard-no-entries-container'>
                     <Typography variant="h6">Looks like you don't have any journal entries yet. Click the button below to create your first entry!</Typography>

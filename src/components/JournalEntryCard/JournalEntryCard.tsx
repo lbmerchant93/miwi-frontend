@@ -15,13 +15,15 @@ interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
   setEntries: any;
+  refetch: () => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { 
     entry, 
     triggerSnackBar, 
-    setEntries 
+    setEntries, 
+    refetch
   } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -47,6 +49,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       setIsUpdateModalOpen(true);
     } else {
       setIsUpdateModalOpen(false);
+      refetch()
     }
   }
 

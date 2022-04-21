@@ -99,6 +99,10 @@ export const useCreateJournalEntry = () => {
 
   return useMutation(createJournalEntry, {
     onSuccess: () => {
+      // this doesn't work... skip/count are require for the pagination... refetch not working right still
+      // const queryCache = queryClient.getQueryCache()
+      // const queries: any = queryCache.findAll({ queryKey: ["journalEntries"] })
+      // queryClient.setQueryData(["journalEntriesCount"], () => (queries[queries.length - 1].queryKey[1] + 1))
       return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }, 
   })

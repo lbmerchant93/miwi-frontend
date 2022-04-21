@@ -90,6 +90,10 @@ interface DashboardPanelViewsProps {
     triggerSnackBar: (err: boolean, message: string) => void;
     isFetching: boolean;
     setEntries: any;
+    count: number;
+    skipCount: number;
+    setSkipCount: any;
+    refetch: () => void;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
@@ -98,7 +102,11 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
         data, 
         triggerSnackBar, 
         isFetching, 
-        setEntries 
+        setEntries,
+        count,
+        skipCount,
+        setSkipCount, 
+        refetch
     } = props;
 
     return (
@@ -110,6 +118,10 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
                         triggerSnackBar={triggerSnackBar} 
                         isFetching={isFetching} 
                         setEntries={setEntries} 
+                        count={count}
+                        skipCount={skipCount}
+                        setSkipCount={setSkipCount}
+                        refetch={refetch}
                     />
                 </DashboardTabPanel>
             ))}
@@ -124,6 +136,10 @@ interface DashboardPanelProps {
     triggerSnackBar: (err: boolean, message: string) => void;
     isFetching: boolean;
     setEntries: any;
+    count: number;
+    skipCount: number;
+    setSkipCount: any;
+    refetch: () => void;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
@@ -131,7 +147,11 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
         data, 
         triggerSnackBar, 
         isFetching, 
-        setEntries 
+        setEntries,
+        count,
+        skipCount,
+        setSkipCount,
+        refetch 
     } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
@@ -156,6 +176,10 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         triggerSnackBar={triggerSnackBar}
                         isFetching={isFetching}
                         setEntries={setEntries}
+                        count={count}
+                        skipCount={skipCount}
+                        setSkipCount={setSkipCount}
+                        refetch={refetch}
                     />
                 </Box>
             ) : (

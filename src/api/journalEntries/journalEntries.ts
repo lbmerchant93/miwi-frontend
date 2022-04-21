@@ -3,8 +3,17 @@ import { gql } from '@apollo/client';
 import { useQuery } from 'react-query';
 
 export const journalEntries = gql`
-  query JournalEntries($authorId: String) {
-    journalEntries(orderBy: [ { date: desc } ], where: { authorId: { equals: $authorId } }) {
+  query JournalEntries(
+    $authorId: String,
+    $limit: Int,
+    $skip: Int
+  ) {
+    journalEntries(
+      orderBy: [ { date: desc } ], 
+      skip: $skip,
+      take: $limit,
+      where: { authorId: { equals: $authorId } }
+    ) {
       id
       date
       exercise
@@ -19,11 +28,16 @@ export const journalEntries = gql`
   }
 `;
 
-export const useJournalEntries = (authorId: string | undefined , count: number | undefined) => {
-    return useQuery(['journalEntries'], async () => {
+export const useJournalEntries = (
+  authorId: string | undefined, 
+  limit: number,
+  skip: number,
+  count: number | undefined
+) => {
+    return useQuery(['journalEntries', count, skip], async () => {
         const { data } = await API.query<any>({
             query: journalEntries,
-            variables: { authorId }
+            variables: { authorId, limit, skip }
         });
         return data.journalEntries;
       }, {

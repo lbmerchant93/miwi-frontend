@@ -86,14 +86,16 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                 },
                 onSuccess: () => {
                     onUpdateClick(false, 'Journal entry update successful!')
-                    setEntries((prev: any) => prev.map((prevEntry: any) => {
+                    setEntries((prev: any) => {
+                        const updatedEntries = prev.map((prevEntry: any) => {
                         if (JSON.stringify(prevEntry.id) === updatedEntry.id) {
-                            console.log('hitting')
                             return updatedEntry
                         } else {
                             return prevEntry
                         }
-                    }))
+                        })
+                        return updatedEntries
+                    })
                 },
                 onSettled: () => {
                     setIsLoading(false)
