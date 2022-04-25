@@ -34,13 +34,15 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
     deleteJournalEntry.mutate(entry.id, {
       onError: (err: any) => {
         triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
+        setIsWarningModalOpen(true);
       },
       onSuccess: () => {
         triggerSnackBar(false, 'Journal entry deletion successful!');
         setEntries((prev: any) => prev.filter((prevEntry: any) => prevEntry.id !== entry.id))
+        setIsWarningModalOpen(false);
+        refetch()
       }
     });
-    setIsWarningModalOpen(false);
   };
 
   const onUpdateClick = (err: boolean, message: string) => {

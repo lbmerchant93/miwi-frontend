@@ -34,16 +34,16 @@ export const useJournalEntries = (
   skip: number,
   count: number | undefined
 ) => {
-    return useQuery(['journalEntries', count, skip], async () => {
-        const { data } = await API.query<any>({
-            query: journalEntries,
-            variables: { authorId, limit, skip }
-        });
-        return data.journalEntries;
-      }, {
-        enabled: authorId !== undefined
-      }
-    );
+  return useQuery(['journalEntries', count, skip], async () => {
+    const { data } = await API.query<any>({
+        query: journalEntries,
+        variables: { authorId, limit, skip }
+      });
+      return data.journalEntries;
+    }, {
+      enabled: !!authorId && !!count
+    }
+  );
 };
 
 const authorJournalEntry = gql`
@@ -79,7 +79,7 @@ export const useAuthorJournalEntry = (id: string | undefined, authorId: string |
 }
 
 const journalEntriesCount = gql`
-  query JournalEntries($authorId: String) {
+  query AggregateJournalEntry($authorId: String) {
     aggregateJournalEntry(where: { authorId: { equals: $authorId } }) {
       _count {
         _all
@@ -95,5 +95,8 @@ export const useJournalEntriesCount = (authorId: string | undefined) => {
         variables: { authorId }
     });
     return data.aggregateJournalEntry._count._all;
-  });
+  }, {
+    enabled: !!authorId
+  }
+  );
 }
