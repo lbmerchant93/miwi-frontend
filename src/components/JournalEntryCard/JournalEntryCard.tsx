@@ -5,9 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import WarningModal from '../WarningModal/WarningModal';
+// import WarningModal from '../WarningModal/WarningModal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
-import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
+// import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import UpdateJournalEntryModal from '../UpdateJournalEntryModal/UpdateJournalEntryModal';
 import './JournalEntryCard.css';
 
@@ -27,23 +27,23 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const deleteJournalEntry = useDeleteJournalEntry();
+  // const deleteJournalEntry = useDeleteJournalEntry();
   
 
-  const onDeleteClick = () => {
-    deleteJournalEntry.mutate(entry.id, {
-      onError: (err: any) => {
-        triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
-        setIsWarningModalOpen(true);
-      },
-      onSuccess: () => {
-        triggerSnackBar(false, 'Journal entry deletion successful!');
-        setEntries((prev: any) => prev.filter((prevEntry: any) => prevEntry.id !== entry.id))
-        setIsWarningModalOpen(false);
-        refetch()
-      }
-    });
-  };
+  // const onDeleteClick = () => {
+  //   deleteJournalEntry.mutate(entry.id, {
+  //     onError: (err: any) => {
+  //       triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
+  //       setIsWarningModalOpen(true);
+  //     },
+  //     onSuccess: () => {
+  //       triggerSnackBar(false, 'Journal entry deletion successful!');
+  //       setEntries((prev: any) => prev.filter((prevEntry: any) => prevEntry.id !== entry.id))
+  //       setIsWarningModalOpen(false);
+  //       refetch()
+  //     }
+  //   });
+  // };
 
   const onUpdateClick = (err: boolean, message: string) => {
     triggerSnackBar(err, message);
@@ -71,14 +71,14 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
             <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning"><DeleteIcon /></IconButton>
         </Box>
       </Box>
-      <WarningModal 
+      {/* <WarningModal 
         isOpen={isWarningModalOpen} 
         onClose={() => setIsWarningModalOpen(false)} 
         modalTitle="Delete journal entry modal" 
         modalDescription="Confirm journal entry delete or go back to the dashboard."
         modalMessage="Are you sure you want to delete this entry? This action is irreversible."
-        verifiedAction={onDeleteClick}
-      />
+        // verifiedAction={onDeleteClick}
+      /> */}
       <UpdateJournalEntryModal
         isOpen={isUpdateModalOpen}
         onClose={() => setIsUpdateModalOpen(false)}

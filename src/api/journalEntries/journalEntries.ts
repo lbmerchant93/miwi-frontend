@@ -1,8 +1,10 @@
-import API from '../apolloClient';
-import { gql } from '@apollo/client';
+// import API from '../apolloClient';
+// import { gql } from '@apollo/client';
 import { useQuery } from 'react-query';
+import { request, gql } from "graphql-request";
+import { endpoint } from '../../App';
 
-export const journalEntries = gql`
+export const JournalEntries = gql`
   query JournalEntries(
     $authorId: String,
     $limit: Int,
@@ -35,48 +37,52 @@ export const useJournalEntries = (
   count: number | undefined
 ) => {
   return useQuery(['journalEntries', count, skip], async () => {
-    const { data } = await API.query<any>({
-        query: journalEntries,
+    const { journalEntries } = await request(
+      {
+        url: endpoint,
+        document: JournalEntries,
         variables: { authorId, limit, skip }
       });
-      return data.journalEntries;
+      return journalEntries;
     }, {
       enabled: !!authorId && !!count
     }
   );
 };
 
-const authorJournalEntry = gql`
-  query JournalEntries($id: Int, $authorId: String) {
-    journalEntries(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }]}) {
-      id
-      date
-      exercise
-      garlandPose
-      kegels
-      prenatalVitamins
-      probiotics
-      proteinIntake
-      authorId
-      waterIntake
-    }
-  }
-`;
+// Needs to be modified for graphql-request
+// const authorJournalEntry = gql`
+//   query JournalEntries($id: Int, $authorId: String) {
+//     journalEntries(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }]}) {
+//       id
+//       date
+//       exercise
+//       garlandPose
+//       kegels
+//       prenatalVitamins
+//       probiotics
+//       proteinIntake
+//       authorId
+//       waterIntake
+//     }
+//   }
+// `;
 
-export const useAuthorJournalEntry = (id: string | undefined, authorId: string | undefined) => {
-    return useQuery(['authorJournalEntry'], async () => {
-        const variables = {
-            id: Number(id), 
-            authorId
-        };
-        const { data } = await API.query<any>({
-            query: authorJournalEntry,
-            variables
-        });
+// export const useAuthorJournalEntry = (id: string | undefined, authorId: string | undefined) => {
+//     return useQuery(['authorJournalEntry'], async () => {
+//         const variables = {
+//             id: Number(id), 
+//             authorId
+//         };
+//         const { data } = await request({
+//           url: endpoint,
+//           document: authorJournalEntry,
+//           variables
+//         });
 
-        return data.journalEntries;
-    });
-}
+//         return data.journalEntries;
+//     });
+// }
 
 const journalEntriesCount = gql`
   query AggregateJournalEntry($authorId: String) {
@@ -90,11 +96,12 @@ const journalEntriesCount = gql`
 
 export const useJournalEntriesCount = (authorId: string | undefined) => {
   return useQuery(['journalEntriesCount'], async () => {
-    const { data } = await API.query<any>({
-        query: journalEntriesCount,
-        variables: { authorId }
+    const { aggregateJournalEntry } = await request({
+      url: endpoint,
+      document: journalEntriesCount,
+      variables: { authorId }
     });
-    return data.aggregateJournalEntry._count._all;
+    return aggregateJournalEntry._count._all;
   }, {
     enabled: !!authorId
   }

@@ -17,10 +17,12 @@ import {
   browserLocalPersistence, 
   onAuthStateChanged
 } from 'firebase/auth';
-import apolloClient from './api/apolloClient';
-import { ApolloProvider } from '@apollo/client';
+// import apolloClient from './api/apolloClient';
+// import { ApolloProvider } from '@apollo/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+
+export const endpoint = 'http://localhost:9000/graphql';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,7 +67,7 @@ const App = () => {
   );
   
   return (
-    <ApolloProvider client={apolloClient}>
+    // <ApolloProvider client={apolloClient}>
       <QueryClientProvider client={queryClient}>
         <AuthContext.Provider 
           value={{
@@ -87,7 +89,7 @@ const App = () => {
           </ThemeProvider>
         </AuthContext.Provider>
       </QueryClientProvider>
-    </ApolloProvider>
+    // </ApolloProvider>
   );
 };
 

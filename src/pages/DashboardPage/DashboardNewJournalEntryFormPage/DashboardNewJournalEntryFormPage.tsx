@@ -19,11 +19,12 @@ import { useNavigate } from 'react-router-dom';
 import './DashboardNewJournalEntryFormPage.css';
 
 interface DashboardNewJournalEntryFormPageProps {
-    setEntries: any;
+    setSkipCount: (arg0: number) => number;
+    refetch: () => void;
 }
 
 const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPageProps> = (props) => {
-    const { setEntries } = props;
+    const { setSkipCount, refetch } = props;
     const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [date, setDate] = useState<string | null>(null);
@@ -63,13 +64,11 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
                 setSnackBarDetails({ error: true, show: true, message: err.message || `Something went wrong, please try again` })
             },
             onSuccess: (_, entryInput) => {
-                const newEntry = {...entryInput, 'id': _.id}
-                setEntries((prev: any) => [...prev, newEntry])
+                // const newEntry = {...entryInput, 'id': _.id}
+                // setEntries((prev: any) => [...prev, newEntry])
                 setSnackBarDetails({ error: false, show: true, message: `Journal entry created!` })
-                navigate('/dashboard/home')
-            },
-            onSettled: () => {
-                setIsLoading(false)
+                setSkipCount(0)
+                setTimeout(() => navigate('/dashboard/home'), 1500)
             }
         });
     };

@@ -10,7 +10,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
+// import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import Modal from '@mui/material/Modal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
@@ -48,7 +48,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean>(entry.prenatalVitamins);
     const [probiotics, setProbiotics] = useState<boolean>(entry.probiotics);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const updateJournalEntry = useUpdateJournalEntry();
+    // const updateJournalEntry = useUpdateJournalEntry();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -79,32 +79,32 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
             authorId: entry.authorId
         }
     
-        if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
-            updateJournalEntry.mutate(updatedEntry, {
-                onError: (err: any) => {
-                    onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
-                },
-                onSuccess: () => {
-                    onUpdateClick(false, 'Journal entry update successful!')
-                    setEntries((prev: any) => {
-                        const updatedEntries = prev.map((prevEntry: any) => {
-                        if (JSON.stringify(prevEntry.id) === updatedEntry.id) {
-                            return updatedEntry
-                        } else {
-                            return prevEntry
-                        }
-                        })
-                        return updatedEntries
-                    })
-                },
-                onSettled: () => {
-                    setIsLoading(false)
-                }
-            });
-        } else {
-            onUpdateClick(true, 'Please update the form before clicking submit.')
-            setIsLoading(false)
-        };
+        // if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
+        //     updateJournalEntry.mutate(updatedEntry, {
+        //         onError: (err: any) => {
+        //             onUpdateClick(true, err.message || 'Something went wrong, please try again or contact us for help.')
+        //         },
+        //         onSuccess: () => {
+        //             onUpdateClick(false, 'Journal entry update successful!')
+        //             setEntries((prev: any) => {
+        //                 const updatedEntries = prev.map((prevEntry: any) => {
+        //                 if (JSON.stringify(prevEntry.id) === updatedEntry.id) {
+        //                     return updatedEntry
+        //                 } else {
+        //                     return prevEntry
+        //                 }
+        //                 })
+        //                 return updatedEntries
+        //             })
+        //         },
+        //         onSettled: () => {
+        //             setIsLoading(false)
+        //         }
+        //     });
+        // } else {
+        //     onUpdateClick(true, 'Please update the form before clicking submit.')
+        //     setIsLoading(false)
+        // };
     };
 
     const handleClose = () => {
