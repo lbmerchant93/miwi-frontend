@@ -1,34 +1,35 @@
-import API from '../apolloClient';
-import { gql } from '@apollo/client';
-import { useQuery, useMutation, useQueryClient  } from 'react-query';
+import { useMutation, useQueryClient  } from 'react-query';
+import { request, gql } from "graphql-request";
+import { endpoint } from '../../App';
 
-const journalEntry = gql`
-  query JournalEntry($id: Int) {
-    journalEntry(where: { id: $id }) {
-      id
-      date
-      exercise
-      garlandPose
-      kegels
-      prenatalVitamins
-      probiotics
-      proteinIntake
-      authorId
-      waterIntake
-    }
-  }
-`;
+// Needs to be modified for graphql-request
+// const journalEntry = gql`
+//   query JournalEntry($id: Int) {
+//     journalEntry(where: { id: $id }) {
+//       id
+//       date
+//       exercise
+//       garlandPose
+//       kegels
+//       prenatalVitamins
+//       probiotics
+//       proteinIntake
+//       authorId
+//       waterIntake
+//     }
+//   }
+// `;
 
-export const useJournalEntry = (id: string) => {
-  return useQuery(['journalEntry'], async () => {
-      const { data } = await API.query<any>({
-          query: journalEntry,
-          variables: { id: Number(id) }
-      });
+// export const useJournalEntry = (id: string) => {
+//   return useQuery(['journalEntry'], async () => {
+//       const { data } = await API.query<any>({
+//           query: journalEntry,
+//           variables: { id: Number(id) }
+//       });
 
-      return data.journalEntry;
-  });
-};
+//       return data.journalEntry;
+//   });
+// };
 
 const createJournalEntryMutation = gql`
   mutation createJournalEntry($data: JournalEntryCreateInputData!){
@@ -49,7 +50,7 @@ const createJournalEntryMutation = gql`
   }
 `; 
 
-interface JournalEntryCreate {
+interface JournalEntryCreateInput {
   authorId: string | undefined;
   date: string | null;
   waterIntake: number | string;
@@ -61,7 +62,7 @@ interface JournalEntryCreate {
   probiotics: boolean | null;
 }
 
-const createJournalEntry = async (createJournalEntryInput: JournalEntryCreate) => {
+const createJournalEntry = async (createJournalEntryInput: JournalEntryCreateInput) => {
   const { 
     date, 
     exercise, 
@@ -86,25 +87,26 @@ const createJournalEntry = async (createJournalEntryInput: JournalEntryCreate) =
     "authorId": authorId
   };
 
-  const { data } = await API.mutate<any>({
-    mutation: createJournalEntryMutation,
+  const { createJournalEntry } = await request({
+    url: endpoint,
+    document: createJournalEntryMutation,
     variables: { data: variables}
   });
-  
-  return data.createJournalEntry;
+  return createJournalEntry;
 }
 
 export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }, 
   })
 }
 
-interface JournalEntryUpdate {
+interface JournalEntryUpdateInput {
   id: string | undefined;
   date: string | null;
   waterIntake: number | string;
@@ -139,7 +141,7 @@ const updateJournalEntryMutation = gql`
   }
 `;
 
-const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) => {
+const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdateInput) => {
   const { 
     id,
     date, 
@@ -165,20 +167,21 @@ const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdate) =
     "authorId": authorId 
   };
 
-  const { data } = await API.mutate<any>({
-    mutation: updateJournalEntryMutation,
+  const { updateJournalEntry } = await request({
+    url: endpoint,
+    document: updateJournalEntryMutation,
     variables: { data: variables, updateJournalEntryId: Number(id) }
   });
-
-  return data.updateJournalEntry;
+  return updateJournalEntry;
 }
 
 export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }
   })
 }
@@ -192,20 +195,22 @@ const deleteJournalEntryMutation = gql`
 `
 
 const deleteJournalEntry = async (id: number) => {
-  const { data } = await API.mutate<any>({
-    mutation: deleteJournalEntryMutation,
+  const { deleteJournalEntry } = await request({
+    url: endpoint,
+    document: deleteJournalEntryMutation,
     variables: { where: { id: Number(id) } }
   });
 
-  return data.deleteJournalEntry;
+  return deleteJournalEntry;
 }
 
 export const useDeleteJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(deleteJournalEntry, {
-    onSuccess: async (_, id) => {
-      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }
   })
 }

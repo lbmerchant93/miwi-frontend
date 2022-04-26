@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import './WarningModal.css';
 
@@ -12,7 +12,8 @@ interface WarningModalProps {
     modalTitle: string;
     modalDescription: string;
     modalMessage: string;
-    verifiedAction: () => void;
+    onDeleteClick: () => void;
+    isLoading: boolean;
 };
 
 const WarningModal: React.FC<WarningModalProps> = (props) => {
@@ -22,7 +23,8 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
         modalTitle, 
         modalDescription, 
         modalMessage, 
-        verifiedAction 
+        onDeleteClick,
+        isLoading 
     } = props;
 
     return (
@@ -37,23 +39,25 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
                 <Typography variant="h4" color="warning.main">Warning!</Typography>
                 <Typography variant="h6">{modalMessage}</Typography>
                 <Box className="warning-action-container">
-                    <Box className="warning-action-button">
-                       <Button 
+                    {!isLoading && <Box className="warning-action-button">
+                       <LoadingButton
+                            loading={isLoading}
                             onClick={onClose} 
                             variant="contained" 
                             color="inherit"
                         >
                                 No, Go back
-                        </Button>  
-                    </Box>
+                        </LoadingButton>  
+                    </Box>}
                     <Box className="warning-action-button">
-                       <Button 
-                            onClick={verifiedAction} 
+                       <LoadingButton 
+                            loading={isLoading}
+                            onClick={onDeleteClick} 
                             variant="contained" 
                             color="warning"
                         >
                                 Yes, I'm sure
-                        </Button> 
+                        </LoadingButton> 
                     </Box>
                 </Box>
             </Box>

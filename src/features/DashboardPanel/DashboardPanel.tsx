@@ -89,7 +89,12 @@ interface DashboardPanelViewsProps {
     data: any; 
     triggerSnackBar: (err: boolean, message: string) => void;
     isFetching: boolean;
-    setEntries: any;
+    count: number;
+    skipCount: number;
+    setSkipCount: any;
+    navigateHomeRefetch: () => void;
+    refetch: () => void;
+    refetchCount: () => void;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
@@ -98,7 +103,12 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
         data, 
         triggerSnackBar, 
         isFetching, 
-        setEntries 
+        count,
+        skipCount,
+        setSkipCount,
+        navigateHomeRefetch,
+        refetch,
+        refetchCount
     } = props;
 
     return (
@@ -109,7 +119,12 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
                         data={data} 
                         triggerSnackBar={triggerSnackBar} 
                         isFetching={isFetching} 
-                        setEntries={setEntries} 
+                        count={count}
+                        skipCount={skipCount}
+                        setSkipCount={setSkipCount}
+                        navigateHomeRefetch={navigateHomeRefetch}
+                        refetch={refetch}
+                        refetchCount={refetchCount}
                     />
                 </DashboardTabPanel>
             ))}
@@ -123,7 +138,12 @@ interface DashboardPanelProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
     isFetching: boolean;
-    setEntries: any;
+    count: number;
+    skipCount: number;
+    setSkipCount: any;
+    navigateHomeRefetch: () => void;
+    refetch: () => void;
+    refetchCount: () => void;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
@@ -131,7 +151,12 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
         data, 
         triggerSnackBar, 
         isFetching, 
-        setEntries 
+        count,
+        skipCount,
+        setSkipCount,
+        navigateHomeRefetch,
+        refetch,
+        refetchCount
     } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
@@ -155,7 +180,12 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         data={data} 
                         triggerSnackBar={triggerSnackBar}
                         isFetching={isFetching}
-                        setEntries={setEntries}
+                        count={count}
+                        skipCount={skipCount}
+                        setSkipCount={setSkipCount}
+                        navigateHomeRefetch={navigateHomeRefetch}
+                        refetch={refetch}
+                        refetchCount={refetchCount}
                     />
                 </Box>
             ) : (
