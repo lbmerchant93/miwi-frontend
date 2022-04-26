@@ -20,11 +20,10 @@ import './DashboardNewJournalEntryFormPage.css';
 
 interface DashboardNewJournalEntryFormPageProps {
     setSkipCount: (arg0: number) => number;
-    refetch: () => void;
 }
 
 const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPageProps> = (props) => {
-    const { setSkipCount, refetch } = props;
+    const { setSkipCount } = props;
     const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [date, setDate] = useState<string | null>(null);
@@ -61,14 +60,15 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
     
         createJournalEntry.mutate(journalEntry, {
             onError: (err: any) => {
-                setSnackBarDetails({ error: true, show: true, message: err.message || `Something went wrong, please try again` })
+                setSnackBarDetails({ error: true, show: true, message: err.response.errors[0].message || `Something went wrong, please try again` })
             },
-            onSuccess: (_, entryInput) => {
-                // const newEntry = {...entryInput, 'id': _.id}
-                // setEntries((prev: any) => [...prev, newEntry])
+            onSuccess: () => {
                 setSnackBarDetails({ error: false, show: true, message: `Journal entry created!` })
                 setSkipCount(0)
                 setTimeout(() => navigate('/dashboard/home'), 1500)
+            },
+            onSettled: () => {
+                setIsLoading(false)
             }
         });
     };

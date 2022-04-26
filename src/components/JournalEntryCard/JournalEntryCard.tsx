@@ -14,16 +14,12 @@ import './JournalEntryCard.css';
 interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
-  setEntries: any;
-  refetch: () => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { 
     entry, 
-    triggerSnackBar, 
-    setEntries, 
-    refetch
+    triggerSnackBar
   } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -33,14 +29,12 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const onDeleteClick = () => {
     deleteJournalEntry.mutate(entry.id, {
       onError: (err: any) => {
-        triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
+        triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
         setIsWarningModalOpen(true);
       },
       onSuccess: () => {
         triggerSnackBar(false, 'Journal entry deletion successful!');
-        setEntries((prev: any) => prev.filter((prevEntry: any) => prevEntry.id !== entry.id))
         setIsWarningModalOpen(false);
-        refetch()
       }
     });
   };
@@ -51,7 +45,6 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       setIsUpdateModalOpen(true);
     } else {
       setIsUpdateModalOpen(false);
-      refetch()
     }
   }
 
@@ -87,7 +80,6 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalMessage="Are you sure you want to update this entry? This action is irreversible." 
         entry={entry}
         onUpdateClick={onUpdateClick}
-        setEntries={setEntries}
       />
     </>
     

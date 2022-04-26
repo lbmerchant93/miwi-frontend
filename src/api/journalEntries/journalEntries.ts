@@ -1,5 +1,3 @@
-// import API from '../apolloClient';
-// import { gql } from '@apollo/client';
 import { useQuery } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
@@ -45,7 +43,7 @@ export const useJournalEntries = (
       });
       return journalEntries;
     }, {
-      enabled: !!authorId && !!count
+      enabled: !!authorId && count !== undefined && count !== null
     }
   );
 };

@@ -1,6 +1,4 @@
-// import API from '../apolloClient';
-// import { gql } from '@apollo/client';
-import { useQuery, useMutation, useQueryClient  } from 'react-query';
+import { useMutation, useQueryClient  } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
 
@@ -101,8 +99,9 @@ export const useCreateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(createJournalEntry, {
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
     }, 
   })
 }
@@ -180,8 +179,9 @@ export const useUpdateJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(updateJournalEntry, {
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
     }
   })
 }
@@ -208,8 +208,9 @@ export const useDeleteJournalEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation(deleteJournalEntry, {
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
     }
   })
 }

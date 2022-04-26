@@ -12,11 +12,9 @@ interface DashboardHomePageProps {
     data: any;
     triggerSnackBar: (err: boolean, message: string) => void;
     isFetching: boolean;
-    setEntries: any;
     count: number;
     skipCount: number;
     setSkipCount: any;
-    refetch: () => void;
 }
 
 const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
@@ -24,11 +22,9 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
         data, 
         triggerSnackBar, 
         isFetching,
-        setEntries,
         count,
         skipCount,
         setSkipCount,
-        refetch
     } = props
     const navigate = useNavigate();
 
@@ -55,7 +51,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
 
     return (
         <>
-            {(!isFetching && data.length) ? 
+            {(!isFetching && data && data.length) ? 
             (
                 <>
                     <Box className='dashboard-journal-entries-container'>
@@ -65,8 +61,6 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
                                 entry={entry} 
                                 key={entry.id} 
                                 triggerSnackBar={triggerSnackBar} 
-                                setEntries={setEntries}
-                                refetch={refetch}
                             />)
                         })}
                     </Box>

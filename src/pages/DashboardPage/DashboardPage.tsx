@@ -30,8 +30,6 @@ const DashboardPage = () => {
     // const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
-    const [sortedData, setSortedData] = useState<any>([]);
-    const [entries, setEntries] = useState<any>([]);
 
     const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
@@ -55,32 +53,6 @@ const DashboardPage = () => {
     // }
 
     useEffect(() => {
-        if (data && data.length) {
-            setEntries((prev: any) => [...data])
-        } else {
-            setEntries([])
-        }
-    }, [data])
-
-    useEffect(() => {
-        if (entries && entries.length) {
-            const dataToSort = [...entries]
-            dataToSort.sort((a: any, b: any) => {
-                if (moment(a.date).isBefore(b.date)) {
-                    return 1
-                }
-                if (moment(b.date).isBefore(a.date)) {
-                    return -1
-                }
-                return 0 
-            })
-            setSortedData((prev: any) => [...dataToSort])
-        } else {
-            setSortedData([])
-        }
-    }, [entries])
-
-    useEffect(() => {
         refetchCount()
         refetch()
     }, []) // eslint-disable-line 
@@ -95,14 +67,12 @@ const DashboardPage = () => {
             <UserAside />
             <Box className='dashboard'>
                 <DashboardPanel 
-                    data={sortedData} 
+                    data={data} 
                     triggerSnackBar={triggerSnackBar} 
                     isFetching={isFetching} 
-                    setEntries={setEntries}
                     count={count}
                     skipCount={skipCount}
                     setSkipCount={setSkipCount}
-                    refetch={refetch}
                 />
             </Box>
         </>
