@@ -17,8 +17,6 @@ import {
   browserLocalPersistence, 
   onAuthStateChanged
 } from 'firebase/auth';
-// import apolloClient from './api/apolloClient';
-// import { ApolloProvider } from '@apollo/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -67,29 +65,27 @@ const App = () => {
   );
   
   return (
-    // <ApolloProvider client={apolloClient}>
-      <QueryClientProvider client={queryClient}>
-        <AuthContext.Provider 
-          value={{
-            isLoggedIn: isLoggedIn,
-            id: userId,
-            displayName: displayName,
-            photoURL: photoURL
-          }}
-        >
-          <ThemeProvider theme={theme}>
-            <Router>
-              <ReactQueryDevtools initialIsOpen={false} />
-              <AppBar />
-              <main>
-                {routes}
-              </main>
-              <AppFooter />
-            </Router>
-          </ThemeProvider>
-        </AuthContext.Provider>
-      </QueryClientProvider>
-    // </ApolloProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContext.Provider 
+        value={{
+          isLoggedIn: isLoggedIn,
+          id: userId,
+          displayName: displayName,
+          photoURL: photoURL
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <Router>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <AppBar />
+            <main>
+              {routes}
+            </main>
+            <AppFooter />
+          </Router>
+        </ThemeProvider>
+      </AuthContext.Provider>
+    </QueryClientProvider>
   );
 };
 
