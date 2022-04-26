@@ -15,6 +15,7 @@ interface DashboardHomePageProps {
     count: number;
     skipCount: number;
     setSkipCount: any;
+    refetch: () => void;
     refetchCount: () => void;
 }
 
@@ -26,6 +27,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
         count,
         skipCount,
         setSkipCount,
+        refetch,
         refetchCount
     } = props
     const navigate = useNavigate();
@@ -63,6 +65,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
                                 entry={entry} 
                                 key={entry.id} 
                                 triggerSnackBar={triggerSnackBar}
+                                refetch={refetch}
                                 refetchCount={refetchCount}
                             />)
                         })}

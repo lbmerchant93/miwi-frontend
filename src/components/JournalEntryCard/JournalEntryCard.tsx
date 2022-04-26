@@ -14,6 +14,7 @@ import './JournalEntryCard.css';
 interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
+  refetch: () => void;
   refetchCount: () => void;
 }
 
@@ -21,6 +22,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { 
     entry, 
     triggerSnackBar,
+    refetch,
     refetchCount
   } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -39,11 +41,9 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       },
       onSuccess: () => {
         triggerSnackBar(false, 'Journal entry deletion successful!');
-        setTimeout(() => {
-          setIsLoading(false)
-          setIsWarningModalOpen(false)
-          refetchCount()
-        }, 1500);
+        setIsLoading(false)
+        setIsWarningModalOpen(false)
+        refetchCount()
       }
     });
   };
@@ -54,6 +54,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
       setIsUpdateModalOpen(true);
     } else {
       setIsUpdateModalOpen(false);
+      refetch()
     }
   }
 

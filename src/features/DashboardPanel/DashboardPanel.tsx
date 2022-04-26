@@ -93,6 +93,7 @@ interface DashboardPanelViewsProps {
     skipCount: number;
     setSkipCount: any;
     navigateHomeRefetch: () => void;
+    refetch: () => void;
     refetchCount: () => void;
 }
 
@@ -106,6 +107,7 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
         skipCount,
         setSkipCount,
         navigateHomeRefetch,
+        refetch,
         refetchCount
     } = props;
 
@@ -121,6 +123,7 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
                         skipCount={skipCount}
                         setSkipCount={setSkipCount}
                         navigateHomeRefetch={navigateHomeRefetch}
+                        refetch={refetch}
                         refetchCount={refetchCount}
                     />
                 </DashboardTabPanel>
@@ -139,6 +142,7 @@ interface DashboardPanelProps {
     skipCount: number;
     setSkipCount: any;
     navigateHomeRefetch: () => void;
+    refetch: () => void;
     refetchCount: () => void;
 }
 
@@ -151,6 +155,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
         skipCount,
         setSkipCount,
         navigateHomeRefetch,
+        refetch,
         refetchCount
     } = props;
     const { tab } = useParams();
@@ -179,6 +184,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         skipCount={skipCount}
                         setSkipCount={setSkipCount}
                         navigateHomeRefetch={navigateHomeRefetch}
+                        refetch={refetch}
                         refetchCount={refetchCount}
                     />
                 </Box>

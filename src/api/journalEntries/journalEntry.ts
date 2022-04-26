@@ -180,8 +180,8 @@ export const useUpdateJournalEntry = () => {
 
   return useMutation(updateJournalEntry, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: true })
-      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
     }
   })
 }
