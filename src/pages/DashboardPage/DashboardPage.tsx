@@ -7,8 +7,7 @@ import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import UserAside from "../../features/UserAside/UserAside";
 import DashboardPanel from '../../features/DashboardPanel/DashboardPanel';
-import moment from 'moment';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './DashboardPage.css';
 
@@ -27,7 +26,7 @@ export interface JournalEntry {
 
 const DashboardPage = () => {
     const user = useContext(AuthContext);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
@@ -47,10 +46,11 @@ const DashboardPage = () => {
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
 
-    // const navigateHomeRefetch = () => {
-    //     navigate('/dashboard/home')
-    //     setSkipCount(0)
-    // }
+    const navigateHomeRefetch = () => {
+        navigate('/dashboard/home')
+        setSkipCount(0)
+        refetchCount()
+    }
 
     useEffect(() => {
         refetchCount()
@@ -73,6 +73,7 @@ const DashboardPage = () => {
                     count={count}
                     skipCount={skipCount}
                     setSkipCount={setSkipCount}
+                    navigateHomeRefetch={navigateHomeRefetch}
                 />
             </Box>
         </>

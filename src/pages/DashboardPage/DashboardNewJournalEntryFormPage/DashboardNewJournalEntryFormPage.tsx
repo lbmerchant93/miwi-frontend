@@ -14,18 +14,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useCreateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useNavigate } from 'react-router-dom';
 
 import './DashboardNewJournalEntryFormPage.css';
 
 interface DashboardNewJournalEntryFormPageProps {
-    setSkipCount: (arg0: number) => number;
+    navigateHomeRefetch: () => void;
 }
 
 const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPageProps> = (props) => {
-    const { setSkipCount } = props;
+    const { navigateHomeRefetch } = props;
     const user = useContext(AuthContext);
-    const navigate = useNavigate();
     const [date, setDate] = useState<string | null>(null);
     const [waterIntake, setWaterIntake] = useState<number | string>('');
     const [proteinIntake, setProteinIntake] = useState<number | string>('');
@@ -61,14 +59,14 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
         createJournalEntry.mutate(journalEntry, {
             onError: (err: any) => {
                 setSnackBarDetails({ error: true, show: true, message: err.response.errors[0].message || `Something went wrong, please try again` })
+                setIsLoading(false)
             },
             onSuccess: () => {
                 setSnackBarDetails({ error: false, show: true, message: `Journal entry created!` })
-                setSkipCount(0)
-                setTimeout(() => navigate('/dashboard/home'), 1500)
-            },
-            onSettled: () => {
-                setIsLoading(false)
+                setTimeout(() => {
+                    setIsLoading(false)
+                    navigateHomeRefetch()
+                }, 1500)
             }
         });
     };

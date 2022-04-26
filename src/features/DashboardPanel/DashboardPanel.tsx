@@ -92,6 +92,7 @@ interface DashboardPanelViewsProps {
     count: number;
     skipCount: number;
     setSkipCount: any;
+    navigateHomeRefetch: () => void;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
@@ -102,7 +103,8 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
         isFetching, 
         count,
         skipCount,
-        setSkipCount
+        setSkipCount,
+        navigateHomeRefetch
     } = props;
 
     return (
@@ -116,6 +118,7 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
                         count={count}
                         skipCount={skipCount}
                         setSkipCount={setSkipCount}
+                        navigateHomeRefetch={navigateHomeRefetch}
                     />
                 </DashboardTabPanel>
             ))}
@@ -132,6 +135,7 @@ interface DashboardPanelProps {
     count: number;
     skipCount: number;
     setSkipCount: any;
+    navigateHomeRefetch: () => void;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
@@ -141,7 +145,8 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
         isFetching, 
         count,
         skipCount,
-        setSkipCount
+        setSkipCount,
+        navigateHomeRefetch
     } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
@@ -168,6 +173,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         count={count}
                         skipCount={skipCount}
                         setSkipCount={setSkipCount}
+                        navigateHomeRefetch={navigateHomeRefetch}
                     />
                 </Box>
             ) : (
