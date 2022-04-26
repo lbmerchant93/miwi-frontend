@@ -74,6 +74,7 @@ const DashboardPage = () => {
                     skipCount={skipCount}
                     setSkipCount={setSkipCount}
                     navigateHomeRefetch={navigateHomeRefetch}
+                    refetchCount={refetchCount}
                 />
             </Box>
         </>

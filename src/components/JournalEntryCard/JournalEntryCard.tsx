@@ -14,27 +14,36 @@ import './JournalEntryCard.css';
 interface JournalEntryCardProps {
   entry: JournalEntry;
   triggerSnackBar: (err: boolean, message: string) => void;
+  refetchCount: () => void;
 }
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { 
     entry, 
-    triggerSnackBar
+    triggerSnackBar,
+    refetchCount
   } = props;
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const deleteJournalEntry = useDeleteJournalEntry();
   
 
   const onDeleteClick = () => {
+    setIsLoading(true)
     deleteJournalEntry.mutate(entry.id, {
       onError: (err: any) => {
         triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
-        setIsWarningModalOpen(true);
+        setIsLoading(false)
+        setIsWarningModalOpen(true)
       },
       onSuccess: () => {
         triggerSnackBar(false, 'Journal entry deletion successful!');
-        setIsWarningModalOpen(false);
+        setTimeout(() => {
+          setIsLoading(false)
+          setIsWarningModalOpen(false)
+          refetchCount()
+        }, 1500);
       }
     });
   };
@@ -70,7 +79,8 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         modalTitle="Delete journal entry modal" 
         modalDescription="Confirm journal entry delete or go back to the dashboard."
         modalMessage="Are you sure you want to delete this entry? This action is irreversible."
-        verifiedAction={onDeleteClick}
+        onDeleteClick={onDeleteClick}
+        isLoading={isLoading}
       />
       <UpdateJournalEntryModal
         isOpen={isUpdateModalOpen}
