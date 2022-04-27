@@ -9,6 +9,7 @@ const createUserDocument = gql`
         ) {
             id
             email
+            displayName
         }
     }
 `
@@ -33,7 +34,6 @@ const createUserMutation = async (createUserInput: UserCreateInput) => {
         document: createUserDocument,
         variables: { data: variables }
     });
-    console.log(createUser)
     return createUser;
 };
 
@@ -60,5 +60,7 @@ export const useUser = (id: string, displayName: string) => {
         });
         console.log(user)
         return user;
+    }, {
+        enabled: id !== undefined && id !== null && id !== ''
     })
 }
