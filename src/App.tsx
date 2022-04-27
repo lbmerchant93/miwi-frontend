@@ -40,6 +40,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>('');
   const [photoURL, setPhotoURL] = useState<string | null>('');
+  const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null)
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -71,7 +72,8 @@ const App = () => {
           isLoggedIn: isLoggedIn,
           id: userId,
           displayName: displayName,
-          photoURL: photoURL
+          photoURL: photoURL,
+          expectedDueDate: expectedDueDate
         }}
       >
         <ThemeProvider theme={theme}>
