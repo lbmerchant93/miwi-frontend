@@ -2,10 +2,8 @@ import { useQuery, useMutation } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
 
-
-
 const createUserDocument = gql`
-    mutation createUser($data: UserCreateInputData!){
+    mutation createUser($data: UserCreateInput!){
         createUser(
             data: $data
         ) {
@@ -35,10 +33,32 @@ const createUserMutation = async (createUserInput: UserCreateInput) => {
         document: createUserDocument,
         variables: { data: variables }
     });
-
+    console.log(createUser)
     return createUser;
 };
 
 export const useCreateUser = () => {
     return useMutation(createUserMutation)
 };
+
+const userDocument = gql`
+    query User($id: String) {
+        user (where: { id: $id } ) {
+            id
+            email
+            displayName
+        }
+    }
+`;
+
+export const useUser = (id: string, displayName: string) => {
+    return useQuery(['user', displayName], async () => {
+        const { user } = await request({
+            url: endpoint,
+            document: userDocument,
+            variables: { id }
+        });
+        console.log(user)
+        return user;
+    })
+}
