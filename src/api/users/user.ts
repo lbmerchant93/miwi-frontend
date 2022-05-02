@@ -2,45 +2,6 @@ import { useQuery, useMutation } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
 
-const createUserDocument = gql`
-    mutation createUser($data: UserCreateInput!){
-        createUser(
-            data: $data
-        ) {
-            id
-            email
-            displayName
-        }
-    }
-`
-
-interface UserCreateInput {
-    id: string;
-    email: string;
-    displayName: string;
-};
-
-const createUserMutation = async (createUserInput: UserCreateInput) => {
-    const { id, email, displayName } = createUserInput;
-
-    const variables = {
-        "id": id,
-        "email": email,
-        "displayName": displayName
-    };
-
-    const { createUser } = await request({
-        url: endpoint,
-        document: createUserDocument,
-        variables: { data: variables }
-    });
-    return createUser;
-};
-
-export const useCreateUser = () => {
-    return useMutation(createUserMutation)
-};
-
 const userDocument = gql`
     query User($id: String) {
         user (where: { id: $id } ) {
@@ -58,9 +19,47 @@ export const useUser = (id: string, displayName: string) => {
             document: userDocument,
             variables: { id }
         });
-        console.log(user)
         return user;
     }, {
         enabled: id !== undefined && id !== null && id !== ''
     })
 }
+
+const loginUserDocument = gql`
+    mutation loginUser($data: UserLoginInputData!){
+        loginUser(
+            data: $data
+        ) {
+            id
+            email
+            displayName
+        }
+    }
+`
+
+interface UserLoginInput {
+    id: string;
+    email: string | null;
+    displayName: string | null;
+};
+
+const loginUserMutation = async (createUserInput: UserLoginInput) => {
+    const { id, email, displayName } = createUserInput;
+
+    const variables = {
+        "id": id,
+        "email": email,
+        "displayName": displayName
+    };
+
+    const { loginUser } = await request({
+        url: endpoint,
+        document: loginUserDocument,
+        variables: { data: variables }
+    });
+    return loginUser;
+};
+
+export const useLoginUser = () => {
+    return useMutation(loginUserMutation)
+};

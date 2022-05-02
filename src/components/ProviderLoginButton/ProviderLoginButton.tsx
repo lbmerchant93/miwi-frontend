@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import GoogleIcon from '../../shared/Google.icon';
 import { Auth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useLoginUser } from '../../api/users/user';
 import './ProviderLoginButton.css'
 
 interface ProviderLoginButtonsProps {
@@ -13,13 +14,23 @@ interface ProviderLoginButtonsProps {
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
     const { auth } = props;
     const [error, setError] = useState<string>('');
+    const loginUser = useLoginUser();
 
     const loginWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, new GoogleAuthProvider())
-        } catch (error: any) {
-            setError(error.message);
-            console.log('error signing in', error.message);
+            const user = await signInWithPopup(auth, new GoogleAuthProvider());
+            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+                onError: (err: any) => {
+                    console.log(err)
+                },
+                // onSuccess: () => {
+                //     console.log("login successful")
+                // }
+            })
+
+        } catch (err: any) {
+            setError(err.message);
+            console.log('error signing in', err.message);
         }
     };
     
