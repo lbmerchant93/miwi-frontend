@@ -65,3 +65,42 @@ const loginUserMutation = async (createUserInput: UserLoginInput) => {
 export const useLoginUser = () => {
     return useMutation(loginUserMutation)
 };
+
+const updateUserDocument = gql`
+    mutation updateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!){
+        updateUser(
+            data: $data
+            where: $where 
+        ) {
+            id
+            email
+            displayName
+            expectedDueDate
+        }
+    }
+`
+
+interface UserUpdateInput {
+    id: string | undefined;
+    expectedDueDate: string | null;
+}
+
+const updateUserMutation = async (userUpdateInput: UserUpdateInput) => {
+    const { id, expectedDueDate } = userUpdateInput;
+
+    const variables = {
+        "expectedDueDate": { "set": expectedDueDate }
+    };
+
+    const { updateUser } = await request({
+        url: endpoint,
+        document: updateUserDocument,
+        variables: { data: variables, where: { "id": id } }
+    });
+
+    return updateUser;
+}
+
+export const useUpdateUser = () => {
+    return useMutation(updateUserMutation)
+}
