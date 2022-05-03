@@ -40,8 +40,9 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                 onError: (err: any) => {
                     triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
-                onSuccess: () => {
+                onSuccess: async () => {
                     triggerSnackBar(false, 'Profile update successful!');
+                    await user.setExpectedDueDate(date)
                     setIsEditing(false)
                 },
                 onSettled: () => {

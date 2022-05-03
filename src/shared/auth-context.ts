@@ -6,6 +6,7 @@ export interface User {
     displayName: string | null;
     photoURL: string | null;
     expectedDueDate: string | null;
+    setExpectedDueDate: any;
 }
 
 export const AuthContext = createContext<User>({ 
@@ -13,5 +14,6 @@ export const AuthContext = createContext<User>({
     id: undefined,
     displayName: '',
     photoURL: '',
-    expectedDueDate: null
+    expectedDueDate: null,
+    setExpectedDueDate: () => {}
 })

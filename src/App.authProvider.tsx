@@ -21,6 +21,10 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const { data } = useUser(userId, displayName);
 
+    const updateExpectedDueDate = (newDueDate: string) => {
+        setExpectedDueDate(newDueDate)
+    }
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setUserId(user.uid);
@@ -50,7 +54,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             id: userId,
             displayName: displayName,
             photoURL: photoURL,
-            expectedDueDate: expectedDueDate
+            expectedDueDate: expectedDueDate,
+            setExpectedDueDate: updateExpectedDueDate
             }}
         >
             {props.children}
