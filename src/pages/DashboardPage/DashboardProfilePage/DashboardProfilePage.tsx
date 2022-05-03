@@ -65,8 +65,24 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
 
     return (
         <Box className="profile-container">
-            <Typography variant="h5">Expected due date:</Typography>
-            {!isEditing && <Typography variant="h5"><b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b></Typography>}
+            <Typography variant="h6">Expected due date:</Typography>
+            {!isEditing && 
+                (<>
+                    <Typography variant="h6"><b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b></Typography>
+                    <Box className="profile-edit-button-container">
+                        <Box className="profile-edit-button">
+                            <Button 
+                                variant="contained" 
+                                onClick={() => setIsEditing(true)}
+                                startIcon={<EditIcon />}
+                                color="inherit"
+                            >
+                                Edit
+                            </Button>
+                        </Box>
+                    </Box>
+                </>)
+            }
             {isEditing && 
                 (<Box className="profile-edit-container">
                     <form onSubmit={handleUpdateSubmit}>
@@ -90,39 +106,21 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                     </Button>
                                 </Box>
                             }
-                            
-                            {isEditing && 
-                                <Box className="profile-edit-button">
-                                    <LoadingButton 
-                                        type="submit"
-                                        variant="contained" 
-                                        color="success"
-                                        loading={isLoading}
-                                    >
-                                        Submit Changes
-                                    </LoadingButton>
-                                </Box>
-                            }
+                            <Box className="profile-edit-button">
+                                <LoadingButton 
+                                    type="submit"
+                                    variant="contained" 
+                                    color="success"
+                                    loading={isLoading}
+                                >
+                                    Submit Changes
+                                </LoadingButton>
+                            </Box>
                         </Box>
                     </form>
-                    
                 </Box>)
             }
-            {!isEditing && <Box className="profile-edit-button-container">
-                <Box className="profile-edit-button">
-                    <Button 
-                        variant="contained" 
-                        onClick={() => setIsEditing(true)}
-                        startIcon={<EditIcon />}
-                        color="inherit"
-                    >
-                        Edit
-                    </Button>
-                </Box>
-            </Box>}
-            
         </Box>
-        
     )
 }
 
