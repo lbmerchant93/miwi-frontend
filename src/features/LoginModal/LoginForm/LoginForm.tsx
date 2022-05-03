@@ -8,6 +8,7 @@ import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useLoginUser } from '../../../api/users/user';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -20,10 +21,20 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const loginUser = useLoginUser();
 
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         try {
-            await signInWithEmailAndPassword(auth, email, password)
+            const user = await signInWithEmailAndPassword(auth, email, password)
+            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+                onError: (err: any) => {
+                    console.log(err)
+                },
+                // onSuccess: () => {
+                //     console.log("login successful")
+                // }
+            })
+            
         } catch (error: any) {
             setError(error.message)
         }

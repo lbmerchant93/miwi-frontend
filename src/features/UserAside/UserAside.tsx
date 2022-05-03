@@ -1,8 +1,10 @@
+import React from 'react';
 import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import { AuthContext } from '../../shared/auth-context';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
+import moment from 'moment';
 // import Button from '@mui/material/Button';
 // import EditIcon from '@mui/icons-material/Edit';
 
@@ -22,8 +24,8 @@ const UserAside = () => {
             <Typography variant="h4">{user.displayName}</Typography>
             {user.expectedDueDate && (
                 <>
-                    <Typography variant="h6">Estimated due date:</Typography>
-                    <Typography variant="h6">April 20th 2022</Typography>
+                    <Typography variant="h6">Expected due date:</Typography>
+                    <Typography variant="h6"><b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b></Typography>
                 </>
             )}
             {/* <Button 

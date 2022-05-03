@@ -8,11 +8,12 @@ const userDocument = gql`
             id
             email
             displayName
+            expectedDueDate
         }
     }
 `;
 
-export const useUser = (id: string, displayName: string) => {
+export const useUser = (id: string | undefined, displayName: string | null) => {
     return useQuery(['user', displayName], async () => {
         const { user } = await request({
             url: endpoint,
@@ -33,6 +34,7 @@ const loginUserDocument = gql`
             id
             email
             displayName
+            expectedDueDate
         }
     }
 `
