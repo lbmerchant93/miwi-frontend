@@ -17,10 +17,11 @@ import './DashboardProfilePage.css';
 
 interface DashboardProfilePageProps {
     user: User;
+    triggerSnackBar: (err: boolean, message: string) => void;
 }
 
 const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
-    const { user } = props;
+    const { user, triggerSnackBar } = props;
     const [date, setDate] = useState<string | null>(user.expectedDueDate);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,16 +38,18 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             }
             updateUser.mutate(updateUserInput, {
                 onError: (err: any) => {
-                    console.log(err)
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
-                onSuccess: (data) => {
-                    console.log(data, "Success")
+                onSuccess: () => {
+                    triggerSnackBar(false, 'Profile update successful!');
+                    setIsEditing(false)
                 },
                 onSettled: () => {
                     setIsLoading(false)
                 }
             })
         } else {
+            triggerSnackBar(true, 'Please update the profile before clicking submit.')
             setIsLoading(false)
         }
     }
