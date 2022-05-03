@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useLoginUser } from '../../../api/users/user';
 
 interface CreateAccountFormProps {
     auth: Auth;
@@ -18,12 +19,21 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const loginUser = useLoginUser();
 
     const createAccount = async (email: string, password: string, firstName: string, lastName: string) => {
         const displayName = firstName + ' ' + lastName
         try {
             const createdUser = await createUserWithEmailAndPassword(auth, email, password)
             updateProfile(createdUser.user, {displayName: displayName})
+            loginUser.mutate({id: createdUser.user.uid, email: email, displayName: displayName}, {
+                onError: (err: any) => {
+                    console.log(err)
+                },
+                // onSuccess: () => {
+                //     console.log("login successful")
+                // }
+            })
         } catch (error: any) {
             setError(error.message);
         }    

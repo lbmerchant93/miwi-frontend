@@ -76,6 +76,7 @@ const DashboardPage = () => {
                     navigateHomeRefetch={navigateHomeRefetch}
                     refetch={refetch}
                     refetchCount={refetchCount}
+                    user={user}
                 />
             </Box>
         </>

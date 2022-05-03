@@ -4,8 +4,9 @@ import Tab from '@mui/material/Tab';
 import Home from '../../pages/DashboardPage/DashboardHomePage/DashboardHomePage';
 import Box, { BoxProps } from '@mui/material/Box';
 import { useParams, useNavigate } from 'react-router-dom';
-// import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
+import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
 import NewJournalEntryForm from '../../pages/DashboardPage/DashboardNewJournalEntryFormPage/DashboardNewJournalEntryFormPage';
+import { User } from '../../shared/auth-context';
 
 import './DashboardPanel.css';
 
@@ -28,12 +29,12 @@ const dashboardPageMap = [
         tab: 'journal_entry_form',
         Component: NewJournalEntryForm
     }
-    // ,{
-    //     route: DashboardPageRoutes.profile,
-    //     label: 'PROFILE',
-    //     tab: 'profile',
-    //     Component: Profile
-    // }
+    ,{
+        route: DashboardPageRoutes.profile,
+        label: 'PROFILE',
+        tab: 'profile',
+        Component: Profile
+    }
 ]
 
 const DashboardTabs: React.FC<{
@@ -95,6 +96,7 @@ interface DashboardPanelViewsProps {
     navigateHomeRefetch: () => void;
     refetch: () => void;
     refetchCount: () => void;
+    user: User;
 }
 
 const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
@@ -108,7 +110,8 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
         setSkipCount,
         navigateHomeRefetch,
         refetch,
-        refetchCount
+        refetchCount,
+        user
     } = props;
 
     return (
@@ -125,6 +128,7 @@ const DashboardPanelViews: React.FC<DashboardPanelViewsProps> = (props) => {
                         navigateHomeRefetch={navigateHomeRefetch}
                         refetch={refetch}
                         refetchCount={refetchCount}
+                        user={user}
                     />
                 </DashboardTabPanel>
             ))}
@@ -144,6 +148,7 @@ interface DashboardPanelProps {
     navigateHomeRefetch: () => void;
     refetch: () => void;
     refetchCount: () => void;
+    user: User;
 }
 
 const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
@@ -156,7 +161,8 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
         setSkipCount,
         navigateHomeRefetch,
         refetch,
-        refetchCount
+        refetchCount,
+        user
     } = props;
     const { tab } = useParams();
     const navigate = useNavigate();
@@ -186,6 +192,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                         navigateHomeRefetch={navigateHomeRefetch}
                         refetch={refetch}
                         refetchCount={refetchCount}
+                        user={user}
                     />
                 </Box>
             ) : (

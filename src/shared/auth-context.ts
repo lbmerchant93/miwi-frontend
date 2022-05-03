@@ -5,11 +5,15 @@ export interface User {
     id: string | undefined;
     displayName: string | null;
     photoURL: string | null;
+    expectedDueDate: string | null;
+    setExpectedDueDate: any;
 }
 
 export const AuthContext = createContext<User>({ 
     isLoggedIn: false, 
     id: undefined,
     displayName: '',
-    photoURL: ''
+    photoURL: '',
+    expectedDueDate: null,
+    setExpectedDueDate: () => {}
 })
