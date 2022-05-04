@@ -85,9 +85,6 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                         triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
                         setIsLoading(false)
                     },
-                    onSuccess: () => {
-
-                    }
                 })
             } catch (err: any) {
                 triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
