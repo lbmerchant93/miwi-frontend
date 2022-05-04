@@ -12,6 +12,8 @@ import TextField from '@mui/material/TextField';
 import { User } from '../../../shared/auth-context';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useUpdateUser } from '../../../api/users/user';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FormLabel from '@mui/material/FormLabel';
 
 import './DashboardProfilePage.css';
 
@@ -65,19 +67,37 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
 
     return (
         <Box className="profile-container">
-            <Typography variant="h6">Expected due date:</Typography>
             {!isEditing && 
                 (<>
-                    <Typography variant="h6"><b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b></Typography>
+                    <Box className="profile-info-container">
+                        <Typography variant="h6">Expected due date:</Typography>
+                        <Typography variant="h6" ml={3}><b>{user.expectedDueDate ? moment(user.expectedDueDate).format("MMMM Do YYYY") : " "}</b></Typography>
+                    </Box>
                     <Box className="profile-edit-button-container">
+                        <Typography variant="h6">Edit your account:</Typography>
                         <Box className="profile-edit-button">
                             <Button 
                                 variant="contained" 
                                 onClick={() => setIsEditing(true)}
                                 startIcon={<EditIcon />}
                                 color="inherit"
+                                size="small"
                             >
                                 Edit
+                            </Button>
+                        </Box>
+                    </Box>
+                    <Box className="profile-delete-button-container">
+                        <Typography variant="h6">Delete your account:</Typography>
+                        <Box className="profile-delete-button">
+                            <Button 
+                                variant="contained" 
+                                onClick={() => setIsEditing(true)}
+                                startIcon={<DeleteIcon />}
+                                color="warning"
+                                size="small"
+                            >
+                                Delete Account
                             </Button>
                         </Box>
                     </Box>
@@ -85,7 +105,14 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             }
             {isEditing && 
                 (<Box className="profile-edit-container">
-                    <form onSubmit={handleUpdateSubmit}>
+                    <Typography variant='h5' className="page-title" mb={1}>
+                        Edit Profile
+                    </Typography>
+                    <Typography variant="body1" my={1}>
+                        Fill out the form below and select submit to update your profile.
+                    </Typography>
+                    <form className="form" onSubmit={handleUpdateSubmit}>
+                    <FormLabel id="date-input-label">Expected due date: </FormLabel>
                         <LocalizationProvider dateAdapter={DateAdapter}>
                             <DatePicker
                                 value={date}
@@ -93,9 +120,9 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                 renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
                             />
                         </LocalizationProvider>
-                        <Box className="profile-edit-button-container">
+                        <Box className="profile-edit-action-container">
                             {!isLoading && 
-                                <Box className="profile-edit-button">
+                                <Box className="profile-edit-action-button">
                                     <Button 
                                         variant="contained" 
                                         onClick={() => setIsEditing(false)}
@@ -106,14 +133,14 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                     </Button>
                                 </Box>
                             }
-                            <Box className="profile-edit-button">
+                            <Box className="profile-edit-action-button">
                                 <LoadingButton 
                                     type="submit"
                                     variant="contained" 
                                     color="success"
                                     loading={isLoading}
                                 >
-                                    Submit Changes
+                                    Submit
                                 </LoadingButton>
                             </Box>
                         </Box>
