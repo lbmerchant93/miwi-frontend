@@ -1,5 +1,7 @@
 .profile-container,
-.profile-edit-container {
+.profile-edit-container,
+.profile-delete-account-confirmation,
+.profile-delete-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,4 +41,8 @@
 .profile-edit-button-container,
 .profile-delete-button-container {
     margin: 8px 0;
+}
+
+.profile-delete-form {
+    width: 375px;
 }
