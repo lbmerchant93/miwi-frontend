@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface CreateAccountFormProps {
     auth: Auth;
@@ -19,9 +19,11 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const loginUser = useLoginUser();
 
     const createAccount = async (email: string, password: string, firstName: string, lastName: string) => {
+        setIsLoading(true)
         const displayName = firstName + ' ' + lastName
         try {
             const createdUser = await createUserWithEmailAndPassword(auth, email, password)
@@ -36,6 +38,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
             })
         } catch (error: any) {
             setError(error.message);
+            setIsLoading(false)
         }    
     };
 
@@ -86,13 +89,14 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     />
                 </Box>
                 <Box>
-                    <Button 
+                    <LoadingButton 
                         variant="outlined" 
                         color="inherit" 
                         onClick={() => createAccount(email, password, firstName, lastName)}
+                        loading={isLoading}
                     >
                             Create Account
-                    </Button>  
+                    </LoadingButton>  
                 </Box>
             </form>
             <Typography variant="caption">

@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
+import LoadingButton from '@mui/lab/LoadingButton';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -21,9 +21,11 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const loginUser = useLoginUser();
 
     const loginWithEmailAndPassword = async (email: string, password: string) => {
+        setIsLoading(true)
         try {
             const user = await signInWithEmailAndPassword(auth, email, password)
             loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
@@ -34,9 +36,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 //     console.log("login successful")
                 // }
             })
-            
         } catch (error: any) {
-            setError(error.message)
+            setIsLoading(false)
         }
     };
 
@@ -70,7 +71,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                             />
                         </Box>
                         <Box>
-                            <Button variant="outlined" color="inherit" onClick={() => loginWithEmailAndPassword(email, password)}>Submit</Button>  
+                            <LoadingButton variant="outlined" color="inherit" onClick={() => loginWithEmailAndPassword(email, password)} loading={isLoading}>Submit</LoadingButton>  
                         </Box>
                     </form>
                     <Typography variant="caption">
