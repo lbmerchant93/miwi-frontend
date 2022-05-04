@@ -112,7 +112,23 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                     (<>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Expected due date:</Typography>
-                            <Typography variant="h6" ml={3}><b>{user.expectedDueDate ? moment(user.expectedDueDate).format("MMMM Do YYYY") : " "}</b></Typography>
+                            <Typography variant="h6" ml={3}>
+                                {user.expectedDueDate ? 
+                                    <b>moment(user.expectedDueDate).format("MMMM Do YYYY")</b> 
+                                    : 
+                                    <Box className="profile-edit-button">
+                                        <Button 
+                                            variant="contained" 
+                                            onClick={() => setIsEditing(true)}
+                                            startIcon={<EditIcon />}
+                                            color="inherit"
+                                            size="small"
+                                        >
+                                            Edit
+                                        </Button>
+                                    </Box>
+                                }
+                            </Typography>
                         </Box>
                         <Box className="profile-edit-button-container">
                             <Typography variant="h6">Edit your account:</Typography>
