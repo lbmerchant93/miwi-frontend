@@ -37,7 +37,6 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                 //     console.log("login successful")
                 // }
             })
-            setIsLoading(false)
         } catch (error: any) {
             setError(error.message);
             setIsLoading(false)
