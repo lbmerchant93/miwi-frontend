@@ -104,3 +104,26 @@ const updateUserMutation = async (userUpdateInput: UserUpdateInput) => {
 export const useUpdateUser = () => {
     return useMutation(updateUserMutation)
 }
+
+const deleteUserDocument = gql`
+    mutation deleteUser($id: String) {
+        deleteUser(where: { id: $id } ) {
+            id
+            email
+        }
+    }
+`
+
+const deleteUserMutation = async (id: string | undefined) => {
+    const { deleteUser } = await request({
+        url: endpoint,
+        document: deleteUserDocument,
+        variables: { id }
+    });
+    
+    return deleteUser;
+};
+
+export const useDeleteUser = () => {
+    return useMutation(deleteUserMutation);
+};
