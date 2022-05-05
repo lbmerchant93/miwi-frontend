@@ -20,4 +20,5 @@ main {
   display: flex;
   flex-direction: row;
   width: 100%;
+  min-height: 500px;
 }

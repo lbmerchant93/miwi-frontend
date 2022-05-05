@@ -1,0 +1,16 @@
+.landing-page-container,
+.landing-page-description-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.landing-page-container {
+    padding-top: 1rem;
+    width: 100%;
+}
+
+.landing-page-description-container {
+    margin-top: 4rem;
+}
