@@ -114,7 +114,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                             <Typography variant="h6">Expected due date:</Typography>
                             <Typography variant="h6" ml={3}>
                                 {user.expectedDueDate ? 
-                                    <b>moment(user.expectedDueDate).format("MMMM Do YYYY")</b> 
+                                    <b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b> 
                                     : 
                                     <Box className="profile-edit-button">
                                         <Button 
