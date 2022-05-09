@@ -9,6 +9,7 @@ import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginBut
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -23,6 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const [error, setError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const loginUser = useLoginUser();
+    const navigate = useNavigate();
 
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         setIsLoading(true)
@@ -32,9 +34,9 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 onError: (err: any) => {
                     console.log(err)
                 },
-                // onSuccess: () => {
-                //     console.log("login successful")
-                // }
+                onSuccess: () => {
+                    navigate('/dashboard/home')
+                }
             })
         } catch (error: any) {
             setIsLoading(false)
