@@ -6,6 +6,7 @@ import Link from '@mui/material/Link';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 
 interface CreateAccountFormProps {
     auth: Auth;
@@ -21,6 +22,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     const [error, setError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const loginUser = useLoginUser();
+    const navigate = useNavigate();
 
     const createAccount = async (email: string, password: string, firstName: string, lastName: string) => {
         setIsLoading(true)
@@ -32,9 +34,9 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                 onError: (err: any) => {
                     console.log(err)
                 },
-                // onSuccess: () => {
-                //     console.log("login successful")
-                // }
+                onSuccess: () => {
+                    navigate('/dashboard/home')
+                }
             })
         } catch (error: any) {
             setError(error.message);
