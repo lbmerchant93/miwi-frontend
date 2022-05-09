@@ -14,9 +14,9 @@ const AppFooter: React.FC = () => {
         <Link to={`${PossibleRoutes.ABOUT}`} className="footer-link">
             <Typography variant="body1">About</Typography>
         </Link>
-        {/* <Link to={`${PossibleRoutes.ROOT}`} className="footer-link">
+        <Link to={`${PossibleRoutes.FAQ}`} className="footer-link">
             <Typography variant="body1">FAQ</Typography>
-        </Link> */}
+        </Link>
         {/* <Link to={`${PossibleRoutes.ROOT}`} className="footer-link">
             <Typography variant="body1">Contact Us</Typography>
         </Link> */}

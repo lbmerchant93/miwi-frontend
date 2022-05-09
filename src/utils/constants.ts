@@ -3,4 +3,5 @@ export enum PossibleRoutes {
     DASHBOARD = '/dashboard',
     DASHBOARD_TAB = '/dashboard/:tab',
     ABOUT = '/about',
+    FAQ = '/FAQ',
 }

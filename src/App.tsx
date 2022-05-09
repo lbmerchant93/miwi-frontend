@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthProvider from './App.authProvider';
 import AboutPage from './pages/AboutPage/AboutPage';
+import FAQPage from './pages/FAQPage/FAQPage';
 
 export const endpoint = 'http://localhost:9000/graphql';
 
@@ -35,6 +36,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
+      <Route path={`${PossibleRoutes.FAQ}`} element={<FAQPage />} />
     </Routes>
   );
   
