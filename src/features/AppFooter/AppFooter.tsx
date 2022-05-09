@@ -11,9 +11,9 @@ const AppFooter: React.FC = () => {
   return (
     <footer>
       <Box className="footer-links-container">
-        <Link to={`${PossibleRoutes.ABOUT}`} className="footer-link">
+        {/* <Link to={`${PossibleRoutes.ABOUT}`} className="footer-link">
             <Typography variant="body1">About</Typography>
-        </Link>
+        </Link> */}
         <Link to={`${PossibleRoutes.FAQ}`} className="footer-link">
             <Typography variant="body1">FAQ</Typography>
         </Link>
