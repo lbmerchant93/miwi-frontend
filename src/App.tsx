@@ -12,6 +12,7 @@ import firebaseConfig from './configs/firebase.configs';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthProvider from './App.authProvider';
+import AboutPage from './pages/AboutPage/AboutPage';
 
 export const endpoint = 'http://localhost:9000/graphql';
 
@@ -33,6 +34,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.ROOT}`} element={<LandingPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
+      <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
     </Routes>
   );
   
