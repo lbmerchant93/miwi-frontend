@@ -9,7 +9,9 @@ const MainPage:React.FC = () => {
   return (
     <Box className="landing-page-container">
       <Typography variant="h2">
-        Welcome to MiWi
+        <strong>
+          Welcome to MiWi
+        </strong>
       </Typography>
       <Typography variant="subtitle1">Your personal Midwifery App</Typography>
       <Box className="landing-page-description-container">

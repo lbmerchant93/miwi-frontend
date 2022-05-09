@@ -1,0 +1,17 @@
+.faq-page-container,
+.faq-page-journal-terms-section-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-page-container {
+    text-align: center;
+    align-items: center;
+    padding-top: 1rem;
+    max-width: min(80ch, 100%);
+}
+
+.faq-page-journal-terms-section-container {
+    text-align: start;
+    margin-top: 1rem;
+}
