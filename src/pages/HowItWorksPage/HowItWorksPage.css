@@ -12,6 +12,9 @@
 }
 
 .hiw-page-journal-terms-section-container {
+    text-decoration: underline;
+}
+
+.hiw-page-journal-terms-section {
     text-align: start;
-    margin-top: 1rem;
 }
