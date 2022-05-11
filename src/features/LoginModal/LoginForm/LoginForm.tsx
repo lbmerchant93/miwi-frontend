@@ -10,6 +10,7 @@ import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
+import FormLabel from '@mui/material/FormLabel';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -49,8 +50,12 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         <>
             <Box className="login-form-options">
                 <Box>
+                    {/* <Typography variant="body1" mb={1}>
+                        Login Form
+                    </Typography> */}
                     <form className="login-form">
-                        <Box className="login-form-input">
+                        <FormLabel component="legend">Login Form</FormLabel>
+                        <Box className="login-form-input" mt={1}>
                             <TextField 
                                 label="Email" 
                                 id="Email" 
@@ -84,7 +89,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="login-form-buttons">
-                    <ProviderLoginButton auth={auth} onClose={onClose}/>
+                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Sign in with Google"}/>
                     <Typography variant="caption" my={3}>
                         OR
                     </Typography>
