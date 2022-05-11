@@ -15,10 +15,11 @@ import './LoginForm.css';
 interface LoginFormProps {
     auth: Auth;
     onRegisterClick: () => void;
+    onClose: () => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const { auth, onRegisterClick } = props;
+    const { auth, onRegisterClick, onClose } = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -35,6 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     console.log(err)
                 },
                 onSuccess: () => {
+                    onClose()
                     navigate('/dashboard/home')
                 }
             })

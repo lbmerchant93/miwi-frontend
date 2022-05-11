@@ -18,7 +18,6 @@ enum FormState {
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
-    user: User;
     auth: Auth;
 };
 
@@ -34,17 +33,14 @@ const modalState = {
   };
 
 const LoginModal: React.FC<LoginModalProps> = (props) => {
-    const { isOpen, onClose, user, auth } = props;
+    const { isOpen, onClose, auth } = props;
     const [formState, setFormState] = useState<FormState>(FormState.Login);
 
     useEffect(() => {
         if (isOpen) {
             setFormState(FormState.Login);
         }
-        if (user.isLoggedIn) {
-            onClose()
-        }
-    }, [user, onClose, isOpen])
+    }, [isOpen])
 
     return (
         <Modal
@@ -71,7 +67,8 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                 {formState === FormState.Login && (
                     <LoginForm 
                         auth={auth}
-                        onRegisterClick={() => setFormState(FormState.Creation)} 
+                        onRegisterClick={() => setFormState(FormState.Creation)}
+                        onClose={onClose}
                     />
                 )}
                 {formState === FormState.Creation && (

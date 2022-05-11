@@ -90,7 +90,6 @@ const AppBar: React.FC = () => {
                         <LoginModal 
                             isOpen={isLoginOpen} 
                             onClose={() => setIsLoginOpen(false)} 
-                            user={user} 
                             auth={auth}
                         />
                         <Menu
