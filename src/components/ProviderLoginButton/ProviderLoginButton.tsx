@@ -10,10 +10,11 @@ import './ProviderLoginButton.css'
 
 interface ProviderLoginButtonsProps {
     auth: Auth;
+    onClose: () => void;
 }
 
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
-    const { auth } = props;
+    const { auth, onClose } = props;
     const [error, setError] = useState<string>('');
     const loginUser = useLoginUser();
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
                 },
                 onSuccess: () => {
                     navigate('/dashboard/home')
+                    onClose()
                 }
             })
 
