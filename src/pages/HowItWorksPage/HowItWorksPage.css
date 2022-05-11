@@ -1,0 +1,20 @@
+.hiw-page-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding-top: 1rem;
+    max-width: min(80ch, 100%);
+}
+
+.hiw-page-app-flow-section-title-container,
+.hiw-page-app-features-section-title-container,
+.hiw-page-journal-terms-section-title-container {
+    text-decoration: underline;
+}
+
+.hiw-page-app-flow-section-container,
+.hiw-page-app-features-section-container,
+.hiw-page-journal-terms-section-container {
+    text-align: start;
+}

@@ -5,16 +5,19 @@ import Box from '@mui/material/Box';
 import GoogleIcon from '../../shared/Google.icon';
 import { Auth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../api/users/user';
+import { useNavigate } from 'react-router-dom';
 import './ProviderLoginButton.css'
 
 interface ProviderLoginButtonsProps {
     auth: Auth;
+    onClose: () => void;
 }
 
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
-    const { auth } = props;
+    const { auth, onClose } = props;
     const [error, setError] = useState<string>('');
     const loginUser = useLoginUser();
+    const navigate = useNavigate();
 
     const loginWithGoogle = async () => {
         try {
@@ -23,9 +26,10 @@ const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
                 onError: (err: any) => {
                     console.log(err)
                 },
-                // onSuccess: () => {
-                //     console.log("login successful")
-                // }
+                onSuccess: () => {
+                    navigate('/dashboard/home')
+                    onClose()
+                }
             })
 
         } catch (err: any) {

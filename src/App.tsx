@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppBar from './features/AppBar/AppBar';
 import AppFooter from './features/AppFooter/AppFooter';
 import { PossibleRoutes } from './utils/constants';
-import MainPage from './pages/MainPage/MainPage';
+import LandingPage from './pages/LandingPage/LandingPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
@@ -12,6 +12,8 @@ import firebaseConfig from './configs/firebase.configs';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthProvider from './App.authProvider';
+import AboutPage from './pages/AboutPage/AboutPage';
+import HowItWorksPage from './pages/HowItWorksPage/HowItWorksPage';
 
 export const endpoint = 'http://localhost:9000/graphql';
 
@@ -30,9 +32,11 @@ const App = () => {
 
   const routes = (
     <Routes>
-      <Route path={`${PossibleRoutes.ROOT}`} element={<MainPage />} />
+      <Route path={`${PossibleRoutes.ROOT}`} element={<LandingPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
+      <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
+      <Route path={`${PossibleRoutes.HOW_IT_WORKS}`} element={<HowItWorksPage />} />
     </Routes>
   );
   

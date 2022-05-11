@@ -9,6 +9,7 @@ import WarningModal from '../WarningModal/WarningModal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import UpdateJournalEntryModal from '../UpdateJournalEntryModal/UpdateJournalEntryModal';
+import Tooltip from '@mui/material/Tooltip';
 import './JournalEntryCard.css';
 
 interface JournalEntryCardProps {
@@ -70,8 +71,16 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         <Typography variant="body1">You <b>{entry.prenatalVitamins ? 'did' : 'did not'}</b> take your prenatal vitamins </Typography>
         <Typography variant="body1">You <b>{entry.probiotics ? 'did' : 'did not'}</b> take your probiotics </Typography>
         <Box className="journal-entry-card-options">
-            <IconButton onClick={() => setIsUpdateModalOpen(true)} color="default"><EditIcon /></IconButton> 
-            <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning"><DeleteIcon /></IconButton>
+          <Tooltip title="Edit">
+            <IconButton onClick={() => setIsUpdateModalOpen(true)} color="default">
+              <EditIcon />
+            </IconButton> 
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton onClick={() => setIsWarningModalOpen(true)} color="warning">
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Box>
       <WarningModal 

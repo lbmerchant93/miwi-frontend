@@ -9,20 +9,23 @@ import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginBut
 import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 interface LoginFormProps {
     auth: Auth;
     onRegisterClick: () => void;
+    onClose: () => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const { auth, onRegisterClick } = props;
+    const { auth, onRegisterClick, onClose } = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const loginUser = useLoginUser();
+    const navigate = useNavigate();
 
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         setIsLoading(true)
@@ -32,9 +35,10 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 onError: (err: any) => {
                     console.log(err)
                 },
-                // onSuccess: () => {
-                //     console.log("login successful")
-                // }
+                onSuccess: () => {
+                    onClose()
+                    navigate('/dashboard/home')
+                }
             })
         } catch (error: any) {
             setIsLoading(false)
@@ -80,7 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="login-form-buttons">
-                    <ProviderLoginButton auth={auth} />
+                    <ProviderLoginButton auth={auth} onClose={onClose}/>
                     <Typography variant="caption" my={3}>
                         OR
                     </Typography>
