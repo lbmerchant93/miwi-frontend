@@ -20,7 +20,7 @@ const HowItWorksPage = () => {
             Listed below are the steps in order to create an account and then how to create your first Journal Entry.
           </Typography>
           <Typography variant="body1" mb={2}>
-            <strong>Step 1:</strong> You can create an account by clicking the <i><strong>register</strong></i> button under the sign in form or by selecting to sign in through your google account. The method in which you choose to create an account will be how you sign in to your account in the future. (I.e., if you register an account through the <i><strong>Create an account</strong></i> form, you will sign in using the sign in form, but if you register using your google account you will sign in using the <i><strong>SIGN IN WITH GOOGLE</strong></i> button)
+            <strong>Step 1:</strong> You can create an account by clicking the <i><strong>register</strong></i> button under the <i><strong>Login Form</strong></i> or by selecting to sign in through your google account. The method in which you choose to create an account will be how you sign in to your account in the future. (I.e., if you register an account through the <i><strong>Create an account</strong></i> form, you will sign in using the sign in form, but if you register using your google account you will sign in using the <i><strong>SIGN IN WITH GOOGLE</strong></i> button)
           </Typography>
           <Typography variant="body1" mb={2}>
             <strong>Step 2:</strong> Once you have successfully created your account, you will be directed to your dashboard's <i><strong>Home</strong></i> page. Since you will not have any journal entries yet, a message will appear with a button prompting you to create your first journal entry. Clicking this button will direct you to the Journal Entry Form page, or you can get there by selecting the <i><strong>Journal Entry Form</strong></i> tab.
@@ -45,7 +45,7 @@ const HowItWorksPage = () => {
             The features mentioned below are defined for their intended application use and there for any clarity on how the app works.
           </Typography>
           <Typography variant="body1" mb={2}>
-            <strong>Sign in:</strong> If you already have an account with us, you can sign in through the sign in form if you created your account by registering with us originally or sign in through your google account if you created your account by signing in with your google account originally.
+            <strong>Login:</strong> If you already have an account with us, you can login through the <i><strong>Login Form</strong></i> if you created your account by registering with us originally or sign in through your google account if you created your account by signing in with your google account originally.
           </Typography>
           <Typography variant="body1" mb={2}>
             <strong>Pagination:</strong> Your dashboard's <i><strong>Home</strong></i> page will display the 15 most recent journal entries you have created. If you have more than 15 entries, you can view older journal entries by clicking the <i><strong>next</strong></i> button at the bottom of the <i><strong>Home</strong></i> page. The <i><strong>back</strong></i> button will return you to more recent entries.
