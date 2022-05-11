@@ -11,10 +11,11 @@ import { useNavigate } from 'react-router-dom';
 interface CreateAccountFormProps {
     auth: Auth;
     goBack: () => void;
+    onClose: () => void;
 }
 
 const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
-    const { auth, goBack } = props;
+    const { auth, goBack, onClose } = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [firstName, setFirstName] = useState<string>('');
@@ -35,6 +36,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     console.log(err)
                 },
                 onSuccess: () => {
+                    onClose()
                     navigate('/dashboard/home')
                 }
             })

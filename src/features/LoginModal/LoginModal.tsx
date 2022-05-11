@@ -75,6 +75,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                     <CreateAccountForm 
                         auth={auth}
                         goBack={() => setFormState(FormState.Login)}
+                        onClose={onClose}
                     />
                 )}
             </Box>
