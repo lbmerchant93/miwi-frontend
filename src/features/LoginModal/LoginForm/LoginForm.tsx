@@ -84,7 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="login-form-buttons">
-                    <ProviderLoginButton auth={auth} onClose={onClose}/>
+                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Sign in with Google"}/>
                     <Typography variant="caption" my={3}>
                         OR
                     </Typography>

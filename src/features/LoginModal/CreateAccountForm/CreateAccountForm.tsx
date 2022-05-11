@@ -7,6 +7,10 @@ import { Auth, createUserWithEmailAndPassword, updateProfile } from 'firebase/au
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
+import Divider from '@mui/material/Divider';
+import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
+
+import './CreateAccountForm.css';
 
 interface CreateAccountFormProps {
     auth: Auth;
@@ -47,66 +51,74 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     };
 
     return (
-        <Box>
-            <form className="login-form">
-                <Box className="login-form-input">
-                    <TextField 
-                        label="First Name" 
-                        id="FirstName" 
-                        variant="outlined" 
-                        value={firstName} 
-                        onChange={(e) => setFirstName(e.currentTarget.value)} 
-                        fullWidth={true}
-                    />
-                </Box>
-                <Box className="login-form-input">
-                    <TextField 
-                        label="Last Name" 
-                        id="LastName" 
-                        variant="outlined" 
-                        value={lastName} 
-                        onChange={(e) => setLastName(e.currentTarget.value)} 
-                        fullWidth={true}
-                    />
-                </Box>
-                <Box className="login-form-input">
-                    <TextField 
-                        label="Email" 
-                        id="Email" 
-                        variant="outlined" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.currentTarget.value)} 
-                        fullWidth={true}
-                    />
-                </Box>
-                <Box className="login-form-input">
-                    <TextField 
-                        label="Password" 
-                        id="Password" 
-                        variant="outlined" 
-                        type="password" 
-                        value={password} 
-                        error={!!error}
-                        helperText={error}
-                        onChange={(e) => setPassword(e.currentTarget.value)} 
-                        fullWidth={true}
-                    />
-                </Box>
+        <>
+            <Box className="create-account-form-options">
                 <Box>
-                    <LoadingButton 
-                        variant="outlined" 
-                        color="inherit" 
-                        onClick={() => createAccount(email, password, firstName, lastName)}
-                        loading={isLoading}
-                    >
-                            Create Account
-                    </LoadingButton>  
+                    <form className="create-account-form">
+                        <Box className="create-account-form-input">
+                            <TextField 
+                                label="First Name" 
+                                id="FirstName" 
+                                variant="outlined" 
+                                value={firstName} 
+                                onChange={(e) => setFirstName(e.currentTarget.value)} 
+                                fullWidth={true}
+                            />
+                        </Box>
+                        <Box className="create-account-form-input">
+                            <TextField 
+                                label="Last Name" 
+                                id="LastName" 
+                                variant="outlined" 
+                                value={lastName} 
+                                onChange={(e) => setLastName(e.currentTarget.value)} 
+                                fullWidth={true}
+                            />
+                        </Box>
+                        <Box className="create-account-form-input">
+                            <TextField 
+                                label="Email" 
+                                id="Email" 
+                                variant="outlined" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.currentTarget.value)} 
+                                fullWidth={true}
+                            />
+                        </Box>
+                        <Box className="create-account-form-input">
+                            <TextField 
+                                label="Password" 
+                                id="Password" 
+                                variant="outlined" 
+                                type="password" 
+                                value={password} 
+                                error={!!error}
+                                helperText={error}
+                                onChange={(e) => setPassword(e.currentTarget.value)} 
+                                fullWidth={true}
+                            />
+                        </Box>
+                        <Box>
+                            <LoadingButton 
+                                variant="outlined" 
+                                color="inherit" 
+                                onClick={() => createAccount(email, password, firstName, lastName)}
+                                loading={isLoading}
+                            >
+                                    Create Account
+                            </LoadingButton>  
+                        </Box>
+                    </form>
+                    <Typography variant="caption">
+                        Already have an account? <Link component="button" variant="caption" color="#0000EE" onClick={goBack}>Log in</Link>
+                    </Typography>
                 </Box>
-            </form>
-            <Typography variant="caption">
-                Already have an account? <Link component="button" variant="caption" color="#0000EE" onClick={goBack}>Log in</Link>
-            </Typography>
-        </Box>
+                <Divider orientation="vertical" />
+                <Box className="create-account-form-buttons">
+                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Register with Google"}/>
+                </Box>
+            </Box>
+        </>
     )
 }
 

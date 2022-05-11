@@ -1,0 +1,25 @@
+.create-account-form-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.create-account-form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.create-account-form-input {
+    margin-bottom: 10px;
+}
+
+.create-account-form-buttons {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}

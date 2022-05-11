@@ -11,10 +11,11 @@ import './ProviderLoginButton.css'
 interface ProviderLoginButtonsProps {
     auth: Auth;
     onClose: () => void;
+    message: string;
 }
 
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
-    const { auth, onClose } = props;
+    const { auth, onClose, message } = props;
     const [error, setError] = useState<string>('');
     const loginUser = useLoginUser();
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
             <Button variant="outlined" onClick={() => loginWithGoogle()} color="inherit" >
                 <GoogleIcon />
                 <Box className="provider-login-text-wrapper">
-                    <Typography variant="body1">Sign in with Google</Typography>
+                    <Typography variant="body1">{message}</Typography>
                 </Box>
             </Button>
         </Box>

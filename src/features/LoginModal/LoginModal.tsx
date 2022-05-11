@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { User } from '../../shared/auth-context';
 import LoginForm from './LoginForm/LoginForm';
 import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,7 +23,7 @@ interface LoginModalProps {
 const modalState = {
     [FormState.Creation]: {
       title: 'Create an account',
-      description: `Please fill out this form so we can create a dashboard for you.`,
+      description: `Please fill out this form so we can create a dashboard for you or register an account through your google account.`,
     },
     [FormState.Login]: {
       title: 'Welcome back!',
