@@ -140,6 +140,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                             value={date}
                             onChange={(newDate) => setDate(moment(newDate).startOf('day').toISOString(true))}
                             renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
+                            disabled={isLoading}
                         />
                     </LocalizationProvider>
                     <FormLabel id="water-intake-label">How many ounces of water did you drink?</FormLabel>
@@ -151,6 +152,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         InputProps={{ inputProps: { min: 0 } }}
                         required
                         size='small'
+                        disabled={isLoading}
                     />
                     <FormLabel id="water-intake-label">How many grams of protein did you have?</FormLabel>
                     <TextField
@@ -161,6 +163,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         InputProps={{ inputProps: { min: 0 } }}
                         required
                         size='small'
+                        disabled={isLoading}
                     />
                     <FormLabel id="water-intake-label">How many minutes did you exercise for?</FormLabel>
                     <TextField
@@ -171,6 +174,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         InputProps={{ inputProps: { min: 0 } }}
                         required
                         size='small'
+                        disabled={isLoading}
                     />
                     <FormLabel id="water-intake-label">How many kegels did you do?</FormLabel>
                     <TextField
@@ -181,6 +185,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         InputProps={{ inputProps: { min: 0 } }}
                         required
                         size='small'
+                        disabled={isLoading}
                     />
                     <FormLabel id="water-intake-label">How many minutes did you do garland pose for?</FormLabel>
                     <TextField
@@ -191,6 +196,7 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         InputProps={{ inputProps: { min: 0 } }}
                         required
                         size='small'
+                        disabled={isLoading}
                     />
                     <FormLabel id="prenatal-vitamins-label" >Did you take your prenatal vitamins? </FormLabel>
                     <RadioGroup
@@ -200,8 +206,8 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         value={prenatalVitamins}
                         onChange={(e) => setPrenatalVitamins(e.currentTarget.value === "true" ? true : false)}
                     >
-                        <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
-                        <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
+                        <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" disabled={isLoading}/>
+                        <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" disabled={isLoading}/>
                     </RadioGroup>
                     <FormLabel id="probiotics-label" >Did you take your probiotics? </FormLabel>
                     <RadioGroup
@@ -211,8 +217,8 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
                         value={probiotics}
                         onChange={(e) => setProbiotics(e.currentTarget.value === "true" ? true : false)}
                     >
-                        <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" />
-                        <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" />
+                        <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" disabled={isLoading}/>
+                        <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" disabled={isLoading}/>
                     </RadioGroup>
                     <Box className="update-entry-form-button-container">
                         <Box className="update-entry-form-button">
