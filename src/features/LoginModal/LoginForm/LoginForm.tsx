@@ -34,6 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             const user = await signInWithEmailAndPassword(auth, email, password)
             loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
                 onError: (err: any) => {
+                    setIsLoading(false)
                     console.log(err)
                 },
                 onSuccess: () => {
@@ -41,8 +42,9 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     navigate('/dashboard/home')
                 }
             })
-        } catch (error: any) {
+        } catch (err: any) {
             setIsLoading(false)
+            console.log(err.message)
         }
     };
 
@@ -50,9 +52,6 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         <>
             <Box className="login-form-options">
                 <Box>
-                    {/* <Typography variant="body1" mb={1}>
-                        Login Form
-                    </Typography> */}
                     <form className="login-form">
                         <FormLabel component="legend">Login Form</FormLabel>
                         <Box className="login-form-input" mt={1}>
@@ -64,6 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 error={!!error}
                                 onChange={(e) => setEmail(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box className="login-form-input">
@@ -77,6 +77,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 helperText={error}
                                 onChange={(e) => setPassword(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box>
