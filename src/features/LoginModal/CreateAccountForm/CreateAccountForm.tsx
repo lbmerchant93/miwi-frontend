@@ -39,6 +39,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
             updateProfile(createdUser.user, {displayName: displayName})
             loginUser.mutate({id: createdUser.user.uid, email: email, displayName: displayName}, {
                 onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     setIsLoading(false)
                     console.log(err)
                 },
@@ -61,6 +62,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
             const user = await signInWithPopup(auth, new GoogleAuthProvider());
             loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
                 onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     console.log(err)
                 },
                 onSuccess: () => {
@@ -68,7 +70,6 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     onClose()
                 }
             })
-
         } catch (err: any) {
             setIsLoading(false)
             setError(err.message);
