@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -9,6 +9,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
+import { AuthContext } from '../../../shared/auth-context';
 
 import './CreateAccountForm.css';
 
@@ -28,6 +29,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const loginUser = useLoginUser();
     const navigate = useNavigate();
+    const user = useContext(AuthContext);
 
     const createAccount = async (email: string, password: string, firstName: string, lastName: string) => {
         setIsLoading(true)
@@ -41,6 +43,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     console.log(err)
                 },
                 onSuccess: () => {
+                    user.setDisplayNameOnCreate(displayName)
                     setIsLoading(false)
                     onClose()
                     navigate('/dashboard/home')

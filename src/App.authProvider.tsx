@@ -19,17 +19,23 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [displayName, setDisplayName] = useState<string | null>('');
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
-    const { data } = useUser(userId, displayName);
+    const [email, setEmail] = useState<string | null>('');
+    const { data } = useUser(userId, email);
 
     const updateExpectedDueDate = (newDueDate: string) => {
         setExpectedDueDate(newDueDate)
+    }
+    
+    const setDisplayNameOnCreate = (displayName: string) => {
+        setDisplayName(displayName)
     }
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setUserId(user.uid);
+            setEmail(user.email);
             setIsLoggedIn(true);
-            setDisplayName(user.displayName);
+            
             setPhotoURL(user.photoURL);
         } else {
             setUserId(undefined);
@@ -43,6 +49,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
 
     React.useEffect(() => {
         if (data && data.id === userId) {
+            setDisplayName(data.displayName);
             setExpectedDueDate(data.expectedDueDate);
         } 
     }, [data, userId]);
@@ -55,7 +62,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             displayName: displayName,
             photoURL: photoURL,
             expectedDueDate: expectedDueDate,
-            setExpectedDueDate: updateExpectedDueDate
+            setExpectedDueDate: updateExpectedDueDate,
+            setDisplayNameOnCreate: setDisplayNameOnCreate
             }}
         >
             {props.children}

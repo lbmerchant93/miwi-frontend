@@ -39,7 +39,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         e.preventDefault();
         setIsLoading(true)
 
-        if (JSON.stringify(user.expectedDueDate) !== JSON.stringify(date)) {
+        if (JSON.stringify(user.expectedDueDate) !== JSON.stringify(date) && date !== null) {
             const updateUserInput = {
                 id: user.id,
                 expectedDueDate: date
@@ -50,7 +50,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                 },
                 onSuccess: async () => {
                     triggerSnackBar(false, 'Profile update successful!');
-                    await user.setExpectedDueDate(date)
+                    user.setExpectedDueDate(date)
                     setIsEditing(false)
                 },
                 onSettled: () => {
