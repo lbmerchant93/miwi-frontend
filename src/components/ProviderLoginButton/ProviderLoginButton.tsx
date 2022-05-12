@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import GoogleIcon from '../../shared/Google.icon';
 import { Auth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../api/users/user';
 import { useNavigate } from 'react-router-dom';
+import LoadingButton from '@mui/lab/LoadingButton';
 import './ProviderLoginButton.css'
 
 interface ProviderLoginButtonsProps {
     auth: Auth;
     onClose: () => void;
     message: string;
+    isLoading: boolean;
 }
 
 const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
-    const { auth, onClose, message } = props;
+    const { auth, onClose, message, isLoading } = props;
     const [error, setError] = useState<string>('');
     const loginUser = useLoginUser();
     const navigate = useNavigate();
@@ -41,12 +42,12 @@ const ProviderLoginButton: React.FC<ProviderLoginButtonsProps> = (props) => {
     
     return (
         <Box className="provider-login-button">
-            <Button variant="outlined" onClick={() => loginWithGoogle()} color="inherit" >
-                <GoogleIcon />
+            <LoadingButton variant="outlined" onClick={() => loginWithGoogle()} color="inherit" loading={isLoading}>
+                {!isLoading && <GoogleIcon />}
                 <Box className="provider-login-text-wrapper">
                     <Typography variant="body1">{message}</Typography>
                 </Box>
-            </Button>
+            </LoadingButton>
         </Box>
     )
 }

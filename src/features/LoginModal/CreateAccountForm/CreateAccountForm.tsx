@@ -115,7 +115,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="create-account-form-buttons">
-                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Register with Google"}/>
+                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Register with Google"} isLoading={isLoading}/>
                 </Box>
             </Box>
         </>
