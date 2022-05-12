@@ -34,6 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             const user = await signInWithEmailAndPassword(auth, email, password)
             loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
                 onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     setIsLoading(false)
                     console.log(err)
                 },
@@ -44,6 +45,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 }
             })
         } catch (err: any) {
+            setError(err.message)
             setIsLoading(false)
             console.log(err.message)
         }
@@ -55,6 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             const user = await signInWithPopup(auth, new GoogleAuthProvider());
             loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
                 onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     setIsLoading(false)
                     console.log(err)
                 },
@@ -64,7 +67,6 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     onClose()
                 }
             })
-
         } catch (err: any) {
             setIsLoading(false)
             setError(err.message);
