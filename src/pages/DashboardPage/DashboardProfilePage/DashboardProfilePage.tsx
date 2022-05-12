@@ -14,7 +14,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useUpdateUser, useDeleteUser } from '../../../api/users/user';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FormLabel from '@mui/material/FormLabel';
-import { getAuth, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
+import { 
+    getAuth, 
+    deleteUser, 
+    EmailAuthProvider, 
+    reauthenticateWithCredential, 
+    reauthenticateWithPopup, 
+    GoogleAuthProvider
+} from "firebase/auth";
 
 import './DashboardProfilePage.css';
 
@@ -34,6 +41,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const [error, setError] = useState<string>('');
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
+    const provider = auth.currentUser?.providerData[0].providerId;
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -65,11 +73,11 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         }
     }
 
-    const onDelete = async (e: FormEvent<HTMLFormElement>) => {
+    const onDeleteWithEmailAndPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLoading(true)
         if (auth.currentUser?.email) {
-           try {
+            try {
                 const credential = EmailAuthProvider.credential(
                     auth.currentUser.email, 
                     password
@@ -96,7 +104,31 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
             setIsLoading(false)
         }
-        
+    }
+
+    const onDeleteWithGoogle = async () => {
+        setIsLoading(true)
+        if (auth.currentUser) {
+            try {
+                const provider = new GoogleAuthProvider();
+                const result = await reauthenticateWithPopup(auth.currentUser, provider);
+
+                await deleteUser(result.user)
+                
+                deleteUserAccount.mutate(user.id, {
+                    onError: (err: any) => {
+                        triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
+                        setIsLoading(false)
+                    },
+                })
+            } catch (err: any) {
+                triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
+                setIsLoading(false)
+            } 
+        } else {
+            triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -210,21 +242,48 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                 {isDeletingAccount && 
                     <Box className="profile-delete-account-confirmation">
                         <Typography variant="h4" color="warning.main">Warning!</Typography>
-                        <Typography variant="h6">Are you sure you want to delete your account? This action is irreversible. If so, please enter your password below and select Delete Account.</Typography>
-                        <form className="profile-delete-form" onSubmit={onDelete}>
-                            <Box className="profile-delete-form-input">
-                                <TextField 
-                                    label="Password" 
-                                    id="Password" 
-                                    variant="outlined" 
-                                    type="password" 
-                                    value={password} 
-                                    error={!!error}
-                                    helperText={error}
-                                    onChange={(e) => setPassword(e.currentTarget.value)} 
-                                    fullWidth={true}
-                                />
-                            </Box>
+                        {(provider === "password") && <>
+                            <Typography variant="h6">Are you sure you want to delete your account? If so, please enter your password below and select Delete Account. This action is irreversible.</Typography>
+                            <form className="profile-delete-form" onSubmit={onDeleteWithEmailAndPassword}>
+                                <Box className="profile-delete-form-input">
+                                    <TextField 
+                                        label="Password" 
+                                        id="Password" 
+                                        variant="outlined" 
+                                        type="password" 
+                                        value={password} 
+                                        error={!!error}
+                                        helperText={error}
+                                        onChange={(e) => setPassword(e.currentTarget.value)} 
+                                        fullWidth={true}
+                                    />
+                                </Box>
+                                <Box className="warning-action-container">
+                                    {!isLoading && <Box className="warning-action-button">
+                                        <LoadingButton
+                                            loading={isLoading}
+                                            onClick={() => setIsDeletingAccount(false)} 
+                                            variant="contained" 
+                                            color="inherit"
+                                        >
+                                                No, Go back
+                                        </LoadingButton>  
+                                    </Box>}
+                                    <Box className="warning-action-button">
+                                        <LoadingButton 
+                                            loading={isLoading}
+                                            type="submit" 
+                                            variant="contained" 
+                                            color="warning"
+                                        >
+                                                Delete Account
+                                        </LoadingButton> 
+                                    </Box>
+                                </Box>
+                            </form>
+                        </>}
+                        {(provider === "google.com") && <>
+                            <Typography variant="h6">Are you sure you want to delete your account? If so, select Delete Account and authenticate this action using your google account. This action is irreversible.</Typography>
                             <Box className="warning-action-container">
                                 {!isLoading && <Box className="warning-action-button">
                                     <LoadingButton
@@ -239,7 +298,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                 <Box className="warning-action-button">
                                     <LoadingButton 
                                         loading={isLoading}
-                                        type="submit" 
+                                        onClick={onDeleteWithGoogle}
                                         variant="contained" 
                                         color="warning"
                                     >
@@ -247,7 +306,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                     </LoadingButton> 
                                 </Box>
                             </Box>
-                        </form>
+                        </>}
                     </Box>
                 }
             </Box>
