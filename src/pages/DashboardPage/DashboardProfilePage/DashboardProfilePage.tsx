@@ -175,6 +175,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                     value={date}
                                     onChange={(newDate) => setDate(moment(newDate).startOf('day').toISOString(true))}
                                     renderInput={(params) => <TextField required size='small' sx={{width: "200px"}} {...params} />}
+                                    disabled={isLoading}
                                 />
                             </LocalizationProvider>
                             <Box className="profile-edit-action-container">
