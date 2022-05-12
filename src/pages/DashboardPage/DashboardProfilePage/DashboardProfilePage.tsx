@@ -124,7 +124,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                             color="inherit"
                                             size="small"
                                         >
-                                            Edit
+                                            Add
                                         </Button>
                                     </Box>
                                 }
