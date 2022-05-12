@@ -86,6 +86,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 value={firstName} 
                                 onChange={(e) => setFirstName(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box className="create-account-form-input">
@@ -96,6 +97,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 value={lastName} 
                                 onChange={(e) => setLastName(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box className="create-account-form-input">
@@ -106,6 +108,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 value={email} 
                                 onChange={(e) => setEmail(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box className="create-account-form-input">
@@ -119,6 +122,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 helperText={error}
                                 onChange={(e) => setPassword(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box>
