@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
-import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     console.log(err)
                 },
                 onSuccess: () => {
+                    setIsLoading(false)
                     onClose()
                     navigate('/dashboard/home')
                 }
@@ -45,6 +46,29 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         } catch (err: any) {
             setIsLoading(false)
             console.log(err.message)
+        }
+    };
+
+    const loginWithGoogle = async () => {
+        setIsLoading(true)
+        try {
+            const user = await signInWithPopup(auth, new GoogleAuthProvider());
+            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+                onError: (err: any) => {
+                    setIsLoading(false)
+                    console.log(err)
+                },
+                onSuccess: () => {
+                    setIsLoading(false)
+                    navigate('/dashboard/home')
+                    onClose()
+                }
+            })
+
+        } catch (err: any) {
+            setIsLoading(false)
+            setError(err.message);
+            console.log('error signing in', err.message);
         }
     };
 
@@ -90,11 +114,18 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="login-form-buttons">
-                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Sign in with Google"} isLoading={isLoading}/>
+                    <ProviderLoginButton 
+                        message={"Sign in with Google"} 
+                        isLoading={isLoading}
+                        loginWithGoogle={loginWithGoogle}
+                    />
                     <Typography variant="caption" my={3}>
                         OR
                     </Typography>
-                    <GuestLoginButton loginWithEmailAndPassword={loginWithEmailAndPassword} isLoading={isLoading}/>
+                    <GuestLoginButton 
+                        loginWithEmailAndPassword={loginWithEmailAndPassword} 
+                        isLoading={isLoading}
+                    />
                 </Box>
             </Box>
         </>

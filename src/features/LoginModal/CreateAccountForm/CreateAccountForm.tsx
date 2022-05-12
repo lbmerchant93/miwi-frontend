@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import { Auth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { Auth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
@@ -37,9 +37,11 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
             updateProfile(createdUser.user, {displayName: displayName})
             loginUser.mutate({id: createdUser.user.uid, email: email, displayName: displayName}, {
                 onError: (err: any) => {
+                    setIsLoading(false)
                     console.log(err)
                 },
                 onSuccess: () => {
+                    setIsLoading(false)
                     onClose()
                     navigate('/dashboard/home')
                 }
@@ -48,6 +50,27 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
             setError(error.message);
             setIsLoading(false)
         }    
+    };
+
+    const loginWithGoogle = async () => {
+        setIsLoading(true)
+        try {
+            const user = await signInWithPopup(auth, new GoogleAuthProvider());
+            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+                onError: (err: any) => {
+                    console.log(err)
+                },
+                onSuccess: () => {
+                    navigate('/dashboard/home')
+                    onClose()
+                }
+            })
+
+        } catch (err: any) {
+            setIsLoading(false)
+            setError(err.message);
+            console.log('error signing in', err.message);
+        }
     };
 
     return (
@@ -115,7 +138,11 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="create-account-form-buttons">
-                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Register with Google"} isLoading={isLoading}/>
+                    <ProviderLoginButton 
+                        message={"Register with Google"} 
+                        isLoading={isLoading}
+                        loginWithGoogle={loginWithGoogle}
+                    />
                 </Box>
             </Box>
         </>
