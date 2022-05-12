@@ -46,6 +46,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             }
             updateUser.mutate(updateUserInput, {
                 onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
                 onSuccess: async () => {
@@ -58,6 +59,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                 }
             })
         } else {
+            setError('Please update the profile before clicking submit.')
             triggerSnackBar(true, 'Please update the profile before clicking submit.')
             setIsLoading(false)
         }
