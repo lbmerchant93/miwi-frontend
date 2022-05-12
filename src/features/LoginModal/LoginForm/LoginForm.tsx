@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
-import { Auth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
@@ -34,15 +34,41 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
             const user = await signInWithEmailAndPassword(auth, email, password)
             loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
                 onError: (err: any) => {
+                    setIsLoading(false)
                     console.log(err)
                 },
                 onSuccess: () => {
+                    setIsLoading(false)
                     onClose()
                     navigate('/dashboard/home')
                 }
             })
-        } catch (error: any) {
+        } catch (err: any) {
             setIsLoading(false)
+            console.log(err.message)
+        }
+    };
+
+    const loginWithGoogle = async () => {
+        setIsLoading(true)
+        try {
+            const user = await signInWithPopup(auth, new GoogleAuthProvider());
+            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+                onError: (err: any) => {
+                    setIsLoading(false)
+                    console.log(err)
+                },
+                onSuccess: () => {
+                    setIsLoading(false)
+                    navigate('/dashboard/home')
+                    onClose()
+                }
+            })
+
+        } catch (err: any) {
+            setIsLoading(false)
+            setError(err.message);
+            console.log('error signing in', err.message);
         }
     };
 
@@ -50,9 +76,6 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         <>
             <Box className="login-form-options">
                 <Box>
-                    {/* <Typography variant="body1" mb={1}>
-                        Login Form
-                    </Typography> */}
                     <form className="login-form">
                         <FormLabel component="legend">Login Form</FormLabel>
                         <Box className="login-form-input" mt={1}>
@@ -64,6 +87,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 error={!!error}
                                 onChange={(e) => setEmail(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box className="login-form-input">
@@ -77,6 +101,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 helperText={error}
                                 onChange={(e) => setPassword(e.currentTarget.value)} 
                                 fullWidth={true}
+                                disabled={isLoading}
                             />
                         </Box>
                         <Box>
@@ -89,11 +114,18 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                 </Box>
                 <Divider orientation="vertical" />
                 <Box className="login-form-buttons">
-                    <ProviderLoginButton auth={auth} onClose={onClose} message={"Sign in with Google"}/>
+                    <ProviderLoginButton 
+                        message={"Sign in with Google"} 
+                        isLoading={isLoading}
+                        loginWithGoogle={loginWithGoogle}
+                    />
                     <Typography variant="caption" my={3}>
                         OR
                     </Typography>
-                    <GuestLoginButton loginWithEmailAndPassword={loginWithEmailAndPassword}/>
+                    <GuestLoginButton 
+                        loginWithEmailAndPassword={loginWithEmailAndPassword} 
+                        isLoading={isLoading}
+                    />
                 </Box>
             </Box>
         </>
