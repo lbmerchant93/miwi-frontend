@@ -1,8 +1,12 @@
-.about-page-container {
+.about-page-container,
+.team-container {
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
+}
+
+.about-page-container {
     padding-top: 1rem;
     max-width: min(80ch, 100%);
 }
