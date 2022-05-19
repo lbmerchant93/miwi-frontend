@@ -6,6 +6,7 @@ export interface User {
     displayName: string | null;
     photoURL: string | null;
     expectedDueDate: string | null;
+    email: string | null;
     setExpectedDueDate: (newDueDate: string) => void;
     setDisplayNameOnCreate: (displayName: string) => void;
 }
@@ -16,6 +17,7 @@ export const AuthContext = createContext<User>({
     displayName: '',
     photoURL: '',
     expectedDueDate: null,
+    email: '',
     setExpectedDueDate: () => {},
     setDisplayNameOnCreate: () => {}
 })

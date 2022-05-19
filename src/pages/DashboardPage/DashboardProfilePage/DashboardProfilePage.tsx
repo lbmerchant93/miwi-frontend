@@ -131,6 +131,10 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         }
     }
 
+    const onDeleteGuestProfile = () => {
+        triggerSnackBar(true, 'You can not delete the guest account!');
+    }
+
     useEffect(() => {
         if (user.expectedDueDate) {
             setDate(user.expectedDueDate)
@@ -183,7 +187,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                             <Box className="profile-delete-button">
                                 <Button 
                                     variant="contained" 
-                                    onClick={() => setIsDeletingAccount(true)}
+                                    onClick={user.email === 'guest@guest.com' ? () => onDeleteGuestProfile() : () => setIsDeletingAccount(true)}
                                     startIcon={<DeleteIcon />}
                                     color="warning"
                                     size="small"

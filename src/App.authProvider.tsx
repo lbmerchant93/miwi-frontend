@@ -64,6 +64,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             displayName: displayName,
             photoURL: photoURL,
             expectedDueDate: expectedDueDate,
+            email: email,
             setExpectedDueDate: updateExpectedDueDate,
             setDisplayNameOnCreate: setDisplayNameOnCreate
             }}
