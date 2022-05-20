@@ -41,7 +41,7 @@ describe('AppFooter', () => {
     cy.url().should('equal', 'http://localhost:3000/about')
   })
 
-  it.only('Navigate to the How It Works page on How MiWi Works link click', () => {
+  it('Navigate to the How MiWi Works page on How MiWi Works link click', () => {
     cy.get('footer a').eq(1).click()
     cy.url().should('equal', 'http://localhost:3000/how_miwi_works')
   })

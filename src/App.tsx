@@ -13,7 +13,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthProvider from './App.authProvider';
 import AboutPage from './pages/AboutPage/AboutPage';
-import HowItWorksPage from './pages/HowItWorksPage/HowItWorksPage';
+import HowMiWiWorksPage from './pages/HowMiWiWorksPage/HowMiWiWorksPage';
 
 export const endpoint: string = process.env.NODE_ENV === 'production' ? (process.env.REACT_APP_GQL_ENDPOINT_PRODUCTION as string) : (process.env.REACT_APP_GQL_ENDPOINT_DEVELOPMENT as string)
 
@@ -36,7 +36,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
-      <Route path={`${PossibleRoutes.HOW_IT_WORKS}`} element={<HowItWorksPage />} />
+      <Route path={`${PossibleRoutes.HOW_IT_WORKS}`} element={<HowMiWiWorksPage />} />
     </Routes>
   );
   
