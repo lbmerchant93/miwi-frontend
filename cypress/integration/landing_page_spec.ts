@@ -41,7 +41,10 @@ describe('AppBar', () => {
         req.alias = 'gqlloginUserMutation'
 
         req.reply((res) => {
-          res.body.data.loginUser.displayName = "Lucas Merch"
+          res.body.data.loginUser.id = "opov7wBC6RPiEnJP6hB8iiCtPeq1"
+          res.body.data.loginUser.displayName = "Guest Viewer"
+          res.body.data.loginUser.email = "guest@guest.com"
+          res.body.data.loginUser.expectedDueDate = '2022-07-01T00:00:00.000-06:00'
         })
       }
     })
@@ -70,7 +73,9 @@ describe('AppBar', () => {
     cy.wait('@gqlUserQuery')
     cy.wait('@gqlloginUserMutation').its('response.body.data.loginUser').should((loginUser) => {
       // Add other response property test here
-      expect(loginUser.displayName).to.be.equal('Lucas Merch')
+      expect(loginUser.displayName).to.be.equal('Guest Viewer')
+      expect(loginUser.email).to.be.equal('guest@guest.com')
+      expect(loginUser.expectedDueDate).to.be.equal('2022-07-01T00:00:00.000-06:00')
     })
     cy.wait('@gqlAggregateJournalEntryQuery')
     cy.wait('@gqlJournalEntriesQuery')
