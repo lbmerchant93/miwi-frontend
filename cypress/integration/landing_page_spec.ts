@@ -24,3 +24,15 @@ describe('Landing Page', () => {
     cy.get('.landing-page-description-container p').should('have.length', 3)
   })
 })
+
+describe('AppFooter', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
+  it('Have a links for About Us and How it works', () => {
+    cy.get('footer a').should('have.length', 2)
+    cy.get('footer a').eq(0).contains('About Us').should('be.visible')
+    cy.get('footer a').eq(1).contains('How MiWi Works').should('be.visible')
+  })
+})
