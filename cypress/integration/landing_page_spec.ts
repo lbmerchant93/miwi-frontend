@@ -35,4 +35,9 @@ describe('AppFooter', () => {
     cy.get('footer a').eq(0).contains('About Us').should('be.visible')
     cy.get('footer a').eq(1).contains('How MiWi Works').should('be.visible')
   })
+
+  it('Navigate to the About Us page on About Us link click', () => {
+    cy.get('footer a').eq(0).click()
+    cy.url().should('equal', 'http://localhost:3000/about')
+  })
 })
