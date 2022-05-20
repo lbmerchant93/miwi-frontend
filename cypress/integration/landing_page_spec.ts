@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import { hasOperationName, aliasQuery, aliasMutation } from '../utils/graphql-test-utils'
 
 describe('Landing Page', () => {
   beforeEach(() => {
@@ -27,6 +28,23 @@ describe('Landing Page', () => {
 
 describe('AppBar', () => {
   beforeEach(() => {
+    cy.intercept('POST', 'http://localhost:9000/graphql', (req) => {
+      // Queries
+      aliasQuery(req, 'User')
+      aliasQuery(req, 'AggregateJournalEntry')
+      aliasQuery(req, 'JournalEntries')
+
+      // Mutations
+      aliasMutation(req, 'loginUser')
+      const { body } = req
+      if (hasOperationName(req, 'loginUser')) {
+        req.alias = 'gqlloginUserMutation'
+
+        req.reply((res) => {
+          res.body.data.loginUser.displayName = "Lucas Merch"
+        })
+      }
+    })
     cy.visit('/')
   })
 
@@ -36,6 +54,26 @@ describe('AppBar', () => {
     cy.url().should('equal', 'http://localhost:3000/about')
     cy.get('header h1').click()
     cy.url().should('equal', 'http://localhost:3000/')
+  })
+
+  it.only('Should have a login button which opens a login modal containing a login form which logs in a user with email and password.', () => {
+    cy.get('header .login-button button').contains('Log In').click()
+    cy.get('.login-modal').should('be.visible')
+    cy.get('.login-modal-title').contains('Welcome back!').should('be.visible')
+    cy.get('.login-modal-title').contains('Please log in to access your dashboard! You can log in through your Google account or enter your email/password to access your dashboard.').should('be.visible')
+    cy.get('.login-form .login-form-input').should('have.length', 2)
+    cy.get('.login-form #Email').eq(0).type('guest@guest.com')
+    cy.get('.login-form #Email').eq(0).should('have.attr', 'value', 'guest@guest.com')
+    cy.get('.login-form #Password').eq(0).type('guestviewer')
+    cy.get('.login-form #Password').eq(0).should('have.attr', 'value', 'guestviewer')
+    cy.get('.login-form-button button').click()
+    cy.wait('@gqlUserQuery')
+    cy.wait('@gqlloginUserMutation').its('response.body.data.loginUser').should((loginUser) => {
+      // Add other response property test here
+      expect(loginUser.displayName).to.be.equal('Lucas Merch')
+    })
+    cy.wait('@gqlAggregateJournalEntryQuery')
+    cy.wait('@gqlJournalEntriesQuery')
   })
 })
 

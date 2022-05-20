@@ -77,7 +77,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     return (
         <>
             <Box className="login-form-options">
-                <Box>
+                <Box className="login-form-container">
                     <form className="login-form">
                         <FormLabel component="legend">Login Form</FormLabel>
                         <Box className="login-form-input" mt={1}>
@@ -106,7 +106,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 disabled={isLoading}
                             />
                         </Box>
-                        <Box>
+                        <Box className="login-form-button">
                             <LoadingButton variant="outlined" color="inherit" onClick={() => loginWithEmailAndPassword(email, password)} loading={isLoading}>Submit</LoadingButton>  
                         </Box>
                     </form>
