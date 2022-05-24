@@ -178,7 +178,15 @@ describe('AppBar', () => {
     cy.wait('@gqlAggregateJournalEntryQuery').its('response.body.data.aggregateJournalEntry').should((aggregateJournalEntry) => {
       expect(aggregateJournalEntry._count._all).to.be.equal(6)
     })
-    cy.wait('@gqlJournalEntriesQuery')
+    cy.wait('@gqlJournalEntriesQuery').its('response.body.data.journalEntries').should((journalEntries) => {
+      expect(journalEntries).to.have.lengthOf(6)
+      expect(journalEntries[0].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
+      expect(journalEntries[1].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
+      expect(journalEntries[2].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
+      expect(journalEntries[3].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
+      expect(journalEntries[4].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
+      expect(journalEntries[5].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
+    })
   })
 })
 
