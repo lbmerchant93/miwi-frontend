@@ -70,8 +70,8 @@ const AppBar: React.FC = () => {
                             </Button>
                         ) : (
                             <Button
-                                id="demo-positioned-button"
-                                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                id="menu-button"
+                                aria-controls={open ? 'menu-button' : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={open ? 'true' : undefined}
                                 onClick={handleClick}

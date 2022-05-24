@@ -154,7 +154,7 @@ describe('AppBar', () => {
     cy.url().should('equal', 'http://localhost:3000/')
   })
 
-  it.only('Should have a login button which opens a login modal containing a login form which logs in a user with email and password.', () => {
+  it('Should have a login button which opens a login modal containing a login form which logs in a user with email and password.', () => {
     cy.get('header .login-button button').contains('Log In').click()
     cy.get('.login-modal').should('be.visible')
     cy.get('.login-modal-title').contains('Welcome back!').should('be.visible')
@@ -187,6 +187,16 @@ describe('AppBar', () => {
       expect(journalEntries[4].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
       expect(journalEntries[5].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
     })
+  })
+
+  // Photo url not currently integrated into app, will have to circle back once added
+  it('Should display the user\'s photo url or first initial on the app menu once the user is logged in, and menu icon.', () => {
+    cy.get('header .login-button button').click()
+    cy.get('.login-form #Email').eq(0).type('guest@guest.com')
+    cy.get('.login-form #Password').eq(0).type('guestviewer')
+    cy.get('.login-form-button button').click()
+    cy.get('#menu-button div').contains('G')
+    cy.get('#menu-button [data-testid=MenuIcon]').should('be.visible')
   })
 })
 
