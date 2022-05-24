@@ -199,7 +199,18 @@ describe('AppBar', () => {
     cy.get('#menu-button [data-testid=MenuIcon]').should('be.visible')
   })
 
-  it('Should change back to LOG IN once a user logs out', () => {
+  it('Should have two menu options, Dashboard or Log out.', () => {
+    cy.get('header .login-button button').click()
+    cy.get('.login-form #Email').eq(0).type('guest@guest.com')
+    cy.get('.login-form #Password').eq(0).type('guestviewer')
+    cy.get('.login-form-button button').click()
+    cy.get('#menu-button').click()
+    cy.get('#app-menu ul li').should('have.length', 2)
+    cy.get('#app-menu ul li').eq(0).contains('My Dashboard').should('be.visible')
+    cy.get('#app-menu ul li').eq(1).contains('Log out').should('be.visible')
+  })
+
+  it('Should change back to LOG IN once a user logs out.', () => {
     cy.get('header .login-button button').click()
     cy.get('.login-form #Email').eq(0).type('guest@guest.com')
     cy.get('.login-form #Password').eq(0).type('guestviewer')
