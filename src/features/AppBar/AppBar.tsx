@@ -93,8 +93,8 @@ const AppBar: React.FC = () => {
                             auth={auth}
                         />
                         <Menu
-                            id="demo-positioned-menu"
-                            aria-labelledby="demo-positioned-button"
+                            id="app-menu"
+                            aria-labelledby="app-menu-button"
                             anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}

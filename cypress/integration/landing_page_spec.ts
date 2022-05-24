@@ -198,6 +198,16 @@ describe('AppBar', () => {
     cy.get('#menu-button div').contains('G')
     cy.get('#menu-button [data-testid=MenuIcon]').should('be.visible')
   })
+
+  it('Should change back to LOG IN once a user logs out', () => {
+    cy.get('header .login-button button').click()
+    cy.get('.login-form #Email').eq(0).type('guest@guest.com')
+    cy.get('.login-form #Password').eq(0).type('guestviewer')
+    cy.get('.login-form-button button').click()
+    cy.get('#menu-button').click()
+    cy.get('.logout-link').click()
+    cy.get('header .login-button button').contains('Log In')
+  })
 })
 
 describe('AppFooter', () => {
