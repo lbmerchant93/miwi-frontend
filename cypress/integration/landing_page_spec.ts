@@ -210,6 +210,18 @@ describe('AppBar', () => {
     cy.get('#app-menu ul li').eq(1).contains('Log out').should('be.visible')
   })
 
+  it('Should navigate the user to the Dashboard Page once clicking the My Dashboard menu item in the app menu.', () => {
+    cy.get('header .login-button button').click()
+    cy.get('.login-form #Email').eq(0).type('guest@guest.com')
+    cy.get('.login-form #Password').eq(0).type('guestviewer')
+    cy.get('.login-form-button button').click()
+    cy.get('header h1').click()
+    cy.url().should('equal', 'http://localhost:3000/')
+    cy.get('#menu-button').click()
+    cy.get('#app-menu ul li').eq(0).click()
+    cy.url().should('equal', 'http://localhost:3000/dashboard')
+  })
+
   it('Should change back to LOG IN once a user logs out.', () => {
     cy.get('header .login-button button').click()
     cy.get('.login-form #Email').eq(0).type('guest@guest.com')
