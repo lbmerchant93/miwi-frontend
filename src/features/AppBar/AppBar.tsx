@@ -59,7 +59,7 @@ const AppBar: React.FC = () => {
                     <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
                         <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
                     </Link>
-                    <div>
+                    <div className={!user.isLoggedIn ? 'login-button' : 'user-menu'}>
                         {!user.isLoggedIn ? (
                             <Button
                                 onClick={() => setIsLoginOpen(true)}
@@ -70,8 +70,8 @@ const AppBar: React.FC = () => {
                             </Button>
                         ) : (
                             <Button
-                                id="demo-positioned-button"
-                                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                id="menu-button"
+                                aria-controls={open ? 'menu-button' : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={open ? 'true' : undefined}
                                 onClick={handleClick}
@@ -93,8 +93,8 @@ const AppBar: React.FC = () => {
                             auth={auth}
                         />
                         <Menu
-                            id="demo-positioned-menu"
-                            aria-labelledby="demo-positioned-button"
+                            id="app-menu"
+                            aria-labelledby="app-menu-button"
                             anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}

@@ -36,9 +36,6 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             setEmail(user.email);
             setIsLoggedIn(true);
             setPhotoURL(user.photoURL);
-            if (user.displayName) {
-                setDisplayName(user.displayName)
-            }
         } else {
             setUserId(undefined);
             setIsLoggedIn(false);

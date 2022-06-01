@@ -3,5 +3,5 @@ export enum PossibleRoutes {
     DASHBOARD = '/dashboard',
     DASHBOARD_TAB = '/dashboard/:tab',
     ABOUT = '/about',
-    HOW_IT_WORKS = '/how_it_works',
+    HOW_IT_WORKS = '/how_miwi_works',
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import './HowItWorksPage.css';
+import './HowMiWiWorksPage.css';
 
 const HowItWorksPage = () => {
   return (
