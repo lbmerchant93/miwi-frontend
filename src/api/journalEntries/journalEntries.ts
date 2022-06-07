@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
+import { getAuthToken } from '../../App.authProvider';
 
 export const JournalEntries = gql`
   query JournalEntries(
@@ -35,11 +36,16 @@ export const useJournalEntries = (
   count: number | undefined
 ) => {
   return useQuery(['journalEntries', count, skip], async () => {
+    const token = getAuthToken();
+    const requestHeaders = {
+      authorization: `Bearer ${token}`
+    }
     const { journalEntries } = await request(
       {
         url: endpoint,
         document: JournalEntries,
-        variables: { authorId, limit, skip }
+        variables: { authorId, limit, skip },
+        requestHeaders
       });
       return journalEntries;
     }, {
@@ -93,11 +99,16 @@ const journalEntriesCount = gql`
 `;
 
 export const useJournalEntriesCount = (authorId: string | undefined) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+    authorization: `Bearer ${token}`
+  }
   return useQuery(['journalEntriesCount'], async () => {
     const { aggregateJournalEntry } = await request({
       url: endpoint,
       document: journalEntriesCount,
-      variables: { authorId }
+      variables: { authorId },
+      requestHeaders
     });
     return aggregateJournalEntry._count._all;
   }, {

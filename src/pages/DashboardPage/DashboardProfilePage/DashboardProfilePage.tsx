@@ -78,6 +78,13 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         setIsLoading(true)
         if (auth.currentUser?.email) {
             try {
+                deleteUserAccount.mutate(user.id, {
+                    onError: (err: any) => {
+                        triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
+                        setIsLoading(false)
+                    },
+                })
+
                 const credential = EmailAuthProvider.credential(
                     auth.currentUser.email, 
                     password
@@ -90,12 +97,6 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
 
                 await deleteUser(result.user)
                 
-                deleteUserAccount.mutate(user.id, {
-                    onError: (err: any) => {
-                        triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
-                        setIsLoading(false)
-                    },
-                })
             } catch (err: any) {
                 triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
                 setIsLoading(false)
