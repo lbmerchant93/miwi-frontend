@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
+import { getAuthToken } from '../../App.authProvider';
 
 const userDocument = gql`
     query User($id: String) {
@@ -13,16 +14,21 @@ const userDocument = gql`
     }
 `;
 
-export const useUser = (id: string | undefined, displayName: string | null) => {
-    return useQuery(['user', displayName], async () => {
+export const useUser = (id: string | undefined, email: string | null) => {
+    const token = getAuthToken();
+    const requestHeaders = {
+        authorization: `Bearer ${token}`
+    }
+    return useQuery(['user', email], async () => {
         const { user } = await request({
             url: endpoint,
             document: userDocument,
-            variables: { id }
+            variables: { id },
+            requestHeaders
         });
         return user;
     }, {
-        enabled: id !== undefined && id !== null && id !== ''
+        enabled: id !== undefined && id !== null && id !== '' && email !== ''
     })
 }
 
@@ -46,6 +52,10 @@ interface UserLoginInput {
 };
 
 const loginUserMutation = async (createUserInput: UserLoginInput) => {
+    const token = getAuthToken();
+    const requestHeaders = {
+        authorization: `Bearer ${token}`
+    }
     const { id, email, displayName } = createUserInput;
 
     const variables = {
@@ -57,7 +67,8 @@ const loginUserMutation = async (createUserInput: UserLoginInput) => {
     const { loginUser } = await request({
         url: endpoint,
         document: loginUserDocument,
-        variables: { data: variables }
+        variables: { data: variables },
+        requestHeaders
     });
     return loginUser;
 };
@@ -86,6 +97,10 @@ interface UserUpdateInput {
 }
 
 const updateUserMutation = async (userUpdateInput: UserUpdateInput) => {
+    const token = getAuthToken();
+    const requestHeaders = {
+        authorization: `Bearer ${token}`
+    }
     const { id, expectedDueDate } = userUpdateInput;
 
     const variables = {
@@ -95,7 +110,8 @@ const updateUserMutation = async (userUpdateInput: UserUpdateInput) => {
     const { updateUser } = await request({
         url: endpoint,
         document: updateUserDocument,
-        variables: { data: variables, where: { "id": id } }
+        variables: { data: variables, where: { "id": id } },
+        requestHeaders
     });
 
     return updateUser;
@@ -115,10 +131,16 @@ const deleteUserDocument = gql`
 `
 
 const deleteUserMutation = async (id: string | undefined) => {
+    const token = getAuthToken();
+    const requestHeaders = {
+        authorization: `Bearer ${token}`
+    }
+
     const { deleteUser } = await request({
         url: endpoint,
         document: deleteUserDocument,
-        variables: { id }
+        variables: { id },
+        requestHeaders
     });
     
     return deleteUser;

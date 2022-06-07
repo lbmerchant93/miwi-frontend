@@ -9,6 +9,9 @@ import {
 } from 'firebase/auth';
 import { useUser } from './api/users/user';
 
+export const getAuthToken = () => localStorage.getItem('token');
+
+
 interface AuthProviderProps {}
 
 const AuthProvider: React.FC<AuthProviderProps> = (props) => {
@@ -20,6 +23,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');
+    const [providerId, setProviderId] = useState<string | null>('');
+    const [refreshToken, setRefreshToken] = useState<string | null>('');
     const { data } = useUser(userId, email);
 
     const updateExpectedDueDate = (newDueDate: string) => {
@@ -30,13 +35,24 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         setDisplayName(displayName)
     }
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
+            try {
+                const bearerToken = await user.getIdToken();
+                localStorage.setItem('token', bearerToken);
+            } catch (e) {
+                console.log('getIdToken failure', e);
+                const newToken = await getAuth().currentUser?.getIdToken();
+                localStorage.setItem('token', newToken ?? '');
+            }
+            setProviderId(providerId);
+            setRefreshToken(refreshToken);
             setUserId(user.uid);
             setEmail(user.email);
             setIsLoggedIn(true);
             setPhotoURL(user.photoURL);
         } else {
+            localStorage.setItem('token', '');
             setUserId(undefined);
             setIsLoggedIn(false);
             setDisplayName('');

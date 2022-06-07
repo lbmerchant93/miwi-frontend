@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient  } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
+import { getAuthToken } from '../../App.authProvider';
 
 // Needs to be modified for graphql-request
 // const journalEntry = gql`
@@ -63,6 +64,11 @@ interface JournalEntryCreateInput {
 }
 
 const createJournalEntry = async (createJournalEntryInput: JournalEntryCreateInput) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+    authorization: `Bearer ${token}`
+  }
+
   const { 
     date, 
     exercise, 
@@ -90,7 +96,8 @@ const createJournalEntry = async (createJournalEntryInput: JournalEntryCreateInp
   const { createJournalEntry } = await request({
     url: endpoint,
     document: createJournalEntryMutation,
-    variables: { data: variables}
+    variables: { data: variables},
+    requestHeaders
   });
   return createJournalEntry;
 }
@@ -142,6 +149,10 @@ const updateJournalEntryMutation = gql`
 `;
 
 const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdateInput) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+    authorization: `Bearer ${token}`
+  }
   const { 
     id,
     date, 
@@ -170,7 +181,8 @@ const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdateInp
   const { updateJournalEntry } = await request({
     url: endpoint,
     document: updateJournalEntryMutation,
-    variables: { data: variables, updateJournalEntryId: Number(id) }
+    variables: { data: variables, updateJournalEntryId: Number(id) },
+    requestHeaders
   });
   return updateJournalEntry;
 }
@@ -195,10 +207,16 @@ const deleteJournalEntryMutation = gql`
 `
 
 const deleteJournalEntry = async (id: number) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+    authorization: `Bearer ${token}`
+  }
+
   const { deleteJournalEntry } = await request({
     url: endpoint,
     document: deleteJournalEntryMutation,
-    variables: { where: { id: Number(id) } }
+    variables: { where: { id: Number(id) } },
+    requestHeaders
   });
 
   return deleteJournalEntry;

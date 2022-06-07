@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+// Move header and footer to a shared folder, own files each
 import { hasOperationName, aliasQuery, aliasMutation } from '../utils/graphql-test-utils'
 
 describe('Landing Page', () => {
@@ -154,6 +155,15 @@ describe('AppBar', () => {
     cy.url().should('equal', 'http://localhost:3000/')
   })
 
+  // Test for Registering navigation, don't need to click. only exist on registration spec
+  // Test for require email and require password
+  // Test for requires valid username and password
+  // Redirects to dashboard on success
+  // Error handling
+  // [data-test=email] [data-test=password]
+  // cy.hash().should('eq', '#/')
+  // cy.login() -> create special function to login, under support folder -> command
+  // cy.request({})
   it('Should have a login button which opens a login modal containing a login form which logs in a user with email and password.', () => {
     cy.get('header .login-button button').contains('Log In').click()
     cy.get('.login-modal').should('be.visible')
@@ -222,6 +232,7 @@ describe('AppBar', () => {
     cy.url().should('equal', 'http://localhost:3000/dashboard')
   })
 
+  // check url is landing page
   it('Should change back to LOG IN once a user logs out.', () => {
     cy.get('header .login-button button').click()
     cy.get('.login-form #Email').eq(0).type('guest@guest.com')
