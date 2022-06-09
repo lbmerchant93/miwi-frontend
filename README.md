@@ -1,46 +1,95 @@
-# Getting Started with Create React App
+# MiWi - Frontend
+#### Midwifery Application Prototype
+This project is designed as a prototype for a midwifery application. The project is used by the developer to demonstrate and expand on his knowledge/use of React, TypeScript, GraphQL, Firebase, and Material-UI.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Contributors
+- Lucas Merchant - Software Developer: [github profile](https://github.com/lbmerchant93)
+- Jennifer O'Briant - App Concept Creator
 
-## Available Scripts
+### Stack
 
-In the project directory, you can run:
+**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI, Moment
 
-### `npm start`
+**Testing**: Cypress.js (Currently implementing)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Deployment**: Vercel
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Instructions](#setup-instructions)
+3. [How-To](#using-petstrology)
+4. [Challenges & Wins](#challenges-&-wins)
 
-### `npm test`
+## Introduction
+Currently the app's main feature is a journal that guides you through the daily activities that will have you ready to rock your birth. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup Instructions
+To run the project locally:
+- `git clone` this repo 
+- `cd` into the miwi-frontend repo
+- run `npm run start` to run the React App in your browser
 
-### `npm run build`
+OR
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The App has been deployed using Vercel. This way you don't have to clone it locally in order to use it! To visit, click the link below!
+- [https://miwi-frontend.vercel.app/](https://miwi-frontend.vercel.app/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Testing
+#### *Currently working on fully testing all current features, then will utilize a more Test Driven Development approach*
+Cypress.js is being used to implement end-to-end-tests of the user flow. To run these tests, `cd` into the project repository and install Cypress by typing `npm i -D cypress` on the command line and adding 
+```
+"scripts": {
+    "cypress:open": "cypress open"
+  }
+  ```
+ to your `package.json` file if it does not already contain the command.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ Then run `npm run cypress:open`
 
-### `npm run eject`
+ Cypress.js should open a window with a list of test files. Click on a file name to run the tests in that file.
+ 
+ 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[Back to Top of Page](#table-of-contents)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## App Features
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The features mentioned below are defined for their intended application use and for any clarity on how the app works.
 
-## Learn More
+### Login: 
+*There is a Guest Account button to demonstrate login and there for experimental use.*
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If you already have an account with us, you can login through the Login Form if you created your account by registering with us originally or sign in through your google account if you created your account by signing in with your google account originally.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Pagination: 
+Your dashboard's Home page will display the 15 most recent journal entries you have created. If you have more than 15 entries, you can view older journal entries by clicking the next button at the bottom of the Home page. The back button will return you to more recent entries.
+
+### Profile Information: 
+If you click the Profile tab you will see options to add an Expected due date, Edit your account, or Delete your account. Select either the Add button next to Expected due date or the Edit button next to Edit your account in order to be direct to a form in which you can edit/update your profile. Once you’ve completed the form, click submit to submit your changes. When your updates have been successfully stored to your account, a green success message will appear and you will be redirected back to the previous profile view which will include your newly updated information.
+
+### Delete Journal Entry: 
+If you select the delete button on a journal entry card, a warning modal will pop up asking if you are sure you would like to delete the selected journal entry because this action is irreversible. If you a certain you would like to delete the entry, click the YES, I'M SURE button. Once your entry is successfully delete the warning modal will close and your dashboard will update to exclude the deleted entry. The CANCEL button will return you to your dashboard without deleting the entry.
+
+### Update Journal Entry: 
+If you select the edit button on a journal entry card, an Update Journal Entry form will pop up that looks like the Create Journal Entry form but will be repopulated with the information from the journal entry you selected. Make changes to the form and click the UPDATE button. Once your information has been successfully stored, a green success message will briefly flash to alert you of the successful changes and the form will close which will return you to your dashboard that will show your updated changes. The CANCEL button will return you to your dashboard without updating the entry.
+
+### Footer Content
+Included in the footer are links to an About Us and How MiWi Works. These links provide some information on the developer that made the app, the app work flow for its features, and definitions for commonly used terms.
+
+### Mobile Friendly Responsive Design
+
+Currently working to make the application completely responsive for mobile, tablet and large screens. This will be achieved through the use of the useMediaQuery feature from Material-UI.
+
+[Back to Top of Page](#table-of-contents)
+
+---
+
+
+### Future Features
+- **One:** Additional journal sections including: Fetal Love Break, Self Care, Postpartum Prep, Childbirth Education, and Nourishment. Through these the design of the journal entry's card display will likely need to change. 
+- **Two:** Better design/layout. Things such as adding images, color scheming, responsive design, and skeletal loading.
+
+
+[Back to Top of Page](#table-of-contents)
