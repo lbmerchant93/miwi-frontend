@@ -27,6 +27,7 @@ Currently the app's main feature is a journal that guides you through the daily 
 To run the project locally:
 - `git clone` this repo 
 - `cd` into the miwi-frontend repo
+- run `npm i` to install dependencies
 - run `npm run start` to run the React App in your browser
 
 OR
