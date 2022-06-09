@@ -17,7 +17,7 @@ This project is designed as a prototype for a midwifery application. The project
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Instructions](#setup-instructions)
-3. [How-To](#using-petstrology)
+3. [How-To](#using-miwi)
 4. [Challenges & Wins](#challenges-&-wins)
 
 ## Introduction
