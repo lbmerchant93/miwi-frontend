@@ -7,6 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Profile from '../../pages/DashboardPage/DashboardProfilePage/DashboardProfilePage';
 import NewJournalEntryForm from '../../pages/DashboardPage/DashboardNewJournalEntryFormPage/DashboardNewJournalEntryFormPage';
 import { User } from '../../shared/auth-context';
+import JournalEntryCardSkeleton from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
 
 import './DashboardPanel.css';
 
@@ -173,7 +174,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
         navigate(`/dashboard/${panelRoutes[0]}`)
     }
     }, [tab, panelRoutes, navigate])
-    
+
     return (
         <Box className='dashboard-panel'>
             <Box>
@@ -196,10 +197,9 @@ const DashboardPanel: React.FC<DashboardPanelProps> = (props) => {
                     />
                 </Box>
             ) : (
-                <p>Fetching...</p>
+                <JournalEntryCardSkeleton />
             )}
         </Box>
-        
     )
 }
 
