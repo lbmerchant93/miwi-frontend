@@ -11,7 +11,7 @@ const JournalEntryCardSkeleton = () => {
 
 const JournalEntryCardSkeletonGrid = () => {
     return (
-        <Box className='dashboard'>
+        <Box className='dashboard-journal-entries-container'>
             {Array(9).fill(<JournalEntryCardSkeleton />)}
         </Box>
     )
