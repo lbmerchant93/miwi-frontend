@@ -80,7 +80,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
     return (
         <>
             <Box className="create-account-form-options">
-                <Box>
+                <Box className="create-account-form-container">
                     <form className="create-account-form">
                         <Box className="create-account-form-input">
                             <TextField 
