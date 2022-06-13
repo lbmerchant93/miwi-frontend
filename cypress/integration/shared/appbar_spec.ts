@@ -135,10 +135,7 @@ describe('AppBar', () => {
     // Test for requires valid username and password
     // Redirects to dashboard on success
     // Error handling
-    // [data-test=email] [data-test=password]
-    // cy.hash().should('eq', '#/')
-    // cy.login() -> create special function to login, under support folder -> command
-    // cy.request({})
+
     it('Should have a login button which opens a login modal containing a login form which logs in a user with email and password.', () => {
       cy.get('header .login-button button').contains('Log In').click()
       cy.get('.login-modal').should('be.visible')
