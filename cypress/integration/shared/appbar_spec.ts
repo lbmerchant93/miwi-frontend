@@ -136,39 +136,11 @@ describe('AppBar', () => {
     // Redirects to dashboard on success
     // Error handling
 
-    it('Should have a login button which opens a login modal containing a login form which logs in a user with email and password.', () => {
+    it('Should have a login button which opens a login modal.', () => {
       cy.get('header .login-button button').contains('Log In').click()
       cy.get('.login-modal').should('be.visible')
       cy.get('.login-modal-title').contains('Welcome back!').should('be.visible')
       cy.get('.login-modal-title').contains('Please log in to access your dashboard! You can log in through your Google account or enter your email/password to access your dashboard.').should('be.visible')
-      cy.get('.login-form .login-form-input').should('have.length', 2)
-      cy.get('.login-form #Email').eq(0).type('guest@guest.com')
-      cy.get('.login-form #Email').eq(0).should('have.attr', 'value', 'guest@guest.com')
-      cy.get('.login-form #Password').eq(0).type('guestviewer')
-      cy.get('.login-form #Password').eq(0).should('have.attr', 'value', 'guestviewer')
-      cy.get('.login-form-button button').click()
-      cy.wait('@gqlloginUserMutation').its('response.body.data.loginUser').should((loginUser) => {
-        expect(loginUser.displayName).to.be.equal('Guest Viewer')
-        expect(loginUser.email).to.be.equal('guest@guest.com')
-        expect(loginUser.expectedDueDate).to.be.equal('2022-07-01T00:00:00.000-06:00')
-      })
-      cy.wait('@gqlUserQuery').its('response.body.data.user').should((user) => {
-        expect(user.displayName).to.be.equal('Guest Viewer')
-        expect(user.email).to.be.equal('guest@guest.com')
-        expect(user.expectedDueDate).to.be.equal('2022-07-01T00:00:00.000-06:00')
-      })
-      cy.wait('@gqlAggregateJournalEntryQuery').its('response.body.data.aggregateJournalEntry').should((aggregateJournalEntry) => {
-        expect(aggregateJournalEntry._count._all).to.be.equal(6)
-      })
-      cy.wait('@gqlJournalEntriesQuery').its('response.body.data.journalEntries').should((journalEntries) => {
-        expect(journalEntries).to.have.lengthOf(6)
-        expect(journalEntries[0].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
-        expect(journalEntries[1].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
-        expect(journalEntries[2].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
-        expect(journalEntries[3].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
-        expect(journalEntries[4].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
-        expect(journalEntries[5].authorId).to.be.equal("opov7wBC6RPiEnJP6hB8iiCtPeq1")
-      })
     })
   
     // Photo url not currently integrated into app, will have to circle back once added
