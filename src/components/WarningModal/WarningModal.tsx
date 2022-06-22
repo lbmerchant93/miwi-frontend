@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import LoadingButton from '@mui/lab/LoadingButton';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 import './WarningModal.css';
 
@@ -36,6 +38,11 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
             className="warning-modal"
         >
             <Box className="warning-modal-container">
+                <Box alignSelf={'flex-end'} position={"relative"} top={2} right={-27}>
+                    <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
                 <Typography variant="h4" color="warning.main">Warning!</Typography>
                 <Typography variant="h6">{modalMessage}</Typography>
                 <Box className="warning-action-container">
