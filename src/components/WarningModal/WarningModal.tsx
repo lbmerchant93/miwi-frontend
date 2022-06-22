@@ -3,6 +3,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import LoadingButton from '@mui/lab/LoadingButton';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 import './WarningModal.css';
 
@@ -26,6 +30,8 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
         onDeleteClick,
         isLoading 
     } = props;
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <Modal
@@ -35,7 +41,12 @@ const WarningModal: React.FC<WarningModalProps> = (props) => {
             aria-describedby={`${modalDescription}`}
             className="warning-modal"
         >
-            <Box className="warning-modal-container">
+            <Box className="warning-modal-container" maxWidth={isMobile ? 320 : 450}>
+                <Box alignSelf={'flex-end'} position={"relative"} top={4} right={-17}>
+                    <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
                 <Typography variant="h4" color="warning.main">Warning!</Typography>
                 <Typography variant="h6">{modalMessage}</Typography>
                 <Box className="warning-action-container">
