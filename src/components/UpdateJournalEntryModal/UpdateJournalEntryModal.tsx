@@ -15,6 +15,8 @@ import moment from 'moment';
 import Modal from '@mui/material/Modal';
 import { JournalEntry } from '../../pages/DashboardPage/DashboardPage';
 import LoadingButton from '@mui/lab/LoadingButton';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 import './UpdateJournalEntryModal.css';
 
@@ -127,6 +129,11 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
             className="update-entry-modal"
         >
             <Box className="update-modal-container">
+                <Box alignSelf={'flex-end'} position={"relative"} top={4} right={-17}>
+                    <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
                 <form className="form" onSubmit={handleSubmit}>
                     <Typography variant='h5' className="page-title">
                         Update Journal Entry
