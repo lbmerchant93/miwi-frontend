@@ -50,7 +50,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
             className="login-modal"
         >
             <Box className="login-modal-container">
-                <Box className="login-modal-close-button" >
+                <Box alignSelf={'flex-end'} position={"relative"} top={4} right={-17}>
                     <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
                         <CloseIcon />
                     </IconButton>
