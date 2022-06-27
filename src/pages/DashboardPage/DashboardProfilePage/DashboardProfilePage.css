@@ -45,3 +45,7 @@
 .profile-delete-form {
     width: 375px;
 }
+
+.profile-delete-account-confirmation {
+    max-width: min(80ch, 100%);
+}
