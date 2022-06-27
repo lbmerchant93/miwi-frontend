@@ -22,6 +22,7 @@ import {
     reauthenticateWithPopup, 
     GoogleAuthProvider
 } from "firebase/auth";
+import Avatar from '@mui/material/Avatar';
 
 import './DashboardProfilePage.css';
 
@@ -149,6 +150,13 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             <Box className="profile-container">
                 {(!isEditing && !isDeletingAccount) && 
                     (<>
+                        <Avatar
+                            src={user.photoURL ?? undefined}
+                            alt="User Photo"
+                            style={{ fontSize: '100px', height: 200, width: 200, marginRight: '8px' }}>
+                            {user.displayName?.toUpperCase()[0]}
+                        </Avatar>
+                        <Typography variant="h4">{user.displayName}</Typography>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Expected due date:</Typography>
                             <Typography variant="h6" ml={3}>
