@@ -59,6 +59,7 @@ const DashboardTabs: React.FC<{
                     key={route}
                     label={label}
                     value={route}
+                    id={route}
                 />
             ))}
         </Tabs>
