@@ -169,7 +169,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                             style={{ fontSize: '100px', height: 200, width: 200, marginRight: '8px' }}>
                             {user.displayName?.toUpperCase()[0]}
                         </Avatar>
-                        <Typography variant="h4">{user.displayName}</Typography>
+                        <Typography variant="h4" id="display-name">{user.displayName}</Typography>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Expected due date:</Typography>
                             <Typography variant="h6" ml={3}>
@@ -229,7 +229,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                             Fill out the form below and select submit to update your profile.
                         </Typography>
                         <form className="form" onSubmit={handleUpdateSubmit}>
-                            <FormLabel id="date-input-label">Display name: </FormLabel>
+                            <FormLabel id="displayName-input-label">Display name: </FormLabel>
                             <TextField
                                 id="displayName-input"
                                 type="text"
