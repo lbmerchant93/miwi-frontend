@@ -5,9 +5,11 @@ import Box from '@mui/material/Box';
 import { useJournalEntries, useJournalEntriesCount } from '../../api/journalEntries/journalEntries';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
-import UserAside from "../../features/UserAside/UserAside";
+// import UserAside from "../../features/UserAside/UserAside";
 import DashboardPanel from '../../features/DashboardPanel/DashboardPanel';
 import { useNavigate } from 'react-router-dom';
+// import useMediaQuery from '@mui/material/useMediaQuery';
+// import { useTheme } from '@mui/material/styles';
 
 import './DashboardPage.css';
 
@@ -29,6 +31,8 @@ const DashboardPage = () => {
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
+    // const theme = useTheme();
+    // const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
@@ -64,7 +68,7 @@ const DashboardPage = () => {
                     {snackBarDetails.message}
                 </Alert>
             </SnackBar>
-            <UserAside />
+            {/* {!isMobile && <UserAside />} */}
             <Box className='dashboard'>
                 <DashboardPanel 
                     data={data} 

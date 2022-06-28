@@ -93,6 +93,7 @@ const updateUserDocument = gql`
 
 interface UserUpdateInput {
     id: string | undefined;
+    displayName: string | null;
     expectedDueDate: string | null;
 }
 
@@ -101,9 +102,10 @@ const updateUserMutation = async (userUpdateInput: UserUpdateInput) => {
     const requestHeaders = {
         authorization: `Bearer ${token}`
     }
-    const { id, expectedDueDate } = userUpdateInput;
+    const { id, displayName, expectedDueDate } = userUpdateInput;
 
     const variables = {
+        "displayName": { "set": displayName },
         "expectedDueDate": { "set": expectedDueDate }
     };
 

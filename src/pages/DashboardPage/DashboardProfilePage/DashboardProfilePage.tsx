@@ -22,6 +22,7 @@ import {
     reauthenticateWithPopup, 
     GoogleAuthProvider
 } from "firebase/auth";
+import Avatar from '@mui/material/Avatar';
 
 import './DashboardProfilePage.css';
 
@@ -34,6 +35,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const { user, triggerSnackBar } = props;
     const auth = getAuth();
     const [date, setDate] = useState<string | null>(user.expectedDueDate);
+    const [displayName, setDisplayName] = useState<string | null>(user.displayName);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
@@ -47,9 +49,20 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         e.preventDefault();
         setIsLoading(true)
 
-        if (JSON.stringify(user.expectedDueDate) !== JSON.stringify(date) && date !== null) {
+        const updatedProfile = {
+            displayName: displayName,
+            expectedDueDate: date
+        }
+
+        const previousProfile = {
+            displayName: user.displayName,
+            expectedDueDate: user.expectedDueDate
+        }
+
+        if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null) {
             const updateUserInput = {
                 id: user.id,
+                displayName: displayName,
                 expectedDueDate: date
             }
             updateUser.mutate(updateUserInput, {
@@ -59,6 +72,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                 },
                 onSuccess: async () => {
                     triggerSnackBar(false, 'Profile update successful!');
+                    user.setDisplayName(displayName)
                     user.setExpectedDueDate(date)
                     setIsEditing(false)
                 },
@@ -149,6 +163,13 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             <Box className="profile-container">
                 {(!isEditing && !isDeletingAccount) && 
                     (<>
+                        <Avatar
+                            src={user.photoURL ?? undefined}
+                            alt="User Photo"
+                            style={{ fontSize: '100px', height: 200, width: 200, marginRight: '8px' }}>
+                            {user.displayName?.toUpperCase()[0]}
+                        </Avatar>
+                        <Typography variant="h4" id="display-name">{user.displayName}</Typography>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Expected due date:</Typography>
                             <Typography variant="h6" ml={3}>
@@ -208,6 +229,15 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                             Fill out the form below and select submit to update your profile.
                         </Typography>
                         <form className="form" onSubmit={handleUpdateSubmit}>
+                            <FormLabel id="displayName-input-label">Display name: </FormLabel>
+                            <TextField
+                                id="displayName-input"
+                                type="text"
+                                value={displayName}
+                                onChange={(e) => setDisplayName(e.currentTarget.value)}
+                                size='small'
+                                disabled={isLoading}
+                            />
                             <FormLabel id="date-input-label">Expected due date: </FormLabel>
                             <LocalizationProvider dateAdapter={DateAdapter}>
                                 <DatePicker

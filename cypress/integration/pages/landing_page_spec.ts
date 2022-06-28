@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-// Move header and footer to a shared folder, own files each
 
 describe('Landing Page', () => {
   beforeEach(() => {

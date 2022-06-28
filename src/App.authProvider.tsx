@@ -31,7 +31,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         setExpectedDueDate(newDueDate)
     }
     
-    const setDisplayNameOnCreate = (displayName: string) => {
+    const updateDisplayName = (displayName: string | null) => {
         setDisplayName(displayName)
     }
 
@@ -79,7 +79,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             expectedDueDate: expectedDueDate,
             email: email,
             setExpectedDueDate: updateExpectedDueDate,
-            setDisplayNameOnCreate: setDisplayNameOnCreate
+            setDisplayName: updateDisplayName
             }}
         >
             {props.children}

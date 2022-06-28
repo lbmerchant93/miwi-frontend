@@ -44,7 +44,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     console.log(err)
                 },
                 onSuccess: () => {
-                    user.setDisplayNameOnCreate(displayName)
+                    user.setDisplayName(displayName)
                     setIsLoading(false)
                     onClose()
                     navigate('/dashboard/home')
