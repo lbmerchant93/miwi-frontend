@@ -177,8 +177,19 @@ describe('AppBar', () => {
       cy.get('#app-menu ul li').eq(0).click()
       cy.url().should('equal', 'http://localhost:3000/dashboard')
     })
+
+    it('Should navigate the user to the New Journal Entry Page once clicking the New Journal Entry menu item in the app menu.', () => {
+      cy.get('header .login-button button').click()
+      cy.get('.login-form #Email').eq(0).type('guest@guest.com')
+      cy.get('.login-form #Password').eq(0).type('guestviewer')
+      cy.get('.login-form-button button').click()
+      cy.get('header h1').click()
+      cy.url().should('equal', 'http://localhost:3000/')
+      cy.get('#menu-button').click()
+      cy.get('#app-menu ul li').eq(1).click()
+      cy.url().should('equal', 'http://localhost:3000/dashboard/journal_entry_form')
+    })
   
-    // check url is landing page
     it('Should change back to LOG IN once a user logs out.', () => {
       cy.get('header .login-button button').click()
       cy.get('.login-form #Email').eq(0).type('guest@guest.com')
@@ -187,5 +198,6 @@ describe('AppBar', () => {
       cy.get('#menu-button').click()
       cy.get('.logout-link').click()
       cy.get('header .login-button button').contains('Log In')
+      cy.url().should('equal', 'http://localhost:3000/')
     })
   })
