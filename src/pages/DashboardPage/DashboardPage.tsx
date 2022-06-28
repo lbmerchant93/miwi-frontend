@@ -10,6 +10,7 @@ import DashboardPanel from '../../features/DashboardPanel/DashboardPanel';
 import { useNavigate } from 'react-router-dom';
 // import useMediaQuery from '@mui/material/useMediaQuery';
 // import { useTheme } from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
 
 import './DashboardPage.css';
 
@@ -33,6 +34,7 @@ const DashboardPage = () => {
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     // const theme = useTheme();
     // const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const { pathname } = useLocation();
 
     const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
@@ -60,6 +62,10 @@ const DashboardPage = () => {
         refetchCount()
         refetch()
     }, []) // eslint-disable-line 
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
     return user.isLoggedIn ? (
         <>
