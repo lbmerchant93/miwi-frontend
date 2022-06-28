@@ -17,19 +17,19 @@ import './AppBar.css';
 
 // const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
 //     const { children } = props;
-  
+
 //     const trigger = useScrollTrigger({
-//       disableHysteresis: true,
-//       threshold: 0,
-//       target: window,
+//         disableHysteresis: true,
+//         threshold: 0,
+//         target: window,
 //     });
-  
+
 //     return React.cloneElement(children, {
 //         style: {
 //             boxShadow: trigger ? '0px 4px 7px -4px rgb(0 0 0 / 20%)' : 'none'
 //         }
 //     });
-//   };
+// };
 
 const AppBar: React.FC = () => {
     const user = useContext(AuthContext);
