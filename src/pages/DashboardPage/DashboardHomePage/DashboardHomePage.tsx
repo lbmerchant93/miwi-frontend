@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { JournalEntry } from '../DashboardPage';
 import { useNavigate } from 'react-router-dom';
+import JournalEntryCardSkeletonGrid from '../../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton'
 
 import './DashboardHomePage.css'
 
@@ -52,6 +53,12 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
             }
         });
     };
+
+    if (isFetching) {
+        return (
+            <JournalEntryCardSkeletonGrid/>
+        )
+    }
 
     return (
         <>
