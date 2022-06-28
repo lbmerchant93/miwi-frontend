@@ -153,15 +153,17 @@ describe('AppBar', () => {
       cy.get('#menu-button [data-testid=MenuIcon]').should('be.visible')
     })
   
-    it('Should have two menu options, Dashboard or Log out.', () => {
+    it('Should have four menu options, Dashboard, New Journal Entry, Profile, or Log out.', () => {
       cy.get('header .login-button button').click()
       cy.get('.login-form #Email').eq(0).type('guest@guest.com')
       cy.get('.login-form #Password').eq(0).type('guestviewer')
       cy.get('.login-form-button button').click()
       cy.get('#menu-button').click()
-      cy.get('#app-menu ul li').should('have.length', 2)
+      cy.get('#app-menu ul li').should('have.length', 4)
       cy.get('#app-menu ul li').eq(0).contains('My Dashboard').should('be.visible')
-      cy.get('#app-menu ul li').eq(1).contains('Log out').should('be.visible')
+      cy.get('#app-menu ul li').eq(1).contains('New Journal Entry').should('be.visible')
+      cy.get('#app-menu ul li').eq(2).contains('Profile').should('be.visible')
+      cy.get('#app-menu ul li').eq(3).contains('Log out').should('be.visible')
     })
   
     it('Should navigate the user to the Dashboard Page once clicking the My Dashboard menu item in the app menu.', () => {
