@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import lucasProfile from '../../images/lucasProfile.jpg';
 import Link from '@mui/material/Link';
+import { useLocation } from 'react-router-dom';
 
 import './AboutPage.css';
 
 const AboutPage = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
   return (
     <>
       <Box className='about-page-container'>

@@ -39,7 +39,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
     };
 
     const onPaginationClick = (direction: string) => {
-        document.body.scroll(0, 0);
+        window.scrollTo(0, 0);
 
         setTimeout(() => {
             switch (direction) {
