@@ -111,6 +111,14 @@ const AppBar: React.FC = () => {
                                 onClick={onListItemClick(() => navigate(PossibleRoutes.DASHBOARD))}>
                                     My Dashboard
                             </MenuItem>
+                            <MenuItem 
+                                onClick={onListItemClick(() => navigate('/dashboard/journal_entry_form'))}>
+                                    New Journal Entry
+                            </MenuItem>
+                            <MenuItem 
+                                onClick={onListItemClick(() => navigate('/dashboard/profile'))}>
+                                    Profile
+                            </MenuItem>
                             <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
                                 <MenuItem 
                                     onClick={onListItemClick(() => signOut(auth))}>
