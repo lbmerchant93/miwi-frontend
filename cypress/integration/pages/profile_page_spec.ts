@@ -124,10 +124,15 @@ describe('Profile Page', () => {
         cy.get('.login-form #Email').eq(0).type('guest@guest.com')
         cy.get('.login-form #Password').eq(0).type('guestviewer')
         cy.get('.login-form-button button').click()
+        cy.wait('@gqlloginUserMutation')
+        cy.wait('@gqlUserQuery')
+        cy.wait('@gqlAggregateJournalEntryQuery')
+        cy.wait('@gqlJournalEntriesQuery')
+        cy.get('#profile').click()
     })
   
-    it.skip('Should display the user\'s information (display name, expected due date, google photo url).', () => {
-
+    it.only('Should display the user\'s information (display name, expected due date, google photo url).', () => {
+        cy.get('#display-name').contains('Guest Viewer')
     })
 
     it.skip('Should have an edit profile button that displays a form to edit the user\'s information.', () => {
