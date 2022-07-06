@@ -23,16 +23,31 @@ import {
     GoogleAuthProvider
 } from "firebase/auth";
 import Avatar from '@mui/material/Avatar';
+import Skeleton from '@mui/material/Skeleton';
 
 import './DashboardProfilePage.css';
 
+const DashboardProfilePageSkeleton = () => {
+    return (
+        <Box className="profile-container">
+            <Skeleton variant="circular" width={200} height={200} />
+            <Box width={'100%'}>
+                <Typography variant="h4" mb={1}><Skeleton /></Typography>
+                <Typography variant="h6" mt={1} mb={1}><Skeleton /></Typography>
+                <Typography variant="h6" mt={1} mb={1}><Skeleton /></Typography>
+                <Typography variant="h6" mt={1} mb={1}><Skeleton /></Typography>
+            </Box>
+        </Box>
+    )
+}
 interface DashboardProfilePageProps {
     user: User;
     triggerSnackBar: (err: boolean, message: string) => void;
+    isFetching: boolean;
 }
 
 const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
-    const { user, triggerSnackBar } = props;
+    const { user, triggerSnackBar, isFetching } = props;
     const auth = getAuth();
     const [date, setDate] = useState<string | null>(user.expectedDueDate);
     const [displayName, setDisplayName] = useState<string | null>(user.displayName);
@@ -158,6 +173,10 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         }
     }, [user])
 
+    if (isFetching) {
+        return <DashboardProfilePageSkeleton />
+    }
+
     return (
         <>
             <Box className="profile-container">
@@ -166,7 +185,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                         <Avatar
                             src={user.photoURL ?? undefined}
                             alt="User Photo"
-                            style={{ fontSize: '100px', height: 200, width: 200, marginRight: '8px' }}>
+                            style={{ fontSize: '100px', height: 200, width: 200 }}>
                             {user.displayName?.toUpperCase()[0]}
                         </Avatar>
                         <Typography variant="h4" id="display-name">{user.displayName}</Typography>
