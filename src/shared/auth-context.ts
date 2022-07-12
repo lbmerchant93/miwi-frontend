@@ -1,5 +1,13 @@
 import { createContext } from "react";
 
+export interface Goals {
+    waterIntakeGoal: number | null;
+    proteinIntakeGoal: number | null;
+    exerciseGoal: number | null;
+    kegelsGoal: number | null;
+    garlandPoseGoal: number | null;
+}
+
 export interface User {
     isLoggedIn: boolean;
     id: string | undefined;
@@ -7,10 +15,10 @@ export interface User {
     photoURL: string | null;
     expectedDueDate: string | null;
     email: string | null;
-    goals?: [],
+    goals: [Goals],
     setExpectedDueDate: (newDueDate: string) => void;
     setDisplayName: (displayName: string | null) => void;
-    setGoals: (newGoals: []) => void;
+    setGoals: (newGoals: [Goals]) => void;
 }
 
 export const AuthContext = createContext<User>({ 
@@ -20,7 +28,13 @@ export const AuthContext = createContext<User>({
     photoURL: '',
     expectedDueDate: null,
     email: '',
-    goals: [],
+    goals: [{
+        waterIntakeGoal: null,
+        proteinIntakeGoal: null,
+        exerciseGoal: null,
+        kegelsGoal: null,
+        garlandPoseGoal: null
+    }],
     setExpectedDueDate: () => {},
     setDisplayName: () => {},
     setGoals: () => {}

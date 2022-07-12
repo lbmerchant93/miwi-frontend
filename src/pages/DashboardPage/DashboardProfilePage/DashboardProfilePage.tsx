@@ -24,6 +24,8 @@ import {
 } from "firebase/auth";
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
+import { useUpdateGoals } from '../../../api/goals/goal';
+import { Goals } from '../../../shared/auth-context';
 
 import './DashboardProfilePage.css';
 
@@ -59,6 +61,8 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
     const provider = auth.currentUser?.providerData[0].providerId;
+    const [goals, setGoals] = useState<[Goals]>(user.goals)
+    const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -171,6 +175,18 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
         } else {
             setDate(null)
         }
+
+        if (user.goals.length) {
+            setGoals(user.goals)
+        } else {
+            setGoals([{
+                waterIntakeGoal: null,
+                proteinIntakeGoal: null,
+                exerciseGoal: null,
+                kegelsGoal: null,
+                garlandPoseGoal: null
+            }])
+        }
     }, [user])
 
     if (isFetching) {
@@ -207,6 +223,36 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                         </Button>
                                     </Box>
                                 }
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Water intake goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                {goals[0].waterIntakeGoal}
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Protein intake goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                {goals[0].proteinIntakeGoal}
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Exercise goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                {goals[0].exerciseGoal}
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Kegels goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                {goals[0].kegelsGoal}
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Garland pose goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                {goals[0].garlandPoseGoal}
                             </Typography>
                         </Box>
                         <Box className="profile-edit-button-container">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthContext } from './shared/auth-context';
+import { AuthContext, Goals } from './shared/auth-context';
 import { 
     getAuth, 
     signOut, 
@@ -10,7 +10,6 @@ import {
 import { useUser } from './api/users/user';
 
 export const getAuthToken = () => localStorage.getItem('token');
-
 
 interface AuthProviderProps {}
 
@@ -23,7 +22,13 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');
-    const [goals, setGoals] = useState<[]>([])
+    const [goals, setGoals] = useState<[Goals]>([{
+        waterIntakeGoal: null,
+        proteinIntakeGoal: null,
+        exerciseGoal: null,
+        kegelsGoal: null,
+        garlandPoseGoal: null
+    }])
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
     const { data } = useUser(userId, email);
@@ -36,7 +41,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         setDisplayName(displayName)
     }
 
-    const updateGoals = (newGoals: []) => {
+    const updateGoals = (newGoals: [Goals]) => {
         setGoals(newGoals)
     }
 

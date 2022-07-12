@@ -19,7 +19,7 @@ const updateGoalDocument = gql`
     }
 `
 
-interface UpdateGoalInput {
+interface GoalUpdateInput {
     id: string;
     waterIntakeGoal: number | null;
     proteinIntakeGoal: number | null;
@@ -28,7 +28,7 @@ interface UpdateGoalInput {
     garlandPoseGoal: number | null;
 };
 
-const updateGoalMutation = async (updateGoalInput: UpdateGoalInput) => {
+const updateGoalsMutation = async (goalUpdateInput: GoalUpdateInput) => {
     const token = getAuthToken();
     const requestHeaders = {
         authorization: `Bearer ${token}`
@@ -39,10 +39,9 @@ const updateGoalMutation = async (updateGoalInput: UpdateGoalInput) => {
         exerciseGoal, 
         kegelsGoal, 
         garlandPoseGoal 
-    } = updateGoalInput;
+    } = goalUpdateInput;
 
     const variables = {
-        "id": id,
         "waterIntakeGoal": waterIntakeGoal,
         "proteinIntakeGoal": proteinIntakeGoal,
         "exerciseGoal": exerciseGoal,
@@ -53,12 +52,12 @@ const updateGoalMutation = async (updateGoalInput: UpdateGoalInput) => {
     const { updateGoal } = await request({
         url: endpoint,
         document: updateGoalDocument,
-        variables: { data: variables },
+        variables: { data: variables, where: { "id": id } },
         requestHeaders
     });
     return updateGoal;
 };
 
-export const useUpdateGoal = () => {
-    return useMutation(updateGoalMutation)
+export const useUpdateGoals = () => {
+    return useMutation(updateGoalsMutation)
 };
