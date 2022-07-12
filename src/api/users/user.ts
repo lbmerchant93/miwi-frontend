@@ -10,6 +10,14 @@ const userDocument = gql`
             email
             displayName
             expectedDueDate
+            goals {
+                id
+                waterIntakeGoal
+                proteinIntakeGoal
+                exerciseGoal
+                kegelsGoal
+                garlandPoseGoal
+            }
         }
     }
 `;
@@ -41,6 +49,14 @@ const loginUserDocument = gql`
             email
             displayName
             expectedDueDate
+            goals {
+                id
+                waterIntakeGoal
+                proteinIntakeGoal
+                exerciseGoal
+                kegelsGoal
+                garlandPoseGoal
+            }
         }
     }
 `

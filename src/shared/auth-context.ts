@@ -7,10 +7,10 @@ export interface User {
     photoURL: string | null;
     expectedDueDate: string | null;
     email: string | null;
-    goals?: {},
+    goals?: [],
     setExpectedDueDate: (newDueDate: string) => void;
     setDisplayName: (displayName: string | null) => void;
-    setGoals: (newGoals: {}) => void;
+    setGoals: (newGoals: []) => void;
 }
 
 export const AuthContext = createContext<User>({ 
@@ -20,7 +20,7 @@ export const AuthContext = createContext<User>({
     photoURL: '',
     expectedDueDate: null,
     email: '',
-    goals: {},
+    goals: [],
     setExpectedDueDate: () => {},
     setDisplayName: () => {},
     setGoals: () => {}
