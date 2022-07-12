@@ -23,6 +23,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');
+    const [goals, setGoals] = useState<{}>({})
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
     const { data } = useUser(userId, email);
@@ -33,6 +34,10 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     
     const updateDisplayName = (displayName: string | null) => {
         setDisplayName(displayName)
+    }
+
+    const updateGoals = (newGoals: {}) => {
+        setGoals(newGoals)
     }
 
     onAuthStateChanged(auth, async (user) => {
@@ -78,8 +83,10 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             photoURL: photoURL,
             expectedDueDate: expectedDueDate,
             email: email,
+            goals: goals,
             setExpectedDueDate: updateExpectedDueDate,
-            setDisplayName: updateDisplayName
+            setDisplayName: updateDisplayName,
+            setGoals: updateGoals
             }}
         >
             {props.children}
