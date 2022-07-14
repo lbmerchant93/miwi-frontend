@@ -25,7 +25,6 @@ import {
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
 import { useUpdateGoals } from '../../../api/goals/goal';
-import { Goals } from '../../../shared/auth-context';
 
 import './DashboardProfilePage.css';
 
@@ -61,8 +60,12 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
     const provider = auth.currentUser?.providerData[0].providerId;
-    const [goals, setGoals] = useState<[Goals]>(user.goals)
-    const updateGoals = useUpdateGoals();
+    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number | null | undefined>(null);
+    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number | null | undefined>(null);
+    const [exerciseGoal, setExerciseGoal] = useState<number | null | undefined>(null);
+    const [kegelsGoal, setKegelsGoal] = useState<number | null | undefined>(null);
+    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null | undefined>(null);
+    // const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -172,20 +175,23 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     useEffect(() => {
         if (user.expectedDueDate) {
             setDate(user.expectedDueDate)
+            setDisplayName(user.displayName)
         } else {
             setDate(null)
         }
 
         if (user.goals.length) {
-            setGoals(user.goals)
+            setWaterIntakeGoal(user.goals[0].waterIntakeGoal)
+            setProteinIntakeGoal(user.goals[0].proteinIntakeGoal)
+            setExerciseGoal(user.goals[0].exerciseGoal)
+            setKegelsGoal(user.goals[0].kegelsGoal)
+            setGarlandPoseGoal(user.goals[0].garlandPoseGoal)
         } else {
-            setGoals([{
-                waterIntakeGoal: null,
-                proteinIntakeGoal: null,
-                exerciseGoal: null,
-                kegelsGoal: null,
-                garlandPoseGoal: null
-            }])
+            setWaterIntakeGoal(0)
+            setProteinIntakeGoal(0)
+            setExerciseGoal(0)
+            setKegelsGoal(0)
+            setGarlandPoseGoal(0)
         }
     }, [user])
 
@@ -211,48 +217,38 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                 {user.expectedDueDate ? 
                                     <b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b> 
                                     : 
-                                    <Box className="profile-edit-button">
-                                        <Button 
-                                            variant="contained" 
-                                            onClick={() => setIsEditing(true)}
-                                            startIcon={<EditIcon />}
-                                            color="inherit"
-                                            size="small"
-                                        >
-                                            Add
-                                        </Button>
-                                    </Box>
+                                    <b>MM/DD/YYY</b>
                                 }
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Water intake goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].waterIntakeGoal ? goals[0].waterIntakeGoal : 0}oz
+                                <b>{waterIntakeGoal}oz</b>
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Protein intake goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].proteinIntakeGoal ? goals[0].proteinIntakeGoal : 0}g
+                                <b>{proteinIntakeGoal}g</b>
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Exercise goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].exerciseGoal ? goals[0].exerciseGoal : 0}min
+                                <b>{exerciseGoal}min</b>
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Kegels goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].kegelsGoal ? goals[0].kegelsGoal : 0}
+                                <b>{kegelsGoal}</b>
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Garland pose goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].garlandPoseGoal ? goals[0].garlandPoseGoal : 0}min
+                                <b>{garlandPoseGoal}min</b>
                             </Typography>
                         </Box>
                         <Box className="profile-edit-button-container">
@@ -312,6 +308,16 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                     disabled={isLoading}
                                 />
                             </LocalizationProvider>
+                            <FormLabel id="water-intake-goal-label">Water intake goal: </FormLabel>
+                            <TextField
+                                id="water-intake-input"
+                                type="number"
+                                value={waterIntakeGoal}
+                                onChange={(e) => setWaterIntakeGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                             <Box className="profile-edit-action-container">
                                 {!isLoading && 
                                     <Box className="profile-edit-action-button">

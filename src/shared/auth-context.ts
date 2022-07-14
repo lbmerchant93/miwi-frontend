@@ -1,11 +1,11 @@
 import { createContext } from "react";
 
 export interface Goals {
-    waterIntakeGoal: number | null;
-    proteinIntakeGoal: number | null;
-    exerciseGoal: number | null;
-    kegelsGoal: number | null;
-    garlandPoseGoal: number | null;
+    waterIntakeGoal?: number | null;
+    proteinIntakeGoal?: number | null;
+    exerciseGoal?: number | null;
+    kegelsGoal?: number | null;
+    garlandPoseGoal?: number | null;
 }
 
 export interface User {
