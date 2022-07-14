@@ -228,31 +228,31 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                         <Box className="profile-info-container">
                             <Typography variant="h6">Water intake goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].waterIntakeGoal}
+                                {goals[0].waterIntakeGoal ? goals[0].waterIntakeGoal : 0}oz
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Protein intake goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].proteinIntakeGoal}
+                                {goals[0].proteinIntakeGoal ? goals[0].proteinIntakeGoal : 0}g
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Exercise goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].exerciseGoal}
+                                {goals[0].exerciseGoal ? goals[0].exerciseGoal : 0}min
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Kegels goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].kegelsGoal}
+                                {goals[0].kegelsGoal ? goals[0].kegelsGoal : 0}
                             </Typography>
                         </Box>
                         <Box className="profile-info-container">
                             <Typography variant="h6">Garland pose goal:</Typography>
                             <Typography variant="h6" ml={3}>
-                                {goals[0].garlandPoseGoal}
+                                {goals[0].garlandPoseGoal ? goals[0].garlandPoseGoal : 0}min
                             </Typography>
                         </Box>
                         <Box className="profile-edit-button-container">
