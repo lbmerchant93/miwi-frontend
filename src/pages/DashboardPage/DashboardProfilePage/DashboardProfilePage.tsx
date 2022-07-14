@@ -310,10 +310,50 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                             </LocalizationProvider>
                             <FormLabel id="water-intake-goal-label">Water intake goal: </FormLabel>
                             <TextField
-                                id="water-intake-input"
+                                id="water-intake-goal-input"
                                 type="number"
                                 value={waterIntakeGoal}
                                 onChange={(e) => setWaterIntakeGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="protein-intake-goal-label">Protein intake goal: </FormLabel>
+                            <TextField
+                                id="protein-intake-goal-input"
+                                type="number"
+                                value={proteinIntakeGoal}
+                                onChange={(e) => setProteinIntakeGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="exercise-goal-label">Exercise goal: </FormLabel>
+                            <TextField
+                                id="exercise-goal-input"
+                                type="number"
+                                value={exerciseGoal}
+                                onChange={(e) => setExerciseGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="kegels-goal-label">Kegels goal: </FormLabel>
+                            <TextField
+                                id="kegels-goal-input"
+                                type="number"
+                                value={kegelsGoal}
+                                onChange={(e) => setKegelsGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="garlandPose-goal-label">Garland pose goal: </FormLabel>
+                            <TextField
+                                id="garlandPose-goal-input"
+                                type="number"
+                                value={garlandPoseGoal}
+                                onChange={(e) => setGarlandPoseGoal(parseInt(e.currentTarget.value))}
                                 InputProps={{ inputProps: { min: 0 } }}
                                 size='small'
                                 disabled={isLoading}
