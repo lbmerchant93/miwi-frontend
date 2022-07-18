@@ -7,6 +7,7 @@ import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { Auth } from 'firebase/auth';
+import { User } from '../../shared/auth-context';
 import './LoginModal.css';
 
 enum FormState {
@@ -18,6 +19,7 @@ interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
     auth: Auth;
+    user: User;
 };
 
 const modalState = {
@@ -32,7 +34,7 @@ const modalState = {
   };
 
 const LoginModal: React.FC<LoginModalProps> = (props) => {
-    const { isOpen, onClose, auth } = props;
+    const { isOpen, onClose, auth, user } = props;
     const [formState, setFormState] = useState<FormState>(FormState.Login);
 
     useEffect(() => {
@@ -68,6 +70,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                         auth={auth}
                         onRegisterClick={() => setFormState(FormState.Creation)}
                         onClose={onClose}
+                        user={user}
                     />
                 )}
                 {formState === FormState.Creation && (

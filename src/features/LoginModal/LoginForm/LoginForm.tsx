@@ -11,16 +11,18 @@ import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import FormLabel from '@mui/material/FormLabel';
+import { User } from '../../../shared/auth-context';
 import './LoginForm.css';
 
 interface LoginFormProps {
     auth: Auth;
     onRegisterClick: () => void;
     onClose: () => void;
+    user: User;
 };
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const { auth, onRegisterClick, onClose } = props;
+    const { auth, onRegisterClick, onClose, user } = props;
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -31,14 +33,16 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const loginWithEmailAndPassword = async (email: string, password: string) => {
         setIsLoading(true)
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password)
-            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+            const userLogin = await signInWithEmailAndPassword(auth, email, password)
+            loginUser.mutate({ id: userLogin.user.uid, email: userLogin.user.email, displayName: userLogin.user.displayName }, {
                 onError: (err: any) => {
                     setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     setIsLoading(false)
                     console.log(err)
                 },
-                onSuccess: () => {
+                onSuccess: (data) => {
+                    user.setUserId(userLogin.user.uid)
+                    user.setGoals(data.goals)
                     setIsLoading(false)
                     onClose()
                     navigate('/dashboard/home')
@@ -54,14 +58,15 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const loginWithGoogle = async () => {
         setIsLoading(true)
         try {
-            const user = await signInWithPopup(auth, new GoogleAuthProvider());
-            loginUser.mutate({ id: user.user.uid, email: user.user.email, displayName: user.user.displayName }, {
+            const userLogin = await signInWithPopup(auth, new GoogleAuthProvider());
+            loginUser.mutate({ id: userLogin.user.uid, email: userLogin.user.email, displayName: userLogin.user.displayName }, {
                 onError: (err: any) => {
                     setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                     setIsLoading(false)
                     console.log(err)
                 },
                 onSuccess: () => {
+                    user.setUserId(userLogin.user.uid)
                     setIsLoading(false)
                     navigate('/dashboard/home')
                     onClose()
