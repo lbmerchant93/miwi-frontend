@@ -24,7 +24,7 @@ import {
 } from "firebase/auth";
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
-import { useUpdateGoals } from '../../../api/goals/goal';
+// import { useUpdateGoals } from '../../../api/goals/goal';
 
 import './DashboardProfilePage.css';
 
@@ -51,6 +51,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const { user, triggerSnackBar, isFetching } = props;
     const auth = getAuth();
     const [date, setDate] = useState<string | null>(user.expectedDueDate);
+    // look into setting displayName here with auth.currentUser.displayName?
     const [displayName, setDisplayName] = useState<string | null>(user.displayName);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -60,11 +61,11 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
     const provider = auth.currentUser?.providerData[0].providerId;
-    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number | null | undefined>(null);
-    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number | null | undefined>(null);
-    const [exerciseGoal, setExerciseGoal] = useState<number | null | undefined>(null);
-    const [kegelsGoal, setKegelsGoal] = useState<number | null | undefined>(null);
-    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null | undefined>(null);
+    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number | null>(null);
+    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number | null>(null);
+    const [exerciseGoal, setExerciseGoal] = useState<number | null>(null);
+    const [kegelsGoal, setKegelsGoal] = useState<number | null>(null);
+    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null>(null);
     // const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -173,20 +174,17 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     }
 
     useEffect(() => {
-        if (user.expectedDueDate) {
+        if (user) {
+            // make sure setDate and setDisplayName works properly here with the change of the conditional
             setDate(user.expectedDueDate)
             setDisplayName(user.displayName)
+            setWaterIntakeGoal(user.goals.waterIntakeGoal)
+            setProteinIntakeGoal(user.goals.proteinIntakeGoal)
+            setExerciseGoal(user.goals.exerciseGoal)
+            setKegelsGoal(user.goals.kegelsGoal)
+            setGarlandPoseGoal(user.goals.garlandPoseGoal)
         } else {
             setDate(null)
-        }
-
-        if (user.goals.length) {
-            setWaterIntakeGoal(user.goals[0].waterIntakeGoal)
-            setProteinIntakeGoal(user.goals[0].proteinIntakeGoal)
-            setExerciseGoal(user.goals[0].exerciseGoal)
-            setKegelsGoal(user.goals[0].kegelsGoal)
-            setGarlandPoseGoal(user.goals[0].garlandPoseGoal)
-        } else {
             setWaterIntakeGoal(0)
             setProteinIntakeGoal(0)
             setExerciseGoal(0)

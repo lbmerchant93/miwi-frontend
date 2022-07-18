@@ -22,13 +22,13 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');
-    const [goals, setGoals] = useState<[Goals]>([{
-        waterIntakeGoal: null,
-        proteinIntakeGoal: null,
-        exerciseGoal: null,
-        kegelsGoal: null,
-        garlandPoseGoal: null
-    }])
+    const [goals, setGoals] = useState<Goals>({
+        waterIntakeGoal: 0,
+        proteinIntakeGoal: 0,
+        exerciseGoal: 0,
+        kegelsGoal: 0,
+        garlandPoseGoal: 0
+    })
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
     const { data } = useUser(userId, email);
@@ -41,7 +41,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         setDisplayName(displayName)
     }
 
-    const updateGoals = (newGoals: [Goals]) => {
+    const updateGoals = (newGoals: Goals) => {
         setGoals(newGoals)
     }
 
@@ -90,6 +90,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             expectedDueDate: expectedDueDate,
             email: email,
             goals: goals,
+            setUserId: setUserId,
             setExpectedDueDate: updateExpectedDueDate,
             setDisplayName: updateDisplayName,
             setGoals: updateGoals
