@@ -33,19 +33,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [refreshToken, setRefreshToken] = useState<string | null>('');
     const { data } = useUser(userId, email);
 
-    const updateExpectedDueDate = (newDueDate: string) => {
-        setExpectedDueDate(newDueDate)
-    }
-    
-    const updateDisplayName = (displayName: string | null) => {
-        setDisplayName(displayName)
-    }
-
-    const updateGoals = (newGoals: Goals) => {
-        setGoals(newGoals)
-    }
-
     onAuthStateChanged(auth, async (user) => {
+        // conditional to check data from useUser to match user from firebase ?
         if (user) {
             try {
                 const bearerToken = await user.getIdToken();
@@ -91,9 +80,9 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             email: email,
             goals: goals,
             setUserId: setUserId,
-            setExpectedDueDate: updateExpectedDueDate,
-            setDisplayName: updateDisplayName,
-            setGoals: updateGoals
+            setExpectedDueDate: setExpectedDueDate,
+            setDisplayName: setDisplayName,
+            setGoals: setGoals
             }}
         >
             {props.children}

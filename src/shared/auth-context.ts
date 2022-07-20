@@ -17,9 +17,9 @@ export interface User {
     email: string | null;
     goals: Goals,
     setUserId: Dispatch<SetStateAction<string | undefined>>
-    setExpectedDueDate: (newDueDate: string) => void;
-    setDisplayName: (displayName: string | null) => void;
-    setGoals: (newGoals: Goals) => void;
+    setExpectedDueDate: Dispatch<SetStateAction<string | null>>
+    setDisplayName: Dispatch<SetStateAction<string | null>>
+    setGoals: Dispatch<SetStateAction<Goals>>
 }
 
 export const AuthContext = createContext<User>({ 
