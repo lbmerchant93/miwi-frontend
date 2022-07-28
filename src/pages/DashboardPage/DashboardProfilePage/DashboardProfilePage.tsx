@@ -119,10 +119,19 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                     triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
                 onSuccess: async () => {
-                    triggerSnackBar(false, 'Profile update successful!');
                     user.setDisplayName(displayName)
                     user.setExpectedDueDate(date)
-                    setIsEditing(false)
+                    updateGoals.mutate(updateGoalsInput, {
+                        onError: (err: any) => {
+                            setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                            triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                        },
+                        onSuccess: async () => {
+                            triggerSnackBar(false, 'Profile update successful!');
+                            user.setGoals(updateGoalsInput)
+                            setIsEditing(false)
+                        }
+                    })
                 },
                 onSettled: () => {
                     setIsLoading(false)
