@@ -42,11 +42,11 @@ const updateGoalsMutation = async (goalUpdateInput: GoalUpdateInput) => {
     } = goalUpdateInput;
 
     const variables = {
-        "waterIntakeGoal": waterIntakeGoal,
-        "proteinIntakeGoal": proteinIntakeGoal,
-        "exerciseGoal": exerciseGoal,
-        "kegelsGoal": kegelsGoal,
-        "garlandPoseGoal": garlandPoseGoal
+        "waterIntakeGoal": { "set": waterIntakeGoal},
+        "proteinIntakeGoal": { "set": proteinIntakeGoal},
+        "exerciseGoal": { "set": exerciseGoal},
+        "kegelsGoal": { "set": kegelsGoal},
+        "garlandPoseGoal": { "set": garlandPoseGoal}
     };
 
     const { updateGoal } = await request({

@@ -23,7 +23,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');
     const [goals, setGoals] = useState<Goals>({
-        id: null,
+        id: '',
         waterIntakeGoal: 0,
         proteinIntakeGoal: 0,
         exerciseGoal: 0,

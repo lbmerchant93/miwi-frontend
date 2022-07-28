@@ -27,7 +27,6 @@ import Skeleton from '@mui/material/Skeleton';
 import { useUpdateGoals } from '../../../api/goals/goal';
 
 import './DashboardProfilePage.css';
-import { json } from 'stream/consumers';
 
 const DashboardProfilePageSkeleton = () => {
     return (
@@ -160,12 +159,20 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                 garlandPoseGoal
             }
 
-            
-            console.log(user.goals)
-            console.log(updatedGoals, "updated")
-            console.log(previousGoals, 'previous')
-            console.log('update goals')
-            setIsLoading(false)
+            updateGoals.mutate(updateGoalsInput, {
+                onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: async () => {
+                    triggerSnackBar(false, 'Profile update successful!');
+                    user.setGoals(updateGoalsInput)
+                    setIsEditing(false)
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
+            })
         } else {
             setError('Please update the profile before clicking submit.')
             triggerSnackBar(true, 'Please update the profile before clicking submit.')
