@@ -1,6 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 
 export interface Goals {
+    id: number | null;
     waterIntakeGoal: number | null;
     proteinIntakeGoal: number | null;
     exerciseGoal: number | null;
@@ -30,6 +31,7 @@ export const AuthContext = createContext<User>({
     expectedDueDate: null,
     email: '',
     goals: {
+        id: null,
         waterIntakeGoal: null,
         proteinIntakeGoal: null,
         exerciseGoal: null,

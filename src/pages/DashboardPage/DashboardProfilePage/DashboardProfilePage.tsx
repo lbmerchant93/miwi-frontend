@@ -24,9 +24,10 @@ import {
 } from "firebase/auth";
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
-// import { useUpdateGoals } from '../../../api/goals/goal';
+import { useUpdateGoals } from '../../../api/goals/goal';
 
 import './DashboardProfilePage.css';
+import { json } from 'stream/consumers';
 
 const DashboardProfilePageSkeleton = () => {
     return (
@@ -65,23 +66,70 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const [exerciseGoal, setExerciseGoal] = useState<number | null>(null);
     const [kegelsGoal, setKegelsGoal] = useState<number | null>(null);
     const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null>(null);
-    // const updateGoals = useUpdateGoals();
+    const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true)
+        setIsLoading(true);
 
         const updatedProfile = {
             displayName: displayName,
             expectedDueDate: date
-        }
+        };
 
         const previousProfile = {
             displayName: user.displayName,
             expectedDueDate: user.expectedDueDate
-        }
+        };
+        
+        const updatedGoals = {
+            waterIntakeGoal,
+            proteinIntakeGoal,
+            exerciseGoal,
+            kegelsGoal,
+            garlandPoseGoal
+        };
 
-        if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null) {
+        const previousGoals = {
+            waterIntakeGoal: user.goals.waterIntakeGoal,
+            proteinIntakeGoal: user.goals.proteinIntakeGoal,
+            exerciseGoal: user.goals.exerciseGoal,
+            kegelsGoal: user.goals.kegelsGoal,
+            garlandPoseGoal: user.goals.garlandPoseGoal
+        };
+
+        if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null && JSON.stringify(updatedGoals) !== JSON.stringify(previousGoals)) {
+            const updateUserInput = {
+                id: user.id,
+                displayName: displayName,
+                expectedDueDate: date
+            }
+
+            const updateGoalsInput = {
+                id: user.goals.id,
+                waterIntakeGoal,
+                proteinIntakeGoal,
+                exerciseGoal,
+                kegelsGoal,
+                garlandPoseGoal
+            }
+
+            updateUser.mutate(updateUserInput, {
+                onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: async () => {
+                    triggerSnackBar(false, 'Profile update successful!');
+                    user.setDisplayName(displayName)
+                    user.setExpectedDueDate(date)
+                    setIsEditing(false)
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
+            })
+        } else if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null) {
             const updateUserInput = {
                 id: user.id,
                 displayName: displayName,
@@ -102,6 +150,22 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                     setIsLoading(false)
                 }
             })
+        } else if (JSON.stringify(updatedGoals) !== JSON.stringify(previousGoals)) {
+            const updateGoalsInput = {
+                id: user.goals.id,
+                waterIntakeGoal,
+                proteinIntakeGoal,
+                exerciseGoal,
+                kegelsGoal,
+                garlandPoseGoal
+            }
+
+            
+            console.log(user.goals)
+            console.log(updatedGoals, "updated")
+            console.log(previousGoals, 'previous')
+            console.log('update goals')
+            setIsLoading(false)
         } else {
             setError('Please update the profile before clicking submit.')
             triggerSnackBar(true, 'Please update the profile before clicking submit.')
@@ -175,11 +239,11 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     useEffect(() => {
         if (user) {
             setDate(user.expectedDueDate)
-            setWaterIntakeGoal(user.goals.waterIntakeGoal)
-            setProteinIntakeGoal(user.goals.proteinIntakeGoal)
-            setExerciseGoal(user.goals.exerciseGoal)
-            setKegelsGoal(user.goals.kegelsGoal)
-            setGarlandPoseGoal(user.goals.garlandPoseGoal)
+            setWaterIntakeGoal(user.goals.waterIntakeGoal || 0)
+            setProteinIntakeGoal(user.goals.proteinIntakeGoal || 0)
+            setExerciseGoal(user.goals.exerciseGoal || 0)
+            setKegelsGoal(user.goals.kegelsGoal || 0)
+            setGarlandPoseGoal(user.goals.garlandPoseGoal || 0)
         } else {
             setDate(null)
             setWaterIntakeGoal(0)
