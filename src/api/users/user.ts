@@ -109,7 +109,7 @@ const updateUserDocument = gql`
 
 interface UserUpdateInput {
     id: string | undefined;
-    displayName: string | null;
+    displayName: string | null | undefined;
     expectedDueDate: string | null;
 }
 

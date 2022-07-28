@@ -18,7 +18,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     setPersistence(auth, browserLocalPersistence);
     const [userId, setUserId] = useState<string | undefined>(undefined);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [displayName, setDisplayName] = useState<string | null>('');
+    const [displayName, setDisplayName] = useState<string | null | undefined>('');
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');

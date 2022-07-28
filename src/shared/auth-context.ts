@@ -11,14 +11,14 @@ export interface Goals {
 export interface User {
     isLoggedIn: boolean;
     id: string | undefined;
-    displayName: string | null;
+    displayName?: string | null;
     photoURL: string | null;
     expectedDueDate: string | null;
     email: string | null;
     goals: Goals,
     setUserId: Dispatch<SetStateAction<string | undefined>>
     setExpectedDueDate: Dispatch<SetStateAction<string | null>>
-    setDisplayName: Dispatch<SetStateAction<string | null>>
+    setDisplayName: Dispatch<SetStateAction<string | null | undefined>>
     setGoals: Dispatch<SetStateAction<Goals>>
 }
 

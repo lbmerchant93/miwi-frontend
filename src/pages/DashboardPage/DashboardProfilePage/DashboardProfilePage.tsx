@@ -51,8 +51,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const { user, triggerSnackBar, isFetching } = props;
     const auth = getAuth();
     const [date, setDate] = useState<string | null>(user.expectedDueDate);
-    // look into setting displayName here with auth.currentUser.displayName?
-    const [displayName, setDisplayName] = useState<string | null>(user.displayName);
+    const [displayName, setDisplayName] = useState<string | null | undefined>(auth?.currentUser?.displayName);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
@@ -175,9 +174,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
 
     useEffect(() => {
         if (user) {
-            // make sure setDate and setDisplayName works properly here with the change of the conditional
             setDate(user.expectedDueDate)
-            setDisplayName(user.displayName)
             setWaterIntakeGoal(user.goals.waterIntakeGoal)
             setProteinIntakeGoal(user.goals.proteinIntakeGoal)
             setExerciseGoal(user.goals.exerciseGoal)
