@@ -10,6 +10,14 @@ const userDocument = gql`
             email
             displayName
             expectedDueDate
+            goals {
+                id
+                waterIntakeGoal
+                proteinIntakeGoal
+                exerciseGoal
+                kegelsGoal
+                garlandPoseGoal
+            }
         }
     }
 `;
@@ -41,6 +49,14 @@ const loginUserDocument = gql`
             email
             displayName
             expectedDueDate
+            goals {
+                id
+                waterIntakeGoal
+                proteinIntakeGoal
+                exerciseGoal
+                kegelsGoal
+                garlandPoseGoal
+            }
         }
     }
 `
@@ -93,7 +109,7 @@ const updateUserDocument = gql`
 
 interface UserUpdateInput {
     id: string | undefined;
-    displayName: string | null;
+    displayName: string | null | undefined;
     expectedDueDate: string | null;
 }
 

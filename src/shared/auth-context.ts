@@ -1,14 +1,26 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
+
+export interface Goals {
+    id: string;
+    waterIntakeGoal: number | null;
+    proteinIntakeGoal: number | null;
+    exerciseGoal: number | null;
+    kegelsGoal: number | null;
+    garlandPoseGoal: number | null;
+}
 
 export interface User {
     isLoggedIn: boolean;
     id: string | undefined;
-    displayName: string | null;
+    displayName?: string | null;
     photoURL: string | null;
     expectedDueDate: string | null;
     email: string | null;
-    setExpectedDueDate: (newDueDate: string) => void;
-    setDisplayName: (displayName: string | null) => void;
+    goals: Goals,
+    setUserId: Dispatch<SetStateAction<string | undefined>>
+    setExpectedDueDate: Dispatch<SetStateAction<string | null>>
+    setDisplayName: Dispatch<SetStateAction<string | null | undefined>>
+    setGoals: Dispatch<SetStateAction<Goals>>
 }
 
 export const AuthContext = createContext<User>({ 
@@ -18,6 +30,16 @@ export const AuthContext = createContext<User>({
     photoURL: '',
     expectedDueDate: null,
     email: '',
+    goals: {
+        id: '',
+        waterIntakeGoal: null,
+        proteinIntakeGoal: null,
+        exerciseGoal: null,
+        kegelsGoal: null,
+        garlandPoseGoal: null
+    },
+    setUserId: () => {},
     setExpectedDueDate: () => {},
-    setDisplayName: () => {}
+    setDisplayName: () => {},
+    setGoals: () => {}
 })

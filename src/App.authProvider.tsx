@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthContext } from './shared/auth-context';
+import { AuthContext, Goals } from './shared/auth-context';
 import { 
     getAuth, 
     signOut, 
@@ -11,7 +11,6 @@ import { useUser } from './api/users/user';
 
 export const getAuthToken = () => localStorage.getItem('token');
 
-
 interface AuthProviderProps {}
 
 const AuthProvider: React.FC<AuthProviderProps> = (props) => {
@@ -19,23 +18,24 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     setPersistence(auth, browserLocalPersistence);
     const [userId, setUserId] = useState<string | undefined>(undefined);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [displayName, setDisplayName] = useState<string | null>('');
+    const [displayName, setDisplayName] = useState<string | null | undefined>('');
     const [photoURL, setPhotoURL] = useState<string | null>('');
     const [expectedDueDate, setExpectedDueDate] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>('');
+    const [goals, setGoals] = useState<Goals>({
+        id: '',
+        waterIntakeGoal: 0,
+        proteinIntakeGoal: 0,
+        exerciseGoal: 0,
+        kegelsGoal: 0,
+        garlandPoseGoal: 0
+    })
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
     const { data } = useUser(userId, email);
 
-    const updateExpectedDueDate = (newDueDate: string) => {
-        setExpectedDueDate(newDueDate)
-    }
-    
-    const updateDisplayName = (displayName: string | null) => {
-        setDisplayName(displayName)
-    }
-
     onAuthStateChanged(auth, async (user) => {
+        // conditional to check data from useUser to match user from firebase ?
         if (user) {
             try {
                 const bearerToken = await user.getIdToken();
@@ -66,6 +66,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         if (data && data.id === userId) {
             setDisplayName(data.displayName);
             setExpectedDueDate(data.expectedDueDate);
+            setGoals(data.goals)
         } 
     }, [data, userId]);
 
@@ -78,8 +79,11 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             photoURL: photoURL,
             expectedDueDate: expectedDueDate,
             email: email,
-            setExpectedDueDate: updateExpectedDueDate,
-            setDisplayName: updateDisplayName
+            goals: goals,
+            setUserId: setUserId,
+            setExpectedDueDate: setExpectedDueDate,
+            setDisplayName: setDisplayName,
+            setGoals: setGoals
             }}
         >
             {props.children}

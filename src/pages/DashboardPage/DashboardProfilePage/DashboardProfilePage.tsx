@@ -24,6 +24,7 @@ import {
 } from "firebase/auth";
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
+import { useUpdateGoals } from '../../../api/goals/goal';
 
 import './DashboardProfilePage.css';
 
@@ -50,7 +51,7 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const { user, triggerSnackBar, isFetching } = props;
     const auth = getAuth();
     const [date, setDate] = useState<string | null>(user.expectedDueDate);
-    const [displayName, setDisplayName] = useState<string | null>(user.displayName);
+    const [displayName, setDisplayName] = useState<string | null | undefined>(auth?.currentUser?.displayName);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
@@ -59,22 +60,84 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
     const provider = auth.currentUser?.providerData[0].providerId;
+    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number | null>(null);
+    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number | null>(null);
+    const [exerciseGoal, setExerciseGoal] = useState<number | null>(null);
+    const [kegelsGoal, setKegelsGoal] = useState<number | null>(null);
+    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null>(null);
+    const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true)
+        setIsLoading(true);
 
         const updatedProfile = {
             displayName: displayName,
             expectedDueDate: date
-        }
+        };
 
         const previousProfile = {
             displayName: user.displayName,
             expectedDueDate: user.expectedDueDate
-        }
+        };
+        
+        const updatedGoals = {
+            waterIntakeGoal,
+            proteinIntakeGoal,
+            exerciseGoal,
+            kegelsGoal,
+            garlandPoseGoal
+        };
 
-        if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null) {
+        const previousGoals = {
+            waterIntakeGoal: user.goals.waterIntakeGoal,
+            proteinIntakeGoal: user.goals.proteinIntakeGoal,
+            exerciseGoal: user.goals.exerciseGoal,
+            kegelsGoal: user.goals.kegelsGoal,
+            garlandPoseGoal: user.goals.garlandPoseGoal
+        };
+
+        if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null && JSON.stringify(updatedGoals) !== JSON.stringify(previousGoals)) {
+            const updateUserInput = {
+                id: user.id,
+                displayName: displayName,
+                expectedDueDate: date
+            }
+
+            const updateGoalsInput = {
+                id: user.goals.id,
+                waterIntakeGoal,
+                proteinIntakeGoal,
+                exerciseGoal,
+                kegelsGoal,
+                garlandPoseGoal
+            }
+
+            updateUser.mutate(updateUserInput, {
+                onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: async () => {
+                    user.setDisplayName(displayName)
+                    user.setExpectedDueDate(date)
+                    updateGoals.mutate(updateGoalsInput, {
+                        onError: (err: any) => {
+                            setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                            triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                        },
+                        onSuccess: async () => {
+                            triggerSnackBar(false, 'Profile update successful!');
+                            user.setGoals(updateGoalsInput)
+                            setIsEditing(false)
+                        }
+                    })
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
+            })
+        } else if (JSON.stringify(updatedProfile) !== JSON.stringify(previousProfile) && date !== null) {
             const updateUserInput = {
                 id: user.id,
                 displayName: displayName,
@@ -89,6 +152,30 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                     triggerSnackBar(false, 'Profile update successful!');
                     user.setDisplayName(displayName)
                     user.setExpectedDueDate(date)
+                    setIsEditing(false)
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
+            })
+        } else if (JSON.stringify(updatedGoals) !== JSON.stringify(previousGoals)) {
+            const updateGoalsInput = {
+                id: user.goals.id,
+                waterIntakeGoal,
+                proteinIntakeGoal,
+                exerciseGoal,
+                kegelsGoal,
+                garlandPoseGoal
+            }
+
+            updateGoals.mutate(updateGoalsInput, {
+                onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: async () => {
+                    triggerSnackBar(false, 'Profile update successful!');
+                    user.setGoals(updateGoalsInput)
                     setIsEditing(false)
                 },
                 onSettled: () => {
@@ -166,10 +253,20 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     }
 
     useEffect(() => {
-        if (user.expectedDueDate) {
+        if (user) {
             setDate(user.expectedDueDate)
+            setWaterIntakeGoal(user.goals.waterIntakeGoal || 0)
+            setProteinIntakeGoal(user.goals.proteinIntakeGoal || 0)
+            setExerciseGoal(user.goals.exerciseGoal || 0)
+            setKegelsGoal(user.goals.kegelsGoal || 0)
+            setGarlandPoseGoal(user.goals.garlandPoseGoal || 0)
         } else {
             setDate(null)
+            setWaterIntakeGoal(0)
+            setProteinIntakeGoal(0)
+            setExerciseGoal(0)
+            setKegelsGoal(0)
+            setGarlandPoseGoal(0)
         }
     }, [user])
 
@@ -195,18 +292,38 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                 {user.expectedDueDate ? 
                                     <b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b> 
                                     : 
-                                    <Box className="profile-edit-button">
-                                        <Button 
-                                            variant="contained" 
-                                            onClick={() => setIsEditing(true)}
-                                            startIcon={<EditIcon />}
-                                            color="inherit"
-                                            size="small"
-                                        >
-                                            Add
-                                        </Button>
-                                    </Box>
+                                    <b>MM/DD/YYY</b>
                                 }
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Water intake goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                <b>{waterIntakeGoal}oz</b>
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Protein intake goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                <b>{proteinIntakeGoal}g</b>
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Exercise goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                <b>{exerciseGoal}min</b>
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Kegels goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                <b>{kegelsGoal}</b>
+                            </Typography>
+                        </Box>
+                        <Box className="profile-info-container">
+                            <Typography variant="h6">Garland pose goal:</Typography>
+                            <Typography variant="h6" ml={3}>
+                                <b>{garlandPoseGoal}min</b>
                             </Typography>
                         </Box>
                         <Box className="profile-edit-button-container">
@@ -266,6 +383,56 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
                                     disabled={isLoading}
                                 />
                             </LocalizationProvider>
+                            <FormLabel id="water-intake-goal-label">Water intake goal: </FormLabel>
+                            <TextField
+                                id="water-intake-goal-input"
+                                type="number"
+                                value={waterIntakeGoal}
+                                onChange={(e) => setWaterIntakeGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="protein-intake-goal-label">Protein intake goal: </FormLabel>
+                            <TextField
+                                id="protein-intake-goal-input"
+                                type="number"
+                                value={proteinIntakeGoal}
+                                onChange={(e) => setProteinIntakeGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="exercise-goal-label">Exercise goal: </FormLabel>
+                            <TextField
+                                id="exercise-goal-input"
+                                type="number"
+                                value={exerciseGoal}
+                                onChange={(e) => setExerciseGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="kegels-goal-label">Kegels goal: </FormLabel>
+                            <TextField
+                                id="kegels-goal-input"
+                                type="number"
+                                value={kegelsGoal}
+                                onChange={(e) => setKegelsGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
+                            <FormLabel id="garlandPose-goal-label">Garland pose goal: </FormLabel>
+                            <TextField
+                                id="garlandPose-goal-input"
+                                type="number"
+                                value={garlandPoseGoal}
+                                onChange={(e) => setGarlandPoseGoal(parseInt(e.currentTarget.value))}
+                                InputProps={{ inputProps: { min: 0 } }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                             <Box className="profile-edit-action-container">
                                 {!isLoading && 
                                     <Box className="profile-edit-action-button">
