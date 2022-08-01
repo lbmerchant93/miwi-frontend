@@ -47,6 +47,11 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
     const [garlandPose, setGarlandPose] = useState<number>(entry.garlandPose);
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean>(entry.prenatalVitamins);
     const [probiotics, setProbiotics] = useState<boolean>(entry.probiotics);
+    const [mood, setMood] = useState<string>('');
+    const [childbirthEducation, setChildbirthEducation] = useState<string>('');
+    const [selfCare, setSelfCare] = useState<string>('');
+    const [postpartumPrep, setPostpartumPrep] = useState<string>('');
+    const [fetalLoveBreak, setFetalLoveBreak] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const updateJournalEntry = useUpdateJournalEntry();
 
@@ -63,7 +68,12 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
-            authorId: entry.authorId
+            authorId: entry.authorId,
+            mood: mood,
+            childbirthEducation: childbirthEducation,
+            selfCare: selfCare,
+            postpartumPrep: postpartumPrep,
+            fetalLoveBreak: fetalLoveBreak
         };
     
         const previousEntry = {
@@ -76,7 +86,12 @@ const UpdateJournalEntryModal: React.FC<UpdateJournalEntryFormProps> = (props) =
             garlandPose: entry.garlandPose,
             prenatalVitamins: entry.prenatalVitamins,
             probiotics: entry.probiotics,
-            authorId: entry.authorId
+            authorId: entry.authorId,
+            mood: entry.mood,
+            childbirthEducation: entry.childbirthEducation,
+            selfCare: entry.selfCare,
+            postpartumPrep: entry.postpartumPrep,
+            fetalLoveBreak: entry.fetalLoveBreak
         }
     
         if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {

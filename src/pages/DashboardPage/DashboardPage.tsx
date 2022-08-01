@@ -25,6 +25,11 @@ export interface JournalEntry {
     garlandPose: number;
     prenatalVitamins: boolean;
     probiotics: boolean;
+    mood: string;
+    childbirthEducation: string;
+    selfCare: string;
+    postpartumPrep: string;
+    fetalLoveBreak: string;
 }
 
 const DashboardPage = () => {
