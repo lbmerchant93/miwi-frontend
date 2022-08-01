@@ -182,16 +182,18 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" disabled={isLoading}/>
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" disabled={isLoading}/>
                 </RadioGroup>
-                <FormLabel id="mood-input-label">Mood: </FormLabel>
-                <TextField
-                    id="mood-input"
-                    type="text"
+                <FormLabel id="mood-label" >How did you feel today? </FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="mood-input"
+                    name="mood-input"
                     value={mood}
                     onChange={(e) => setMood(e.currentTarget.value)}
-                    size='small'
-                    required
-                    disabled={isLoading}
-                />
+                >
+                    <FormControlLabel value="Not so good" control={<Radio color="default" required={true}/>} label="Not so good" disabled={isLoading}/>
+                    <FormControlLabel value="OK" control={<Radio color="default" required={true}/>} label="OK" disabled={isLoading}/>
+                    <FormControlLabel value="Amazing!" control={<Radio color="default" required={true}/>} label="Amazing!" disabled={isLoading}/>
+                </RadioGroup>
                 <FormLabel id="childbirthEducation-input-label">Childbirth education: </FormLabel>
                 <TextField
                     id="childbirthEducation-input"
