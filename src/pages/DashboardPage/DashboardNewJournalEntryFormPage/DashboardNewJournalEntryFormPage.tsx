@@ -32,6 +32,11 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+    const [mood, setMood] = useState<string>('');
+    const [childbirthEducation, setChildbirthEducation] = useState<string>('');
+    const [selfCare, setSelfCare] = useState<string>('');
+    const [postpartumPrep, setPostpartumPrep] = useState<string>('');
+    const [fetalLoveBreak, setFetalLoveBreak] = useState<string>('');
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const createJournalEntry = useCreateJournalEntry();
@@ -54,6 +59,11 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
+            mood: mood,
+            childbirthEducation: childbirthEducation,
+            selfCare: selfCare,
+            postpartumPrep: postpartumPrep,
+            fetalLoveBreak: fetalLoveBreak
         };
     
         createJournalEntry.mutate(journalEntry, {
