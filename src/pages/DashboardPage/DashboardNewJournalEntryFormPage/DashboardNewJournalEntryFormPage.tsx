@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useCreateJournalEntry } from '../../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import LoadingButton from '@mui/lab/LoadingButton';
+import Box from '@mui/material/Box';
 
 import './DashboardNewJournalEntryFormPage.css';
 
@@ -32,6 +33,11 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
     const [garlandPose, setGarlandPose] = useState<number | string>('');
     const [prenatalVitamins, setPrenatalVitamins] = useState<boolean | null>(null);
     const [probiotics, setProbiotics] = useState<boolean | null>(null);
+    const [mood, setMood] = useState<string>('');
+    const [childbirthEducation, setChildbirthEducation] = useState<string>('');
+    const [selfCare, setSelfCare] = useState<string>('');
+    const [postpartumPrep, setPostpartumPrep] = useState<string>('');
+    const [fetalLoveBreak, setFetalLoveBreak] = useState<string>('');
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const createJournalEntry = useCreateJournalEntry();
@@ -54,6 +60,11 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
             garlandPose: garlandPose,
             prenatalVitamins: prenatalVitamins,
             probiotics: probiotics,
+            mood: mood,
+            childbirthEducation: childbirthEducation,
+            selfCare: selfCare,
+            postpartumPrep: postpartumPrep,
+            fetalLoveBreak: fetalLoveBreak
         };
     
         createJournalEntry.mutate(journalEntry, {
@@ -171,14 +182,68 @@ const DashboardNewJournalEntryFormPage: React.FC<DashboardNewJournalEntryFormPag
                     <FormControlLabel value="true" control={<Radio color="default" required={true}/>} label="Yes" disabled={isLoading}/>
                     <FormControlLabel value="false" control={<Radio color="default" required={true}/>} label="No" disabled={isLoading}/>
                 </RadioGroup>
-                <LoadingButton 
-                    type='submit' 
-                    variant='outlined' 
-                    color='inherit'
-                    loading={isLoading}
+                <FormLabel id="mood-label" >How did you feel today? </FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="mood-input"
+                    name="mood-input"
+                    value={mood}
+                    onChange={(e) => setMood(e.currentTarget.value)}
                 >
-                    Submit
-                </LoadingButton>
+                    <FormControlLabel value="Not so good" control={<Radio color="default" required={true}/>} label="Not so good" disabled={isLoading}/>
+                    <FormControlLabel value="OK" control={<Radio color="default" required={true}/>} label="OK" disabled={isLoading}/>
+                    <FormControlLabel value="Amazing!" control={<Radio color="default" required={true}/>} label="Amazing!" disabled={isLoading}/>
+                </RadioGroup>
+                <FormLabel id="childbirthEducation-input-label">Childbirth education: </FormLabel>
+                <TextField
+                    id="childbirthEducation-input"
+                    type="text"
+                    value={childbirthEducation}
+                    onChange={(e) => setChildbirthEducation(e.currentTarget.value)}
+                    size='small'
+                    required
+                    disabled={isLoading}
+                />
+                <FormLabel id="selfCare-input-label">Self care: </FormLabel>
+                <TextField
+                    id="selfCare-input"
+                    type="text"
+                    value={selfCare}
+                    onChange={(e) => setSelfCare(e.currentTarget.value)}
+                    size='small'
+                    required
+                    disabled={isLoading}
+                />
+                <FormLabel id="postpartumPrep-input-label">Postpartum prep: </FormLabel>
+                <TextField
+                    id="postpartumPrep-input"
+                    type="text"
+                    value={postpartumPrep}
+                    onChange={(e) => setPostpartumPrep(e.currentTarget.value)}
+                    size='small'
+                    required
+                    disabled={isLoading}
+                />
+                <FormLabel id="fetalLoveBreak-input-label">Fetal love break: </FormLabel>
+                <TextField
+                    id="fetalLoveBreak-input"
+                    type="text"
+                    value={fetalLoveBreak}
+                    onChange={(e) => setFetalLoveBreak(e.currentTarget.value)}
+                    size='small'
+                    required
+                    disabled={isLoading}
+                />
+                <Box mt={1}>
+                    <LoadingButton 
+                        type='submit' 
+                        variant='outlined' 
+                        color='inherit'
+                        loading={isLoading}
+                    >
+                        Submit
+                    </LoadingButton>
+                </Box>
             </form> 
         </>
     )

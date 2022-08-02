@@ -97,6 +97,21 @@ const HowItWorksPage = () => {
           <Typography variant="body1" mb={2}>
             <strong>Probiotics:</strong> Choose a probiotic that has Lactobacillus Reuteri and Lactobacillus Rhamnosus, to be taken daily. Those two strands target the reproductive flora as well as the gut flora.
           </Typography>
+          <Typography variant="body1" mb={2}>
+            <strong>Mood:</strong> Choose the answer that best represents how you felt about you day today as a whole. 
+          </Typography>
+          <Typography variant="body1" mb={2}>
+            <strong>Childbirth Education:</strong> What are you reading, learning, or listening to today to give you the most empowering birth possible? Search for classes that are not associated with the facility you're delivering in. Sure, those may be cheaper, but with hospitals, they are often classes to show you how to be a “good patient” and fit through their assembly-line of doing things. Search for third-party Childbirth Education that can show you how to cope with contractions naturally, such as Hypnobirth©, Hypnobabies©, Bradley©, Birthing From Within©, etc. Also check out SpinningBabies.com© for some excellent resources on Daily Activities and how to make sure your baby is in the best position for labor.
+          </Typography>
+          <Typography variant="body1" mb={2}>
+            <strong>Self Care:</strong> Make time for body work such as quality, Webster certified Chiropractic care, massage, prenatal yoga, quiet moments, visualization time, guided breathing, and/or walks in the sunshine.
+          </Typography>
+          <Typography variant="body1" mb={2}>
+            <strong>Postpartum Prep:</strong> How are you preparing to have an easier postpartum period, so that you can relax with your baby and focus on your breastfeeding relationship? What are you reading, organizing, meal-prepping, or learning about breastfeeding today? Who can you designate to do house-hold chores or bring meals so that you can hold and feed your baby?
+          </Typography>
+          <Typography variant="body1" mb={2}>
+            <strong>Fetal Love Break:</strong> Talk to your baby. Place your hands on your belly. What did you have to say?
+          </Typography>
         </Box>
     </Box>
   )

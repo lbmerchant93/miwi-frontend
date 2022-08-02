@@ -47,6 +47,11 @@ const createJournalEntryMutation = gql`
       proteinIntake
       waterIntake
       authorId
+      mood
+      childbirthEducation
+      selfCare
+      postpartumPrep
+      fetalLoveBreak
     }
   }
 `; 
@@ -61,6 +66,11 @@ interface JournalEntryCreateInput {
   garlandPose: number | string;
   prenatalVitamins: boolean | null;
   probiotics: boolean | null;
+  mood: string;
+  childbirthEducation: string;
+  selfCare: string;
+  postpartumPrep: string;
+  fetalLoveBreak: string;
 }
 
 const createJournalEntry = async (createJournalEntryInput: JournalEntryCreateInput) => {
@@ -78,7 +88,12 @@ const createJournalEntry = async (createJournalEntryInput: JournalEntryCreateInp
     probiotics, 
     proteinIntake, 
     waterIntake, 
-    authorId 
+    authorId,
+    mood,
+    childbirthEducation,
+    selfCare,
+    postpartumPrep,
+    fetalLoveBreak
   } = createJournalEntryInput;
 
   const variables = {
@@ -90,7 +105,12 @@ const createJournalEntry = async (createJournalEntryInput: JournalEntryCreateInp
     "probiotics": probiotics,
     "proteinIntake": proteinIntake,
     "waterIntake": waterIntake,
-    "authorId": authorId
+    "authorId": authorId,
+    "mood": mood,
+    "childbirthEducation": childbirthEducation,
+    "selfCare": selfCare,
+    "postpartumPrep": postpartumPrep,
+    "fetalLoveBreak": fetalLoveBreak
   };
 
   const { createJournalEntry } = await request({
@@ -124,6 +144,11 @@ interface JournalEntryUpdateInput {
   prenatalVitamins: boolean | null;
   probiotics: boolean | null;
   authorId: string | undefined;
+  mood: string;
+  childbirthEducation: string;
+  selfCare: string;
+  postpartumPrep: string;
+  fetalLoveBreak: string;
 }
 
 const updateJournalEntryMutation = gql`
@@ -144,6 +169,11 @@ const updateJournalEntryMutation = gql`
     proteinIntake
     waterIntake
     authorId
+    mood
+    childbirthEducation
+    selfCare
+    postpartumPrep
+    fetalLoveBreak
     }
   }
 `;
@@ -163,7 +193,12 @@ const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdateInp
     probiotics, 
     proteinIntake, 
     waterIntake, 
-    authorId
+    authorId,
+    mood,
+    childbirthEducation,
+    selfCare,
+    postpartumPrep,
+    fetalLoveBreak
   } = updateJournalEntryInput;
 
   const variables = {
@@ -175,7 +210,12 @@ const updateJournalEntry = async (updateJournalEntryInput: JournalEntryUpdateInp
     "probiotics": probiotics,
     "proteinIntake": proteinIntake,
     "waterIntake": waterIntake,
-    "authorId": authorId 
+    "authorId": authorId,
+    "mood": mood,
+    "childbirthEducation": childbirthEducation,
+    "selfCare": selfCare,
+    "postpartumPrep": postpartumPrep,
+    "fetalLoveBreak": fetalLoveBreak 
   };
 
   const { updateJournalEntry } = await request({
