@@ -40,7 +40,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
       <Route path={`${PossibleRoutes.HOW_IT_WORKS}`} element={<HowMiWiWorksPage />} />
-      <Route path={`${PossibleRoutes.HOME}`} element={<HomePage />} />
+      <Route path={`${PossibleRoutes.HOME_USER}`} element={<HomePage />} />
       <Route path={`${PossibleRoutes.PROFILE_USER}`} element={<ProfilePage />} />
       <Route path={`${PossibleRoutes.JOURNAL_USER}`} element={<JournalPage />} />
     </Routes>

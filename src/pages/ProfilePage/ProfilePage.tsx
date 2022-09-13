@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const ProfilePage = () => {
-  return (
-    <div>ProfilePage</div>
-  )
+    const { user } = useParams();
+    
+    return (
+        <div>ProfilePage</div>
+    );
 }
 
 export default ProfilePage

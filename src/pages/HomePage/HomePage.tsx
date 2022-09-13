@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
+    const { user } = useParams();
+    
+    return (
+        <div>HomePage</div>
+    );
 }
 
 export default HomePage
