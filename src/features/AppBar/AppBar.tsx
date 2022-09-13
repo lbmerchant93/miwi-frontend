@@ -13,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import MUIAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 // import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import './AppBar.css';
 
 // const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
@@ -59,7 +63,7 @@ const AppBar: React.FC = () => {
                     <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
                         <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
                     </Link>
-                    <div className={!user.isLoggedIn ? 'login-button' : 'user-menu'}>
+                    <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250}>
                         {!user.isLoggedIn ? (
                             <Button
                                 onClick={() => setIsLoginOpen(true)}
@@ -69,23 +73,33 @@ const AppBar: React.FC = () => {
                                 Log In
                             </Button>
                         ) : (
-                            <Button
-                                id="menu-button"
-                                aria-controls={open ? 'menu-button' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}
-                                variant="outlined"
-                                color="inherit"
-                            >
-                                <Avatar
-                                    src={user.photoURL ?? undefined}
-                                    alt="User Photo"
-                                    style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
-                                    {user.displayName?.toUpperCase()[0]}
-                                </Avatar>
-                                <MenuIcon />
-                            </Button>
+                            <Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
+                                <Button onClick={() => console.log('Home')}>
+                                    <HomeIcon />
+                                </Button>
+                                <Divider orientation="vertical" />
+                                <Button onClick={() => console.log('Journal')}>
+                                    <MenuBookIcon />
+                                </Button>
+                                <Divider orientation="vertical" />
+                                <Button
+                                    id="menu-button"
+                                    aria-controls={open ? 'menu-button' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick}
+                                    color="inherit"
+                                >
+                                    <Avatar
+                                        src={user.photoURL ?? undefined}
+                                        alt="User Photo"
+                                        style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
+                                        {user.displayName?.toUpperCase()[0]}
+                                    </Avatar>
+                                    <MenuIcon />
+                                </Button>
+                            </Box>
+                            
                         )}
                         <LoginModal 
                             isOpen={isLoginOpen} 
@@ -127,7 +141,7 @@ const AppBar: React.FC = () => {
                                 </MenuItem>
                             </Link>
                         </Menu>
-                    </div>   
+                    </Box>   
                 </Toolbar> 
             </MUIAppBar>
         </>
