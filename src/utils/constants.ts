@@ -4,4 +4,7 @@ export enum PossibleRoutes {
     DASHBOARD_TAB = '/dashboard/:tab',
     ABOUT = '/about',
     HOW_IT_WORKS = '/how_miwi_works',
+    HOME = '/home',
+    PROFILE_USER = '/profile/:user',
+    JOURNAL_USER = '/journal/:user',
 }
