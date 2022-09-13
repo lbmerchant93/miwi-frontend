@@ -63,7 +63,7 @@ const AppBar: React.FC = () => {
                     <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
                         <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
                     </Link>
-                    <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250}>
+                    <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250} justifyContent={'flex-end'}>
                         {!user.isLoggedIn ? (
                             <Button
                                 onClick={() => setIsLoginOpen(true)}
