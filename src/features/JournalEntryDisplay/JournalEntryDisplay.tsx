@@ -8,6 +8,10 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 
 interface JournalEntryDisplayProps {
 
@@ -20,18 +24,21 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 <Box>
                     <Typography variant="body1"><strong>Water</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
+                        <LocalDrinkIcon fontSize="large" color="info"/>
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
                 <Box>
                     <Typography variant="body1"><strong>Protein</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
+                        <RestaurantIcon fontSize="large" color="disabled" />
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
                 <Box>
                     <Typography variant="body1"><strong>Exercise</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
+                        <FitnessCenterIcon fontSize="large" color="success" />
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
@@ -46,6 +53,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 <Box>
                     <Typography variant="body1"><strong>Garland Pose</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
+                        <SelfImprovementIcon fontSize="large" />
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
