@@ -74,11 +74,11 @@ const AppBar: React.FC = () => {
                             </Button>
                         ) : (
                             <Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
-                                <Button onClick={() => console.log('Home')}>
+                                <Button onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))}>
                                     <HomeIcon />
                                 </Button>
                                 <Divider orientation="vertical" />
-                                <Button onClick={() => console.log('Journal')}>
+                                <Button onClick={onListItemClick(() => navigate(`/journal/${user.email?.split('@')[0]}`))}>
                                     <MenuBookIcon />
                                 </Button>
                                 <Divider orientation="vertical" />
@@ -89,6 +89,7 @@ const AppBar: React.FC = () => {
                                     aria-expanded={open ? 'true' : undefined}
                                     onClick={handleClick}
                                     color="inherit"
+                                    variant='outlined'
                                 >
                                     <Avatar
                                         src={user.photoURL ?? undefined}
@@ -131,7 +132,7 @@ const AppBar: React.FC = () => {
                                     New Journal Entry
                             </MenuItem>
                             <MenuItem 
-                                onClick={onListItemClick(() => navigate('/dashboard/profile'))}>
+                                onClick={onListItemClick(() => navigate(`/profile/${user.email?.split('@')[0]}`))}>
                                     Profile
                             </MenuItem>
                             <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
