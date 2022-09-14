@@ -11,7 +11,7 @@ const HomePage = () => {
     const user = useContext(AuthContext);
     
     return (
-        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center">
+        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={5}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
             <JournalEntryDisplay />
         </Box>
