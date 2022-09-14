@@ -63,10 +63,40 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <CheckBoxOutlineBlankIcon />
                 </Box>
             </Box>    
-            
+            <Box mt={7}>
+                <Box display="flex" flexDirection="row" justifyContent="space-evenly">
+                    <Box>
+                        <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
+                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
+                            Childbirth Education
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Typography variant="body1"><strong>Self Care</strong></Typography>
+                       <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
+                            Self Care
+                        </Box> 
+                    </Box>
+                    
+                </Box>
+                <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
+                    <Box>
+                        <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
+                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
+                            Postpartum Prep
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
+                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
+                            Fetal Love Break
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
 
             
-            <Box>Writing</Box>
+            
             <Box>Mood</Box>
         </Box>
     );
