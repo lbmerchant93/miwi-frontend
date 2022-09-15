@@ -14,6 +14,10 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { JournalEntry } from '../../pages/HomePage/HomePage';
 import { User } from '../../shared/auth-context';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
@@ -52,6 +56,48 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
+    const chartData = [20, 80];
+    const data1 = {
+        datasets: [
+            {
+            data: chartData,
+            backgroundColor: ["#0188D1", "#707070"]
+            }
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        legend: {
+          display: false,
+          position: "bottom",
+          labels: {
+            fontSize: 18,
+            fontColor: "#6D7278",
+            fontFamily: "kanit light"
+          }
+        }      
+    }
+
+    const plugins = [{
+        id: 'id',
+        beforeDraw: function(chart: any) {
+         var width = chart.width,
+             height = chart.height,
+             ctx = chart.ctx;
+             ctx.restore();
+             var fontSize = (height / 160).toFixed(2);
+             ctx.font = fontSize + "em sans-serif";
+             ctx.textBaseline = "middle";
+             var text = "100%",
+             textX = Math.round((width - ctx.measureText(text).width) / 2),
+             textY = height / 2;
+             ctx.fillText(text, textX, textY);
+             ctx.save();
+        } 
+      }]
+
+
     const calcPercentage = (completed: number, goal: number) => {
         let percentage = (100 * completed) / goal;
         if (isNaN(percentage)) {
@@ -64,25 +110,28 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         <Box width={"100%"} display="flex" flexDirection="column" mt={7}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
                 <Box>
+                    <LocalDrinkIcon fontSize="large" color="info"/>
                     <Typography variant="body1"><strong>Water</strong></Typography>
-                    <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        <LocalDrinkIcon fontSize="large" color="info"/>
-                        <Typography variant="body1">{waterIntake}</Typography>
-                        <Typography variant="body1">{calcPercentage(waterIntake, waterIntakeGoal)}</Typography>
-                    </Box>
+                    <Doughnut data={data1} options={options} height={250} plugins={plugins}/>
+                    {/* <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}> */}
+                        {/* <Typography variant="body1">{waterIntake}</Typography>
+                        <Typography variant="body1">{calcPercentage(waterIntake, waterIntakeGoal)}</Typography> */}
+                    {/* </Box> */}
                 </Box>
                 <Box>
+                    <RestaurantIcon fontSize="large" color="disabled" />
                     <Typography variant="body1"><strong>Protein</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        <RestaurantIcon fontSize="large" color="disabled" />
+                        
                         <Typography variant="body1">{proteinIntake}</Typography>
                         <Typography variant="body1">{calcPercentage(proteinIntake, proteinIntakeGoal)}</Typography>
                     </Box>
                 </Box>
                 <Box>
+                    <FitnessCenterIcon fontSize="large" color="success" />
                     <Typography variant="body1"><strong>Exercise</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        <FitnessCenterIcon fontSize="large" color="success" />
+                        
                         <Typography variant="body1">{exercise}</Typography>
                         <Typography variant="body1">{calcPercentage(exercise, exerciseGoal)}</Typography>
                     </Box>
@@ -97,9 +146,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     </Box>
                 </Box>
                 <Box>
+                    <SelfImprovementIcon fontSize="large" />
                     <Typography variant="body1"><strong>Garland Pose</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        <SelfImprovementIcon fontSize="large" />
+                        
                         <Typography variant="body1">{garlandPose}</Typography>
                         <Typography variant="body1">{calcPercentage(garlandPose, garlandPoseGoal)}</Typography>
                     </Box>
