@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient  } from 'react-query';
+import { useMutation, useQueryClient, useQuery  } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
 import { getAuthToken } from '../../App.authProvider';
@@ -31,6 +31,45 @@ import { getAuthToken } from '../../App.authProvider';
 //       return data.journalEntry;
 //   });
 // };
+
+const firstEntry = gql`
+  query FindFirstJournalEntry($authorId: String, $date: String) {
+    findFirstJournalEntry(where: { AND: [{ authorId: { equals: $authorId } }, { date: { equals: $date } }] }) {
+      id
+      date
+      exercise
+      garlandPose
+      kegels
+      prenatalVitamins
+      probiotics
+      proteinIntake
+      authorId
+      waterIntake
+      mood
+      childbirthEducation
+      selfCare
+      postpartumPrep
+      fetalLoveBreak
+    }
+  }
+`
+
+export const useFindFirstEntry = (authorId: string | undefined, date: string) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+      authorization: `Bearer ${token}`
+  }
+
+  return useQuery(['firstEntry'], async () => {
+    const { findFirstJournalEntry } = await request({
+      url: endpoint,
+      document: firstEntry,
+      variables: { authorId, date },
+      requestHeaders
+    });
+    return findFirstJournalEntry;
+  })
+}
 
 const createJournalEntryMutation = gql`
   mutation createJournalEntry($data: JournalEntryCreateInputData!){
