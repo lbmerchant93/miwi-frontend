@@ -12,12 +12,32 @@ import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
+import { JournalEntry } from '../../pages/HomePage/HomePage';
 
 interface JournalEntryDisplayProps {
-
+    journalEntry: JournalEntry | null;
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
+    const { journalEntry } = props
+    const {
+        id,
+        authorId,
+        date,
+        waterIntake = 0, 
+        proteinIntake = 0, 
+        exercise = 0, 
+        kegels = 0, 
+        garlandPose = 0, 
+        prenatalVitamins, 
+        probiotics, 
+        mood = "",
+        childbirthEducation = "Write about what you read today...",
+        selfCare = "Write about what you did for your body today...",
+        postpartumPrep = "Write about how you are preparing for postpartum...",
+        fetalLoveBreak = "Write about what you said to your baby today..."
+    } = journalEntry ?? {};
+
     return (
         <Box width={"100%"} display="flex" flexDirection="column" mt={7}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
@@ -25,6 +45,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Typography variant="body1"><strong>Water</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <LocalDrinkIcon fontSize="large" color="info"/>
+                        <Typography variant="body1">{waterIntake}</Typography>
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
@@ -32,6 +53,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Typography variant="body1"><strong>Protein</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <RestaurantIcon fontSize="large" color="disabled" />
+                        <Typography variant="body1">{proteinIntake}</Typography>
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
@@ -39,6 +61,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Typography variant="body1"><strong>Exercise</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <FitnessCenterIcon fontSize="large" color="success" />
+                        <Typography variant="body1">{exercise}</Typography>
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
@@ -47,6 +70,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 <Box>
                     <Typography variant="body1"><strong>Kegels</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
+                        <Typography variant="body1">{kegels}</Typography>
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
@@ -54,6 +78,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Typography variant="body1"><strong>Garland Pose</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <SelfImprovementIcon fontSize="large" />
+                        <Typography variant="body1">{garlandPose}</Typography>
                         <Typography variant="body1">100%</Typography>
                     </Box>
                 </Box>
@@ -70,11 +95,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
             >
                 <Box display="flex" flexDirection="row">
                     <Typography variant="body1" pr={2}><strong>Vitamins</strong></Typography>
-                    <CheckBoxIcon />
+                    {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
                 </Box>
                 <Box display="flex" flexDirection="row">
                     <Typography variant="body1" pr={2}><strong>Probiotics</strong></Typography>
-                    <CheckBoxOutlineBlankIcon />
+                    {probiotics ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
                 </Box>
             </Box>    
             <Box mt={7}>
@@ -82,13 +107,13 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Box>
                         <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
                         <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            Childbirth Education
+                            <Typography variant="body1">{childbirthEducation}</Typography>
                         </Box>
                     </Box>
                     <Box>
                         <Typography variant="body1"><strong>Self Care</strong></Typography>
                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            Self Care
+                            <Typography variant="body1">{selfCare}</Typography>
                         </Box> 
                     </Box>
                     
@@ -97,13 +122,13 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Box>
                         <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
                         <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            Postpartum Prep
+                            <Typography variant="body1">{postpartumPrep}</Typography>
                         </Box>
                     </Box>
                     <Box>
                         <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
                         <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            Fetal Love Break
+                            <Typography variant="body1">{fetalLoveBreak}</Typography>
                         </Box>
                     </Box>
                 </Box>
@@ -118,11 +143,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
             >
                 <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
                 <Box display="flex" flexDirection="row" justifyContent="space-around">
-                    <SentimentVeryDissatisfiedIcon fontSize="large" />
-                    <SentimentDissatisfiedIcon fontSize="large" />
-                    <SentimentNeutralIcon fontSize="large" />
-                    <SentimentSatisfiedIcon fontSize="large" />
-                    <SentimentSatisfiedAltIcon fontSize="large" color="success"/>
+                    <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
+                    <SentimentDissatisfiedIcon fontSize="large" color={mood === "bad" ? "error" : "disabled"}/>
+                    <SentimentNeutralIcon fontSize="large" color={mood === "ok" ? "inherit" : "disabled"}/>
+                    <SentimentSatisfiedIcon fontSize="large" color={mood === "good" ? "success" : "disabled"}/>
+                    <SentimentSatisfiedAltIcon fontSize="large" color={mood === "great" ? "success" : "disabled"}/>
                 </Box>
             </Box>
         </Box>
