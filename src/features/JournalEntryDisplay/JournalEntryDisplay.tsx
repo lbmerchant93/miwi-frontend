@@ -13,13 +13,27 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { JournalEntry } from '../../pages/HomePage/HomePage';
+import { User } from '../../shared/auth-context';
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
+    user: User;
+    isLoading: boolean;
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
-    const { journalEntry } = props
+    const { journalEntry, user } = props;
+
+    const { 
+        id: goalsId,
+        // Can use id here for the flash of wrong goals when a page is refreshed.. should fix later when fixing default goals on backend
+        exerciseGoal, 
+        garlandPoseGoal, 
+        kegelsGoal, 
+        proteinIntakeGoal, 
+        waterIntakeGoal 
+    } = user.goals;
+
     const {
         id,
         authorId,
@@ -38,6 +52,14 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
+    const calcPercentage = (completed: number, goal: number) => {
+        let percentage = (100 * completed) / goal;
+        if (isNaN(percentage)) {
+            percentage = 0
+        }
+        return `${percentage}%`
+    }
+
     return (
         <Box width={"100%"} display="flex" flexDirection="column" mt={7}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
@@ -46,7 +68,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <LocalDrinkIcon fontSize="large" color="info"/>
                         <Typography variant="body1">{waterIntake}</Typography>
-                        <Typography variant="body1">100%</Typography>
+                        <Typography variant="body1">{calcPercentage(waterIntake, waterIntakeGoal)}</Typography>
                     </Box>
                 </Box>
                 <Box>
@@ -54,7 +76,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <RestaurantIcon fontSize="large" color="disabled" />
                         <Typography variant="body1">{proteinIntake}</Typography>
-                        <Typography variant="body1">100%</Typography>
+                        <Typography variant="body1">{calcPercentage(proteinIntake, proteinIntakeGoal)}</Typography>
                     </Box>
                 </Box>
                 <Box>
@@ -62,7 +84,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <FitnessCenterIcon fontSize="large" color="success" />
                         <Typography variant="body1">{exercise}</Typography>
-                        <Typography variant="body1">100%</Typography>
+                        <Typography variant="body1">{calcPercentage(exercise, exerciseGoal)}</Typography>
                     </Box>
                 </Box>
             </Box>    
@@ -71,7 +93,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Typography variant="body1"><strong>Kegels</strong></Typography>
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <Typography variant="body1">{kegels}</Typography>
-                        <Typography variant="body1">100%</Typography>
+                        <Typography variant="body1">{calcPercentage(kegels, kegelsGoal)}</Typography>
                     </Box>
                 </Box>
                 <Box>
@@ -79,7 +101,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
                         <SelfImprovementIcon fontSize="large" />
                         <Typography variant="body1">{garlandPose}</Typography>
-                        <Typography variant="body1">100%</Typography>
+                        <Typography variant="body1">{calcPercentage(garlandPose, garlandPoseGoal)}</Typography>
                     </Box>
                 </Box>
             </Box>

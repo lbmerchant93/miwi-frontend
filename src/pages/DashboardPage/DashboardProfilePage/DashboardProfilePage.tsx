@@ -60,11 +60,11 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
     const provider = auth.currentUser?.providerData[0].providerId;
-    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number | null>(null);
-    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number | null>(null);
-    const [exerciseGoal, setExerciseGoal] = useState<number | null>(null);
-    const [kegelsGoal, setKegelsGoal] = useState<number | null>(null);
-    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null>(null);
+    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number >(20);
+    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number >(20);
+    const [exerciseGoal, setExerciseGoal] = useState<number >(20);
+    const [kegelsGoal, setKegelsGoal] = useState<number >(20);
+    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number >(20);
     const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {

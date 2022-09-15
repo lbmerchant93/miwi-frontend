@@ -2,11 +2,11 @@ import { createContext, Dispatch, SetStateAction } from "react";
 
 export interface Goals {
     id: string;
-    waterIntakeGoal: number | null;
-    proteinIntakeGoal: number | null;
-    exerciseGoal: number | null;
-    kegelsGoal: number | null;
-    garlandPoseGoal: number | null;
+    waterIntakeGoal: number;
+    proteinIntakeGoal: number;
+    exerciseGoal: number;
+    kegelsGoal: number;
+    garlandPoseGoal: number;
 }
 
 export interface User {
@@ -32,11 +32,11 @@ export const AuthContext = createContext<User>({
     email: '',
     goals: {
         id: '',
-        waterIntakeGoal: null,
-        proteinIntakeGoal: null,
-        exerciseGoal: null,
-        kegelsGoal: null,
-        garlandPoseGoal: null
+        waterIntakeGoal: 20,
+        proteinIntakeGoal: 20,
+        exerciseGoal: 20,
+        kegelsGoal: 20,
+        garlandPoseGoal: 20
     },
     setUserId: () => {},
     setExpectedDueDate: () => {},
