@@ -66,43 +66,29 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 <Box>
                     <LocalDrinkIcon fontSize="large" color="info"/>
                     <Typography variant="body1"><strong>Water</strong></Typography>
-                    <DoughnutGraph name={'waterIntake'} completed={waterIntake} goal={waterIntakeGoal} color={"#0188D1"}/>
+                    <DoughnutGraph name={'waterIntake'} completed={waterIntake} goal={waterIntakeGoal} color={"#ADD8E6"}/>
                 </Box>
                 <Box>
                     <RestaurantIcon fontSize="large" color="disabled" />
                     <Typography variant="body1"><strong>Protein</strong></Typography>
-                    <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        
-                        <Typography variant="body1">{proteinIntake}</Typography>
-                        <Typography variant="body1">{calcPercentage(proteinIntake, proteinIntakeGoal)}</Typography>
-                    </Box>
+                    <DoughnutGraph name={'proteinIntake'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                 </Box>
                 <Box>
                     <FitnessCenterIcon fontSize="large" color="success" />
                     <Typography variant="body1"><strong>Exercise</strong></Typography>
-                    <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        
-                        <Typography variant="body1">{exercise}</Typography>
-                        <Typography variant="body1">{calcPercentage(exercise, exerciseGoal)}</Typography>
-                    </Box>
+                    <DoughnutGraph name={'exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                 </Box>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
                 <Box>
+                    <SelfImprovementIcon fontSize="large" />
                     <Typography variant="body1"><strong>Kegels</strong></Typography>
-                    <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        <Typography variant="body1">{kegels}</Typography>
-                        <Typography variant="body1">{calcPercentage(kegels, kegelsGoal)}</Typography>
-                    </Box>
+                    <DoughnutGraph name={'kegels'} completed={kegels} goal={kegelsGoal} color={"#FFC0CB"}/>
                 </Box>
                 <Box>
                     <SelfImprovementIcon fontSize="large" />
                     <Typography variant="body1"><strong>Garland Pose</strong></Typography>
-                    <Box border={"1px solid black"} borderRadius={"50%"} height={200} width={200}>
-                        
-                        <Typography variant="body1">{garlandPose}</Typography>
-                        <Typography variant="body1">{calcPercentage(garlandPose, garlandPoseGoal)}</Typography>
-                    </Box>
+                    <DoughnutGraph name={'garlandPose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                 </Box>
             </Box>
             <Box 
