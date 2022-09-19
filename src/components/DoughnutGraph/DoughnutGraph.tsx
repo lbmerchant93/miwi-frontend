@@ -8,10 +8,11 @@ interface DoughnutGraphProps {
     name: string;
     completed: number;
     goal: number;
+    color: string;
 }
 
 const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
-    const { name, completed, goal } = props;
+    const { name, completed, goal, color } = props;
 
     const calcPercentage = (completed: number, goal: number) => {
         let percentage = (100 * completed) / goal;
@@ -26,7 +27,7 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
         datasets: [
             {
             data: chartData,
-            backgroundColor: ["#0188D1", "#707070"]
+            backgroundColor: [color, "#707070"]
             }
         ]
     };

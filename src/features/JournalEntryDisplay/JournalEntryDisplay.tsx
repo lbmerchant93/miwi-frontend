@@ -66,7 +66,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 <Box>
                     <LocalDrinkIcon fontSize="large" color="info"/>
                     <Typography variant="body1"><strong>Water</strong></Typography>
-                    <DoughnutGraph name={'waterIntake'} completed={waterIntake} goal={waterIntakeGoal} />
+                    <DoughnutGraph name={'waterIntake'} completed={waterIntake} goal={waterIntakeGoal} color={"#0188D1"}/>
                 </Box>
                 <Box>
                     <RestaurantIcon fontSize="large" color="disabled" />
