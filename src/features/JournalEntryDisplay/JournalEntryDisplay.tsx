@@ -19,7 +19,6 @@ import DoughnutGraph from '../../components/DoughnutGraph/DoughnutGraph';
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
     user: User;
-    isLoading: boolean;
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {

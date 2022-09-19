@@ -24,14 +24,15 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [email, setEmail] = useState<string | null>('');
     const [goals, setGoals] = useState<Goals>({
         id: '',
-        waterIntakeGoal: 20,
-        proteinIntakeGoal: 20,
-        exerciseGoal: 20,
-        kegelsGoal: 20,
-        garlandPoseGoal: 20
+        waterIntakeGoal: 0,
+        proteinIntakeGoal: 0,
+        exerciseGoal: 0,
+        kegelsGoal: 0,
+        garlandPoseGoal: 0
     })
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
+    const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
     const { data } = useUser(userId, email);
 
     onAuthStateChanged(auth, async (user) => {
@@ -55,6 +56,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             localStorage.setItem('token', '');
             setUserId(undefined);
             setIsLoggedIn(false);
+            setIsLoadingUser(true);
             setDisplayName('');
             setPhotoURL('');
             setExpectedDueDate(null);
@@ -66,7 +68,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         if (data && data.id === userId) {
             setDisplayName(data.displayName);
             setExpectedDueDate(data.expectedDueDate);
-            setGoals(data.goals)
+            setGoals(data.goals);
+            setIsLoadingUser(false);
         } 
     }, [data, userId]);
 
@@ -74,6 +77,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         <AuthContext.Provider 
             value={{
             isLoggedIn: isLoggedIn,
+            isLoadingUser: isLoadingUser,
             id: userId,
             displayName: displayName,
             photoURL: photoURL,

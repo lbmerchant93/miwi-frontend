@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import JournalEntryDisplay from '../../features/JournalEntryDisplay/JournalEntryDisplay';
 import { useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
+import MessagePage from '../../components/MessagePage/MessagePage';
 
 export interface JournalEntry {
     id: number;
@@ -28,13 +29,28 @@ export interface JournalEntry {
 const HomePage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
-    const { data: firstJournalEntry, isLoading } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true));
-    return (
+    const { data: firstJournalEntry } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true));
+
+    if (!user.isLoggedIn) {
+        return (
+            <MessagePage 
+                title="Uh oh, looks like you're not logged in."
+                subtitle="You must be logged-in to view this page."
+            />
+        )
+    }
+
+    return user.isLoadingUser ? (
         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={5}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
-            <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} isLoading={isLoading} />
+            
         </Box>
-    );
+    ) : (
+        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={5}>
+            <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
+            <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} />
+        </Box>
+    )
 }
 
 export default HomePage

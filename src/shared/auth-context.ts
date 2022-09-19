@@ -11,6 +11,7 @@ export interface Goals {
 
 export interface User {
     isLoggedIn: boolean;
+    isLoadingUser: boolean;
     id: string | undefined;
     displayName?: string | null;
     photoURL: string | null;
@@ -25,6 +26,7 @@ export interface User {
 
 export const AuthContext = createContext<User>({ 
     isLoggedIn: false, 
+    isLoadingUser: false,
     id: undefined,
     displayName: '',
     photoURL: '',
@@ -32,11 +34,11 @@ export const AuthContext = createContext<User>({
     email: '',
     goals: {
         id: '',
-        waterIntakeGoal: 20,
-        proteinIntakeGoal: 20,
-        exerciseGoal: 20,
-        kegelsGoal: 20,
-        garlandPoseGoal: 20
+        waterIntakeGoal: 0,
+        proteinIntakeGoal: 0,
+        exerciseGoal: 0,
+        kegelsGoal: 0,
+        garlandPoseGoal: 0
     },
     setUserId: () => {},
     setExpectedDueDate: () => {},
