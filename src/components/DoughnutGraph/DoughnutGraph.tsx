@@ -18,6 +18,10 @@ const Container = styled(Box)`
     height: 250px;
     width: 250px;
 
+    :hover {
+        cursor: pointer;
+    }
+
     :hover .graphContainer{
         opacity: 0.6
     }
@@ -79,8 +83,12 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
         return percentage
     }
 
+    const editSection = () => {
+        console.log("Edit Section")
+    }
+
     return (
-        <Container>
+        <Container onClick={() => editSection()}>
             <DoughnutGraphContainerStyled className="graphContainer">
                 <CircularProgressbarWithChildren 
                     value={calcPercentage(completed, goal)}
@@ -116,7 +124,7 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
                 </CircularProgressbarWithChildren>
             </DoughnutGraphContainerStyled>
             <EditButtonStyled className="editButton">
-                <IconButton onClick={() => console.log("edit")} color="inherit">
+                <IconButton color="inherit">
                     <EditIcon />
                 </IconButton>
             </EditButtonStyled>
