@@ -15,7 +15,7 @@ import styled from 'styled-components/macro'
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 
-const Container = styled(Box)`
+const GraphContainer = styled(Box)`
     display: flex;
     flex-direction: column;
     position: relative;
@@ -33,13 +33,40 @@ const Container = styled(Box)`
     :hover .editButton{
         opacity: 1
     }
-`
+`;
+
+const CheckBoxContainer = styled(Box)`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid black;
+    height: 92px;
+
+    :hover {
+        cursor: pointer;
+    }
+
+    :hover .checkBoxSection{
+        opacity: 0.6
+    }
+
+    :hover .editButton{
+        opacity: 1
+    }
+`;
+
+const CheckBoxSection = styled(Box)`
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+`;
 
 const EditButtonStyled = styled(Box)`
     transition: .5s ease;
     opacity: 0;
     position: absolute;
-    left: 85%;
+    left: 90%;
 `;
 
 interface JournalEntryDisplayProps {
@@ -84,68 +111,64 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     return (
         <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                <Container onClick={() => editSection()}>
+                <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                     <EditButtonStyled className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonStyled>
-                </Container>
-                <Container onClick={() => editSection()}>
+                </GraphContainer>
+                <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                     <EditButtonStyled className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonStyled>
-                </Container>
-                <Container onClick={() => editSection()}>
+                </GraphContainer>
+                <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                     <EditButtonStyled className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonStyled>
-                </Container>
+                </GraphContainer>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
-                <Container onClick={() => editSection()}>
+                <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
                     <EditButtonStyled className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonStyled>
-                </Container>
-                <Container onClick={() => editSection()}>
+                </GraphContainer>
+                <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                     <EditButtonStyled className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonStyled>
-                </Container>
+                </GraphContainer>
             </Box>
-            <Box 
-                border={"1px solid black"} 
-                mt={7} 
-                display="flex" 
-                flexDirection="row" 
-                justifyContent="space-around" 
-                alignItems="center" 
-                height={90}
-                mx={3}
-            >
-                <Box display="flex" flexDirection="row">
+            <CheckBoxContainer mt={7} mx={3} onClick={() => editSection()}>
+                <CheckBoxSection className="checkBoxSection">
                     <Typography variant="body1" pr={2}><strong>Vitamins</strong></Typography>
                     {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
-                </Box>
-                <Box display="flex" flexDirection="row">
+                </CheckBoxSection>
+                <CheckBoxSection className="checkBoxSection">
                     <Typography variant="body1" pr={2}><strong>Probiotics</strong></Typography>
                     {probiotics ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
-                </Box>
-            </Box>    
+                </CheckBoxSection>
+                <EditButtonStyled className="editButton">
+                    <IconButton color="inherit">
+                        <EditIcon />
+                    </IconButton>
+                </EditButtonStyled>
+            </CheckBoxContainer>    
             <Box mt={7}>
                 <Box display="flex" flexDirection="row" justifyContent="space-evenly">
                     <Box>
