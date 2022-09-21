@@ -8,40 +8,11 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styled from 'styled-components/macro'
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-
-const Container = styled(Box)`
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 250px;
-    width: 250px;
-
-    :hover {
-        cursor: pointer;
-    }
-
-    :hover .graphContainer{
-        opacity: 0.6
-    }
-
-    :hover .editButton{
-        opacity: 1
-    }
-`
 
 const DoughnutGraphContainerStyled = styled(Box)`
     opacity: 1;
     transition: .5s ease;
     backface-visibility: hidden;
-`;
-
-const EditButtonStyled = styled(Box)`
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    left: 85%;
 `;
 
 interface CenterInfoProps {
@@ -83,52 +54,41 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
         return percentage
     }
 
-    const editSection = () => {
-        console.log("Edit Section")
-    }
-
     return (
-        <Container onClick={() => editSection()}>
-            <DoughnutGraphContainerStyled className="graphContainer">
-                <CircularProgressbarWithChildren 
-                    value={calcPercentage(completed, goal)}
-                    strokeWidth={8}
-                    styles={buildStyles({
-                        pathColor: `${color}`,
-                        trailColor: "#eee"
-                    })}
-                >
-                    {calcPercentage(completed, goal) >= 101 && <Box width={'83%'}>
-                        <CircularProgressbarWithChildren
-                            value={calcPercentage(completed, goal) - 100}
-                            styles={buildStyles({
-                                pathColor: `${color}`,
-                                trailColor: "#eee"
-                            })}
-                        >
-                            {calcPercentage(completed, goal) >= 201 && <Box width={'83%'}>
-                                <CircularProgressbarWithChildren
-                                    value={calcPercentage(completed, goal) - 200}
-                                    styles={buildStyles({
-                                        pathColor: `${color}`,
-                                        trailColor: "#eee"
-                                    })}
-                                >
-                                    <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />
-                                </CircularProgressbarWithChildren>
-                            </Box>}
-                            {calcPercentage(completed, goal) <= 200 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
-                        </CircularProgressbarWithChildren>
-                    </Box>}
-                    {calcPercentage(completed, goal) <= 100 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
-                </CircularProgressbarWithChildren>
-            </DoughnutGraphContainerStyled>
-            <EditButtonStyled className="editButton">
-                <IconButton color="inherit">
-                    <EditIcon />
-                </IconButton>
-            </EditButtonStyled>
-        </Container>
+        <DoughnutGraphContainerStyled className="graphContainer">
+            <CircularProgressbarWithChildren 
+                value={calcPercentage(completed, goal)}
+                strokeWidth={8}
+                styles={buildStyles({
+                    pathColor: `${color}`,
+                    trailColor: "#eee"
+                })}
+            >
+                {calcPercentage(completed, goal) >= 101 && <Box width={'83%'}>
+                    <CircularProgressbarWithChildren
+                        value={calcPercentage(completed, goal) - 100}
+                        styles={buildStyles({
+                            pathColor: `${color}`,
+                            trailColor: "#eee"
+                        })}
+                    >
+                        {calcPercentage(completed, goal) >= 201 && <Box width={'83%'}>
+                            <CircularProgressbarWithChildren
+                                value={calcPercentage(completed, goal) - 200}
+                                styles={buildStyles({
+                                    pathColor: `${color}`,
+                                    trailColor: "#eee"
+                                })}
+                            >
+                                <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />
+                            </CircularProgressbarWithChildren>
+                        </Box>}
+                        {calcPercentage(completed, goal) <= 200 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
+                    </CircularProgressbarWithChildren>
+                </Box>}
+                {calcPercentage(completed, goal) <= 100 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
+            </CircularProgressbarWithChildren>
+        </DoughnutGraphContainerStyled>
     )
 }
 

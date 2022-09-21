@@ -11,6 +11,37 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { JournalEntry } from '../../pages/HomePage/HomePage';
 import { User } from '../../shared/auth-context';
 import DoughnutGraph from '../../components/DoughnutGraph/DoughnutGraph';
+import styled from 'styled-components/macro'
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+
+const Container = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 250px;
+    width: 250px;
+
+    :hover {
+        cursor: pointer;
+    }
+
+    :hover .graphContainer{
+        opacity: 0.6
+    }
+
+    :hover .editButton{
+        opacity: 1
+    }
+`
+
+const EditButtonStyled = styled(Box)`
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    left: 85%;
+`;
+
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
     user: User;
@@ -46,17 +77,55 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
+    const editSection = () => {
+        console.log("Edit Section")
+    }
 
     return (
         <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
-                <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
-                <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
+                <Container onClick={() => editSection()}>
+                    <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
+                    <EditButtonStyled className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonStyled>
+                </Container>
+                <Container onClick={() => editSection()}>
+                    <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
+                    <EditButtonStyled className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonStyled>
+                </Container>
+                <Container onClick={() => editSection()}>
+                    <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
+                    <EditButtonStyled className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonStyled>
+                </Container>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
-                <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
-                <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
+                <Container onClick={() => editSection()}>
+                    <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
+                    <EditButtonStyled className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonStyled>
+                </Container>
+                <Container onClick={() => editSection()}>
+                    <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
+                    <EditButtonStyled className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonStyled>
+                </Container>
             </Box>
             <Box 
                 border={"1px solid black"} 
