@@ -1,5 +1,4 @@
 import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
@@ -9,7 +8,6 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface DoughnutGraphProps {
     name: string;
