@@ -65,7 +65,18 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
                             trailColor: "#eee"
                         })}
                     >
-                        <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />
+                        {calcPercentage(completed, goal) >= 201 && <Box width={'83%'}>
+                            <CircularProgressbarWithChildren
+                                value={calcPercentage(completed, goal) - 200}
+                                styles={buildStyles({
+                                    pathColor: `${color}`,
+                                    trailColor: "#eee"
+                                })}
+                            >
+                                <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />
+                            </CircularProgressbarWithChildren>
+                        </Box>}
+                        {calcPercentage(completed, goal) <= 200 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
                     </CircularProgressbarWithChildren>
                 </Box>}
                 {calcPercentage(completed, goal) <= 100 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
