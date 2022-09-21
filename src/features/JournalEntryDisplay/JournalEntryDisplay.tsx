@@ -56,31 +56,21 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         <Box width={"100%"} display="flex" flexDirection="column" mt={7}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
                 <Box>
-                    {/* <LocalDrinkIcon fontSize="large" color="info"/>
-                    <Typography variant="body1"><strong>Water</strong></Typography> */}
                     <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                 </Box>
                 <Box>
-                    <RestaurantIcon fontSize="large" color="disabled" />
-                    <Typography variant="body1"><strong>Protein</strong></Typography>
-                    {/* <DoughnutGraph name={'proteinIntake'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/> */}
+                    <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                 </Box>
                 <Box>
-                    <FitnessCenterIcon fontSize="large" color="success" />
-                    <Typography variant="body1"><strong>Exercise</strong></Typography>
-                    {/* <DoughnutGraph name={'exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/> */}
+                    <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                 </Box>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
                 <Box>
-                    <SelfImprovementIcon fontSize="large" />
-                    <Typography variant="body1"><strong>Kegels</strong></Typography>
-                    {/* <DoughnutGraph name={'kegels'} completed={kegels} goal={kegelsGoal} color={"#FFC0CB"}/> */}
+                    <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
                 </Box>
                 <Box>
-                    <SelfImprovementIcon fontSize="large" />
-                    <Typography variant="body1"><strong>Garland Pose</strong></Typography>
-                    {/* <DoughnutGraph name={'garlandPose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/> */}
+                    <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                 </Box>
             </Box>
             <Box 

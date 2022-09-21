@@ -44,10 +44,13 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
                         // trailColor: "transparent"
                         })}
                     > */}
-                        <LocalDrinkIcon fontSize="large" color="info"/>
-                        <Box mt={1}>
-                            <Typography variant="body1"><strong>{name}</strong></Typography>
-                        </Box>
+                        {name === 'Water' && <LocalDrinkIcon fontSize="large" color="info"/>}
+                        {name === 'Protein' && <RestaurantIcon fontSize="large" color="disabled" />}
+                        {name === 'Exercise' && <FitnessCenterIcon fontSize="large" color="success" />}
+                        {name === 'Kegels' && <SelfImprovementIcon fontSize="large" />}
+                        {name === 'Garland Pose' && <SelfImprovementIcon fontSize="large" />}
+                        <Typography variant="body1"><strong>{name}</strong></Typography>
+                        <Typography variant="body1" mt={-0.5}><strong>{calcPercentage(completed, goal)}%</strong></Typography>
                     {/* </CircularProgressbarWithChildren> */}
                 </Box>
             </CircularProgressbarWithChildren>
