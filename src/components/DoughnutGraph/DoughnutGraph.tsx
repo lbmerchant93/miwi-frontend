@@ -8,6 +8,26 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+interface CenterInfoProps {
+    name: string;
+    percentage: number;
+}
+
+const CenterInfo: React.FC<CenterInfoProps> = (props) => {
+    const { name, percentage } = props;
+
+    return (
+        <>
+            {name === 'Water' && <LocalDrinkIcon fontSize="large" color="info"/>}
+            {name === 'Protein' && <RestaurantIcon fontSize="large" color="disabled" />}
+            {name === 'Exercise' && <FitnessCenterIcon fontSize="large" color="success" />}
+            {name === 'Kegels' && <SelfImprovementIcon fontSize="large" />}
+            {name === 'Garland Pose' && <SelfImprovementIcon fontSize="large" />}
+            <Typography variant="body1"><strong>{name}</strong></Typography>
+            <Typography variant="body1" mt={-0.5}><strong>{percentage}%</strong></Typography>
+        </>
+    )
+}
 
 interface DoughnutGraphProps {
     name: string;
@@ -37,22 +57,18 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
                     trailColor: "#eee"
                 })}
             >
-                <Box width={'83%'}>
-                    {/* <CircularProgressbarWithChildren
-                        value={0}
+                {calcPercentage(completed, goal) >= 101 && <Box width={'83%'}>
+                    <CircularProgressbarWithChildren
+                        value={calcPercentage(completed, goal) - 100}
                         styles={buildStyles({
-                        // trailColor: "transparent"
+                            pathColor: `${color}`,
+                            trailColor: "#eee"
                         })}
-                    > */}
-                        {name === 'Water' && <LocalDrinkIcon fontSize="large" color="info"/>}
-                        {name === 'Protein' && <RestaurantIcon fontSize="large" color="disabled" />}
-                        {name === 'Exercise' && <FitnessCenterIcon fontSize="large" color="success" />}
-                        {name === 'Kegels' && <SelfImprovementIcon fontSize="large" />}
-                        {name === 'Garland Pose' && <SelfImprovementIcon fontSize="large" />}
-                        <Typography variant="body1"><strong>{name}</strong></Typography>
-                        <Typography variant="body1" mt={-0.5}><strong>{calcPercentage(completed, goal)}%</strong></Typography>
-                    {/* </CircularProgressbarWithChildren> */}
-                </Box>
+                    >
+                        <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />
+                    </CircularProgressbarWithChildren>
+                </Box>}
+                {calcPercentage(completed, goal) <= 100 && <CenterInfo name={name} percentage={calcPercentage(completed, goal)} />}
             </CircularProgressbarWithChildren>
         </Box>
     )
