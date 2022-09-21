@@ -50,7 +50,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
 
 
     return (
-        <Box width={"100%"} display="flex" flexDirection="column" mt={7}>
+        <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
                 <Box>
                     <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>

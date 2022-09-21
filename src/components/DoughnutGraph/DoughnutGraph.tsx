@@ -18,9 +18,9 @@ const CenterInfo: React.FC<CenterInfoProps> = (props) => {
 
     return (
         <>
-            {name === 'Water' && <LocalDrinkIcon fontSize="large" color="info"/>}
+            {name === 'Water' && <LocalDrinkIcon fontSize="large" style={{ color: "#1ca3ec" }}/>}
             {name === 'Protein' && <RestaurantIcon fontSize="large" color="disabled" />}
-            {name === 'Exercise' && <FitnessCenterIcon fontSize="large" color="success" />}
+            {name === 'Exercise' && <FitnessCenterIcon fontSize="large" style={{ color: "#7FFFD4" }} />}
             {name === 'Kegels' && <SelfImprovementIcon fontSize="large" />}
             {name === 'Garland Pose' && <SelfImprovementIcon fontSize="large" />}
             <Typography variant="body1"><strong>{name}</strong></Typography>
@@ -48,7 +48,7 @@ const DoughnutGraph: React.FC<DoughnutGraphProps> = (props) => {
     }
 
     return (
-        <Box>
+        <Box height={250} width={250}>
             <CircularProgressbarWithChildren 
                 value={calcPercentage(completed, goal)}
                 strokeWidth={8}
