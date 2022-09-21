@@ -11,7 +11,6 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { JournalEntry } from '../../pages/HomePage/HomePage';
 import { User } from '../../shared/auth-context';
 import DoughnutGraph from '../../components/DoughnutGraph/DoughnutGraph';
-
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
     user: User;
@@ -22,7 +21,6 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
 
     const { 
         id: goalsId,
-        // Can use id here for the flash of wrong goals when a page is refreshed.. should fix later when fixing default goals on backend
         exerciseGoal, 
         garlandPoseGoal, 
         kegelsGoal, 
@@ -52,23 +50,13 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     return (
         <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                <Box>
-                    <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
-                </Box>
-                <Box>
-                    <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
-                </Box>
-                <Box>
-                    <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
-                </Box>
+                <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
+                <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
+                <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
-                <Box>
-                    <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
-                </Box>
-                <Box>
-                    <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
-                </Box>
+                <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
+                <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
             </Box>
             <Box 
                 border={"1px solid black"} 
