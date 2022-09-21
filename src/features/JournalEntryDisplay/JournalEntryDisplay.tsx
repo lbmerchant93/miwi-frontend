@@ -8,7 +8,6 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
@@ -52,43 +51,36 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
-    const calcPercentage = (completed: number, goal: number) => {
-        let percentage = (100 * completed) / goal;
-        if (isNaN(percentage)) {
-            percentage = 0
-        }
-        return `${percentage}%`
-    }
 
     return (
         <Box width={"100%"} display="flex" flexDirection="column" mt={7}>
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
                 <Box>
-                    <LocalDrinkIcon fontSize="large" color="info"/>
-                    <Typography variant="body1"><strong>Water</strong></Typography>
-                    <DoughnutGraph name={'waterIntake'} completed={waterIntake} goal={waterIntakeGoal} color={"#ADD8E6"}/>
+                    {/* <LocalDrinkIcon fontSize="large" color="info"/>
+                    <Typography variant="body1"><strong>Water</strong></Typography> */}
+                    <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                 </Box>
                 <Box>
                     <RestaurantIcon fontSize="large" color="disabled" />
                     <Typography variant="body1"><strong>Protein</strong></Typography>
-                    <DoughnutGraph name={'proteinIntake'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
+                    {/* <DoughnutGraph name={'proteinIntake'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/> */}
                 </Box>
                 <Box>
                     <FitnessCenterIcon fontSize="large" color="success" />
                     <Typography variant="body1"><strong>Exercise</strong></Typography>
-                    <DoughnutGraph name={'exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
+                    {/* <DoughnutGraph name={'exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/> */}
                 </Box>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
                 <Box>
                     <SelfImprovementIcon fontSize="large" />
                     <Typography variant="body1"><strong>Kegels</strong></Typography>
-                    <DoughnutGraph name={'kegels'} completed={kegels} goal={kegelsGoal} color={"#FFC0CB"}/>
+                    {/* <DoughnutGraph name={'kegels'} completed={kegels} goal={kegelsGoal} color={"#FFC0CB"}/> */}
                 </Box>
                 <Box>
                     <SelfImprovementIcon fontSize="large" />
                     <Typography variant="body1"><strong>Garland Pose</strong></Typography>
-                    <DoughnutGraph name={'garlandPose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
+                    {/* <DoughnutGraph name={'garlandPose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/> */}
                 </Box>
             </Box>
             <Box 
