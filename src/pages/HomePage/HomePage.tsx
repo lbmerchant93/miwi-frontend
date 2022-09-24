@@ -44,7 +44,7 @@ const HomePage = () => {
         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
             <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
-            
+            {/* Insert loading for journal entry display */}
         </Box>
     ) : (
         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
