@@ -11,106 +11,18 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { JournalEntry } from '../../pages/HomePage/HomePage';
 import { User } from '../../shared/auth-context';
 import DoughnutGraph from '../../components/DoughnutGraph/DoughnutGraph';
-import styled from 'styled-components/macro'
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-
-const GraphContainer = styled(Box)`
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 250px;
-    width: 250px;
-
-    :hover {
-        cursor: pointer;
-    }
-
-    :hover .graphContainer{
-        opacity: 0.6
-    }
-
-    :hover .editButton{
-        opacity: 1
-    }
-`;
-
-const CheckBoxContainer = styled(Box)`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px solid black;
-    height: 92px;
-
-    :hover {
-        cursor: pointer;
-    }
-
-    :hover .checkBoxSection{
-        opacity: 0.6
-    }
-
-    :hover .editButton{
-        opacity: 1
-    }
-`;
-
-const CheckBoxSection = styled(Box)`
-    opacity: 1;
-    display: flex;
-    flex-direction: row;
-`;
-
-const MoodContainer = styled(Box)`
-    border: 1px solid black;
-
-    :hover {
-        cursor: pointer;
-    }
-
-    :hover .moodSection{
-        opacity: 0.6
-    }
-
-    :hover .editButton{
-        opacity: 1
-    }
-`;
-
-const MoodSection = styled(Box)`
-    display: flex;
-    flex-direction: column;
-    height: 92px;
-`;
-
-const WritingContainer = styled(Box)`
-    position: relative;
-
-    :hover {
-        cursor: pointer;
-    }
-
-    :hover .writingSection{
-        opacity: 0.6
-    }
-
-    :hover .editButton{
-        opacity: 1
-    }
-`;
-
-const WritingSection = styled(Box)`
-    height: 325px;
-    width: 325px;
-`;
-
-const EditButtonStyled = styled(Box)`
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    left: 90%;
-`;
+import {
+    GraphContainer,
+    CheckBoxContainer,
+    CheckBoxSection,
+    MoodContainer,
+    MoodSection,
+    WritingContainer,
+    WritingSection,
+    EditButtonContainer
+} from "./JournalEntryDisplay.styled"
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
@@ -156,45 +68,45 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
                 <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
-                    <EditButtonStyled className="editButton">
+                    <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
-                    </EditButtonStyled>
+                    </EditButtonContainer>
                 </GraphContainer>
                 <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
-                    <EditButtonStyled className="editButton">
+                    <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
-                    </EditButtonStyled>
+                    </EditButtonContainer>
                 </GraphContainer>
                 <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
-                    <EditButtonStyled className="editButton">
+                    <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
-                    </EditButtonStyled>
+                    </EditButtonContainer>
                 </GraphContainer>
             </Box>    
             <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
                 <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
-                    <EditButtonStyled className="editButton">
+                    <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
-                    </EditButtonStyled>
+                    </EditButtonContainer>
                 </GraphContainer>
                 <GraphContainer onClick={() => editSection()}>
                     <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
-                    <EditButtonStyled className="editButton">
+                    <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
-                    </EditButtonStyled>
+                    </EditButtonContainer>
                 </GraphContainer>
             </Box>
             <CheckBoxContainer mt={7} mx={3} onClick={() => editSection()}>
@@ -206,11 +118,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     <Typography variant="body1" pr={2}><strong>Probiotics</strong></Typography>
                     {probiotics ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
                 </CheckBoxSection>
-                <EditButtonStyled className="editButton">
+                <EditButtonContainer className="editButton">
                     <IconButton color="inherit">
                         <EditIcon />
                     </IconButton>
-                </EditButtonStyled>
+                </EditButtonContainer>
             </CheckBoxContainer>    
             <Box mt={7}>
                 <Box display="flex" flexDirection="row" justifyContent="space-evenly">
@@ -221,11 +133,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 <Typography variant="body1">{childbirthEducation}</Typography>
                             </Box>
                         </WritingSection>
-                        <EditButtonStyled className="editButton" top={-15}>
+                        <EditButtonContainer className="editButton" top={-15}>
                             <IconButton color="inherit">
                                 <EditIcon />
                             </IconButton>
-                        </EditButtonStyled>
+                        </EditButtonContainer>
                     </WritingContainer>
                     <WritingContainer onClick={() => editSection()}>
                         <WritingSection className="writingSection">
@@ -233,11 +145,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
                                 <Typography variant="body1">{selfCare}</Typography>
                             </Box> 
-                            <EditButtonStyled className="editButton" top={-15}>
+                            <EditButtonContainer className="editButton" top={-15}>
                                 <IconButton color="inherit">
                                     <EditIcon />
                                 </IconButton>
-                            </EditButtonStyled>
+                            </EditButtonContainer>
                         </WritingSection>
                     </WritingContainer>
                 </Box>
@@ -248,11 +160,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
                                 <Typography variant="body1">{postpartumPrep}</Typography>
                             </Box>
-                            <EditButtonStyled className="editButton" top={-15}>
+                            <EditButtonContainer className="editButton" top={-15}>
                                 <IconButton color="inherit">
                                     <EditIcon />
                                 </IconButton>
-                            </EditButtonStyled>
+                            </EditButtonContainer>
                         </WritingSection>
                     </WritingContainer>
                     <WritingContainer onClick={() => editSection()}>
@@ -261,11 +173,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
                                 <Typography variant="body1">{fetalLoveBreak}</Typography>
                             </Box>
-                            <EditButtonStyled className="editButton" top={-15}>
+                            <EditButtonContainer className="editButton" top={-15}>
                                 <IconButton color="inherit">
                                     <EditIcon />
                                 </IconButton>
-                            </EditButtonStyled>
+                            </EditButtonContainer>
                         </WritingSection>
                     </WritingContainer>
                 </Box>
@@ -280,11 +192,11 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         <SentimentSatisfiedIcon fontSize="large" color={mood === "good" ? "success" : "disabled"}/>
                         <SentimentSatisfiedAltIcon fontSize="large" color={mood === "great" ? "success" : "disabled"}/>
                     </Box>
-                    <EditButtonStyled className="editButton">
+                    <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
-                    </EditButtonStyled>
+                    </EditButtonContainer>
                 </MoodSection>
             </MoodContainer>
         </Box>
