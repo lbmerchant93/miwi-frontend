@@ -82,7 +82,28 @@ const MoodSection = styled(Box)`
     display: flex;
     flex-direction: column;
     height: 92px;
-`
+`;
+
+const WritingContainer = styled(Box)`
+    position: relative;
+
+    :hover {
+        cursor: pointer;
+    }
+
+    :hover .writingSection{
+        opacity: 0.6
+    }
+
+    :hover .editButton{
+        opacity: 1
+    }
+`;
+
+const WritingSection = styled(Box)`
+    height: 325px;
+    width: 325px;
+`;
 
 const EditButtonStyled = styled(Box)`
     transition: .5s ease;
@@ -193,37 +214,64 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
             </CheckBoxContainer>    
             <Box mt={7}>
                 <Box display="flex" flexDirection="row" justifyContent="space-evenly">
-                    <Box>
-                        <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
-                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            <Typography variant="body1">{childbirthEducation}</Typography>
-                        </Box>
-                    </Box>
-                    <Box>
-                        <Typography variant="body1"><strong>Self Care</strong></Typography>
-                       <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            <Typography variant="body1">{selfCare}</Typography>
-                        </Box> 
-                    </Box>
-                    
+                    <WritingContainer onClick={() => editSection()}>
+                        <WritingSection className="writingSection">
+                            <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
+                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                <Typography variant="body1">{childbirthEducation}</Typography>
+                            </Box>
+                        </WritingSection>
+                        <EditButtonStyled className="editButton" top={-15}>
+                            <IconButton color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </EditButtonStyled>
+                    </WritingContainer>
+                    <WritingContainer onClick={() => editSection()}>
+                        <WritingSection className="writingSection">
+                            <Typography variant="body1"><strong>Self Care</strong></Typography>
+                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                <Typography variant="body1">{selfCare}</Typography>
+                            </Box> 
+                            <EditButtonStyled className="editButton" top={-15}>
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonStyled>
+                        </WritingSection>
+                    </WritingContainer>
                 </Box>
                 <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
-                    <Box>
-                        <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
-                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            <Typography variant="body1">{postpartumPrep}</Typography>
-                        </Box>
-                    </Box>
-                    <Box>
-                        <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
-                        <Box border={"1px solid black"} height={300} width={350} borderRadius={5}>
-                            <Typography variant="body1">{fetalLoveBreak}</Typography>
-                        </Box>
-                    </Box>
+                    <WritingContainer onClick={() => editSection()}>
+                        <WritingSection className="writingSection">
+                            <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
+                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                <Typography variant="body1">{postpartumPrep}</Typography>
+                            </Box>
+                            <EditButtonStyled className="editButton" top={-15}>
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonStyled>
+                        </WritingSection>
+                    </WritingContainer>
+                    <WritingContainer onClick={() => editSection()}>
+                        <WritingSection className="writingSection">
+                            <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
+                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                <Typography variant="body1">{fetalLoveBreak}</Typography>
+                            </Box>
+                            <EditButtonStyled className="editButton" top={-15}>
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonStyled>
+                        </WritingSection>
+                    </WritingContainer>
                 </Box>
             </Box>
             <MoodContainer my={7} mx={3}>
-                <MoodSection className="moodSection">
+                <MoodSection className="moodSection" onClick={() => editSection()}>
                     <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
                     <Box display="flex" flexDirection="row" justifyContent="space-around" >
                         <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
