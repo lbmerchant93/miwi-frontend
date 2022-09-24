@@ -62,6 +62,28 @@ const CheckBoxSection = styled(Box)`
     flex-direction: row;
 `;
 
+const MoodContainer = styled(Box)`
+    border: 1px solid black;
+
+    :hover {
+        cursor: pointer;
+    }
+
+    :hover .moodSection{
+        opacity: 0.6
+    }
+
+    :hover .editButton{
+        opacity: 1
+    }
+`;
+
+const MoodSection = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    height: 92px;
+`
+
 const EditButtonStyled = styled(Box)`
     transition: .5s ease;
     opacity: 0;
@@ -200,23 +222,23 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     </Box>
                 </Box>
             </Box>
-            <Box
-                border={"1px solid black"} 
-                my={7} 
-                display="flex" 
-                flexDirection="column" 
-                height={90}
-                mx={3}
-            >
-                <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
-                <Box display="flex" flexDirection="row" justifyContent="space-around">
-                    <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
-                    <SentimentDissatisfiedIcon fontSize="large" color={mood === "bad" ? "error" : "disabled"}/>
-                    <SentimentNeutralIcon fontSize="large" color={mood === "ok" ? "inherit" : "disabled"}/>
-                    <SentimentSatisfiedIcon fontSize="large" color={mood === "good" ? "success" : "disabled"}/>
-                    <SentimentSatisfiedAltIcon fontSize="large" color={mood === "great" ? "success" : "disabled"}/>
-                </Box>
-            </Box>
+            <MoodContainer my={7} mx={3}>
+                <MoodSection className="moodSection">
+                    <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
+                    <Box display="flex" flexDirection="row" justifyContent="space-around" >
+                        <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
+                        <SentimentDissatisfiedIcon fontSize="large" color={mood === "bad" ? "error" : "disabled"}/>
+                        <SentimentNeutralIcon fontSize="large" color={mood === "ok" ? "inherit" : "disabled"}/>
+                        <SentimentSatisfiedIcon fontSize="large" color={mood === "good" ? "success" : "disabled"}/>
+                        <SentimentSatisfiedAltIcon fontSize="large" color={mood === "great" ? "success" : "disabled"}/>
+                    </Box>
+                    <EditButtonStyled className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonStyled>
+                </MoodSection>
+            </MoodContainer>
         </Box>
     );
 };
