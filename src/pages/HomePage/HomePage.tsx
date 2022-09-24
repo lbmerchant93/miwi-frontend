@@ -41,13 +41,15 @@ const HomePage = () => {
     }
 
     return user.isLoadingUser ? (
-        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={5}>
+        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
+            <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
             
         </Box>
     ) : (
-        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={5}>
+        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
+            <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
             <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} />
         </Box>
     )
