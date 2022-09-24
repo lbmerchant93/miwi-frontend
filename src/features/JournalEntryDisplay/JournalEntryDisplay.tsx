@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -22,7 +22,8 @@ import {
     WritingContainer,
     WritingSection,
     EditButtonContainer
-} from "./JournalEntryDisplay.styled"
+} from "./JournalEntryDisplay.styled";
+import UpdateEntryModal from '../../components/UpdateEntryModal/UpdateEntryModal';
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
@@ -31,9 +32,12 @@ interface JournalEntryDisplayProps {
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const { journalEntry, user } = props;
+    const [isUpdateEntryModalOpen, setIsUpdateEntryModalOpen] = useState(false);
+    const [sectionEditing, setSectionEditing] = useState<string | undefined>("");
+    const [inputType, setInputType] = useState("");
 
     const { 
-        id: goalsId,
+        // id: goalsId,
         exerciseGoal, 
         garlandPoseGoal, 
         kegelsGoal, 
@@ -42,9 +46,9 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     } = user.goals;
 
     const {
-        id,
-        authorId,
-        date,
+        // id,
+        // authorId,
+        // date,
         waterIntake = 0, 
         proteinIntake = 0, 
         exercise = 0, 
@@ -59,147 +63,166 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
-    const editSection = () => {
-        console.log("Edit Section")
+    const editSection = (inputType: string, section?: string) => {
+        setInputType(inputType)
+        setSectionEditing(section);
+        setIsUpdateEntryModalOpen(true);
+    }
+
+    const closeUpdateModal = () => {
+        setIsUpdateEntryModalOpen(false);
+        setSectionEditing("");
+        setInputType("");
     }
 
     return (
-        <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
-            <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                <GraphContainer onClick={() => editSection()}>
-                    <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
-                    <EditButtonContainer className="editButton">
-                        <IconButton color="inherit">
-                            <EditIcon />
-                        </IconButton>
-                    </EditButtonContainer>
-                </GraphContainer>
-                <GraphContainer onClick={() => editSection()}>
-                    <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
-                    <EditButtonContainer className="editButton">
-                        <IconButton color="inherit">
-                            <EditIcon />
-                        </IconButton>
-                    </EditButtonContainer>
-                </GraphContainer>
-                <GraphContainer onClick={() => editSection()}>
-                    <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
-                    <EditButtonContainer className="editButton">
-                        <IconButton color="inherit">
-                            <EditIcon />
-                        </IconButton>
-                    </EditButtonContainer>
-                </GraphContainer>
-            </Box>    
-            <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
-                <GraphContainer onClick={() => editSection()}>
-                    <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
-                    <EditButtonContainer className="editButton">
-                        <IconButton color="inherit">
-                            <EditIcon />
-                        </IconButton>
-                    </EditButtonContainer>
-                </GraphContainer>
-                <GraphContainer onClick={() => editSection()}>
-                    <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
-                    <EditButtonContainer className="editButton">
-                        <IconButton color="inherit">
-                            <EditIcon />
-                        </IconButton>
-                    </EditButtonContainer>
-                </GraphContainer>
-            </Box>
-            <CheckBoxContainer mt={7} mx={3} onClick={() => editSection()}>
-                <CheckBoxSection className="checkBoxSection">
-                    <Typography variant="body1" pr={2}><strong>Vitamins</strong></Typography>
-                    {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
-                </CheckBoxSection>
-                <CheckBoxSection className="checkBoxSection">
-                    <Typography variant="body1" pr={2}><strong>Probiotics</strong></Typography>
-                    {probiotics ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
-                </CheckBoxSection>
-                <EditButtonContainer className="editButton">
-                    <IconButton color="inherit">
-                        <EditIcon />
-                    </IconButton>
-                </EditButtonContainer>
-            </CheckBoxContainer>    
-            <Box mt={7}>
-                <Box display="flex" flexDirection="row" justifyContent="space-evenly">
-                    <WritingContainer onClick={() => editSection()}>
-                        <WritingSection className="writingSection">
-                            <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
-                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
-                                <Typography variant="body1">{childbirthEducation}</Typography>
-                            </Box>
-                        </WritingSection>
-                        <EditButtonContainer className="editButton" top={-15}>
+        <>
+            <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
+                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
+                    <GraphContainer onClick={() => editSection("graph", "waterIntake")}>
+                        <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
+                        <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
                                 <EditIcon />
                             </IconButton>
                         </EditButtonContainer>
-                    </WritingContainer>
-                    <WritingContainer onClick={() => editSection()}>
-                        <WritingSection className="writingSection">
-                            <Typography variant="body1"><strong>Self Care</strong></Typography>
-                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
-                                <Typography variant="body1">{selfCare}</Typography>
-                            </Box> 
-                            <EditButtonContainer className="editButton" top={-15}>
-                                <IconButton color="inherit">
-                                    <EditIcon />
-                                </IconButton>
-                            </EditButtonContainer>
-                        </WritingSection>
-                    </WritingContainer>
+                    </GraphContainer>
+                    <GraphContainer onClick={() => editSection("graph", "proteinIntake")}>
+                        <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
+                        <EditButtonContainer className="editButton">
+                            <IconButton color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </EditButtonContainer>
+                    </GraphContainer>
+                    <GraphContainer onClick={() => editSection("graph", "exercise")}>
+                        <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
+                        <EditButtonContainer className="editButton">
+                            <IconButton color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </EditButtonContainer>
+                    </GraphContainer>
+                </Box>    
+                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
+                    <GraphContainer onClick={() => editSection("graph", "kegels")}>
+                        <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
+                        <EditButtonContainer className="editButton">
+                            <IconButton color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </EditButtonContainer>
+                    </GraphContainer>
+                    <GraphContainer onClick={() => editSection("graph", "garlandPose")}>
+                        <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
+                        <EditButtonContainer className="editButton">
+                            <IconButton color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </EditButtonContainer>
+                    </GraphContainer>
                 </Box>
-                <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
-                    <WritingContainer onClick={() => editSection()}>
-                        <WritingSection className="writingSection">
-                            <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
-                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
-                                <Typography variant="body1">{postpartumPrep}</Typography>
-                            </Box>
-                            <EditButtonContainer className="editButton" top={-15}>
-                                <IconButton color="inherit">
-                                    <EditIcon />
-                                </IconButton>
-                            </EditButtonContainer>
-                        </WritingSection>
-                    </WritingContainer>
-                    <WritingContainer onClick={() => editSection()}>
-                        <WritingSection className="writingSection">
-                            <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
-                            <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
-                                <Typography variant="body1">{fetalLoveBreak}</Typography>
-                            </Box>
-                            <EditButtonContainer className="editButton" top={-15}>
-                                <IconButton color="inherit">
-                                    <EditIcon />
-                                </IconButton>
-                            </EditButtonContainer>
-                        </WritingSection>
-                    </WritingContainer>
-                </Box>
-            </Box>
-            <MoodContainer my={7} mx={3}>
-                <MoodSection className="moodSection" onClick={() => editSection()}>
-                    <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
-                    <Box display="flex" flexDirection="row" justifyContent="space-around" >
-                        <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
-                        <SentimentDissatisfiedIcon fontSize="large" color={mood === "bad" ? "error" : "disabled"}/>
-                        <SentimentNeutralIcon fontSize="large" color={mood === "ok" ? "inherit" : "disabled"}/>
-                        <SentimentSatisfiedIcon fontSize="large" color={mood === "good" ? "success" : "disabled"}/>
-                        <SentimentSatisfiedAltIcon fontSize="large" color={mood === "great" ? "success" : "disabled"}/>
-                    </Box>
+                <CheckBoxContainer mt={7} mx={3} onClick={() => editSection("checkbox")}>
+                    <CheckBoxSection className="checkBoxSection">
+                        <Typography variant="body1" pr={2}><strong>Vitamins</strong></Typography>
+                        {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
+                    </CheckBoxSection>
+                    <CheckBoxSection className="checkBoxSection">
+                        <Typography variant="body1" pr={2}><strong>Probiotics</strong></Typography>
+                        {probiotics ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
+                    </CheckBoxSection>
                     <EditButtonContainer className="editButton">
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonContainer>
-                </MoodSection>
-            </MoodContainer>
-        </Box>
+                </CheckBoxContainer>    
+                <Box mt={7}>
+                    <Box display="flex" flexDirection="row" justifyContent="space-evenly">
+                        <WritingContainer onClick={() => editSection("writing", "childbirthEducation")}>
+                            <WritingSection className="writingSection">
+                                <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
+                                <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                    <Typography variant="body1">{childbirthEducation}</Typography>
+                                </Box>
+                            </WritingSection>
+                            <EditButtonContainer className="editButton" top={-15}>
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonContainer>
+                        </WritingContainer>
+                        <WritingContainer onClick={() => editSection("writing", "selfCare")}>
+                            <WritingSection className="writingSection">
+                                <Typography variant="body1"><strong>Self Care</strong></Typography>
+                                <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                    <Typography variant="body1">{selfCare}</Typography>
+                                </Box> 
+                                <EditButtonContainer className="editButton" top={-15}>
+                                    <IconButton color="inherit">
+                                        <EditIcon />
+                                    </IconButton>
+                                </EditButtonContainer>
+                            </WritingSection>
+                        </WritingContainer>
+                    </Box>
+                    <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
+                        <WritingContainer onClick={() => editSection("writing", "postpartumPrep")}>
+                            <WritingSection className="writingSection">
+                                <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
+                                <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                    <Typography variant="body1">{postpartumPrep}</Typography>
+                                </Box>
+                                <EditButtonContainer className="editButton" top={-15}>
+                                    <IconButton color="inherit">
+                                        <EditIcon />
+                                    </IconButton>
+                                </EditButtonContainer>
+                            </WritingSection>
+                        </WritingContainer>
+                        <WritingContainer onClick={() => editSection("writing", "fetalLoveBreak")}>
+                            <WritingSection className="writingSection">
+                                <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
+                                <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                    <Typography variant="body1">{fetalLoveBreak}</Typography>
+                                </Box>
+                                <EditButtonContainer className="editButton" top={-15}>
+                                    <IconButton color="inherit">
+                                        <EditIcon />
+                                    </IconButton>
+                                </EditButtonContainer>
+                            </WritingSection>
+                        </WritingContainer>
+                    </Box>
+                </Box>
+                <MoodContainer my={7} mx={3}>
+                    <MoodSection className="moodSection" onClick={() => editSection("mood")}>
+                        <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
+                        <Box display="flex" flexDirection="row" justifyContent="space-around" >
+                            <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
+                            <SentimentDissatisfiedIcon fontSize="large" color={mood === "bad" ? "error" : "disabled"}/>
+                            <SentimentNeutralIcon fontSize="large" color={mood === "ok" ? "inherit" : "disabled"}/>
+                            <SentimentSatisfiedIcon fontSize="large" color={mood === "good" ? "success" : "disabled"}/>
+                            <SentimentSatisfiedAltIcon fontSize="large" color={mood === "great" ? "success" : "disabled"}/>
+                        </Box>
+                        <EditButtonContainer className="editButton">
+                            <IconButton color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </EditButtonContainer>
+                    </MoodSection>
+                </MoodContainer>
+            </Box>
+            <UpdateEntryModal 
+                isOpen={isUpdateEntryModalOpen}
+                onClose={() => closeUpdateModal()}
+                modalTitle="Update Journal Entry Section"
+                modalDescription="Update the journal entry or go back to the dashboard."
+                modalMessage="Please input your updated information for this journal entry."
+                section={sectionEditing}
+                inputType={inputType}
+            />
+        </>
     );
 };
 
