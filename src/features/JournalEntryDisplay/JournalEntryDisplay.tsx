@@ -29,10 +29,11 @@ interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
     user: User;
     refetch: () => void;
+    triggerSnackBar: (err: boolean, message: string) => void;
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
-    const { journalEntry, user, refetch } = props;
+    const { journalEntry, user, refetch, triggerSnackBar } = props;
     const [isUpdateEntryModalOpen, setIsUpdateEntryModalOpen] = useState(false);
     const [sectionEditing, setSectionEditing] = useState<string>("");
 
@@ -75,7 +76,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     }
 
     const onUpdateClick = (err: boolean, message: string) => {
-        console.log(err,"err", message, "message")
+        triggerSnackBar(err, message);
         if (err) {
           setIsUpdateEntryModalOpen(true);
         } else {

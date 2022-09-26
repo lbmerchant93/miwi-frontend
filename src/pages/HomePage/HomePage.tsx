@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 // import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../shared/auth-context';
 import Box from '@mui/material/Box';
@@ -7,6 +7,8 @@ import JournalEntryDisplay from '../../features/JournalEntryDisplay/JournalEntry
 import { useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
 import MessagePage from '../../components/MessagePage/MessagePage';
+import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
+import { Alert } from '@mui/material';
 
 export interface JournalEntry {
     id: number;
@@ -30,6 +32,19 @@ const HomePage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
     const { data: firstJournalEntry, refetch } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true));
+    const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
+
+    const triggerSnackBar = (err: boolean, message: string) => {
+        setSnackBarDetails({ 
+            error: err, 
+            show: true, 
+            message: message
+        })
+    }
+
+    const dismissSnackBar = () => {
+        setSnackBarDetails({ ...snackBarDetails, show: false });
+    };
 
     if (!user.isLoggedIn) {
         return (
@@ -47,11 +62,19 @@ const HomePage = () => {
             {/* Insert loading for journal entry display */}
         </Box>
     ) : (
-        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
-            <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
-            <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
-            <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} refetch={refetch} />
-        </Box>
+        <>
+            <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
+                <Alert onClose={dismissSnackBar} severity={snackBarDetails.error ? "error" : "success"} variant="filled">
+                    {snackBarDetails.message}
+                </Alert>
+            </SnackBar>
+            <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
+                <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
+                <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
+                <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} refetch={refetch} triggerSnackBar={triggerSnackBar}/>
+            </Box>
+        </>
+        
     )
 }
 
