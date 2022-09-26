@@ -148,10 +148,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 </CheckBoxContainer>    
                 <Box mt={7}>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly">
-                        <WritingContainer onClick={() => console.log('edit')}>
+                        <WritingContainer onClick={() => editSection("childbirthEducation")}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
-                                <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
+                                <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"} p={1}>
                                     <Typography variant="body1">{childbirthEducation}</Typography>
                                 </Box>
                             </WritingSection>
@@ -161,7 +161,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </IconButton>
                             </EditButtonContainer>
                         </WritingContainer>
-                        <WritingContainer onClick={() => console.log('edit')}>
+                        <WritingContainer onClick={() => editSection("selfCare")}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Self Care</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
@@ -176,7 +176,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </WritingContainer>
                     </Box>
                     <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
-                        <WritingContainer onClick={() => console.log('edit')}>
+                        <WritingContainer onClick={() => editSection("postpartumPrep")}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
@@ -189,7 +189,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </EditButtonContainer>
                             </WritingSection>
                         </WritingContainer>
-                        <WritingContainer onClick={() => console.log('edit')}>
+                        <WritingContainer onClick={() => editSection("fetalLoveBreak")}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>

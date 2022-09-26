@@ -15,6 +15,7 @@ import { useUpdateJournalEntry, useCreateJournalEntry } from '../../api/journalE
 import moment from 'moment';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import TextField from '@mui/material/TextField';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -76,6 +77,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateGarlandPose, setUpdateGarlandPose] = useState(garlandPose);
     const [updatePrenatalVitamins, setUpdatePrenatalVitamins] = useState(prenatalVitamins);
     const [updateProbiotics, setUpdateProbiotics] = useState(probiotics);
+    const [updateChildbirthEducation, setUpdateChildbirthEducation] = useState(childbirthEducation);
     const updateJournalEntry = useUpdateJournalEntry();
     const createJournalEntry = useCreateJournalEntry();
 
@@ -93,7 +95,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 prenatalVitamins: updatePrenatalVitamins,
                 probiotics: updateProbiotics,
                 mood: mood,
-                childbirthEducation: childbirthEducation,
+                childbirthEducation: updateChildbirthEducation,
                 selfCare: selfCare,
                 postpartumPrep: postpartumPrep,
                 fetalLoveBreak: fetalLoveBreak
@@ -122,7 +124,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 probiotics: updateProbiotics,
                 authorId: authorId,
                 mood: mood,
-                childbirthEducation: childbirthEducation,
+                childbirthEducation: updateChildbirthEducation,
                 selfCare: selfCare,
                 postpartumPrep: postpartumPrep,
                 fetalLoveBreak: fetalLoveBreak
@@ -309,7 +311,24 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                             />
                     </>
                 );
-            case "writing":
+            case "childbirthEducation":
+                return (
+                    <Box width={"100%"}>
+                        <TextField
+                            label="Childbirth Education"
+                            multiline
+                            rows={10}
+                            value={updateChildbirthEducation}
+                            onChange={(e) => setUpdateChildbirthEducation(e.currentTarget.value)}
+                            fullWidth
+                        />
+                    </Box>
+                );
+            case "selfCare":
+                return (<Typography variant="body1">writing</Typography>);
+            case "postpartumPrep":
+                return (<Typography variant="body1">writing</Typography>);
+            case "fetalLoveBreak":
                 return (<Typography variant="body1">writing</Typography>);
             case "mood":
                 return (<Typography variant="body1">mood</Typography>);
