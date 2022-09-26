@@ -11,6 +11,7 @@ import { User } from '../../shared/auth-context';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
+import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -21,6 +22,7 @@ interface UpdateEntryModalProps {
     section: string;
     journalEntry: JournalEntry | null;
     user: User;
+    onUpdateClick: (err: boolean, message: string) => void;
 };
 
 const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
@@ -32,25 +34,26 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
         // modalMessage, 
         section,
         journalEntry,
-        user
+        user, 
+        onUpdateClick
     } = props;
 
     const {
-        // id,
-        // authorId,
-        // date,
+        id,
+        authorId = user.id,
+        date = "",
         waterIntake = 0, 
         proteinIntake = 0, 
         exercise = 0, 
         kegels = 0, 
         garlandPose = 0, 
-        // prenatalVitamins, 
-        // probiotics, 
-        // mood = "",
-        // childbirthEducation = "Write about what you read today...",
-        // selfCare = "Write about what you did for your body today...",
-        // postpartumPrep = "Write about how you are preparing for postpartum...",
-        // fetalLoveBreak = "Write about what you said to your baby today..."
+        prenatalVitamins = false, 
+        probiotics = false, 
+        mood = "",
+        childbirthEducation = "Write about what you read today...",
+        selfCare = "Write about what you did for your body today...",
+        postpartumPrep = "Write about how you are preparing for postpartum...",
+        fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
     const { 
@@ -68,6 +71,63 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateExercise, setUpdateExercise] = useState(exercise);
     const [updateKegels, setUpdateKegels] = useState(kegels);
     const [updateGarlandPose, setUpdateGarlandPose] = useState(garlandPose);
+    const updateJournalEntry = useUpdateJournalEntry();
+
+    const handleUpdateEntry = () => {
+        setIsLoading(true)
+        const updatedEntry = {
+            id: JSON.stringify(id),
+            date: date,
+            waterIntake: updateWaterIntake,
+            proteinIntake: updateProteinIntake,
+            exercise: updateExercise,
+            kegels: updateKegels,
+            garlandPose: updateGarlandPose,
+            prenatalVitamins: prenatalVitamins,
+            probiotics: probiotics,
+            authorId: authorId,
+            mood: mood,
+            childbirthEducation: childbirthEducation,
+            selfCare: selfCare,
+            postpartumPrep: postpartumPrep,
+            fetalLoveBreak: fetalLoveBreak
+        };
+    
+        const previousEntry = {
+            id: JSON.stringify(id),
+            date: date,
+            waterIntake: waterIntake,
+            proteinIntake: proteinIntake,
+            exercise: exercise,
+            kegels: kegels,
+            garlandPose: garlandPose,
+            prenatalVitamins: prenatalVitamins,
+            probiotics: probiotics,
+            authorId: authorId,
+            mood: mood,
+            childbirthEducation: childbirthEducation,
+            selfCare: selfCare,
+            postpartumPrep: postpartumPrep,
+            fetalLoveBreak: fetalLoveBreak
+        }
+    
+        if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
+            updateJournalEntry.mutate(updatedEntry, {
+                onError: (err: any) => {
+                    onUpdateClick(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: () => {
+                    onUpdateClick(false, 'Journal entry update successful!')
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
+            });
+        } else {
+            onUpdateClick(true, 'Please update the form before clicking submit.')
+            setIsLoading(false)
+        };
+    };
 
     const renderCurrentInputType = () => {
         switch (section) {
@@ -94,6 +154,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                 </Button>
                             </Box>
                         </Box>
+                        <Box display="flex" justifyContent={"center"} mt={3}>
+                            <LoadingButton
+                                onClick={() => handleUpdateEntry()} 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
+                        </Box>
                     </>
                 );
             case "proteinIntake":
@@ -118,6 +188,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <AddIcon/>
                                 </Button>
                             </Box>
+                        </Box>
+                        <Box display="flex" justifyContent={"center"} mt={3}>
+                            <LoadingButton
+                                onClick={() => handleUpdateEntry()} 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
                         </Box>
                     </>
                 );
@@ -144,6 +224,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                 </Button>
                             </Box>
                         </Box>
+                        <Box display="flex" justifyContent={"center"} mt={3}>
+                            <LoadingButton
+                                onClick={() => handleUpdateEntry()} 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
+                        </Box>
                     </>
                 );
             case "kegels":
@@ -169,6 +259,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                 </Button>
                             </Box>
                         </Box>
+                        <Box display="flex" justifyContent={"center"} mt={3}>
+                            <LoadingButton
+                                onClick={() => handleUpdateEntry()} 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
+                        </Box>
                     </>
                 );
             case "garlandPose":
@@ -193,6 +293,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <AddIcon/>
                                 </Button>
                             </Box>
+                        </Box>
+                        <Box display="flex" justifyContent={"center"} mt={3}>
+                            <LoadingButton
+                                onClick={() => handleUpdateEntry()} 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
                         </Box>
                     </>
                 );
@@ -223,16 +333,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 </Box>
                 <Typography variant="h4" mb={3}>Update Journal Entry</Typography>
                 {renderCurrentInputType()}
-                <Box display="flex" justifyContent={"center"} mt={3}>
-                    <LoadingButton
-                        onClick={() => console.log("update")} 
-                        variant='contained' 
-                        color='success'
-                        loading={isLoading}
-                    >
-                            Update
-                    </LoadingButton>
-                </Box>
             </Box>
         </Modal>
     )

@@ -28,10 +28,11 @@ import UpdateEntryModal from '../../components/UpdateEntryModal/UpdateEntryModal
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
     user: User;
+    refetch: () => void;
 }
 
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
-    const { journalEntry, user } = props;
+    const { journalEntry, user, refetch } = props;
     const [isUpdateEntryModalOpen, setIsUpdateEntryModalOpen] = useState(false);
     const [sectionEditing, setSectionEditing] = useState<string>("");
 
@@ -71,6 +72,16 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const closeUpdateModal = () => {
         setIsUpdateEntryModalOpen(false);
         setSectionEditing("");
+    }
+
+    const onUpdateClick = (err: boolean, message: string) => {
+        console.log(err,"err", message, "message")
+        if (err) {
+          setIsUpdateEntryModalOpen(true);
+        } else {
+          setIsUpdateEntryModalOpen(false);
+          refetch()
+        }
     }
 
     return (
@@ -220,6 +231,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 section={sectionEditing}
                 journalEntry={journalEntry}
                 user={user}
+                onUpdateClick={onUpdateClick}
             />
         </>
     );

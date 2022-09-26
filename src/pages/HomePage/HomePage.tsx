@@ -29,7 +29,7 @@ export interface JournalEntry {
 const HomePage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
-    const { data: firstJournalEntry } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true));
+    const { data: firstJournalEntry, refetch } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true));
 
     if (!user.isLoggedIn) {
         return (
@@ -50,7 +50,7 @@ const HomePage = () => {
         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
             <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
-            <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} />
+            <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} refetch={refetch} />
         </Box>
     )
 }
