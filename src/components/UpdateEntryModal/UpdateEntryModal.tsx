@@ -13,6 +13,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import { useUpdateJournalEntry, useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
 import moment from 'moment';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -72,6 +74,8 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateExercise, setUpdateExercise] = useState(exercise);
     const [updateKegels, setUpdateKegels] = useState(kegels);
     const [updateGarlandPose, setUpdateGarlandPose] = useState(garlandPose);
+    const [updatePrenatalVitamins, setUpdatePrenatalVitamins] = useState(prenatalVitamins);
+    const [updateProbiotics, setUpdateProbiotics] = useState(probiotics);
     const updateJournalEntry = useUpdateJournalEntry();
     const createJournalEntry = useCreateJournalEntry();
 
@@ -86,8 +90,8 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 exercise: updateExercise,
                 kegels: updateKegels,
                 garlandPose: updateGarlandPose,
-                prenatalVitamins: prenatalVitamins,
-                probiotics: probiotics,
+                prenatalVitamins: updatePrenatalVitamins,
+                probiotics: updateProbiotics,
                 mood: mood,
                 childbirthEducation: childbirthEducation,
                 selfCare: selfCare,
@@ -114,8 +118,8 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 exercise: updateExercise,
                 kegels: updateKegels,
                 garlandPose: updateGarlandPose,
-                prenatalVitamins: prenatalVitamins,
-                probiotics: probiotics,
+                prenatalVitamins: updatePrenatalVitamins,
+                probiotics: updateProbiotics,
                 authorId: authorId,
                 mood: mood,
                 childbirthEducation: childbirthEducation,
@@ -289,7 +293,22 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                     </>
                 );
             case "checkbox":
-                return (<Typography variant="body1">checkbox</Typography>);
+                return (
+                    <>
+                            <FormControlLabel
+                                value="start"
+                                control={<Checkbox checked={updatePrenatalVitamins} onChange={() => setUpdatePrenatalVitamins(!updatePrenatalVitamins)} />}
+                                label={<Typography variant="h6"><strong>Prenatal Vitamins</strong></Typography>}
+                                labelPlacement="start"
+                            />
+                            <FormControlLabel
+                                value="start"
+                                control={<Checkbox checked={updateProbiotics} onChange={() => setUpdateProbiotics(!updateProbiotics)} />}
+                                label={<Typography variant="h6"><strong>Probiotics</strong></Typography>}
+                                labelPlacement="start"
+                            />
+                    </>
+                );
             case "writing":
                 return (<Typography variant="body1">writing</Typography>);
             case "mood":
@@ -307,23 +326,32 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
             aria-describedby={`${modalDescription}`}
             className="update-entry-modal"
         >
-            <Box bgcolor="white" width={450} height={450} position="relative" p={3} display="flex" flexDirection="column" textAlign={"center"} alignItems="center">
+            <Box bgcolor="white" width={450} height={450} position="relative" p={3}>
                 <Box position={"absolute"} left={"92%"} top={"1%"}>
                     <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
                         <CloseIcon />
                     </IconButton>
                 </Box>
-                <Typography variant="h4" mb={3}>Update Journal Entry</Typography>
-                {renderCurrentInputType()}
-                <Box display="flex" justifyContent={"center"} mt={3}>
-                    <LoadingButton
-                        onClick={() => handleUpdateEntry()} 
-                        variant='contained' 
-                        color='success'
-                        loading={isLoading}
-                    >
-                            Update
-                    </LoadingButton>
+                <Box 
+                    display="flex" 
+                    flexDirection="column" 
+                    textAlign="center"
+                    alignItems="center" 
+                    height={"100%"} 
+                    justifyContent="space-between"
+                >
+                   <Typography variant="h4" mb={3}>Update Journal Entry</Typography>
+                    {renderCurrentInputType()}
+                    <Box display="flex" justifyContent={"center"} mt={3}>
+                        <LoadingButton
+                            onClick={() => handleUpdateEntry()} 
+                            variant='contained' 
+                            color='success'
+                            loading={isLoading}
+                        >
+                                Update
+                        </LoadingButton>
+                    </Box> 
                 </Box>
             </Box>
         </Modal>
