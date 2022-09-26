@@ -40,7 +40,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
         // authorId,
         // date,
         waterIntake = 0, 
-        // proteinIntake = 0, 
+        proteinIntake = 0, 
         // exercise = 0, 
         // kegels = 0, 
         // garlandPose = 0, 
@@ -58,12 +58,13 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
         // exerciseGoal, 
         // garlandPoseGoal, 
         // kegelsGoal, 
-        // proteinIntakeGoal, 
+        proteinIntakeGoal, 
         waterIntakeGoal 
     } = user.goals;
 
     const [isLoading, setIsLoading] = useState(false);
     const [updateWaterIntake, setUpdateWaterIntake] = useState(waterIntake);
+    const [updateProteinIntake, setUpdateProteinIntake] = useState(proteinIntake);
 
     const renderCurrentInputType = () => {
         switch (section) {
@@ -94,9 +95,28 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 );
             case "proteinIntake":
                 return (
-                    <Box height={250} width={250}>
-                        <DoughnutGraph name={'Protein'} completed={5} goal={20} color={"#FF6961"}/>
-                    </Box>
+                    <>
+                        <Box height={250} width={250}>
+                            <DoughnutGraph name={'Protein'} completed={updateProteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
+                        </Box>
+                        <Box display="flex" flexDirection="row" mt={5}>
+                            <Box mr={5}>
+                                <Button 
+                                    variant="outlined"
+                                    onClick={() => setUpdateProteinIntake(prev => prev - 1)}
+                                    disabled={updateProteinIntake === 0}
+                                >
+                                    <RemoveIcon/>
+                                </Button>
+                            </Box>
+                            <Typography variant="h6">{updateProteinIntake}</Typography>
+                            <Box ml={5}>
+                                <Button variant="outlined" onClick={() => setUpdateProteinIntake(prev => prev + 1)}>
+                                    <AddIcon/>
+                                </Button>
+                            </Box>
+                        </Box>
+                    </>
                 );
             case "exercise":
                 return (
