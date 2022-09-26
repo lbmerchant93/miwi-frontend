@@ -78,6 +78,9 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updatePrenatalVitamins, setUpdatePrenatalVitamins] = useState(prenatalVitamins);
     const [updateProbiotics, setUpdateProbiotics] = useState(probiotics);
     const [updateChildbirthEducation, setUpdateChildbirthEducation] = useState(childbirthEducation);
+    const [updateSelfCare, setUpdateSelfCare] = useState(selfCare);
+    const [updatePostpartumPrep, setUpdatePostpartumPrep] = useState(postpartumPrep);
+    const [updateFetalLoveBreak, setUpdateFetalLoveBreak] = useState(fetalLoveBreak);
     const updateJournalEntry = useUpdateJournalEntry();
     const createJournalEntry = useCreateJournalEntry();
 
@@ -96,9 +99,9 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 probiotics: updateProbiotics,
                 mood: mood,
                 childbirthEducation: updateChildbirthEducation,
-                selfCare: selfCare,
-                postpartumPrep: postpartumPrep,
-                fetalLoveBreak: fetalLoveBreak
+                selfCare: updateSelfCare,
+                postpartumPrep: updatePostpartumPrep,
+                fetalLoveBreak: updateFetalLoveBreak
             };
             createJournalEntry.mutate(journalEntry, {
                 onError: (err: any) => {
@@ -125,9 +128,9 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 authorId: authorId,
                 mood: mood,
                 childbirthEducation: updateChildbirthEducation,
-                selfCare: selfCare,
-                postpartumPrep: postpartumPrep,
-                fetalLoveBreak: fetalLoveBreak
+                selfCare: updateSelfCare,
+                postpartumPrep: updatePostpartumPrep,
+                fetalLoveBreak: updateFetalLoveBreak
             };
         
             const previousEntry = {
@@ -325,11 +328,44 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                     </Box>
                 );
             case "selfCare":
-                return (<Typography variant="body1">writing</Typography>);
+                return (
+                    <Box width={"100%"}>
+                        <TextField
+                            label="Self Care"
+                            multiline
+                            rows={10}
+                            value={updateSelfCare}
+                            onChange={(e) => setUpdateSelfCare(e.currentTarget.value)}
+                            fullWidth
+                        />
+                    </Box>
+                );
             case "postpartumPrep":
-                return (<Typography variant="body1">writing</Typography>);
+                return (
+                    <Box width={"100%"}>
+                        <TextField
+                            label="Postpartum Prep"
+                            multiline
+                            rows={10}
+                            value={updatePostpartumPrep}
+                            onChange={(e) => setUpdatePostpartumPrep(e.currentTarget.value)}
+                            fullWidth
+                        />
+                    </Box>
+                );
             case "fetalLoveBreak":
-                return (<Typography variant="body1">writing</Typography>);
+                return (
+                    <Box width={"100%"}>
+                        <TextField
+                            label="Fetal Love Break"
+                            multiline
+                            rows={10}
+                            value={updateFetalLoveBreak}
+                            onChange={(e) => setUpdateFetalLoveBreak(e.currentTarget.value)}
+                            fullWidth
+                        />
+                    </Box>
+                );
             case "mood":
                 return (<Typography variant="body1">mood</Typography>);
             default:
