@@ -11,7 +11,8 @@ import { User } from '../../shared/auth-context';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
-import { useUpdateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useUpdateJournalEntry, useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
+import moment from 'moment';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -41,7 +42,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const {
         id,
         authorId = user.id,
-        date = "",
+        date = moment().startOf('day').toISOString(true),
         waterIntake = 0, 
         proteinIntake = 0, 
         exercise = 0, 
@@ -72,47 +73,28 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateKegels, setUpdateKegels] = useState(kegels);
     const [updateGarlandPose, setUpdateGarlandPose] = useState(garlandPose);
     const updateJournalEntry = useUpdateJournalEntry();
+    const createJournalEntry = useCreateJournalEntry();
 
     const handleUpdateEntry = () => {
         setIsLoading(true)
-        const updatedEntry = {
-            id: JSON.stringify(id),
-            date: date,
-            waterIntake: updateWaterIntake,
-            proteinIntake: updateProteinIntake,
-            exercise: updateExercise,
-            kegels: updateKegels,
-            garlandPose: updateGarlandPose,
-            prenatalVitamins: prenatalVitamins,
-            probiotics: probiotics,
-            authorId: authorId,
-            mood: mood,
-            childbirthEducation: childbirthEducation,
-            selfCare: selfCare,
-            postpartumPrep: postpartumPrep,
-            fetalLoveBreak: fetalLoveBreak
-        };
-    
-        const previousEntry = {
-            id: JSON.stringify(id),
-            date: date,
-            waterIntake: waterIntake,
-            proteinIntake: proteinIntake,
-            exercise: exercise,
-            kegels: kegels,
-            garlandPose: garlandPose,
-            prenatalVitamins: prenatalVitamins,
-            probiotics: probiotics,
-            authorId: authorId,
-            mood: mood,
-            childbirthEducation: childbirthEducation,
-            selfCare: selfCare,
-            postpartumPrep: postpartumPrep,
-            fetalLoveBreak: fetalLoveBreak
-        }
-    
-        if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
-            updateJournalEntry.mutate(updatedEntry, {
+        if (id === undefined) {
+            const journalEntry = {
+                authorId: user.id,
+                date: date,
+                waterIntake: updateWaterIntake,
+                proteinIntake: updateProteinIntake,
+                exercise: updateExercise,
+                kegels: updateKegels,
+                garlandPose: updateGarlandPose,
+                prenatalVitamins: prenatalVitamins,
+                probiotics: probiotics,
+                mood: mood,
+                childbirthEducation: childbirthEducation,
+                selfCare: selfCare,
+                postpartumPrep: postpartumPrep,
+                fetalLoveBreak: fetalLoveBreak
+            };
+            createJournalEntry.mutate(journalEntry, {
                 onError: (err: any) => {
                     onUpdateClick(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
@@ -124,8 +106,58 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 }
             });
         } else {
-            onUpdateClick(true, 'Please update the form before clicking submit.')
-            setIsLoading(false)
+           const updatedEntry = {
+                id: JSON.stringify(id),
+                date: date,
+                waterIntake: updateWaterIntake,
+                proteinIntake: updateProteinIntake,
+                exercise: updateExercise,
+                kegels: updateKegels,
+                garlandPose: updateGarlandPose,
+                prenatalVitamins: prenatalVitamins,
+                probiotics: probiotics,
+                authorId: authorId,
+                mood: mood,
+                childbirthEducation: childbirthEducation,
+                selfCare: selfCare,
+                postpartumPrep: postpartumPrep,
+                fetalLoveBreak: fetalLoveBreak
+            };
+        
+            const previousEntry = {
+                id: JSON.stringify(id),
+                date: date,
+                waterIntake: waterIntake,
+                proteinIntake: proteinIntake,
+                exercise: exercise,
+                kegels: kegels,
+                garlandPose: garlandPose,
+                prenatalVitamins: prenatalVitamins,
+                probiotics: probiotics,
+                authorId: authorId,
+                mood: mood,
+                childbirthEducation: childbirthEducation,
+                selfCare: selfCare,
+                postpartumPrep: postpartumPrep,
+                fetalLoveBreak: fetalLoveBreak
+            }
+        
+            if (JSON.stringify(updatedEntry) !== JSON.stringify(previousEntry)) {
+                updateJournalEntry.mutate(updatedEntry, {
+                    onError: (err: any) => {
+                        onUpdateClick(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    },
+                    onSuccess: () => {
+                        onUpdateClick(false, 'Journal entry update successful!')
+                    },
+                    onSettled: () => {
+                        setIsLoading(false)
+                    }
+                });
+            } else {
+                onUpdateClick(true, 'Please update the form before clicking submit.')
+                setIsLoading(false)
+            }; 
         };
     };
 

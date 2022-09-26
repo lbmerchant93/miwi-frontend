@@ -48,7 +48,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     } = user.goals;
 
     const {
-        // id,
+        id,
         // authorId,
         // date,
         waterIntake = 0, 
@@ -64,6 +64,8 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         postpartumPrep = "Write about how you are preparing for postpartum...",
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
+    console.log(id, "id")
+    console.log(waterIntake)
 
     const editGraphSection = (section: string) => {
         setSectionEditing(section);

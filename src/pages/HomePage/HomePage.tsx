@@ -31,7 +31,7 @@ export interface JournalEntry {
 const HomePage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
-    const { data: firstJournalEntry, refetch } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true));
+    const { data: firstJournalEntry, refetch } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true), user.email);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const triggerSnackBar = (err: boolean, message: string) => {

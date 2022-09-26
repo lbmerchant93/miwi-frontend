@@ -54,13 +54,13 @@ const firstEntry = gql`
   }
 `
 
-export const useFindFirstEntry = (authorId: string | undefined, date: string) => {
+export const useFindFirstEntry = (authorId: string | undefined, date: string, email: string | null) => {
   const token = getAuthToken();
   const requestHeaders = {
       authorization: `Bearer ${token}`
   }
 
-  return useQuery(['firstEntry'], async () => {
+  return useQuery(['firstEntry', email], async () => {
     const { findFirstJournalEntry } = await request({
       url: endpoint,
       document: firstEntry,
