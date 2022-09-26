@@ -16,6 +16,11 @@ import moment from 'moment';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -81,6 +86,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateSelfCare, setUpdateSelfCare] = useState(selfCare);
     const [updatePostpartumPrep, setUpdatePostpartumPrep] = useState(postpartumPrep);
     const [updateFetalLoveBreak, setUpdateFetalLoveBreak] = useState(fetalLoveBreak);
+    const [updateMood, setUpdateMood] = useState(mood);
     const updateJournalEntry = useUpdateJournalEntry();
     const createJournalEntry = useCreateJournalEntry();
 
@@ -97,7 +103,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 garlandPose: updateGarlandPose,
                 prenatalVitamins: updatePrenatalVitamins,
                 probiotics: updateProbiotics,
-                mood: mood,
+                mood: updateMood,
                 childbirthEducation: updateChildbirthEducation,
                 selfCare: updateSelfCare,
                 postpartumPrep: updatePostpartumPrep,
@@ -126,7 +132,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 prenatalVitamins: updatePrenatalVitamins,
                 probiotics: updateProbiotics,
                 authorId: authorId,
-                mood: mood,
+                mood: updateMood,
                 childbirthEducation: updateChildbirthEducation,
                 selfCare: updateSelfCare,
                 postpartumPrep: updatePostpartumPrep,
@@ -367,7 +373,18 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                     </Box>
                 );
             case "mood":
-                return (<Typography variant="body1">mood</Typography>);
+                return (
+                    <Box>
+                        <Typography variant="h6" mb={2}><strong>How did you feel today overall?</strong></Typography>
+                        <Box display="flex" flexDirection="row" width={"100%"} justifyContent="space-around">
+                            <SentimentVeryDissatisfiedIcon fontSize="large" color={updateMood === "horrible" ? "error" : "disabled"} onClick={() => setUpdateMood("horrible")} />
+                            <SentimentDissatisfiedIcon fontSize="large" color={updateMood === "bad" ? "error" : "disabled"} onClick={() => setUpdateMood("bad")} />
+                            <SentimentNeutralIcon fontSize="large" color={updateMood === "ok" ? "inherit" : "disabled"} onClick={() => setUpdateMood("ok")} />
+                            <SentimentSatisfiedIcon fontSize="large" color={updateMood === "good" ? "success" : "disabled"} onClick={() => setUpdateMood("good")} />
+                            <SentimentSatisfiedAltIcon fontSize="large" color={updateMood === "great" ? "success" : "disabled"} onClick={() => setUpdateMood("great")} />
+                        </Box>
+                    </Box>
+                );
             default:
                 return (<Typography variant="body1">An error occurred, please try again!</Typography>)
         }

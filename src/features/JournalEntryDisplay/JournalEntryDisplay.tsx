@@ -205,7 +205,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     </Box>
                 </Box>
                 <MoodContainer my={7} mx={3}>
-                    <MoodSection className="moodSection" onClick={() => console.log('edit')}>
+                    <MoodSection className="moodSection" onClick={() => editSection("mood")}>
                         <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
                         <Box display="flex" flexDirection="row" justifyContent="space-around" >
                             <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
