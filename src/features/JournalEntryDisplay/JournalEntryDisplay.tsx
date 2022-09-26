@@ -33,8 +33,8 @@ interface JournalEntryDisplayProps {
 const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const { journalEntry, user } = props;
     const [isUpdateEntryModalOpen, setIsUpdateEntryModalOpen] = useState(false);
-    const [sectionEditing, setSectionEditing] = useState<string | undefined>("");
-    const [inputType, setInputType] = useState("");
+    const [sectionEditing, setSectionEditing] = useState<string>("");
+
 
     const { 
         // id: goalsId,
@@ -63,8 +63,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
 
-    const editSection = (inputType: string, section?: string) => {
-        setInputType(inputType)
+    const editGraphSection = (section: string) => {
         setSectionEditing(section);
         setIsUpdateEntryModalOpen(true);
     }
@@ -72,14 +71,13 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const closeUpdateModal = () => {
         setIsUpdateEntryModalOpen(false);
         setSectionEditing("");
-        setInputType("");
     }
 
     return (
         <>
             <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
                 <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                    <GraphContainer onClick={() => editSection("graph", "waterIntake")}>
+                    <GraphContainer onClick={() => editGraphSection("waterIntake")}>
                         <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -87,7 +85,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("graph", "proteinIntake")}>
+                    <GraphContainer onClick={() => editGraphSection("proteinIntake")}>
                         <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -95,7 +93,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("graph", "exercise")}>
+                    <GraphContainer onClick={() => editGraphSection("exercise")}>
                         <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -105,7 +103,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     </GraphContainer>
                 </Box>    
                 <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
-                    <GraphContainer onClick={() => editSection("graph", "kegels")}>
+                    <GraphContainer onClick={() => editGraphSection("kegels")}>
                         <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -113,7 +111,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("graph", "garlandPose")}>
+                    <GraphContainer onClick={() => editGraphSection("garlandPose")}>
                         <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -122,7 +120,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </EditButtonContainer>
                     </GraphContainer>
                 </Box>
-                <CheckBoxContainer mt={7} mx={3} onClick={() => editSection("checkbox")}>
+                <CheckBoxContainer mt={7} mx={3} onClick={() => console.log("edit checkbox")}>
                     <CheckBoxSection className="checkBoxSection">
                         <Typography variant="body1" pr={2}><strong>Vitamins</strong></Typography>
                         {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
@@ -139,7 +137,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 </CheckBoxContainer>    
                 <Box mt={7}>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly">
-                        <WritingContainer onClick={() => editSection("writing", "childbirthEducation")}>
+                        <WritingContainer onClick={() => console.log('edit')}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
@@ -152,7 +150,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </IconButton>
                             </EditButtonContainer>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("writing", "selfCare")}>
+                        <WritingContainer onClick={() => console.log('edit')}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Self Care</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
@@ -167,7 +165,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </WritingContainer>
                     </Box>
                     <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
-                        <WritingContainer onClick={() => editSection("writing", "postpartumPrep")}>
+                        <WritingContainer onClick={() => console.log('edit')}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
@@ -180,7 +178,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </EditButtonContainer>
                             </WritingSection>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("writing", "fetalLoveBreak")}>
+                        <WritingContainer onClick={() => console.log('edit')}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
                                 <Box border={"1px solid black"} borderRadius={5} height={"100%"} width={"100%"}>
@@ -196,7 +194,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     </Box>
                 </Box>
                 <MoodContainer my={7} mx={3}>
-                    <MoodSection className="moodSection" onClick={() => editSection("mood")}>
+                    <MoodSection className="moodSection" onClick={() => console.log('edit')}>
                         <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
                         <Box display="flex" flexDirection="row" justifyContent="space-around" >
                             <SentimentVeryDissatisfiedIcon fontSize="large" color={mood === "horrible" ? "error" : "disabled"}/>
@@ -220,7 +218,8 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 modalDescription="Update the journal entry or go back to the dashboard."
                 modalMessage="Please input your updated information for this journal entry."
                 section={sectionEditing}
-                inputType={inputType}
+                journalEntry={journalEntry}
+                user={user}
             />
         </>
     );
