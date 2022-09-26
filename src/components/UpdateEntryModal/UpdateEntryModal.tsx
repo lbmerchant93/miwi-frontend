@@ -154,16 +154,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                 </Button>
                             </Box>
                         </Box>
-                        <Box display="flex" justifyContent={"center"} mt={3}>
-                            <LoadingButton
-                                onClick={() => handleUpdateEntry()} 
-                                variant='contained' 
-                                color='success'
-                                loading={isLoading}
-                            >
-                                    Update
-                            </LoadingButton>
-                        </Box>
                     </>
                 );
             case "proteinIntake":
@@ -188,16 +178,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <AddIcon/>
                                 </Button>
                             </Box>
-                        </Box>
-                        <Box display="flex" justifyContent={"center"} mt={3}>
-                            <LoadingButton
-                                onClick={() => handleUpdateEntry()} 
-                                variant='contained' 
-                                color='success'
-                                loading={isLoading}
-                            >
-                                    Update
-                            </LoadingButton>
                         </Box>
                     </>
                 );
@@ -224,16 +204,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                 </Button>
                             </Box>
                         </Box>
-                        <Box display="flex" justifyContent={"center"} mt={3}>
-                            <LoadingButton
-                                onClick={() => handleUpdateEntry()} 
-                                variant='contained' 
-                                color='success'
-                                loading={isLoading}
-                            >
-                                    Update
-                            </LoadingButton>
-                        </Box>
                     </>
                 );
             case "kegels":
@@ -259,16 +229,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                 </Button>
                             </Box>
                         </Box>
-                        <Box display="flex" justifyContent={"center"} mt={3}>
-                            <LoadingButton
-                                onClick={() => handleUpdateEntry()} 
-                                variant='contained' 
-                                color='success'
-                                loading={isLoading}
-                            >
-                                    Update
-                            </LoadingButton>
-                        </Box>
                     </>
                 );
             case "garlandPose":
@@ -293,16 +253,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <AddIcon/>
                                 </Button>
                             </Box>
-                        </Box>
-                        <Box display="flex" justifyContent={"center"} mt={3}>
-                            <LoadingButton
-                                onClick={() => handleUpdateEntry()} 
-                                variant='contained' 
-                                color='success'
-                                loading={isLoading}
-                            >
-                                    Update
-                            </LoadingButton>
                         </Box>
                     </>
                 );
@@ -333,6 +283,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 </Box>
                 <Typography variant="h4" mb={3}>Update Journal Entry</Typography>
                 {renderCurrentInputType()}
+                <Box display="flex" justifyContent={"center"} mt={3}>
+                    <LoadingButton
+                        onClick={() => handleUpdateEntry()} 
+                        variant='contained' 
+                        color='success'
+                        loading={isLoading}
+                    >
+                            Update
+                    </LoadingButton>
+                </Box>
             </Box>
         </Modal>
     )
