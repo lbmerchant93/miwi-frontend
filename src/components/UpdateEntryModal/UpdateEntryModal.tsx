@@ -388,19 +388,35 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
             default:
                 return (<Typography variant="body1">An error occurred, please try again!</Typography>)
         }
-    }
+    };
+
+    const closeModal = () => {
+        setUpdateWaterIntake(waterIntake);
+        setUpdateProteinIntake(proteinIntake);
+        setUpdateExercise(exercise);
+        setUpdateKegels(kegels);
+        setUpdateGarlandPose(garlandPose);
+        setUpdatePrenatalVitamins(prenatalVitamins);
+        setUpdateProbiotics(probiotics);
+        setUpdateChildbirthEducation(childbirthEducation);
+        setUpdateSelfCare(selfCare);
+        setUpdatePostpartumPrep(postpartumPrep);
+        setUpdateFetalLoveBreak(fetalLoveBreak);
+        setUpdateMood(mood);
+        onClose();
+    };
 
     return (
         <Modal
             open={isOpen}
-            onClose={onClose}
+            onClose={closeModal}
             aria-labelledby={`${modalTitle}`}
             aria-describedby={`${modalDescription}`}
             className="update-entry-modal"
         >
             <Box bgcolor="white" width={450} height={450} position="relative" p={3}>
                 <Box position={"absolute"} left={"92%"} top={"1%"}>
-                    <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
+                    <IconButton onClick={closeModal} edge="start" color="inherit" aria-label="exit">
                         <CloseIcon />
                     </IconButton>
                 </Box>
