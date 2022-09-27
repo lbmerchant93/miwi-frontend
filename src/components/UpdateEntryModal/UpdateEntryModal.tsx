@@ -377,11 +377,11 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                     <Box>
                         <Typography variant="h6" mb={2}><strong>How did you feel today overall?</strong></Typography>
                         <Box display="flex" flexDirection="row" width={"100%"} justifyContent="space-around">
-                            <SentimentVeryDissatisfiedIcon fontSize="large" color={updateMood === "horrible" ? "error" : "disabled"} onClick={() => setUpdateMood("horrible")} />
-                            <SentimentDissatisfiedIcon fontSize="large" color={updateMood === "bad" ? "error" : "disabled"} onClick={() => setUpdateMood("bad")} />
-                            <SentimentNeutralIcon fontSize="large" color={updateMood === "ok" ? "inherit" : "disabled"} onClick={() => setUpdateMood("ok")} />
-                            <SentimentSatisfiedIcon fontSize="large" color={updateMood === "good" ? "success" : "disabled"} onClick={() => setUpdateMood("good")} />
-                            <SentimentSatisfiedAltIcon fontSize="large" color={updateMood === "great" ? "success" : "disabled"} onClick={() => setUpdateMood("great")} />
+                            <SentimentVeryDissatisfiedIcon fontSize="large" color={updateMood === "horrible" ? "error" : "disabled"} onClick={() => setUpdateMood("horrible")} style={{ cursor: "pointer" }}/>
+                            <SentimentDissatisfiedIcon fontSize="large" color={updateMood === "bad" ? "error" : "disabled"} onClick={() => setUpdateMood("bad")} style={{ cursor: "pointer" }}/>
+                            <SentimentNeutralIcon fontSize="large" color={updateMood === "ok" ? "inherit" : "disabled"} onClick={() => setUpdateMood("ok")} style={{ cursor: "pointer" }}/>
+                            <SentimentSatisfiedIcon fontSize="large" color={updateMood === "good" ? "success" : "disabled"} onClick={() => setUpdateMood("good")} style={{ cursor: "pointer" }}/>
+                            <SentimentSatisfiedAltIcon fontSize="large" color={updateMood === "great" ? "success" : "disabled"} onClick={() => setUpdateMood("great")} style={{ cursor: "pointer" }}/>
                         </Box>
                     </Box>
                 );
