@@ -194,7 +194,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <RemoveIcon/>
                                 </Button>
                             </Box>
-                            <Typography variant="h6">{updateWaterIntake}</Typography>
+                            <Typography variant="h6">{updateWaterIntake} oz</Typography>
                             <Box ml={5}>
                                 <Button variant="outlined" onClick={() => setUpdateWaterIntake(prev => prev + 1)}>
                                     <AddIcon/>
@@ -219,7 +219,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <RemoveIcon/>
                                 </Button>
                             </Box>
-                            <Typography variant="h6">{updateProteinIntake}</Typography>
+                            <Typography variant="h6">{updateProteinIntake} g</Typography>
                             <Box ml={5}>
                                 <Button variant="outlined" onClick={() => setUpdateProteinIntake(prev => prev + 1)}>
                                     <AddIcon/>
@@ -244,7 +244,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <RemoveIcon/>
                                 </Button>
                             </Box>
-                            <Typography variant="h6">{updateExercise}</Typography>
+                            <Typography variant="h6">{updateExercise} min</Typography>
                             <Box ml={5}>
                                 <Button variant="outlined" onClick={() => setUpdateExercise(prev => prev + 1)}>
                                     <AddIcon/>
@@ -294,7 +294,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                                     <RemoveIcon/>
                                 </Button>
                             </Box>
-                            <Typography variant="h6">{updateGarlandPose}</Typography>
+                            <Typography variant="h6">{updateGarlandPose} min</Typography>
                             <Box ml={5}>
                                 <Button variant="outlined" onClick={() => setUpdateGarlandPose(prev => prev + 1)}>
                                     <AddIcon/>
