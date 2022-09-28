@@ -55,6 +55,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         } else {
             localStorage.setItem('token', '');
             setUserId(undefined);
+            setEmail('');
             setIsLoggedIn(false);
             setIsLoadingUser(true);
             setDisplayName('');
@@ -87,7 +88,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             setUserId: setUserId,
             setExpectedDueDate: setExpectedDueDate,
             setDisplayName: setDisplayName,
-            setGoals: setGoals
+            setGoals: setGoals,
+            setIsLoadingUser: setIsLoadingUser
             }}
         >
             {props.children}

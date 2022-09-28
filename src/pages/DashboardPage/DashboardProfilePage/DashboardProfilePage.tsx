@@ -229,15 +229,13 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             try {
                 const provider = new GoogleAuthProvider();
                 const result = await reauthenticateWithPopup(auth.currentUser, provider);
-
-                await deleteUser(result.user)
-                
-                deleteUserAccount.mutate(user.id, {
+                await deleteUserAccount.mutate(user.id, {
                     onError: (err: any) => {
                         triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
                         setIsLoading(false)
                     },
                 })
+                await deleteUser(result.user)
             } catch (err: any) {
                 triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
                 setIsLoading(false)

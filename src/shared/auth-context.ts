@@ -17,11 +17,12 @@ export interface User {
     photoURL: string | null;
     expectedDueDate: string | null;
     email: string | null;
-    goals: Goals,
-    setUserId: Dispatch<SetStateAction<string | undefined>>
-    setExpectedDueDate: Dispatch<SetStateAction<string | null>>
-    setDisplayName: Dispatch<SetStateAction<string | null | undefined>>
-    setGoals: Dispatch<SetStateAction<Goals>>
+    goals: Goals;
+    setUserId: Dispatch<SetStateAction<string | undefined>>;
+    setExpectedDueDate: Dispatch<SetStateAction<string | null>>;
+    setDisplayName: Dispatch<SetStateAction<string | null | undefined>>;
+    setGoals: Dispatch<SetStateAction<Goals>>;
+    setIsLoadingUser: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AuthContext = createContext<User>({ 
@@ -43,5 +44,6 @@ export const AuthContext = createContext<User>({
     setUserId: () => {},
     setExpectedDueDate: () => {},
     setDisplayName: () => {},
-    setGoals: () => {}
+    setGoals: () => {},
+    setIsLoadingUser: () => {}
 })
