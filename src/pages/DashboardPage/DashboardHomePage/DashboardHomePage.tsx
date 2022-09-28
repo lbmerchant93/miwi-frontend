@@ -1,9 +1,9 @@
 import React from 'react';
-import JournalEntryCard from '../../../components/JournalEntryCard/JournalEntryCard';
+// import JournalEntryCard from '../../../components/JournalEntryCard/JournalEntryCard';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { JournalEntry } from '../DashboardPage';
+// import { JournalEntry } from '../DashboardPage';
 import { useNavigate } from 'react-router-dom';
 import JournalEntryCardSkeletonGrid from '../../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton'
 
@@ -23,13 +23,13 @@ interface DashboardHomePageProps {
 const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
     const { 
         data, 
-        triggerSnackBar, 
+        // triggerSnackBar, 
         isFetching,
         count,
         skipCount,
         setSkipCount,
-        refetch,
-        refetchCount
+        // refetch,
+        // refetchCount
     } = props
     const navigate = useNavigate();
 
@@ -65,7 +65,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
             {(!isFetching && data && data.length) ? 
             (
                 <>
-                    <Box className='dashboard-journal-entries-container'>
+                    {/* <Box className='dashboard-journal-entries-container'>
                         {data.map((entry: JournalEntry) => {
                             return (
                             <JournalEntryCard 
@@ -76,7 +76,7 @@ const DashboardHomePage: React.FC<DashboardHomePageProps> = (props) => {
                                 refetchCount={refetchCount}
                             />)
                         })}
-                    </Box>
+                    </Box> */}
                     <Box display="flex" justifyContent="center">
                     <Box mx={2}>
                         <Button
