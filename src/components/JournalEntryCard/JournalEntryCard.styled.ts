@@ -27,3 +27,11 @@ export const JournalEntryCardStyled = styled(Box)`
     display: flex;
     align-items: center;
 `;
+
+export const EditButtonContainer = styled(Box)`
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    left: 77%;
+    top: 8%;
+`;
