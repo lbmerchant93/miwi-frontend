@@ -32,6 +32,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     })
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
+    const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
     const { data } = useUser(userId, email);
 
     onAuthStateChanged(auth, async (user) => {
@@ -54,7 +55,9 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         } else {
             localStorage.setItem('token', '');
             setUserId(undefined);
+            setEmail('');
             setIsLoggedIn(false);
+            setIsLoadingUser(true);
             setDisplayName('');
             setPhotoURL('');
             setExpectedDueDate(null);
@@ -66,7 +69,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         if (data && data.id === userId) {
             setDisplayName(data.displayName);
             setExpectedDueDate(data.expectedDueDate);
-            setGoals(data.goals)
+            setGoals(data.goals);
+            setIsLoadingUser(false);
         } 
     }, [data, userId]);
 
@@ -74,6 +78,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         <AuthContext.Provider 
             value={{
             isLoggedIn: isLoggedIn,
+            isLoadingUser: isLoadingUser,
             id: userId,
             displayName: displayName,
             photoURL: photoURL,
@@ -83,7 +88,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             setUserId: setUserId,
             setExpectedDueDate: setExpectedDueDate,
             setDisplayName: setDisplayName,
-            setGoals: setGoals
+            setGoals: setGoals,
+            setIsLoadingUser: setIsLoadingUser
             }}
         >
             {props.children}

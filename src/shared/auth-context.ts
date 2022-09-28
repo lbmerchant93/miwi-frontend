@@ -2,29 +2,32 @@ import { createContext, Dispatch, SetStateAction } from "react";
 
 export interface Goals {
     id: string;
-    waterIntakeGoal: number | null;
-    proteinIntakeGoal: number | null;
-    exerciseGoal: number | null;
-    kegelsGoal: number | null;
-    garlandPoseGoal: number | null;
+    waterIntakeGoal: number;
+    proteinIntakeGoal: number;
+    exerciseGoal: number;
+    kegelsGoal: number;
+    garlandPoseGoal: number;
 }
 
 export interface User {
     isLoggedIn: boolean;
+    isLoadingUser: boolean;
     id: string | undefined;
     displayName?: string | null;
     photoURL: string | null;
     expectedDueDate: string | null;
     email: string | null;
-    goals: Goals,
-    setUserId: Dispatch<SetStateAction<string | undefined>>
-    setExpectedDueDate: Dispatch<SetStateAction<string | null>>
-    setDisplayName: Dispatch<SetStateAction<string | null | undefined>>
-    setGoals: Dispatch<SetStateAction<Goals>>
+    goals: Goals;
+    setUserId: Dispatch<SetStateAction<string | undefined>>;
+    setExpectedDueDate: Dispatch<SetStateAction<string | null>>;
+    setDisplayName: Dispatch<SetStateAction<string | null | undefined>>;
+    setGoals: Dispatch<SetStateAction<Goals>>;
+    setIsLoadingUser: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AuthContext = createContext<User>({ 
     isLoggedIn: false, 
+    isLoadingUser: false,
     id: undefined,
     displayName: '',
     photoURL: '',
@@ -32,14 +35,15 @@ export const AuthContext = createContext<User>({
     email: '',
     goals: {
         id: '',
-        waterIntakeGoal: null,
-        proteinIntakeGoal: null,
-        exerciseGoal: null,
-        kegelsGoal: null,
-        garlandPoseGoal: null
+        waterIntakeGoal: 0,
+        proteinIntakeGoal: 0,
+        exerciseGoal: 0,
+        kegelsGoal: 0,
+        garlandPoseGoal: 0
     },
     setUserId: () => {},
     setExpectedDueDate: () => {},
     setDisplayName: () => {},
-    setGoals: () => {}
+    setGoals: () => {},
+    setIsLoadingUser: () => {}
 })

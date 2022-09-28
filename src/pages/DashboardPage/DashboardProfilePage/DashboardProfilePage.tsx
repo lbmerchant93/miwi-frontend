@@ -60,11 +60,11 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
     const updateUser = useUpdateUser();
     const deleteUserAccount = useDeleteUser();
     const provider = auth.currentUser?.providerData[0].providerId;
-    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number | null>(null);
-    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number | null>(null);
-    const [exerciseGoal, setExerciseGoal] = useState<number | null>(null);
-    const [kegelsGoal, setKegelsGoal] = useState<number | null>(null);
-    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number | null>(null);
+    const [waterIntakeGoal, setWaterIntakeGoal] = useState<number >(20);
+    const [proteinIntakeGoal, setProteinIntakeGoal] = useState<number >(20);
+    const [exerciseGoal, setExerciseGoal] = useState<number >(20);
+    const [kegelsGoal, setKegelsGoal] = useState<number >(20);
+    const [garlandPoseGoal, setGarlandPoseGoal] = useState<number >(20);
     const updateGoals = useUpdateGoals();
 
     const handleUpdateSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -229,15 +229,13 @@ const DashboardProfilePage: React.FC<DashboardProfilePageProps> = (props) => {
             try {
                 const provider = new GoogleAuthProvider();
                 const result = await reauthenticateWithPopup(auth.currentUser, provider);
-
-                await deleteUser(result.user)
-                
-                deleteUserAccount.mutate(user.id, {
+                await deleteUserAccount.mutate(user.id, {
                     onError: (err: any) => {
                         triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
                         setIsLoading(false)
                     },
                 })
+                await deleteUser(result.user)
             } catch (err: any) {
                 triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
                 setIsLoading(false)

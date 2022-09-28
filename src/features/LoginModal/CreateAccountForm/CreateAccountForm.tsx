@@ -47,7 +47,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     user.setDisplayName(displayName)
                     setIsLoading(false)
                     onClose()
-                    navigate('/dashboard/home')
+                    navigate(`/home/${createdUser.user.email?.split('@')[0]}`)
                 }
             })
         } catch (error: any) {
@@ -66,7 +66,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                     console.log(err)
                 },
                 onSuccess: () => {
-                    navigate('/dashboard/home')
+                    navigate(`/home/${user.user.email?.split('@')[0]}`)
                     onClose()
                 }
             })
