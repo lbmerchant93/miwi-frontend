@@ -414,7 +414,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
             aria-describedby={`${modalDescription}`}
             className="update-entry-modal"
         >
-            <Box bgcolor="white" width={450} height={450} position="relative" p={3}>
+            <Box bgcolor="white" width={450} height={450} position={"relative"} p={3} left={"50%"} top={"50%"} style={{ transform: 'translate(-50%, -50%)' }}>
                 <Box position={"absolute"} left={"92%"} top={"1%"}>
                     <IconButton onClick={closeModal} edge="start" color="inherit" aria-label="exit">
                         <CloseIcon />
