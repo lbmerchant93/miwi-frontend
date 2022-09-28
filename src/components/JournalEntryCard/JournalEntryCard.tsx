@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import { JournalEntry } from '../../pages/HomePage/HomePage';
+import { JournalEntryCardContainer, JournalEntryCardStyled } from './JournalEntryCard.styled';
 
 interface JournalEntryCardProps {
   entry: JournalEntry;
@@ -12,9 +13,11 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const { entry } = props;
 
   return (
-    <Box border={'1px solid grey'} borderRadius={5} p={2} width={200} height={150} m={2} display={"flex"} alignItems={"center"}> 
-      <Typography variant="h5"><b>{moment(entry.date).format("dddd, MMMM Do YYYY ")}</b></Typography>
-    </Box>
+    <JournalEntryCardContainer onClick={() => console.log("view entry")}>
+      <JournalEntryCardStyled className="journalEntryCard">
+        <Typography variant="h5"><b>{moment(entry.date).format("dddd, MMMM Do YYYY ")}</b></Typography>
+      </JournalEntryCardStyled>
+    </JournalEntryCardContainer>
   );
 };
 
