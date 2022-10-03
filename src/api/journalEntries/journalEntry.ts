@@ -69,7 +69,48 @@ export const useFindFirstEntry = (authorId: string | undefined, date: string, em
     });
     return findFirstJournalEntry;
   })
-}
+};
+
+const firstEntryById = gql`
+  query FindFirstJournalEntry($id: Int, $authorId: String) {
+    findFirstJournalEntry(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }] }) {
+      id
+      date
+      exercise
+      garlandPose
+      kegels
+      prenatalVitamins
+      probiotics
+      proteinIntake
+      authorId
+      waterIntake
+      mood
+      childbirthEducation
+      selfCare
+      postpartumPrep
+      fetalLoveBreak
+    }
+  }
+`;
+
+export const useFindFirstEntryById = (authorId: string | undefined, id: string | undefined, email: string | null) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+      authorization: `Bearer ${token}`
+  }
+
+  return useQuery(['firstEntryById', id], async () => {
+    const { findFirstJournalEntry } = await request({
+      url: endpoint,
+      document: firstEntryById,
+      variables: { authorId, id: (isNaN(Number(id)) ? undefined : Number(id)) },
+      requestHeaders
+    });
+    return findFirstJournalEntry;
+  }, {
+    enabled: id !== null && id !== undefined && authorId !== undefined && authorId !== null && !isNaN(Number(id))
+  })
+};
 
 const createJournalEntryMutation = gql`
   mutation createJournalEntry($data: JournalEntryCreateInputData!){
