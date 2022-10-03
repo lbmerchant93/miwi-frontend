@@ -146,7 +146,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </IconButton>
                     </EditButtonContainer>
                 </CheckBoxContainer>    
-                <Box mt={7}>
+                <Box mt={7} mx={3} height={700}>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly">
                         <WritingContainer onClick={() => editSection("childbirthEducation")}>
                             <WritingSection className="writingSection">
