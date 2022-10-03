@@ -78,7 +78,7 @@ const AppBar: React.FC = () => {
                                     <HomeIcon />
                                 </Button>
                                 <Divider orientation="vertical" />
-                                <Button onClick={onListItemClick(() => navigate(`/journal/${user.email?.split('@')[0]}`))}>
+                                <Button onClick={onListItemClick(() => navigate(`/journal/entries`))}>
                                     <MenuBookIcon />
                                 </Button>
                                 <Divider orientation="vertical" />

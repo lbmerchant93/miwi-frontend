@@ -17,14 +17,14 @@ export const JournalEntries = gql`
     ) {
       id
       date
-      exercise
-      garlandPose
-      kegels
-      prenatalVitamins
-      probiotics
-      proteinIntake
+      # exercise
+      # garlandPose
+      # kegels
+      # prenatalVitamins
+      # probiotics
+      # proteinIntake
       authorId
-      waterIntake
+      # waterIntake
     }
   }
 `;
