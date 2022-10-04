@@ -14,12 +14,16 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import DeleteAccountModal from '../../components/DeleteAccountModal/DeleteAccountModal';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 import { 
     ProfilePageContainer, 
     UserInfoContainer, 
     UserGoalsContainer, 
-    UserGoalSection, 
-    DeleteAccountContainer 
+    UserGoalSection,
+    UserGoal, 
+    DeleteAccountContainer,
+    EditButtonContainer
 } from './ProfilePage.styled';
 
 const ProfilePage = () => {
@@ -82,32 +86,67 @@ const ProfilePage = () => {
                 <Box mx={4} my={2} border={"1px solid gray"}></Box>
                 <UserGoalsContainer my={3}>
                     <Box display="flex" flexDirection="row" justifyContent="space-around" my={3}>
-                        <UserGoalSection border={"18px solid #1ca3ec"} borderRadius={"50%"}>
-                            <LocalDrinkIcon fontSize="large" style={{ color: "#1ca3ec" }}/>
-                            <Typography variant="body1"><strong>Water</strong></Typography>
-                            <Typography variant="body1"><strong>{user.goals.waterIntakeGoal} oz</strong></Typography>
+                        <UserGoalSection>
+                            <EditButtonContainer className="editButton">
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonContainer>
+                            <UserGoal border={"18px solid #1ca3ec"} borderRadius={"50%"} className={"userGoal"}>
+                                <LocalDrinkIcon fontSize="large" style={{ color: "#1ca3ec" }}/>
+                                <Typography variant="body1"><strong>Water</strong></Typography>
+                                <Typography variant="body1"><strong>{user.goals.waterIntakeGoal} oz</strong></Typography>
+                            </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection border={"18px solid #FF6961"} borderRadius={"50%"}>
-                            <RestaurantIcon fontSize="large" color="disabled" />
-                            <Typography variant="body1"><strong>Protein</strong></Typography>
-                            <Typography variant="body1"><strong>{user.goals.proteinIntakeGoal} g</strong></Typography>
+                        <UserGoalSection>
+                            <EditButtonContainer className="editButton">
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonContainer>
+                            <UserGoal border={"18px solid #FF6961"} borderRadius={"50%"} className={"userGoal"}>
+                                <RestaurantIcon fontSize="large" color="disabled" />
+                                <Typography variant="body1"><strong>Protein</strong></Typography>
+                                <Typography variant="body1"><strong>{user.goals.proteinIntakeGoal} g</strong></Typography>
+                            </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection border={"18px solid #7FFFD4"} borderRadius={"50%"}>
-                            <FitnessCenterIcon fontSize="large" style={{ color: "#7FFFD4" }} />
-                            <Typography variant="body1"><strong>Exercise</strong></Typography>
-                            <Typography variant="body1"><strong>{user.goals.exerciseGoal} min</strong></Typography>
+                        <UserGoalSection>
+                            <EditButtonContainer className="editButton">
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonContainer>
+                            <UserGoal border={"18px solid #7FFFD4"} borderRadius={"50%"} className={"userGoal"}>
+                                <FitnessCenterIcon fontSize="large" style={{ color: "#7FFFD4" }} />
+                                <Typography variant="body1"><strong>Exercise</strong></Typography>
+                                <Typography variant="body1"><strong>{user.goals.exerciseGoal} min</strong></Typography>
+                            </UserGoal>
                         </UserGoalSection>
                     </Box>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly" my={3}>
-                        <UserGoalSection border={"18px solid #C27BA0"} borderRadius={"50%"}>
-                            <SelfImprovementIcon fontSize="large" />
-                            <Typography variant="body1"><strong>Kegels</strong></Typography>
-                            <Typography variant="body1"><strong>{user.goals.kegelsGoal}</strong></Typography>
+                        <UserGoalSection>
+                            <EditButtonContainer className="editButton">
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonContainer>
+                            <UserGoal border={"18px solid #C27BA0"} borderRadius={"50%"} className={"userGoal"}>
+                                <SelfImprovementIcon fontSize="large" />
+                                <Typography variant="body1"><strong>Kegels</strong></Typography>
+                                <Typography variant="body1"><strong>{user.goals.kegelsGoal}</strong></Typography>
+                            </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection border={"18px solid #9966CC"} borderRadius={"50%"}>
-                            <SelfImprovementIcon fontSize="large" />
-                            <Typography variant="body1"><strong>Garland Pose</strong></Typography>
-                            <Typography variant="body1"><strong>{user.goals.garlandPoseGoal} min</strong></Typography>
+                        <UserGoalSection>
+                            <EditButtonContainer className="editButton">
+                                <IconButton color="inherit">
+                                    <EditIcon />
+                                </IconButton>
+                            </EditButtonContainer>
+                            <UserGoal border={"18px solid #9966CC"} borderRadius={"50%"} className={"userGoal"}>
+                                <SelfImprovementIcon fontSize="large" />
+                                <Typography variant="body1"><strong>Garland Pose</strong></Typography>
+                                <Typography variant="body1"><strong>{user.goals.garlandPoseGoal} min</strong></Typography>
+                            </UserGoal>
                         </UserGoalSection>
                     </Box>
                 </UserGoalsContainer>

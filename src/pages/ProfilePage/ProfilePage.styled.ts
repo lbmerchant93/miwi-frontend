@@ -19,6 +19,22 @@ export const UserGoalsContainer = styled(Box)`
 `;
 
 export const UserGoalSection = styled(Box)`
+    position: relative;
+    
+    :hover {
+        cursor: pointer;
+    }
+
+    :hover .userGoal{
+        opacity: 0.6
+    }
+
+    :hover .editButton{
+        opacity: 1
+    }
+`;
+
+export const UserGoal = styled(Box)`
     height: 200px;
     width: 200px; 
     display: flex; 
@@ -34,4 +50,11 @@ export const DeleteAccountContainer = styled(Box)`
     flex-direction: column;
     width: 100%;
     max-width: min(80ch, 100%);
+`;
+
+export const EditButtonContainer = styled(Box)`
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    left: 90%;
 `;
