@@ -15,7 +15,8 @@ interface UpdateUserGoalModalProps {
     isOpen: boolean;
     onClose: () => void;
     user: User;
-    onUpdateClick: (err: boolean, message: string) => void;
+    triggerSnackBar: (err: boolean, message: string) => void;
+    goal: string;
 }
 
 const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
@@ -23,7 +24,8 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
         isOpen,
         onClose,
         user,
-        onUpdateClick
+        triggerSnackBar,
+        goal
     } = props;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -67,10 +69,10 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
             updateGoals.mutate(updateGoalsInput, {
                 onError: (err: any) => {
                     setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
-                    onUpdateClick(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
                 onSuccess: async () => {
-                    onUpdateClick(false, 'Goal update successful!')
+                    triggerSnackBar(false, 'Goal update successful!')
                     user.setGoals(updateGoalsInput)
                 },
                 onSettled: () => {
@@ -79,7 +81,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
             });
         } else {
             setError('Please update the goal before submitting.')
-            onUpdateClick(true, 'Please update the goal before submitting.')
+            triggerSnackBar(true, 'Please update the goal before submitting.')
             setIsLoading(false)
         };
     };

@@ -16,6 +16,7 @@ import { Alert } from '@mui/material';
 import DeleteAccountModal from '../../components/DeleteAccountModal/DeleteAccountModal';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import UpdateUserGoalModal from '../../components/UpdateUserGoalModal/UpdateUserGoalModal';
 import { 
     ProfilePageContainer, 
     UserInfoContainer, 
@@ -31,6 +32,8 @@ const ProfilePage = () => {
     const user = useContext(AuthContext);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
+    const [isUpdatingGoal, setIsUpdatingGoal] = useState<boolean>(false);
+    const [goalEditing, setGoalEditing] = useState<string>("");
 
     const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
@@ -46,7 +49,17 @@ const ProfilePage = () => {
 
     const onDeleteGuestProfile = () => {
         triggerSnackBar(true, 'You can not delete the guest account!');
-    }
+    };
+
+    const editGoal = (goal: string) => {
+        setGoalEditing(goal);
+        setIsUpdatingGoal(true);
+    };
+
+    const closeUpdateUserGoalModal = () => {
+        setIsUpdatingGoal(false);
+        setGoalEditing("");
+    };
 
     if (!user.isLoggedIn) {
         return (
@@ -86,7 +99,7 @@ const ProfilePage = () => {
                 <Box mx={4} my={2} border={"1px solid gray"}></Box>
                 <UserGoalsContainer my={3}>
                     <Box display="flex" flexDirection="row" justifyContent="space-around" my={3}>
-                        <UserGoalSection>
+                        <UserGoalSection onClick={() => editGoal("waterIntake")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -98,7 +111,7 @@ const ProfilePage = () => {
                                 <Typography variant="body1"><strong>{user.goals.waterIntakeGoal} oz</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection>
+                        <UserGoalSection onClick={() => editGoal("proteinIntake")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -110,7 +123,7 @@ const ProfilePage = () => {
                                 <Typography variant="body1"><strong>{user.goals.proteinIntakeGoal} g</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection>
+                        <UserGoalSection onClick={() => editGoal("exercise")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -124,7 +137,7 @@ const ProfilePage = () => {
                         </UserGoalSection>
                     </Box>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly" my={3}>
-                        <UserGoalSection>
+                        <UserGoalSection onClick={() => editGoal("kegels")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -136,7 +149,7 @@ const ProfilePage = () => {
                                 <Typography variant="body1"><strong>{user.goals.kegelsGoal}</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection>
+                        <UserGoalSection onClick={() => editGoal("garlandPose")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -163,6 +176,13 @@ const ProfilePage = () => {
                 onClose={() => setIsDeletingAccount(false)} 
                 triggerSnackBar={triggerSnackBar}
                 user={user}
+            />
+            <UpdateUserGoalModal
+                isOpen={isUpdatingGoal}
+                onClose={() => closeUpdateUserGoalModal()}
+                triggerSnackBar={triggerSnackBar}
+                user={user}
+                goal={goalEditing}
             />
         </>
         
