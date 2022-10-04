@@ -105,44 +105,46 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = (props) => {
                         <CloseIcon />
                     </IconButton>
                 </Box>
-                <Box display="flex" flexDirection="column" alignItems="center" mt={3}>
+                <Box display="flex" flexDirection="column" alignItems="center" mt={3} textAlign="center">
                     <Typography variant="h4" color="warning.main">Warning!</Typography>
                     {(provider === "password") && <>
-                            <Typography variant="h6">Are you sure you want to delete your account? If so, please enter your password below and select Delete Account. This action is irreversible.</Typography>
-                            <form className="profile-delete-form" onSubmit={onDeleteWithEmailAndPassword}>
-                                <Box className="profile-delete-form-input">
-                                    <TextField 
-                                        label="Password" 
-                                        id="Password" 
-                                        variant="outlined" 
-                                        type="password" 
-                                        value={password} 
-                                        error={!!error}
-                                        helperText={error}
-                                        onChange={(e) => setPassword(e.currentTarget.value)} 
-                                        fullWidth={true}
-                                    />
-                                </Box>
-                                <Box m={1} display="flex" flexDirection="row" justifyContent="center">
-                                    {!isLoading && <Box m={1}>
-                                        <LoadingButton
-                                            loading={isLoading}
-                                            onClick={onClose} 
-                                            variant="contained" 
-                                            color="inherit"
-                                        >
-                                                No, Go back
-                                        </LoadingButton>  
-                                    </Box>}
-                                    <Box m={1}>
-                                        <LoadingButton 
-                                            loading={isLoading}
-                                            type="submit" 
-                                            variant="contained" 
-                                            color="warning"
-                                        >
-                                                Delete Account
-                                        </LoadingButton> 
+                            <Typography variant="h6" mb={2}>Are you sure you want to delete your account? If so, please enter your password below and select Delete Account. This action is irreversible.</Typography>
+                            <form onSubmit={onDeleteWithEmailAndPassword}>
+                                <Box display="flex" flexDirection="column" alignItems="center">
+                                    <Box>
+                                        <TextField 
+                                            label="Password" 
+                                            id="Password" 
+                                            variant="outlined" 
+                                            type="password" 
+                                            value={password} 
+                                            error={!!error}
+                                            helperText={error}
+                                            onChange={(e) => setPassword(e.currentTarget.value)} 
+                                            fullWidth={true}
+                                        />
+                                    </Box>
+                                    <Box m={2} display="flex" flexDirection="row" justifyContent="center">
+                                        {!isLoading && <Box m={1}>
+                                            <LoadingButton
+                                                loading={isLoading}
+                                                onClick={onClose} 
+                                                variant="contained" 
+                                                color="inherit"
+                                            >
+                                                    No, Go back
+                                            </LoadingButton>  
+                                        </Box>}
+                                        <Box m={1}>
+                                            <LoadingButton 
+                                                loading={isLoading}
+                                                type="submit" 
+                                                variant="contained" 
+                                                color="warning"
+                                            >
+                                                    Delete Account
+                                            </LoadingButton> 
+                                        </Box>
                                     </Box>
                                 </Box>
                             </form>

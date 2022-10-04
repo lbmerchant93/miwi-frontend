@@ -34,11 +34,15 @@ const ProfilePage = () => {
             show: true, 
             message: message
         })
-    }
+    };
 
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
+
+    const onDeleteGuestProfile = () => {
+        triggerSnackBar(true, 'You can not delete the guest account!');
+    }
 
     if (!user.isLoggedIn) {
         return (
@@ -63,7 +67,7 @@ const ProfilePage = () => {
             <ProfilePageContainer mt={2} mx={3}>
                 <UserInfoContainer mx={4}>
                     <Avatar
-                        src={user.photoURL ?? undefined}
+                        src={undefined}
                         alt="User Photo"
                         style={{ fontSize: '100px', height: 200, width: 200 }}>
                         {user.displayName?.toUpperCase()[0]}
@@ -110,7 +114,7 @@ const ProfilePage = () => {
                 <Box mx={4} my={2} border={"1px solid gray"}></Box>
                 <DeleteAccountContainer my={4}>
                     <Typography variant="h5">No longer want to use MiWi? Click the button below and follow the instructions to delete your account.</Typography>
-                    <Box mt={3} onClick={() => setIsDeletingAccount(true)}>
+                    <Box mt={3} onClick={user.email === 'guest@guest.com' ? () => onDeleteGuestProfile() : () => setIsDeletingAccount(true)}>
                         <Button variant="contained" color="warning">Delete Account</Button>  
                     </Box>
                 </DeleteAccountContainer>
