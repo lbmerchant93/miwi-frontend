@@ -10,7 +10,7 @@ export const ProfilePageContainer = styled(Box)`
 export const UserInfoContainer = styled(Box)`
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: auto;
     position: relative;
 
     :hover .userInfo{

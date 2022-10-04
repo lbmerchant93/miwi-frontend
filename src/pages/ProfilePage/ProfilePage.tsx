@@ -17,6 +17,7 @@ import DeleteAccountModal from '../../components/DeleteAccountModal/DeleteAccoun
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import UpdateUserGoalModal from '../../components/UpdateUserGoalModal/UpdateUserGoalModal';
+import UpdateUserInfoModal from '../../components/UpdateUserInfoModal.tsx/UpdateUserInfoModal';
 import { 
     ProfilePageContainer, 
     UserInfoContainer,
@@ -35,6 +36,7 @@ const ProfilePage = () => {
     const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
     const [isUpdatingGoal, setIsUpdatingGoal] = useState<boolean>(false);
     const [goalEditing, setGoalEditing] = useState<string>("");
+    const [isUpdatingInfo, setIsUpdatingInfo] = useState<boolean>(false);
 
     const triggerSnackBar = (err: boolean, message: string) => {
         setSnackBarDetails({ 
@@ -91,12 +93,12 @@ const ProfilePage = () => {
                         {user.displayName?.toUpperCase()[0]}
                     </Avatar>
                     <Box mx={4} my={4} border={"1px solid gray"}></Box>
-                    <EditButtonContainer className="editButton">
+                    <EditButtonContainer className="editButton" onClick={() => setIsUpdatingInfo(true)}>
                         <IconButton color="inherit">
                             <EditIcon />
                         </IconButton>
                     </EditButtonContainer>
-                    <UserInfo px={2} className={"userInfo"}>
+                    <UserInfo px={2} className={"userInfo"} onClick={() => setIsUpdatingInfo(true)} width={"100%"}>
                         <Typography variant="h5"><strong>{user.displayName}</strong></Typography>
                         <Typography variant="h5">Expected Due Date: {moment(user.expectedDueDate).format("MMMM Do YYYY")}</Typography>
                         <Typography variant="h5">Denver, CO</Typography>
@@ -189,6 +191,12 @@ const ProfilePage = () => {
                 triggerSnackBar={triggerSnackBar}
                 user={user}
                 goal={goalEditing}
+            />
+            <UpdateUserInfoModal
+                isOpen={isUpdatingInfo}
+                onClose={() => setIsUpdatingInfo(false)}
+                triggerSnackBar={triggerSnackBar}
+                user={user}
             />
         </>
         
