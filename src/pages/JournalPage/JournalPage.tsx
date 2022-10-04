@@ -15,7 +15,7 @@ const JournalPage = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
-    const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id);
+    const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
 

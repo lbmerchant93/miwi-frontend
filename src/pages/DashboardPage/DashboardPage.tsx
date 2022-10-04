@@ -53,7 +53,7 @@ const DashboardPage = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
 
-    const { data: count, refetch: refetchCount } = useJournalEntriesCount(user.id);
+    const { data: count, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
 
