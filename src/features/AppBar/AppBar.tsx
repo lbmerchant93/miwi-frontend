@@ -92,7 +92,7 @@ const AppBar: React.FC = () => {
                                     variant='outlined'
                                 >
                                     <Avatar
-                                        src={user.photoURL ?? undefined}
+                                        src={undefined}
                                         alt="User Photo"
                                         style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
                                         {user.displayName?.toUpperCase()[0]}

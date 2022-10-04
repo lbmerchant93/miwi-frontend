@@ -170,6 +170,10 @@ export const useDeleteUser = () => {
     return useMutation(deleteUserMutation, {
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ["user"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntry"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntryById"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"] })
         }
     });
 };
