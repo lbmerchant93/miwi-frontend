@@ -19,7 +19,8 @@ import IconButton from '@mui/material/IconButton';
 import UpdateUserGoalModal from '../../components/UpdateUserGoalModal/UpdateUserGoalModal';
 import { 
     ProfilePageContainer, 
-    UserInfoContainer, 
+    UserInfoContainer,
+    UserInfo,
     UserGoalsContainer, 
     UserGoalSection,
     UserGoal, 
@@ -90,11 +91,16 @@ const ProfilePage = () => {
                         {user.displayName?.toUpperCase()[0]}
                     </Avatar>
                     <Box mx={4} my={4} border={"1px solid gray"}></Box>
-                    <Box display="flex" flexDirection="column" justifyContent="center" px={2}>
+                    <EditButtonContainer className="editButton">
+                        <IconButton color="inherit">
+                            <EditIcon />
+                        </IconButton>
+                    </EditButtonContainer>
+                    <UserInfo px={2} className={"userInfo"}>
                         <Typography variant="h5"><strong>{user.displayName}</strong></Typography>
                         <Typography variant="h5">Expected Due Date: {moment(user.expectedDueDate).format("MMMM Do YYYY")}</Typography>
                         <Typography variant="h5">Denver, CO</Typography>
-                    </Box>
+                    </UserInfo>
                 </UserInfoContainer>
                 <Box mx={4} my={2} border={"1px solid gray"}></Box>
                 <UserGoalsContainer my={3}>

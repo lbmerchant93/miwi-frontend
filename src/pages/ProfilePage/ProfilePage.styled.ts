@@ -11,6 +11,24 @@ export const UserInfoContainer = styled(Box)`
     display: flex;
     flex-direction: row;
     width: 100%;
+    position: relative;
+
+    :hover .userInfo{
+        opacity: 0.6
+    }
+
+    :hover .editButton{
+        opacity: 1;
+    }
+`;
+
+export const UserInfo = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 export const UserGoalsContainer = styled(Box)`
@@ -20,7 +38,7 @@ export const UserGoalsContainer = styled(Box)`
 
 export const UserGoalSection = styled(Box)`
     position: relative;
-    
+
     :hover {
         cursor: pointer;
     }
