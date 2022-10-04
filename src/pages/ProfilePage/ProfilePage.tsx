@@ -100,7 +100,7 @@ const ProfilePage = () => {
                     </EditButtonContainer>
                     <UserInfo px={2} className={"userInfo"} onClick={() => setIsUpdatingInfo(true)} width={"100%"}>
                         <Typography variant="h5"><strong>{user.displayName}</strong></Typography>
-                        <Typography variant="h5">Expected Due Date: {moment(user.expectedDueDate).format("MMMM Do YYYY")}</Typography>
+                        <Typography variant="h5">Expected Due Date: {moment(user.expectedDueDate).isValid() ? moment(user.expectedDueDate).format("MMMM Do YYYY") : "MM/DD/YYYY"}</Typography>
                         <Typography variant="h5">Denver, CO</Typography>
                     </UserInfo>
                 </UserInfoContainer>
