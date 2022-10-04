@@ -50,7 +50,14 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
     const [error, setError] = useState<string>('');
     const updateGoals = useUpdateGoals();
 
-    
+    const closeModal = () => {
+        setUpdateWaterIntakeGoal(waterIntakeGoal);
+        setUpdateProteinIntakeGoal(proteinIntakeGoal);
+        setUpdateExerciseGoal(exerciseGoal);
+        setUpdateKegelsGoal(kegelsGoal);
+        setUpdateGarlandPoseGoal(garlandPoseGoal);
+        onClose();
+    };
 
     const handleUpdateGoals = () => {
         setIsLoading(true);
@@ -87,17 +94,18 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                     triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
                 onSuccess: async () => {
-                    triggerSnackBar(false, 'Goal update successful!')
-                    user.setGoals(updateGoalsInput)
+                    triggerSnackBar(false, 'Goal update successful!');
+                    user.setGoals(updateGoalsInput);
+                    onClose();
                 },
                 onSettled: () => {
-                    setIsLoading(false)
+                    setIsLoading(false);
                 }
             });
         } else {
-            setError('Please update the goal before submitting.')
-            triggerSnackBar(true, 'Please update the goal before submitting.')
-            setIsLoading(false)
+            setError('Please update the goal before submitting.');
+            triggerSnackBar(true, 'Please update the goal before submitting.');
+            setIsLoading(false);
         };
     };
 
@@ -236,15 +244,6 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
             default:
                 return (<Typography variant="body1">An error occurred, please try again!</Typography>)
         }
-    };
-
-    const closeModal = () => {
-        setUpdateWaterIntakeGoal(waterIntakeGoal);
-        setUpdateProteinIntakeGoal(proteinIntakeGoal);
-        setUpdateExerciseGoal(exerciseGoal);
-        setUpdateKegelsGoal(kegelsGoal);
-        setUpdateGarlandPoseGoal(garlandPoseGoal);
-        onClose();
     };
 
     return (
