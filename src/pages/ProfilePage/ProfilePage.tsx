@@ -99,7 +99,7 @@ const ProfilePage = () => {
                 <Box mx={4} my={2} border={"1px solid gray"}></Box>
                 <UserGoalsContainer my={3}>
                     <Box display="flex" flexDirection="row" justifyContent="space-around" my={3}>
-                        <UserGoalSection onClick={() => editGoal("waterIntake")}>
+                        <UserGoalSection onClick={() => editGoal("waterIntakeGoal")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -111,7 +111,7 @@ const ProfilePage = () => {
                                 <Typography variant="body1"><strong>{user.goals.waterIntakeGoal} oz</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection onClick={() => editGoal("proteinIntake")}>
+                        <UserGoalSection onClick={() => editGoal("proteinIntakeGoal")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -123,7 +123,7 @@ const ProfilePage = () => {
                                 <Typography variant="body1"><strong>{user.goals.proteinIntakeGoal} g</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection onClick={() => editGoal("exercise")}>
+                        <UserGoalSection onClick={() => editGoal("exerciseGoal")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -137,7 +137,7 @@ const ProfilePage = () => {
                         </UserGoalSection>
                     </Box>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly" my={3}>
-                        <UserGoalSection onClick={() => editGoal("kegels")}>
+                        <UserGoalSection onClick={() => editGoal("kegelsGoal")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
@@ -149,7 +149,7 @@ const ProfilePage = () => {
                                 <Typography variant="body1"><strong>{user.goals.kegelsGoal}</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
-                        <UserGoalSection onClick={() => editGoal("garlandPose")}>
+                        <UserGoalSection onClick={() => editGoal("garlandPoseGoal")}>
                             <EditButtonContainer className="editButton">
                                 <IconButton color="inherit">
                                     <EditIcon />
