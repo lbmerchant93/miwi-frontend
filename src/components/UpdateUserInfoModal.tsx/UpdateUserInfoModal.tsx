@@ -8,6 +8,10 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { User } from '../../shared/auth-context';
 import { useUpdateUser } from '../../api/users/user';
 import TextField from '@mui/material/TextField';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import moment from 'moment';
 
 interface UpdateUserInfoModalProps {
     isOpen: boolean;
@@ -74,7 +78,7 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
             setIsLoading(false);
         };
     };
-    
+
 
     return (
         <Modal
@@ -98,14 +102,32 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
                     height={"100%"} 
                     justifyContent="space-between"
                 >
-                    <Typography variant="h4" mb={3}>Update User Info</Typography>
-                    <TextField 
-                        variant="outlined"
-                        label="Name"
-                        value={updateDisplayName}
-                        onChange={(e) => setUpdateDisplayName(e.target.value)}
-                        fullWidth={true}
-                    />
+                    <Box>
+                        <Typography variant="h4">Update User Info</Typography>
+                        <Typography variant="body1">Use the inputs below to update your information.</Typography>  
+                    </Box>
+                    <Box width={300}>
+                        <Box mb={2} >
+                           <TextField 
+                                variant="outlined"
+                                label="Name"
+                                value={updateDisplayName}
+                                onChange={(e) => setUpdateDisplayName(e.target.value)}
+                                fullWidth={true}
+                            /> 
+                        </Box>
+                        
+                        <LocalizationProvider dateAdapter={DateAdapter}>
+                            <DatePicker
+                            label="Expected Due Date"
+                                value={updateExpectedDueDate}
+                                onChange={(newDate) => setUpdateExpectedDueDate(moment(newDate).startOf('day').toISOString(true))}
+                                renderInput={(params) => <TextField sx={{width: "300px"}} {...params} />}
+                                disabled={isLoading}
+                            />
+                        </LocalizationProvider>
+                    </Box>
+                    
                     <Box display="flex" justifyContent={"center"} mt={3}>
                         <LoadingButton
                             onClick={() => handleUpdateUserInfo()} 
