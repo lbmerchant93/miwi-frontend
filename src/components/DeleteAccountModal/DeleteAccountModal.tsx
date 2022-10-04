@@ -16,6 +16,7 @@ import { useDeleteUser } from '../../api/users/user';
 import { User } from '../../shared/auth-context';
 import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@mui/material/TextField';
+import { useNavigate } from 'react-router-dom';
 
 interface DeleteAccountModalProps {
     isOpen: boolean;
@@ -32,6 +33,7 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = (props) => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const deleteUserAccount = useDeleteUser();
+    const navigate = useNavigate();
 
     const onDeleteWithEmailAndPassword = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -44,27 +46,28 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = (props) => {
                         triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
                         setIsLoading(false)
                     },
-                })
+                });
 
                 const credential = EmailAuthProvider.credential(
                     auth.currentUser.email, 
                     password
-                )
+                );
 
                 const result = await reauthenticateWithCredential(
                     auth.currentUser,
                     credential
-                )
+                );
 
-                await deleteUser(result.user)
-                
+                await deleteUser(result.user);
+                navigate('/');
+
             } catch (err: any) {
                 triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
-                setIsLoading(false)
-            } 
+                setIsLoading(false);
+            } ;
         } else {
             triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 
@@ -79,15 +82,17 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = (props) => {
                         triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
                         setIsLoading(false)
                     },
-                })
-                await deleteUser(result.user)
+                });
+                await deleteUser(result.user);
+                navigate('/');
+                
             } catch (err: any) {
                 triggerSnackBar(true, err.message || 'Something went wrong, please try again or contact us for help.');
-                setIsLoading(false)
-            } 
+                setIsLoading(false);
+            } ;
         } else {
             triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 
