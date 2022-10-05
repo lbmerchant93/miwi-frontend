@@ -24,6 +24,10 @@ import {
     EditButtonContainer
 } from "./JournalEntryDisplay.styled";
 import UpdateEntryModal from '../../components/UpdateEntryModal/UpdateEntryModal';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
@@ -36,6 +40,9 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const { journalEntry, user, refetch, triggerSnackBar } = props;
     const [isUpdateEntryModalOpen, setIsUpdateEntryModalOpen] = useState(false);
     const [sectionEditing, setSectionEditing] = useState<string>("");
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
+    const deleteJournalEntry = useDeleteJournalEntry();
+    const navigate = useNavigate();
 
     const { 
         // id: goalsId,
@@ -47,9 +54,9 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     } = user.goals;
 
     const {
-        // id,
+        id,
         // authorId,
-        // date,
+        date,
         waterIntake = 0, 
         proteinIntake = 0, 
         exercise = 0, 
@@ -82,6 +89,31 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
           setIsUpdateEntryModalOpen(false);
           refetch();
         };
+    };
+
+    const onDeleteClick = () => {
+        if (id) {
+            setIsDeleting(true);
+            deleteJournalEntry.mutate(id, {
+                onError: (err: any) => {
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.');
+                    setIsDeleting(false);
+                },
+                onSuccess: () => {
+                    triggerSnackBar(false, 'Journal entry deletion successful!');
+                    if (date === moment().startOf('day').toISOString(true)) {
+                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                    } else {
+                        setTimeout(() => {
+                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                            navigate(`/journal/entries`);
+                        }, 1500);
+                    }
+                }
+            });
+        } else {
+            triggerSnackBar(true, 'Something went wrong, please try again or contact us for help.');
+        }
     };
 
     return (
@@ -221,6 +253,20 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </EditButtonContainer>
                     </MoodSection>
                 </MoodContainer>
+                {id && 
+                    (<Box my={5}>
+                        <Typography variant="body1" mb={1}>Want to remove this journal entry?</Typography>
+                        <LoadingButton 
+                            loading={isDeleting}
+                            onClick={onDeleteClick}
+                            variant="contained" 
+                            color="warning"
+                            size="small"
+                        >
+                                Delete Entry
+                        </LoadingButton> 
+                    </Box>)
+                }
             </Box>
             <UpdateEntryModal 
                 isOpen={isUpdateEntryModalOpen}

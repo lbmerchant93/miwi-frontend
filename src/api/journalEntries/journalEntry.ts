@@ -347,8 +347,10 @@ export const useDeleteJournalEntry = () => {
 
   return useMutation(deleteJournalEntry, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
-      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchInactive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
+      await queryClient.invalidateQueries({ queryKey: ["firstEntry"] })
+      // await queryClient.invalidateQueries({ queryKey: ["firstEntryById"] })
     }
   })
 }

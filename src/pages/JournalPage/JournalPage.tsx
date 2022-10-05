@@ -54,7 +54,8 @@ const JournalPage = () => {
                                 {data.map((entry: JournalEntry) => {
                                     return (
                                     <JournalEntryCard 
-                                        entry={entry} 
+                                        entry={entry}
+                                        email={user.email} 
                                         key={entry.id} 
                                     />)
                                 })}
