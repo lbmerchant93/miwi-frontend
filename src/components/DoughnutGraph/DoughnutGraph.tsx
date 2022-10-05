@@ -31,7 +31,7 @@ const CenterInfo: React.FC<CenterInfoProps> = (props) => {
             {name === 'Kegels' && <SelfImprovementIcon fontSize="large" />}
             {name === 'Garland Pose' && <SelfImprovementIcon fontSize="large" />}
             <Typography variant="body1"><strong>{name}</strong></Typography>
-            <Typography variant="body1" mt={-0.5}><strong>{percentage}%</strong></Typography>
+            <Typography variant="body1" mt={-0.5}><strong>{Math.round(percentage)}%</strong></Typography>
         </>
     )
 }

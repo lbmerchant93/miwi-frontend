@@ -15,7 +15,7 @@ const JournalPage = () => {
     const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
-    const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id);
+    const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
 
@@ -50,7 +50,7 @@ const JournalPage = () => {
                     {(!isFetching && data && data.length) ? 
                     (
                         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
-                            <Box className='dashboard-journal-entries-container'>
+                            <Box display="flex" flexWrap="wrap" justifyContent="center">
                                 {data.map((entry: JournalEntry) => {
                                     return (
                                     <JournalEntryCard 

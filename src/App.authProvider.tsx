@@ -24,11 +24,11 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [email, setEmail] = useState<string | null>('');
     const [goals, setGoals] = useState<Goals>({
         id: '',
-        waterIntakeGoal: 0,
-        proteinIntakeGoal: 0,
-        exerciseGoal: 0,
-        kegelsGoal: 0,
-        garlandPoseGoal: 0
+        waterIntakeGoal: 70,
+        proteinIntakeGoal: 70,
+        exerciseGoal: 30,
+        kegelsGoal: 100,
+        garlandPoseGoal: 10
     })
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');

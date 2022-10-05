@@ -123,7 +123,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                                 <Button 
                                     variant="outlined"
                                     onClick={() => setUpdateWaterIntakeGoal(prev => prev - 1)}
-                                    disabled={updateWaterIntakeGoal === 0}
+                                    disabled={updateWaterIntakeGoal <= 1}
                                 >
                                     <RemoveIcon/>
                                 </Button>
@@ -149,7 +149,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                                 <Button 
                                     variant="outlined"
                                     onClick={() => setUpdateProteinIntakeGoal(prev => prev - 1)}
-                                    disabled={updateProteinIntakeGoal === 0}
+                                    disabled={updateProteinIntakeGoal <= 1}
                                 >
                                     <RemoveIcon/>
                                 </Button>
@@ -175,7 +175,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                                 <Button 
                                     variant="outlined"
                                     onClick={() => setUpdateExerciseGoal(prev => prev - 1)}
-                                    disabled={updateExerciseGoal === 0}
+                                    disabled={updateExerciseGoal <= 1}
                                 >
                                     <RemoveIcon/>
                                 </Button>
@@ -201,7 +201,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                                 <Button 
                                     variant="outlined"
                                     onClick={() => setUpdateKegelsGoal(prev => prev - 1)}
-                                    disabled={updateKegelsGoal === 0}
+                                    disabled={updateKegelsGoal <= 1}
                                 >
                                     <RemoveIcon/>
                                 </Button>
@@ -227,7 +227,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                                 <Button 
                                     variant="outlined"
                                     onClick={() => setUpdateGarlandPoseGoal(prev => prev - 1)}
-                                    disabled={updateGarlandPoseGoal === 0}
+                                    disabled={updateGarlandPoseGoal <= 1}
                                 >
                                     <RemoveIcon/>
                                 </Button>

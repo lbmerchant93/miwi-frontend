@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -121,7 +121,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                 }
             });
         } else {
-           const updatedEntry = {
+            const updatedEntry = {
                 id: JSON.stringify(id),
                 date: date,
                 waterIntake: updateWaterIntake,
@@ -405,6 +405,21 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
         setUpdateMood(mood);
         onClose();
     };
+
+    useEffect(() => {
+        setUpdateWaterIntake(waterIntake);
+        setUpdateProteinIntake(proteinIntake);
+        setUpdateExercise(exercise);
+        setUpdateKegels(kegels);
+        setUpdateGarlandPose(garlandPose);
+        setUpdatePrenatalVitamins(prenatalVitamins);
+        setUpdateProbiotics(probiotics);
+        setUpdateChildbirthEducation(childbirthEducation);
+        setUpdateSelfCare(selfCare);
+        setUpdatePostpartumPrep(postpartumPrep);
+        setUpdateFetalLoveBreak(fetalLoveBreak);
+        setUpdateMood(mood);
+    }, [childbirthEducation, exercise, fetalLoveBreak, garlandPose, journalEntry, kegels, mood, postpartumPrep, prenatalVitamins, probiotics, proteinIntake, selfCare, waterIntake])
 
     return (
         <Modal

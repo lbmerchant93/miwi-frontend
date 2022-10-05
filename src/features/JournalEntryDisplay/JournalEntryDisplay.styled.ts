@@ -27,7 +27,6 @@ export const CheckBoxContainer = styled(Box)`
     justify-content: space-around;
     align-items: center;
     border: 1px solid black;
-    height: 92px;
 
     :hover {
         cursor: pointer;

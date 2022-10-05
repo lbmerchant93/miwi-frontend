@@ -4,7 +4,6 @@ import AppBar from './features/AppBar/AppBar';
 import AppFooter from './features/AppFooter/AppFooter';
 import { PossibleRoutes } from './utils/constants';
 import LandingPage from './pages/LandingPage/LandingPage';
-import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
@@ -37,8 +36,6 @@ const App = () => {
   const routes = (
     <Routes>
       <Route path={`${PossibleRoutes.ROOT}`} element={<LandingPage />} />
-      <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
-      <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
       <Route path={`${PossibleRoutes.HOW_IT_WORKS}`} element={<HowMiWiWorksPage />} />
       <Route path={`${PossibleRoutes.HOME_USER}`} element={<HomePage />} />

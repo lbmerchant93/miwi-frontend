@@ -131,7 +131,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </EditButtonContainer>
                     </GraphContainer>
                 </Box>
-                <CheckBoxContainer mt={7} mx={3} onClick={() => editSection("checkbox")}>
+                <CheckBoxContainer mt={7} mx={3} height={150} onClick={() => editSection("checkbox")}>
                     <CheckBoxSection className="checkBoxSection">
                         <Typography variant="body1" pr={2}><strong>Prenatal Vitamins</strong></Typography>
                         {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
@@ -146,7 +146,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </IconButton>
                     </EditButtonContainer>
                 </CheckBoxContainer>    
-                <Box mt={7} mx={3} height={700}>
+                <Box mt={7} mx={3} height={"100%"}>
                     <Box display="flex" flexDirection="row" justifyContent="space-evenly">
                         <WritingContainer onClick={() => editSection("childbirthEducation")}>
                             <WritingSection className="writingSection">
@@ -204,7 +204,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </WritingContainer>
                     </Box>
                 </Box>
-                <MoodContainer my={7} mx={3}>
+                <MoodContainer my={3} mx={3}>
                     <MoodSection className="moodSection" onClick={() => editSection("mood")}>
                         <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
                         <Box display="flex" flexDirection="row" justifyContent="space-around" >
