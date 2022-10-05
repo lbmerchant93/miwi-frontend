@@ -63,7 +63,6 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         postpartumPrep = "Write about how you are preparing for postpartum...",
         fetalLoveBreak = "Write about what you said to your baby today..."
     } = journalEntry ?? {};
-    console.log(journalEntry, 'journal')
 
     const editSection = (section: string) => {
         setSectionEditing(section);

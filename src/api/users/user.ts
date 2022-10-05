@@ -90,7 +90,17 @@ const loginUserMutation = async (createUserInput: UserLoginInput) => {
 };
 
 export const useLoginUser = () => {
-    return useMutation(loginUserMutation)
+    const queryClient = useQueryClient();
+
+    return useMutation(loginUserMutation, {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["user"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntry"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntryById"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"] })
+        }
+    });
 };
 
 const updateUserDocument = gql`

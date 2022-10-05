@@ -89,7 +89,6 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateMood, setUpdateMood] = useState(mood);
     const updateJournalEntry = useUpdateJournalEntry();
     const createJournalEntry = useCreateJournalEntry();
-    console.log(updateWaterIntake)
 
     const handleUpdateEntry = () => {
         setIsLoading(true)
