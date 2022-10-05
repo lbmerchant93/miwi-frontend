@@ -102,10 +102,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 onSuccess: () => {
                     triggerSnackBar(false, 'Journal entry deletion successful!');
                     if (date === moment().startOf('day').toISOString(true)) {
-                        window.scrollTo(0, 0);
+                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                     } else {
                         setTimeout(() => {
-                            window.scrollTo(0, 0);
+                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                             navigate(`/journal/entries`);
                         }, 1500);
                     }
