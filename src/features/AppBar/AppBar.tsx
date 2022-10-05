@@ -124,14 +124,6 @@ const AppBar: React.FC = () => {
                             }}
                         >
                             <MenuItem 
-                                onClick={onListItemClick(() => navigate(PossibleRoutes.DASHBOARD))}>
-                                    My Dashboard
-                            </MenuItem>
-                            <MenuItem 
-                                onClick={onListItemClick(() => navigate('/dashboard/journal_entry_form'))}>
-                                    New Journal Entry
-                            </MenuItem>
-                            <MenuItem 
                                 onClick={onListItemClick(() => navigate(`/profile/${user.email?.split('@')[0]}`))}>
                                     Profile
                             </MenuItem>

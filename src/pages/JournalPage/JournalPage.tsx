@@ -50,7 +50,7 @@ const JournalPage = () => {
                     {(!isFetching && data && data.length) ? 
                     (
                         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
-                            <Box className='dashboard-journal-entries-container'>
+                            <Box display="flex" flexWrap="wrap" justifyContent="center">
                                 {data.map((entry: JournalEntry) => {
                                     return (
                                     <JournalEntryCard 
