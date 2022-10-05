@@ -9,14 +9,20 @@ import { useNavigate } from 'react-router-dom';
 
 interface JournalEntryCardProps {
   entry: JournalEntry;
+  email: string | null;
 };
 
 const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
-  const { entry } = props;
+  const { entry, email } = props;
   const navigate = useNavigate();
 
   const navigateToEntry = () => {
-    navigate(`/journal/entries/${entry.id}`)
+    if (entry.date === moment().startOf('day').toISOString(true)) {
+      navigate(`/home/${email?.split('@')[0]}`)
+    } else {
+      navigate(`/journal/entries/${entry.id}`)
+    }
+    
   }
 
   return (
