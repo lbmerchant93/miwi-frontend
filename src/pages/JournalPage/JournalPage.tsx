@@ -170,7 +170,7 @@ const JournalPage = () => {
                         </Box>
                     </>
                 )}
-                
+
                 <Divider variant="middle" />
                 <Box my={3}>
                     <Typography variant="h6" mb={2}>Create a new journal entry for a specific date:</Typography>
@@ -181,7 +181,7 @@ const JournalPage = () => {
                                 value={newJournalEntryDate}
                                 onChange={(newDate) => setNewJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
                                 renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
-                                disabled={isLoading}
+                                disabled={isLoading || isFetchingCount || isFetching}
                                 disableFuture
                             />
                         </LocalizationProvider>
@@ -191,6 +191,7 @@ const JournalPage = () => {
                                 color="success"
                                 onClick={handleCreateNewEntryByDate}
                                 endIcon={<NoteAddIcon />}
+                                disabled={isLoading || isFetchingCount || isFetching}
                             >
                                 Create
                             </Button>
