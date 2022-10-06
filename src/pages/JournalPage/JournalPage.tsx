@@ -116,13 +116,14 @@ const JournalPage = () => {
             </SnackBar>
             <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                 <Typography variant="h4"><strong>Journal Entries</strong></Typography>
+
                 {(isFetching || isFetchingCount) && (
                     <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                         <JournalEntryCardSkeletonGrid/>
                     </Box>
                 )}
-                {((!isFetching || !isFetchingCount) && data && data.length) ? 
-                (
+
+                {((!isFetching || !isFetchingCount) && data && data.length) && (
                     <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                         <Box display="flex" flexWrap="wrap" justifyContent="center">
                             {data.map((entry: JournalEntry) => {
@@ -157,7 +158,9 @@ const JournalPage = () => {
                             </Box>
                         </Box>
                     </Box>
-                ) : (
+                )} 
+
+                {(!isFetching || !isFetchingCount) && data && !data.length && (
                     <>
                         <Typography variant="h6" mt={2}>Looks like you don't have any journal entries yet.<br/> Click the button below to go to your dashboard and create a journal for today!</Typography>
                         <Box mt={2}>
@@ -167,6 +170,7 @@ const JournalPage = () => {
                         </Box>
                     </>
                 )}
+                
                 <Divider variant="middle" />
                 <Box my={3}>
                     <Typography variant="h6" mb={2}>Create a new journal entry for a specific date:</Typography>
