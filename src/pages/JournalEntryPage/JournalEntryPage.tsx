@@ -13,7 +13,7 @@ import { Alert } from '@mui/material';
 const JournalEntryPage = () => {
     const { entry } = useParams();
     const user = useContext(AuthContext);
-    const { data: journalEntryData, isLoading, refetch } = useFindFirstEntryById(user.id, entry, user.email);
+    const { data: journalEntryData, isFetching, refetch } = useFindFirstEntryById(user.id, entry, user.email);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const triggerSnackBar = (err: boolean, message: string) => {
