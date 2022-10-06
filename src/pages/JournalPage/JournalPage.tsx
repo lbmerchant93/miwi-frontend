@@ -19,6 +19,7 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
+import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
 
 const JournalPage = () => {
     // const { user } = useParams();
@@ -104,7 +105,7 @@ const JournalPage = () => {
                 subtitle="You must be logged-in to view this page."
             />
         )
-    }
+    };
     
     return (
         <>
@@ -115,7 +116,12 @@ const JournalPage = () => {
             </SnackBar>
             <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                 <Typography variant="h4"><strong>Journal Entries</strong></Typography>
-                {(!isFetching && data && data.length) ? 
+                {(isFetching || isFetchingCount) && (
+                    <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
+                        <JournalEntryCardSkeletonGrid/>
+                    </Box>
+                )}
+                {((!isFetching || !isFetchingCount) && data && data.length) ? 
                 (
                     <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                         <Box display="flex" flexWrap="wrap" justifyContent="center">
