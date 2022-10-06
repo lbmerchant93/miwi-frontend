@@ -82,11 +82,17 @@ const JournalPage = () => {
             onError: (err: any) => {
                 triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
             },
-            onSuccess: () => {
-                triggerSnackBar(false, 'Journal entry created!')
+            onSuccess: (data) => {
+                if (data.date === moment().startOf('day').toISOString(true)) {
+                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                    navigate(`/home/${user.email?.split('@')[0]}`)
+                } else {
+                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                    navigate(`/journal/entries/${data.id}`)
+                }
             },
             onSettled: () => {
-                setIsLoading(false)
+                setIsLoading(false);
             }
         });
     };
