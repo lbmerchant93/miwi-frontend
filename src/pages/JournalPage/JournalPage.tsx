@@ -9,12 +9,22 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 import { JournalEntry } from '../HomePage/HomePage';
+import Divider from '@mui/material/Divider';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import moment from 'moment';
+import TextField from '@mui/material/TextField';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import IconButton from '@mui/material/IconButton';
 
 const JournalPage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
+    const [newJournalEntryDate, setNewJournalEntryDate] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
@@ -60,7 +70,7 @@ const JournalPage = () => {
                                     />)
                                 })}
                             </Box>
-                            <Box display="flex" justifyContent="center">
+                            <Box display="flex" justifyContent="center" m={3}>
                                 <Box mx={2}>
                                     <Button
                                         variant="outlined"
@@ -93,6 +103,31 @@ const JournalPage = () => {
                             </Box>
                         </>
                     )}
+                    <Divider variant="middle" />
+                    <Box my={3}>
+                                <Typography variant="h6" mb={2}>Create a new journal entry for a specific date:</Typography>
+                                <Box display="flex" justifyContent="center">
+                                    <LocalizationProvider dateAdapter={DateAdapter}>
+                                        <DatePicker
+                                            label="New Entry Date"
+                                            value={newJournalEntryDate}
+                                            onChange={(newDate) => setNewJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                                            renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                                            disabled={isLoading}
+                                        />
+                                    </LocalizationProvider>
+                                    <Box ml={1} display="flex">
+                                        <Button
+                                            variant="contained"
+                                            color="success"
+                                            onClick={() => console.log('create new')}
+                                            endIcon={<NoteAddIcon />}
+                                        >
+                                            Create
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            </Box>
             </Box>
         </>
     );
