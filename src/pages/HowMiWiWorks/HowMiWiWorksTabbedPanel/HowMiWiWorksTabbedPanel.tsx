@@ -39,6 +39,7 @@ const HowMiWiWorksTabs: React.FC<{ selectedTab: string; }> = (props) => {
             onChange={handleChange}
             textColor="inherit"
             indicatorColor="primary"
+            orientation="vertical"
         >
             {howMiWiWorksPageMap.map(({ label, route }) => (
                 <Tab 
