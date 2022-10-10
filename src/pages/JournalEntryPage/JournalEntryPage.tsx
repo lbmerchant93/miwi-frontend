@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import { useFindFirstEntryById } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
+import JournalEntryDisplaySkeleton from '../../features/JournalEntryDisplay/JournalEntryDisplaySkeleton';
+import Skeleton from '@mui/material/Skeleton';
 
 const JournalEntryPage = () => {
     const { entry } = useParams();
@@ -37,8 +39,13 @@ const JournalEntryPage = () => {
         );
     };
 
-    return (user.isLoadingUser) ? (
-        <div>JournalEntryPage</div>
+    return (user.isLoadingUser || isFetching) ? (
+        <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
+            <Typography variant="h4"><strong>Journal Entry</strong></Typography>
+            <Typography variant="body1" width={200} alignSelf="center"><Skeleton /></Typography>
+            <JournalEntryDisplaySkeleton />
+        </Box>
+        
     ) : (
         <>
             {!journalEntryData && (

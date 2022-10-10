@@ -9,6 +9,7 @@ import moment from 'moment';
 import MessagePage from '../../components/MessagePage/MessagePage';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
+import JournalEntryDisplaySkeleton from '../../features/JournalEntryDisplay/JournalEntryDisplaySkeleton';
 
 export interface JournalEntry {
     id: number;
@@ -31,7 +32,7 @@ export interface JournalEntry {
 const HomePage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
-    const { data: firstJournalEntry, refetch } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true), user.email);
+    const { data: firstJournalEntry, refetch, isFetching } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true), user.email);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const triggerSnackBar = (err: boolean, message: string) => {
@@ -55,11 +56,11 @@ const HomePage = () => {
         )
     }
 
-    return user.isLoadingUser ? (
+    return (user.isLoadingUser || isFetching) ? (
         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
             <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
-            {/* Insert loading for journal entry display */}
+            <JournalEntryDisplaySkeleton />
         </Box>
     ) : (
         <>
