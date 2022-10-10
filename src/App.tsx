@@ -12,7 +12,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthProvider from './App.authProvider';
 import AboutPage from './pages/AboutPage/AboutPage';
-import HowMiWiWorksPage from './pages/HowMiWiWorksPage/HowMiWiWorksPage';
+import HowMiWiWorksPage from './pages/HowMiWiWorks/HowMiWiWorksPage';
 import HomePage from './pages/HomePage/HomePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import JournalPage from './pages/JournalPage/JournalPage';
