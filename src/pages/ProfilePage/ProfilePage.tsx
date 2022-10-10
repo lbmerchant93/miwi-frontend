@@ -28,6 +28,7 @@ import {
     DeleteAccountContainer,
     EditButtonContainer
 } from './ProfilePage.styled';
+import ProfilePageSkeleton from './ProfilePageSkeleton';
 
 const ProfilePage = () => {
     // const { user } = useParams();
@@ -74,9 +75,7 @@ const ProfilePage = () => {
     };
     
     return user.isLoadingUser ? (
-        <Box>
-            ProfilePage loading user
-        </Box>
+        <ProfilePageSkeleton />
     ) : (
         <>
             <SnackBar open={snackBarDetails.show} onClose={dismissSnackBar}>
