@@ -21,6 +21,7 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import InputAdornment from '@mui/material/InputAdornment';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -184,22 +185,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                         <Box height={250} width={250}>
                             <DoughnutGraph name={'Water'} completed={updateWaterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                         </Box>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateWaterIntake(prev => prev - 1)}
-                                    disabled={updateWaterIntake === 0}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateWaterIntake} oz</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateWaterIntake(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125} mt={1}>
+                            <TextField
+                                id="water-intake-update-input"
+                                type="number"
+                                value={updateWaterIntake}
+                                onChange={(e) => setUpdateWaterIntake(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 0 }, endAdornment: <InputAdornment position="end">oz</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -209,22 +204,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                         <Box height={250} width={250}>
                             <DoughnutGraph name={'Protein'} completed={updateProteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                         </Box>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateProteinIntake(prev => prev - 1)}
-                                    disabled={updateProteinIntake === 0}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateProteinIntake} g</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateProteinIntake(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125} mt={1}>
+                            <TextField
+                                id="protein-intake-update-input"
+                                type="number"
+                                value={updateProteinIntake}
+                                onChange={(e) => setUpdateProteinIntake(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 0 }, endAdornment: <InputAdornment position="end">g</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -234,22 +223,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                         <Box height={250} width={250}>
                             <DoughnutGraph name={'Exercise'} completed={updateExercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                         </Box>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateExercise(prev => prev - 1)}
-                                    disabled={updateExercise === 0}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateExercise} min</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateExercise(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125} mt={1}>
+                            <TextField
+                                id="exercise-update-input"
+                                type="number"
+                                value={updateExercise}
+                                onChange={(e) => setUpdateExercise(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 0 }, endAdornment: <InputAdornment position="end">min</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -259,22 +242,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                         <Box height={250} width={250}>
                             <DoughnutGraph name={'Kegels'} completed={updateKegels} goal={kegelsGoal} color={"#C27BA0"}/>
                         </Box>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateKegels(prev => prev - 1)}
-                                    disabled={updateKegels === 0}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateKegels}</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateKegels(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125} mt={1}>
+                            <TextField
+                                id="kegels-update-input"
+                                type="number"
+                                value={updateKegels}
+                                onChange={(e) => setUpdateKegels(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 0 }, endAdornment: <InputAdornment position="end">reps</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -284,22 +261,16 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
                         <Box height={250} width={250}>
                             <DoughnutGraph name={'Garland Pose'} completed={updateGarlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                         </Box>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateGarlandPose(prev => prev - 1)}
-                                    disabled={updateGarlandPose === 0}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateGarlandPose} min</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateGarlandPose(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125} mt={1}>
+                            <TextField
+                                id="garlandPose-update-input"
+                                type="number"
+                                value={updateGarlandPose}
+                                onChange={(e) => setUpdateGarlandPose(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 0 }, endAdornment: <InputAdornment position="end">min</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
