@@ -6,15 +6,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { User } from '../../shared/auth-context';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import Button from '@mui/material/Button';
 import { useUpdateGoals } from '../../api/goals/goal';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { UserGoal } from '../../pages/ProfilePage/ProfilePage.styled';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 
 interface UpdateUserGoalModalProps {
     isOpen: boolean;
@@ -118,22 +117,16 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                             <LocalDrinkIcon fontSize="large" style={{ color: "#1ca3ec" }}/>
                             <Typography variant="body1"><strong>Water</strong></Typography>
                         </UserGoal>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateWaterIntakeGoal(prev => prev - 1)}
-                                    disabled={updateWaterIntakeGoal <= 1}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateWaterIntakeGoal} oz</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateWaterIntakeGoal(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125}>
+                            <TextField
+                                id="water-intake-goal-update-input"
+                                type="number"
+                                value={updateWaterIntakeGoal}
+                                onChange={(e) => setUpdateWaterIntakeGoal(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 1 }, endAdornment: <InputAdornment position="end">oz</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -144,22 +137,16 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                             <RestaurantIcon fontSize="large" color="disabled" />
                             <Typography variant="body1"><strong>Protein</strong></Typography>
                         </UserGoal>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateProteinIntakeGoal(prev => prev - 1)}
-                                    disabled={updateProteinIntakeGoal <= 1}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateProteinIntakeGoal} g</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateProteinIntakeGoal(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125}>
+                            <TextField
+                                id="protein-intake-goal-update-input"
+                                type="number"
+                                value={updateProteinIntakeGoal}
+                                onChange={(e) => setUpdateProteinIntakeGoal(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 1 }, endAdornment: <InputAdornment position="end">g</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -170,22 +157,16 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                             <FitnessCenterIcon fontSize="large" style={{ color: "#7FFFD4" }} />
                             <Typography variant="body1"><strong>Exercise</strong></Typography>
                         </UserGoal>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateExerciseGoal(prev => prev - 1)}
-                                    disabled={updateExerciseGoal <= 1}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateExerciseGoal} min</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateExerciseGoal(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125}>
+                            <TextField
+                                id="exercise-goal-update-input"
+                                type="number"
+                                value={updateExerciseGoal}
+                                onChange={(e) => setUpdateExerciseGoal(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 1 }, endAdornment: <InputAdornment position="end">min</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -196,22 +177,16 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                             <SelfImprovementIcon fontSize="large" />
                             <Typography variant="body1"><strong>Kegels</strong></Typography>
                         </UserGoal>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateKegelsGoal(prev => prev - 1)}
-                                    disabled={updateKegelsGoal <= 1}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateKegelsGoal}</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateKegelsGoal(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125}>
+                            <TextField
+                                id="kegels-goal-update-input"
+                                type="number"
+                                value={updateKegelsGoal}
+                                onChange={(e) => setUpdateKegelsGoal(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 1 }, endAdornment: <InputAdornment position="end">reps</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );
@@ -222,22 +197,16 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
                             <SelfImprovementIcon fontSize="large" />
                             <Typography variant="body1"><strong>Garland Pose</strong></Typography>
                         </UserGoal>
-                        <Box display="flex" flexDirection="row" mt={5}>
-                            <Box mr={5}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={() => setUpdateGarlandPoseGoal(prev => prev - 1)}
-                                    disabled={updateGarlandPoseGoal <= 1}
-                                >
-                                    <RemoveIcon/>
-                                </Button>
-                            </Box>
-                            <Typography variant="h6">{updateGarlandPoseGoal} min</Typography>
-                            <Box ml={5}>
-                                <Button variant="outlined" onClick={() => setUpdateGarlandPoseGoal(prev => prev + 1)}>
-                                    <AddIcon/>
-                                </Button>
-                            </Box>
+                        <Box width={125}>
+                            <TextField
+                                id="garlandPose-goal-update-input"
+                                type="number"
+                                value={updateGarlandPoseGoal}
+                                onChange={(e) => setUpdateGarlandPoseGoal(parseInt(`${e.currentTarget.value}`))}
+                                InputProps={{ inputProps: { min: 1 }, endAdornment: <InputAdornment position="end">min</InputAdornment> }}
+                                size='small'
+                                disabled={isLoading}
+                            />
                         </Box>
                     </>
                 );

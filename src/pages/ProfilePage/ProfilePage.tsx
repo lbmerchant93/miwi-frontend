@@ -153,7 +153,7 @@ const ProfilePage = () => {
                             <UserGoal border={"18px solid #C27BA0"} borderRadius={"50%"} className={"userGoal"}>
                                 <SelfImprovementIcon fontSize="large" />
                                 <Typography variant="body1"><strong>Kegels</strong></Typography>
-                                <Typography variant="body1"><strong>{user.goals.kegelsGoal}</strong></Typography>
+                                <Typography variant="body1"><strong>{user.goals.kegelsGoal} reps</strong></Typography>
                             </UserGoal>
                         </UserGoalSection>
                         <UserGoalSection onClick={() => editGoal("garlandPoseGoal")}>
