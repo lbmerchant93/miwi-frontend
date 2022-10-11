@@ -1,10 +1,23 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const FirstTimeAppFlow = () => {
     return (
         <Box px={3}>
+            <Box mb={2}>
+                <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                    <Link href="/how-miwi-works">
+                        Help Center
+                    </Link>
+                    <Link underline="none">
+                        First Time App Flow
+                    </Link>
+                </Breadcrumbs>
+            </Box>
             <Typography variant="h4" mb={2}>
                 First Time App Flow
             </Typography>

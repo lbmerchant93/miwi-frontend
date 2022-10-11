@@ -1,12 +1,25 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const AppTerms = () => {
     return (
         <Box px={3} mb={2}>
+            <Box mb={2}>
+                <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                    <Link href="/how-miwi-works">
+                        Help Center
+                    </Link>
+                    <Link underline="none">
+                        App Terms
+                    </Link>
+                </Breadcrumbs>
+            </Box>
           <Typography variant="h4" mb={2}>
-            Journal Entry Terms
+            App Terms
           </Typography>
           <Typography variant="body1" mb={2}>
             The terms for completing journal entries are defined below along with goal recommendations for each section of a journal entry. Refer to this section if there is any confusion in completing your journal entries. 
