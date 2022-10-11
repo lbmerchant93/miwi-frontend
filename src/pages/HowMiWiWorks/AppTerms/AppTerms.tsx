@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 const AppTerms = () => {
     return (
         <Box px={3} mb={2}>
-          <Typography variant="h4">
+          <Typography variant="h4" mb={2}>
             Journal Entry Terms
           </Typography>
           <Typography variant="body1" mb={2}>

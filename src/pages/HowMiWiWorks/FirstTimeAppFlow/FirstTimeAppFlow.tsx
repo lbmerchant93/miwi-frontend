@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 const FirstTimeAppFlow = () => {
     return (
         <Box px={3}>
-            <Typography variant="h5" mb={2}>
+            <Typography variant="h4" mb={2}>
                 First Time App Flow
             </Typography>
             <Typography variant="body1" mb={2}>

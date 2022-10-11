@@ -38,6 +38,7 @@ const App = () => {
       <Route path={`${PossibleRoutes.ROOT}`} element={<LandingPage />} />
       <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
       <Route path={`${PossibleRoutes.HOW_MIWI_WORKS}`} element={<HowMiWiWorksDashboard />} />
+      <Route path={`${PossibleRoutes.HOW_MIWI_WORKS_TAB}`} element={<HowMiWiWorksDashboard />} />
       <Route path={`${PossibleRoutes.HOME_USER}`} element={<HomePage />} />
       <Route path={`${PossibleRoutes.PROFILE_USER}`} element={<ProfilePage />} />
       <Route path={`${PossibleRoutes.JOURNAL_ENTRIES}`} element={<JournalPage />} />

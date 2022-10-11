@@ -54,6 +54,7 @@ const HowMiWiWorksTabs: React.FC<{ selectedTab: string; }> = (props) => {
                     label={label}
                     value={route}
                     id={route}
+                    sx={{ alignItems: 'flex-end' }}
                 />
             ))}
         </Tabs>
@@ -116,8 +117,8 @@ const HowMiWiWorksPanel: React.FC<HowMiWiWorksPanelProps> = (props) => {
 
     return (
         <Box display="flex" flexDirection="column">
-            <Box border={"1px solid gray"} borderRadius="20px" height={100} p={3} my={3} display="flex" flexDirection="column" justifyContent="center">
-                <Typography variant="h4"><strong>Help Center</strong></Typography>
+            <Box border={"1px solid gray"} borderRadius="20px" height={150} pl={4} my={3} display="flex" flexDirection="column" justifyContent="center">
+                <Typography variant="h3"><strong>Help Center</strong></Typography>
                 <Typography variant="h5" sx={{ color: "text.secondary" }}>Information on how to use MiWi</Typography>
             </Box>
             <Box display="flex" flexDirection="row">
