@@ -4,11 +4,12 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ShareLink from '../../../features/ShareLink/ShareLink';
 
 const AppTerms = () => {
     return (
         <Box px={3} mb={2}>
-            <Box mb={2}>
+            <Box mb={2} display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
                 <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                     <Link href="/how-miwi-works">
                         Help Center
@@ -17,6 +18,7 @@ const AppTerms = () => {
                         App Terms
                     </Link>
                 </Breadcrumbs>
+                <ShareLink />
             </Box>
           <Typography variant="h4" mb={2}>
             App Terms
