@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import FirstTimeAppFlow from '../FirstTimeAppFlow/FirstTimeAppFlow';
 import AppFeatures from '../AppFeatures/AppFeatures';
 import AppTerms from '../AppTerms/AppTerms';
+import Typography from '@mui/material/Typography';
 
 export enum HowMiWiWorksPageRoutes {
     firstTimeAppFlow = "first-time-app-flow",
@@ -89,9 +90,9 @@ const HowMiWiWorksPanelViews: React.FC<HowMiWiWorksPanelViewsProps> = (props) =>
 
     return (
         <>
-            {howMiWiWorksPageMap.map(({ route }) => (
+            {howMiWiWorksPageMap.map(({ route, Component }) => (
                 <HowMiWiWorksTabPanel isSelected={selectedPanel === route} value={route} key={route}>
-                    
+                    <Component />
                 </HowMiWiWorksTabPanel>
             ))}
         </>
@@ -114,11 +115,13 @@ const HowMiWiWorksPanel: React.FC<HowMiWiWorksPanelProps> = (props) => {
     }, [tab, panelRoutes, navigate])
 
     return (
-        <Box className='dashboard-panel'>
-            <Box>
-                <HowMiWiWorksTabs selectedTab={tab ? tab : howMiWiWorksPageMap[0].tab} />
+        <Box display="flex" flexDirection="column">
+            <Box border={"1px solid gray"} borderRadius="20px" width={"100%"} height={100} p={3} my={3} display="flex" flexDirection="column" justifyContent="center">
+                <Typography variant="h4"><strong>Help Center</strong></Typography>
+                <Typography variant="h5" sx={{ color: "text.secondary" }}>Information on how to use MiWi</Typography>
             </Box>
-            <Box>
+            <Box display="flex" flexDirection="row">
+                <HowMiWiWorksTabs selectedTab={tab ? tab : howMiWiWorksPageMap[0].tab} />
                 <HowMiWiWorksPanelViews selectedPanel={tab ? tab : howMiWiWorksPageMap[0].tab} />
             </Box>
         </Box>
