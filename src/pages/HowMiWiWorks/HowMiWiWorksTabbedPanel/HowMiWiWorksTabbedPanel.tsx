@@ -16,21 +16,21 @@ export enum HowMiWiWorksPageRoutes {
 
 const howMiWiWorksPageMap = [
     {
-        route: HowMiWiWorksPageRoutes.firstTimeAppFlow,
-        label: "First Time App Flow",
-        tab: "first-time-app-flow",
-        Component: FirstTimeAppFlow
-    }, {
-        route: HowMiWiWorksPageRoutes.appFeatures,
-        label: "App Features",
-        tab: "app-features",
-        Component: AppFeatures
-    }, {
         route: HowMiWiWorksPageRoutes.appTerms,
         label: "App Terms",
         tab: "app-terms",
         Component: AppTerms
-    }
+    },{
+        route: HowMiWiWorksPageRoutes.appFeatures,
+        label: "App Features",
+        tab: "app-features",
+        Component: AppFeatures
+    },{
+        route: HowMiWiWorksPageRoutes.firstTimeAppFlow,
+        label: "First Time App Flow",
+        tab: "first-time-app-flow",
+        Component: FirstTimeAppFlow
+    }, 
 ];
 
 const HowMiWiWorksTabs: React.FC<{ selectedTab: string; }> = (props) => {
@@ -91,7 +91,7 @@ const HowMiWiWorksPanelViews: React.FC<HowMiWiWorksPanelViewsProps> = (props) =>
     return (
         <>
             {howMiWiWorksPageMap.map(({ route, Component }) => (
-                <HowMiWiWorksTabPanel isSelected={selectedPanel === route} value={route} key={route}>
+                <HowMiWiWorksTabPanel isSelected={selectedPanel === route} value={route} key={route} width={"min(80ch, 100%)"}>
                     <Component />
                 </HowMiWiWorksTabPanel>
             ))}
@@ -116,7 +116,7 @@ const HowMiWiWorksPanel: React.FC<HowMiWiWorksPanelProps> = (props) => {
 
     return (
         <Box display="flex" flexDirection="column">
-            <Box border={"1px solid gray"} borderRadius="20px" width={"100%"} height={100} p={3} my={3} display="flex" flexDirection="column" justifyContent="center">
+            <Box border={"1px solid gray"} borderRadius="20px" height={100} p={3} my={3} display="flex" flexDirection="column" justifyContent="center">
                 <Typography variant="h4"><strong>Help Center</strong></Typography>
                 <Typography variant="h5" sx={{ color: "text.secondary" }}>Information on how to use MiWi</Typography>
             </Box>
