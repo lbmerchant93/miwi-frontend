@@ -3,6 +3,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box, { BoxProps } from '@mui/material/Box';
 import { useParams, useNavigate } from 'react-router-dom';
+import FirstTimeAppFlow from '../FirstTimeAppFlow/FirstTimeAppFlow';
+import AppFeatures from '../AppFeatures/AppFeatures';
+import AppTerms from '../AppTerms/AppTerms';
 
 export enum HowMiWiWorksPageRoutes {
     firstTimeAppFlow = "first-time-app-flow",
@@ -14,15 +17,18 @@ const howMiWiWorksPageMap = [
     {
         route: HowMiWiWorksPageRoutes.firstTimeAppFlow,
         label: "First Time App Flow",
-        tab: "first-time-app-flow"
+        tab: "first-time-app-flow",
+        Component: FirstTimeAppFlow
     }, {
         route: HowMiWiWorksPageRoutes.appFeatures,
         label: "App Features",
-        tab: "app-features"
+        tab: "app-features",
+        Component: AppFeatures
     }, {
         route: HowMiWiWorksPageRoutes.appTerms,
         label: "App Terms",
-        tab: "app-terms"
+        tab: "app-terms",
+        Component: AppTerms
     }
 ];
 
