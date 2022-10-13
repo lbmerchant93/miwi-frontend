@@ -30,16 +30,16 @@ const FirstTimeAppFlow = () => {
                 <strong>Step 1:</strong> You can create an account by clicking the <i><strong>register</strong></i> button under the <i><strong>Login Form</strong></i> or by selecting to sign in through your google account. The method in which you choose to create an account will be how you sign in to your account in the future. (I.e., if you register an account through the <i><strong>Create an account</strong></i> form, you will sign in using the sign in form, but if you register using your google account you will sign in using the <i><strong>SIGN IN WITH GOOGLE</strong></i> button)
             </Typography>
             <Typography variant="body1" mb={2}>
-                <strong>Step 2:</strong> Once you have successfully created your account, you will be directed to your dashboard's <i><strong>Home</strong></i> page. Since you will not have any journal entries yet, a message will appear with a button prompting you to create your first journal entry. Clicking this button will direct you to the Journal Entry Form page, or you can get there by selecting the <i><strong>Journal Entry Form</strong></i> tab.
+                <strong>Step 2:</strong> Once you have successfully created your account, you will be directed to today's journal entry. Before starting today's journal entry, we suggest you go to your Profile to change your goals if they differ from the preset example goals. You can get to your <i><strong>Profile Page</strong></i> by selecting the Profile tab on the now visible user menu.
             </Typography>
             <Typography variant="body1" mb={2}>
-                <strong>Step 3:</strong> Fill out the journal entry form with your information for the date you select. Once you have completed the form, click the <i><strong>submit</strong></i> button which will submit your information to be stored in our database. The form will prompt you if a field is required in order to be submitted. Remember that its 100% OK not to check off everything every single day! The requirements for these inputs are there to assist you in case you happen to miss one. It is totally OK to enter “0”, “false”, or “not today” for any of the inputs that you took a grace day on! 
+                <strong>Step 3:</strong> To update your goals, select the goal you wish to change and input your new goal on the modal that opens. Once you've got your desired goals, click the <i><strong>Home Icon</strong></i> to be navigated back to today's journal entry.
             </Typography>
             <Typography variant="body1" mb={2}>
-                <strong>Step 4:</strong> Once you have submitted your journal entry and it has successfully been stored in the database, you will receive a green success message at the top of the screen. You will automatically be directed back to your dashboard’s <i><strong>Home</strong></i> page. It may take a few seconds as we retrieve your entry from the database but the information you submitted will appear shortly inside a journal entry card. This card shows the break down of the information for that day along with a pencil icon button, used for updating the journal entry, and a trash can icon button, used for deleting the journal entry entirely. 
+                <strong>Step 4:</strong> To update your journal entry, select the section you wish to change and input your info on the modal that opens. Once your changes have been successfully updated, you will receive a green notification and be directed back to the journal entry, where your updates will be visible.
             </Typography>
             <Typography variant="body1" mb={2}>
-                <strong>Congrats! You just created your first journal entry! See the App Features section to see what else you can do with MiWi!</strong> 
+                <strong>Congrats! You just set up your profile and created your first journal entry! See the App Features section to see what else you can do with MiWi!</strong> 
             </Typography>
         </Box>
     );
