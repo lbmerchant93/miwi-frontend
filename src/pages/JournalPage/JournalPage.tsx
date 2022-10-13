@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 // import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../shared/auth-context';
 import Box from '@mui/material/Box';
@@ -35,7 +35,7 @@ const JournalPage = () => {
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
 
     const onPaginationClick = (direction: string) => {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
         setTimeout(() => {
             switch (direction) {
@@ -97,6 +97,10 @@ const JournalPage = () => {
             }
         });
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     if (!user.isLoggedIn) {
         return (

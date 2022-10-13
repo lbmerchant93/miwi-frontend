@@ -89,6 +89,10 @@ interface HowMiWiWorksPanelViewsProps {
 const HowMiWiWorksPanelViews: React.FC<HowMiWiWorksPanelViewsProps> = (props) => {
     const { selectedPanel } = props;
 
+    React.useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, [selectedPanel]);
+
     return (
         <>
             {howMiWiWorksPageMap.map(({ route, Component }) => (
@@ -113,7 +117,7 @@ const HowMiWiWorksPanel: React.FC<HowMiWiWorksPanelProps> = (props) => {
         if (tab && !panelRoutes.includes(tab)) {
         navigate(`/how-miwi-works/${panelRoutes[0]}`)
     }
-    }, [tab, panelRoutes, navigate])
+    }, [tab, panelRoutes, navigate]);
 
     return (
         <Box display="flex" flexDirection="column">
