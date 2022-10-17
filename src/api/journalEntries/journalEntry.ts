@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient  } from 'react-query';
+import { useMutation, useQueryClient, useQuery  } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
 import { getAuthToken } from '../../App.authProvider';
@@ -31,6 +31,86 @@ import { getAuthToken } from '../../App.authProvider';
 //       return data.journalEntry;
 //   });
 // };
+
+const firstEntry = gql`
+  query FindFirstJournalEntry($authorId: String, $date: String) {
+    findFirstJournalEntry(where: { AND: [{ authorId: { equals: $authorId } }, { date: { equals: $date } }] }) {
+      id
+      date
+      exercise
+      garlandPose
+      kegels
+      prenatalVitamins
+      probiotics
+      proteinIntake
+      authorId
+      waterIntake
+      mood
+      childbirthEducation
+      selfCare
+      postpartumPrep
+      fetalLoveBreak
+    }
+  }
+`
+
+export const useFindFirstEntry = (authorId: string | undefined, date: string, email: string | null) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+      authorization: `Bearer ${token}`
+  }
+
+  return useQuery(['firstEntry', email], async () => {
+    const { findFirstJournalEntry } = await request({
+      url: endpoint,
+      document: firstEntry,
+      variables: { authorId, date },
+      requestHeaders
+    });
+    return findFirstJournalEntry;
+  })
+};
+
+const firstEntryById = gql`
+  query FindFirstJournalEntry($id: Int, $authorId: String) {
+    findFirstJournalEntry(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }] }) {
+      id
+      date
+      exercise
+      garlandPose
+      kegels
+      prenatalVitamins
+      probiotics
+      proteinIntake
+      authorId
+      waterIntake
+      mood
+      childbirthEducation
+      selfCare
+      postpartumPrep
+      fetalLoveBreak
+    }
+  }
+`;
+
+export const useFindFirstEntryById = (authorId: string | undefined, id: string | undefined, email: string | null) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+      authorization: `Bearer ${token}`
+  }
+
+  return useQuery(['firstEntryById', id], async () => {
+    const { findFirstJournalEntry } = await request({
+      url: endpoint,
+      document: firstEntryById,
+      variables: { authorId, id: (isNaN(Number(id)) ? undefined : Number(id)) },
+      requestHeaders
+    });
+    return findFirstJournalEntry;
+  }, {
+    enabled: id !== null && id !== undefined && authorId !== undefined && authorId !== null && !isNaN(Number(id))
+  })
+};
 
 const createJournalEntryMutation = gql`
   mutation createJournalEntry($data: JournalEntryCreateInputData!){
@@ -127,8 +207,8 @@ export const useCreateJournalEntry = () => {
 
   return useMutation(createJournalEntry, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
-      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchInactive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchInactive: true })
     }, 
   })
 }
@@ -267,8 +347,10 @@ export const useDeleteJournalEntry = () => {
 
   return useMutation(deleteJournalEntry, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchActive: false })
-      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchActive: false })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"], refetchInactive: true })
+      await queryClient.invalidateQueries({ queryKey: ["journalEntries"], refetchInactive: true })
+      await queryClient.invalidateQueries({ queryKey: ["firstEntry"] })
+      // await queryClient.invalidateQueries({ queryKey: ["firstEntryById"] })
     }
   })
 }

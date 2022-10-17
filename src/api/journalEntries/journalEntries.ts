@@ -17,14 +17,14 @@ export const JournalEntries = gql`
     ) {
       id
       date
-      exercise
-      garlandPose
-      kegels
-      prenatalVitamins
-      probiotics
-      proteinIntake
+      # exercise
+      # garlandPose
+      # kegels
+      # prenatalVitamins
+      # probiotics
+      # proteinIntake
       authorId
-      waterIntake
+      # waterIntake
     }
   }
 `;
@@ -98,12 +98,12 @@ const journalEntriesCount = gql`
   }
 `;
 
-export const useJournalEntriesCount = (authorId: string | undefined) => {
+export const useJournalEntriesCount = (authorId: string | undefined, email: string | null) => {
   const token = getAuthToken();
   const requestHeaders = {
     authorization: `Bearer ${token}`
   }
-  return useQuery(['journalEntriesCount'], async () => {
+  return useQuery(['journalEntriesCount', email], async () => {
     const { aggregateJournalEntry } = await request({
       url: endpoint,
       document: journalEntriesCount,

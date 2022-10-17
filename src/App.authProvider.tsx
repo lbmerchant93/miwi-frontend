@@ -24,14 +24,15 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [email, setEmail] = useState<string | null>('');
     const [goals, setGoals] = useState<Goals>({
         id: '',
-        waterIntakeGoal: 0,
-        proteinIntakeGoal: 0,
-        exerciseGoal: 0,
-        kegelsGoal: 0,
-        garlandPoseGoal: 0
+        waterIntakeGoal: 70,
+        proteinIntakeGoal: 70,
+        exerciseGoal: 30,
+        kegelsGoal: 100,
+        garlandPoseGoal: 10
     })
     const [providerId, setProviderId] = useState<string | null>('');
     const [refreshToken, setRefreshToken] = useState<string | null>('');
+    const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
     const { data } = useUser(userId, email);
 
     onAuthStateChanged(auth, async (user) => {
@@ -54,7 +55,9 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         } else {
             localStorage.setItem('token', '');
             setUserId(undefined);
+            setEmail('');
             setIsLoggedIn(false);
+            setIsLoadingUser(true);
             setDisplayName('');
             setPhotoURL('');
             setExpectedDueDate(null);
@@ -66,7 +69,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         if (data && data.id === userId) {
             setDisplayName(data.displayName);
             setExpectedDueDate(data.expectedDueDate);
-            setGoals(data.goals)
+            setGoals(data.goals);
+            setIsLoadingUser(false);
         } 
     }, [data, userId]);
 
@@ -74,6 +78,7 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         <AuthContext.Provider 
             value={{
             isLoggedIn: isLoggedIn,
+            isLoadingUser: isLoadingUser,
             id: userId,
             displayName: displayName,
             photoURL: photoURL,
@@ -83,7 +88,8 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
             setUserId: setUserId,
             setExpectedDueDate: setExpectedDueDate,
             setDisplayName: setDisplayName,
-            setGoals: setGoals
+            setGoals: setGoals,
+            setIsLoadingUser: setIsLoadingUser
             }}
         >
             {props.children}

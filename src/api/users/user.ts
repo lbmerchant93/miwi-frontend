@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { request, gql } from "graphql-request";
 import { endpoint } from '../../App';
 import { getAuthToken } from '../../App.authProvider';
@@ -36,7 +36,7 @@ export const useUser = (id: string | undefined, email: string | null) => {
         });
         return user;
     }, {
-        enabled: id !== undefined && id !== null && id !== '' && email !== ''
+        enabled: id !== undefined && id !== null && id !== '' && email !== '' && email !== null
     })
 }
 
@@ -68,7 +68,7 @@ interface UserLoginInput {
 };
 
 const loginUserMutation = async (createUserInput: UserLoginInput) => {
-    const token = getAuthToken();
+    const token = await getAuthToken();
     const requestHeaders = {
         authorization: `Bearer ${token}`
     }
@@ -90,7 +90,17 @@ const loginUserMutation = async (createUserInput: UserLoginInput) => {
 };
 
 export const useLoginUser = () => {
-    return useMutation(loginUserMutation)
+    const queryClient = useQueryClient();
+
+    return useMutation(loginUserMutation, {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["user"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntry"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntryById"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"] })
+        }
+    });
 };
 
 const updateUserDocument = gql`
@@ -165,5 +175,15 @@ const deleteUserMutation = async (id: string | undefined) => {
 };
 
 export const useDeleteUser = () => {
-    return useMutation(deleteUserMutation);
+    const queryClient = useQueryClient();
+
+    return useMutation(deleteUserMutation, {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ["user"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntry"] })
+          await queryClient.invalidateQueries({ queryKey: ["firstEntryById"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntries"] })
+          await queryClient.invalidateQueries({ queryKey: ["journalEntriesCount"] })
+        }
+    });
 };

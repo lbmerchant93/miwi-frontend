@@ -45,7 +45,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     user.setGoals(data.goals)
                     setIsLoading(false)
                     onClose()
-                    navigate('/dashboard/home')
+                    navigate(`/home/${userLogin.user.email?.split('@')[0]}`)
                 }
             })
         } catch (err: any) {
@@ -65,11 +65,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                     setIsLoading(false)
                     console.log(err)
                 },
-                onSuccess: () => {
+                onSuccess: (data) => {
                     user.setUserId(userLogin.user.uid)
+                    user.setGoals(data.goals)
+                    user.setIsLoadingUser(false)
                     setIsLoading(false)
-                    navigate('/dashboard/home')
                     onClose()
+                    navigate(`/home/${userLogin.user.email?.split('@')[0]}`)
                 }
             })
         } catch (err: any) {

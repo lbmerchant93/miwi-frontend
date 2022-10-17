@@ -4,7 +4,6 @@ import AppBar from './features/AppBar/AppBar';
 import AppFooter from './features/AppFooter/AppFooter';
 import { PossibleRoutes } from './utils/constants';
 import LandingPage from './pages/LandingPage/LandingPage';
-import DashboardPage from './pages/DashboardPage/DashboardPage';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import { initializeApp } from 'firebase/app';
@@ -13,7 +12,11 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthProvider from './App.authProvider';
 import AboutPage from './pages/AboutPage/AboutPage';
-import HowMiWiWorksPage from './pages/HowMiWiWorksPage/HowMiWiWorksPage';
+import HomePage from './pages/HomePage/HomePage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
+import JournalPage from './pages/JournalPage/JournalPage';
+import JournalEntryPage from './pages/JournalEntryPage/JournalEntryPage';
+import HowMiWiWorksDashboard from './pages/HowMiWiWorks/HowMiWiWorksDashboard';
 
 export const endpoint: string = process.env.NODE_ENV === 'production' ? (process.env.REACT_APP_GQL_ENDPOINT_PRODUCTION as string) : (process.env.REACT_APP_GQL_ENDPOINT_DEVELOPMENT as string)
 
@@ -33,10 +36,13 @@ const App = () => {
   const routes = (
     <Routes>
       <Route path={`${PossibleRoutes.ROOT}`} element={<LandingPage />} />
-      <Route path={`${PossibleRoutes.DASHBOARD}`} element={<DashboardPage />} />
-      <Route path={`${PossibleRoutes.DASHBOARD_TAB}`} element={<DashboardPage />} />
       <Route path={`${PossibleRoutes.ABOUT}`} element={<AboutPage />} />
-      <Route path={`${PossibleRoutes.HOW_IT_WORKS}`} element={<HowMiWiWorksPage />} />
+      <Route path={`${PossibleRoutes.HOW_MIWI_WORKS}`} element={<HowMiWiWorksDashboard />} />
+      <Route path={`${PossibleRoutes.HOW_MIWI_WORKS_TAB}`} element={<HowMiWiWorksDashboard />} />
+      <Route path={`${PossibleRoutes.HOME_USER}`} element={<HomePage />} />
+      <Route path={`${PossibleRoutes.PROFILE_USER}`} element={<ProfilePage />} />
+      <Route path={`${PossibleRoutes.JOURNAL_ENTRIES}`} element={<JournalPage />} />
+      <Route path={`${PossibleRoutes.JOURNAL_ENTRIES_ENTRY}`} element={<JournalEntryPage />} />
     </Routes>
   );
   

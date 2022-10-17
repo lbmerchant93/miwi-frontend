@@ -16,7 +16,7 @@ const MainPage:React.FC = () => {
     <Box className="landing-page-container">
       <Typography variant="h2">
         <strong>
-          Welcome to MiWi
+          Welcome to MiWi!
         </strong>
       </Typography>
       <Typography variant="subtitle1">*Your personal Midwifery App*</Typography>
