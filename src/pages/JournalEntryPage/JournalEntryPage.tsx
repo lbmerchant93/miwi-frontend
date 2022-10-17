@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import JournalEntryDisplay from '../../features/JournalEntryDisplay/JournalEntryDisplay';
@@ -29,6 +29,10 @@ const JournalEntryPage = () => {
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     if (!user.isLoggedIn) {
         return (

@@ -1,7 +1,8 @@
 export enum PossibleRoutes {
     ROOT = '/',
     ABOUT = '/about',
-    HOW_IT_WORKS = '/how_miwi_works',
+    HOW_MIWI_WORKS = '/how-miwi-works',
+    HOW_MIWI_WORKS_TAB = '/how-miwi-works/:tab',
     HOME_USER = '/home/:user',
     PROFILE_USER = '/profile/:user',
     JOURNAL_ENTRIES = '/journal/entries',

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 // import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../shared/auth-context';
 import Box from '@mui/material/Box';
@@ -46,6 +46,10 @@ const HomePage = () => {
     const dismissSnackBar = () => {
         setSnackBarDetails({ ...snackBarDetails, show: false });
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     if (!user.isLoggedIn) {
         return (
