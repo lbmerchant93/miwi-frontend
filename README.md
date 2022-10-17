@@ -62,19 +62,16 @@ The features mentioned below are defined for their intended application use and 
 ### Login: 
 *There is a Guest Account button to demonstrate login and there for experimental use.*
 
-If you already have an account with us, you can login through the Login Form if you created your account by registering with us originally or sign in through your google account if you created your account by signing in with your google account originally.
+If you already have an account with us, you can login through the Login Form if you created your account by registering with us originally or you can Sign In With Google if you created your account by signing in with your google account originally. Once you have logged in, you will be directed to today's journal entry.
 
 ### Pagination: 
-Your dashboard's Home page will display the 15 most recent journal entries you have created. If you have more than 15 entries, you can view older journal entries by clicking the next button at the bottom of the Home page. The back button will return you to more recent entries.
+Your Journal page will display the 15 most recent journal entries you have created. If you have more than 15 entries, you can view older journal entries by clicking the next button at the bottom of the Journal page. The back button will return you to more recent entries.
 
-### Profile Information: 
-If you click the Profile tab you will see options to add an Expected due date, Edit your account, or Delete your account. Select either the Add button next to Expected due date or the Edit button next to Edit your account in order to be direct to a form in which you can edit/update your profile. Once you’ve completed the form, click submit to submit your changes. When your updates have been successfully stored to your account, a green success message will appear and you will be redirected back to the previous profile view which will include your newly updated information.
+### Profile Page: 
+The Profile tab you will direct you to your Profile page. Once your information is retrieved from the backend, you will first see your personal information including your Display Name, Expected Due Date, and Location. Below that is a section containing your goals for Water Intake, Protein Intake, Exercise, Kegels, and Garland Pose. These goals are assigned with default suggested values upon creating an account. You may update your profile by clicking on your personal information or a specific goal. When your updates have been successfully stored, a green success message will appear and you will be redirected back to your profile which will include your newly updated information. At the bottom of your profile, there is an option to delete your account. This can be done by clicking the Delete Account button and following the prompts. (Note: this action is irreversible.)
 
-### Delete Journal Entry: 
-If you select the delete button on a journal entry card, a warning modal will pop up asking if you are sure you would like to delete the selected journal entry because this action is irreversible. If you a certain you would like to delete the entry, click the YES, I'M SURE button. Once your entry is successfully delete the warning modal will close and your dashboard will update to exclude the deleted entry. The CANCEL button will return you to your dashboard without deleting the entry.
-
-### Update Journal Entry: 
-If you select the edit button on a journal entry card, an Update Journal Entry form will pop up that looks like the Create Journal Entry form but will be repopulated with the information from the journal entry you selected. Make changes to the form and click the UPDATE button. Once your information has been successfully stored, a green success message will briefly flash to alert you of the successful changes and the form will close which will return you to your dashboard that will show your updated changes. The CANCEL button will return you to your dashboard without updating the entry.
+### Journal Entry: 
+To update a journal entry, you need to select the section you're wanting to update which will open a modal for you to perform your input. You can submit your updates by clicking the Update button. If you wish to delete a journal entry, click the Delete Entry at the bottom of the journal entry page. (Note: Deleting a journal entry is irreversible.)
 
 ### Footer Content
 Included in the footer are links to an About Us and How MiWi Works. These links provide some information on the developer that made the app, the app work flow for its features, and definitions for commonly used terms.
@@ -89,7 +86,7 @@ Currently working to make the application completely responsive for mobile, tabl
 
 
 ### Future Features
-- **One:** Additional journal sections including: Fetal Love Break, Self Care, Postpartum Prep, Childbirth Education, and Nourishment. Through these the design of the journal entry's card display will likely need to change. 
+- **One:** Search functionality for a specific journal date. 
 - **Two:** Better design/layout. Things such as adding images, color scheming, responsive design, and skeletal loading.
 
 
