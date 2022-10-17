@@ -57,9 +57,9 @@ const AppBar: React.FC = () => {
     };
 
     return (
-        <>
-            <MUIAppBar elevation={0} position="sticky" color="inherit">
-                <Toolbar className='header'>
+        <MUIAppBar elevation={0} position="sticky" color="inherit">
+            <Toolbar className="header" disableGutters>
+                <Box display="flex" justifyContent="space-between" alignItems="center" maxWidth="1232px" width={"100%"} py={1} px={2}>
                     <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
                         <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
                     </Link>
@@ -135,9 +135,9 @@ const AppBar: React.FC = () => {
                             </Link>
                         </Menu>
                     </Box>   
-                </Toolbar> 
-            </MUIAppBar>
-        </>
+                </Box>
+            </Toolbar> 
+        </MUIAppBar>
     );
 };
 
