@@ -63,39 +63,40 @@ const JournalPage = () => {
 
     const handleCreateNewEntryByDate = () => {
         setIsLoading(true);
-        const journalEntry = {
-            authorId: user.id,
-            date: newJournalEntryDate,
-            waterIntake: 0,
-            proteinIntake: 0,
-            exercise: 0,
-            kegels: 0,
-            garlandPose: 0,
-            prenatalVitamins: false,
-            probiotics: false,
-            mood: "",
-            childbirthEducation: "Write about what you read today...",
-            selfCare: "Write about what you did for your body today...",
-            postpartumPrep: "Write about how you are preparing for postpartum...",
-            fetalLoveBreak: "Write about what you said to your baby today..."
-        };
-        createJournalEntry.mutate(journalEntry, {
-            onError: (err: any) => {
-                triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
-            },
-            onSuccess: (data) => {
-                if (data.date === moment().startOf('day').toISOString(true)) {
-                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                    navigate(`/home/${user.email?.split('@')[0]}`)
-                } else {
+
+        if (newJournalEntryDate === moment().startOf('day').toISOString(true)) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            navigate(`/home/${user.email?.split('@')[0]}`)
+        } else {
+            const journalEntry = {
+                authorId: user.id,
+                date: newJournalEntryDate,
+                waterIntake: 0,
+                proteinIntake: 0,
+                exercise: 0,
+                kegels: 0,
+                garlandPose: 0,
+                prenatalVitamins: false,
+                probiotics: false,
+                mood: "",
+                childbirthEducation: "Write about what you read today...",
+                selfCare: "Write about what you did for your body today...",
+                postpartumPrep: "Write about how you are preparing for postpartum...",
+                fetalLoveBreak: "Write about what you said to your baby today..."
+            };
+            createJournalEntry.mutate(journalEntry, {
+                onError: (err: any) => {
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: (data) => {
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                     navigate(`/journal/entries/${data.id}`)
+                },
+                onSettled: () => {
+                    setIsLoading(false);
                 }
-            },
-            onSettled: () => {
-                setIsLoading(false);
-            }
-        });
+            });
+        }
     };
 
     useEffect(() => {
@@ -127,7 +128,7 @@ const JournalPage = () => {
                     </Box>
                 )}
 
-                {((!isFetching || !isFetchingCount) && data && data.length) && (
+                {((!isFetching || !isFetchingCount) && data && data.length !== 0) && (
                     <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                         <Box display="flex" flexWrap="wrap" justifyContent="center">
                             {data.map((entry: JournalEntry) => {
@@ -167,7 +168,7 @@ const JournalPage = () => {
                 {(!isFetching || !isFetchingCount) && data && !data.length && (
                     <>
                         <Typography variant="h6" mt={2}>Looks like you don't have any journal entries yet.<br/> Click the button below to go to your dashboard and create a journal for today!</Typography>
-                        <Box mt={2}>
+                        <Box m={3}>
                             <Button onClick={() => navigate(`/home/${user.email?.split('@')[0]}`)} variant='contained' color='success'>
                                 <Typography variant="body1">Dashboard</Typography>
                             </Button>
@@ -195,7 +196,7 @@ const JournalPage = () => {
                                 color="success"
                                 onClick={handleCreateNewEntryByDate}
                                 endIcon={<NoteAddIcon />}
-                                disabled={isLoading || isFetchingCount || isFetching}
+                                disabled={isLoading || isFetchingCount || isFetching || !newJournalEntryDate}
                             >
                                 Create
                             </Button>
