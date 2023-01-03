@@ -167,7 +167,7 @@ const JournalPage = () => {
                 {(!isFetching || !isFetchingCount) && data && !data.length && (
                     <>
                         <Typography variant="h6" mt={2}>Looks like you don't have any journal entries yet.<br/> Click the button below to go to your dashboard and create a journal for today!</Typography>
-                        <Box mt={2}>
+                        <Box m={3}>
                             <Button onClick={() => navigate(`/home/${user.email?.split('@')[0]}`)} variant='contained' color='success'>
                                 <Typography variant="body1">Dashboard</Typography>
                             </Button>
