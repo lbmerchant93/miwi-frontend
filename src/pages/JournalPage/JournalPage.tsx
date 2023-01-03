@@ -195,7 +195,7 @@ const JournalPage = () => {
                                 color="success"
                                 onClick={handleCreateNewEntryByDate}
                                 endIcon={<NoteAddIcon />}
-                                disabled={isLoading || isFetchingCount || isFetching}
+                                disabled={isLoading || isFetchingCount || isFetching || !newJournalEntryDate}
                             >
                                 Create
                             </Button>
