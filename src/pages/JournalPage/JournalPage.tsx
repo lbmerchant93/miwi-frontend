@@ -63,39 +63,40 @@ const JournalPage = () => {
 
     const handleCreateNewEntryByDate = () => {
         setIsLoading(true);
-        const journalEntry = {
-            authorId: user.id,
-            date: newJournalEntryDate,
-            waterIntake: 0,
-            proteinIntake: 0,
-            exercise: 0,
-            kegels: 0,
-            garlandPose: 0,
-            prenatalVitamins: false,
-            probiotics: false,
-            mood: "",
-            childbirthEducation: "Write about what you read today...",
-            selfCare: "Write about what you did for your body today...",
-            postpartumPrep: "Write about how you are preparing for postpartum...",
-            fetalLoveBreak: "Write about what you said to your baby today..."
-        };
-        createJournalEntry.mutate(journalEntry, {
-            onError: (err: any) => {
-                triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
-            },
-            onSuccess: (data) => {
-                if (data.date === moment().startOf('day').toISOString(true)) {
-                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                    navigate(`/home/${user.email?.split('@')[0]}`)
-                } else {
+
+        if (newJournalEntryDate === moment().startOf('day').toISOString(true)) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            navigate(`/home/${user.email?.split('@')[0]}`)
+        } else {
+            const journalEntry = {
+                authorId: user.id,
+                date: newJournalEntryDate,
+                waterIntake: 0,
+                proteinIntake: 0,
+                exercise: 0,
+                kegels: 0,
+                garlandPose: 0,
+                prenatalVitamins: false,
+                probiotics: false,
+                mood: "",
+                childbirthEducation: "Write about what you read today...",
+                selfCare: "Write about what you did for your body today...",
+                postpartumPrep: "Write about how you are preparing for postpartum...",
+                fetalLoveBreak: "Write about what you said to your baby today..."
+            };
+            createJournalEntry.mutate(journalEntry, {
+                onError: (err: any) => {
+                    triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                },
+                onSuccess: (data) => {
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                     navigate(`/journal/entries/${data.id}`)
+                },
+                onSettled: () => {
+                    setIsLoading(false);
                 }
-            },
-            onSettled: () => {
-                setIsLoading(false);
-            }
-        });
+            });
+        }
     };
 
     useEffect(() => {
