@@ -127,7 +127,7 @@ const JournalPage = () => {
                     </Box>
                 )}
 
-                {((!isFetching || !isFetchingCount) && data && data.length) && (
+                {((!isFetching || !isFetchingCount) && data && data.length !== 0) && (
                     <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                         <Box display="flex" flexWrap="wrap" justifyContent="center">
                             {data.map((entry: JournalEntry) => {
