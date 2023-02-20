@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
-import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
+// import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -128,13 +128,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                         isLoading={isLoading}
                         loginWithGoogle={loginWithGoogle}
                     />
-                    <Typography variant="caption" my={3}>
+                    {/* <Typography variant="caption" my={3}>
                         OR
                     </Typography>
                     <GuestLoginButton 
                         loginWithEmailAndPassword={loginWithEmailAndPassword} 
                         isLoading={isLoading}
-                    />
+                    /> */}
                 </Box>
             </Box>
         </>
