@@ -14,7 +14,7 @@ const GuestLoginButton: React.FC<GuestLoginButtonsProps> = (props) => {
     
     return (
         <Box className="guest-login-button-wrapper">
-            <LoadingButton variant="outlined" onClick={() => loginWithEmailAndPassword('guest@guest.com', 'guestviewer')} color="inherit" className="guest-login-button" loading={isLoading}>
+            <LoadingButton variant="outlined" onClick={() => loginWithEmailAndPassword('guestviewer@guest.com', 'guestviewer')} color="inherit" className="guest-login-button" loading={isLoading}>
                 <Box className="guest-login-text-wrapper">
                     <Typography variant="body1">Sign in as guest</Typography>
                 </Box>
