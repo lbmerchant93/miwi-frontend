@@ -16,11 +16,10 @@ import DatePicker from '@mui/lab/DatePicker';
 import moment from 'moment';
 import TextField from '@mui/material/TextField';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import { useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useCreateJournalEntry, useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
-import { useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 
 const JournalPage = () => {
     // const { user } = useParams();
@@ -34,7 +33,6 @@ const JournalPage = () => {
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const createJournalEntry = useCreateJournalEntry();
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
-
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
     const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
 
@@ -102,12 +100,6 @@ const JournalPage = () => {
             });
         }
     };
-
-    const handleSearchEntriesByDate = () => {
-        setIsLoadingSearchEntryDate(true);
-        console.log(foundJournalEntry)
-        setIsLoadingSearchEntryDate(false);
-    }
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -218,28 +210,27 @@ const JournalPage = () => {
                 <Box my={3}>
                     <Typography variant="h6" mb={2}>Search journal entries for a specific date:</Typography>
                     <Box display="flex" justifyContent="center">
-                    <LocalizationProvider dateAdapter={DateAdapter}>
-                        <DatePicker
-                            label="Search Entry Date"
-                            value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
-                            onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
-                            renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
-                            disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching}
-                            disableFuture
-                        />
+                        <LocalizationProvider dateAdapter={DateAdapter}>
+                            <DatePicker
+                                label="Search Entry Date"
+                                value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
+                                onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                                renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                                disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching}
+                                disableFuture
+                            />
                         </LocalizationProvider>
-                        <Box ml={1} display="flex">
-                            <Button
-                                variant="contained"
-                                color="success"
-                                onClick={handleSearchEntriesByDate}
-                                endIcon={<NoteAddIcon />}
-                                disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching || !searchJournalEntryDate}
-                            >
-                                Search
-                            </Button>
-                        </Box>
                     </Box>
+                    {isFetchingSearchDate && <Box my={2}>Searching...</Box>}
+                    {foundJournalEntry && 
+                        <Box display="flex" justifyContent="center">
+                                <JournalEntryCard 
+                                    entry={foundJournalEntry}
+                                    email={user.email} 
+                                    key={foundJournalEntry.id} 
+                                />
+                        </Box>
+                    }
                 </Box>
             </Box>
         </>
