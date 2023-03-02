@@ -27,7 +27,9 @@ const JournalPage = () => {
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
     const [newJournalEntryDate, setNewJournalEntryDate] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [searchJournalEntryDate, setSearchJournalEntryDate] = useState<string | null>(null);
+    const [isLoadingNewEntryDate, setIsLoadingNewEntryDate] = useState<boolean>(false);
+    const [isLoadingSearchEntryDate, setIsLoadingSearchEntryDate] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const createJournalEntry = useCreateJournalEntry();
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
@@ -62,7 +64,7 @@ const JournalPage = () => {
     };
 
     const handleCreateNewEntryByDate = () => {
-        setIsLoading(true);
+        setIsLoadingNewEntryDate(true);
 
         if (newJournalEntryDate === moment().startOf('day').toISOString(true)) {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -93,7 +95,7 @@ const JournalPage = () => {
                     navigate(`/journal/entries/${data.id}`)
                 },
                 onSettled: () => {
-                    setIsLoading(false);
+                    setIsLoadingNewEntryDate(false);
                 }
             });
         }
@@ -186,7 +188,7 @@ const JournalPage = () => {
                                 value={newJournalEntryDate}
                                 onChange={(newDate) => setNewJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
                                 renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
-                                disabled={isLoading || isFetchingCount || isFetching}
+                                disabled={isLoadingNewEntryDate || isFetchingCount || isFetching}
                                 disableFuture
                             />
                         </LocalizationProvider>
@@ -196,9 +198,37 @@ const JournalPage = () => {
                                 color="success"
                                 onClick={handleCreateNewEntryByDate}
                                 endIcon={<NoteAddIcon />}
-                                disabled={isLoading || isFetchingCount || isFetching || !newJournalEntryDate}
+                                disabled={isLoadingNewEntryDate || isFetchingCount || isFetching || !newJournalEntryDate}
                             >
                                 Create
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+
+                <Divider variant="middle" />
+                <Box my={3}>
+                    <Typography variant="h6" mb={2}>Search journal entries for a specific date:</Typography>
+                    <Box display="flex" justifyContent="center">
+                    <LocalizationProvider dateAdapter={DateAdapter}>
+                        <DatePicker
+                            label="Search Entry Date"
+                            value={searchJournalEntryDate}
+                            onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                            renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                            disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching}
+                            disableFuture
+                        />
+                        </LocalizationProvider>
+                        <Box ml={1} display="flex">
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleCreateNewEntryByDate}
+                                endIcon={<NoteAddIcon />}
+                                disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching || !searchJournalEntryDate}
+                            >
+                                Search
                             </Button>
                         </Box>
                     </Box>
