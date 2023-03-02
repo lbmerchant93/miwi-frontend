@@ -193,12 +193,12 @@ const JournalPage = () => {
                         </LocalizationProvider>
                     </Box>
                     {isFetchingSearchDate && <Typography variant="h6" mt={2}>Searching...</Typography>}
-                    {searchJournalEntryDate && !foundJournalEntry && 
+                    {!isFetchingSearchDate && searchJournalEntryDate && !foundJournalEntry && 
                         <Typography variant="h6" mt={2}>
                             Sorry, we couldn't find an entry for that date. If you'd like, you can create one below!
                         </Typography>
                     }
-                    {foundJournalEntry && 
+                    {!isFetchingSearchDate && foundJournalEntry && 
                         <Box display="flex" justifyContent="center">
                                 <JournalEntryCard 
                                     entry={foundJournalEntry}
