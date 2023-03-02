@@ -16,7 +16,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import moment from 'moment';
 import TextField from '@mui/material/TextField';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import { useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
+import { useCreateJournalEntry, useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
@@ -27,12 +27,13 @@ const JournalPage = () => {
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
     const [newJournalEntryDate, setNewJournalEntryDate] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [searchJournalEntryDate, setSearchJournalEntryDate] = useState<string | undefined>(undefined);
+    const [isLoadingNewEntryDate, setIsLoadingNewEntryDate] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const createJournalEntry = useCreateJournalEntry();
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
-
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
+    const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
 
     const onPaginationClick = (direction: string) => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -62,7 +63,7 @@ const JournalPage = () => {
     };
 
     const handleCreateNewEntryByDate = () => {
-        setIsLoading(true);
+        setIsLoadingNewEntryDate(true);
 
         if (newJournalEntryDate === moment().startOf('day').toISOString(true)) {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -93,7 +94,7 @@ const JournalPage = () => {
                     navigate(`/journal/entries/${data.id}`)
                 },
                 onSettled: () => {
-                    setIsLoading(false);
+                    setIsLoadingNewEntryDate(false);
                 }
             });
         }
@@ -177,6 +178,38 @@ const JournalPage = () => {
                 )}
 
                 <Divider variant="middle" />
+                <Box my={3} maxWidth={450} alignSelf="center">
+                    <Typography variant="h6" mb={2}>Search by a specific date:</Typography>
+                    <Box display="flex" justifyContent="center">
+                        <LocalizationProvider dateAdapter={DateAdapter}>
+                            <DatePicker
+                                label="Search Entry Date"
+                                value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
+                                onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                                renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                                disabled={isFetchingSearchDate || isFetchingCount || isFetching}
+                                disableFuture
+                            />
+                        </LocalizationProvider>
+                    </Box>
+                    {isFetchingSearchDate && <Typography variant="h6" mt={2}>Searching...</Typography>}
+                    {searchJournalEntryDate && !foundJournalEntry && 
+                        <Typography variant="h6" mt={2}>
+                            Sorry, we couldn't find an entry for that date. If you'd like, you can create one below!
+                        </Typography>
+                    }
+                    {foundJournalEntry && 
+                        <Box display="flex" justifyContent="center">
+                                <JournalEntryCard 
+                                    entry={foundJournalEntry}
+                                    email={user.email} 
+                                    key={foundJournalEntry.id} 
+                                />
+                        </Box>
+                    }
+                </Box>
+
+                <Divider variant="middle" />
                 <Box my={3}>
                     <Typography variant="h6" mb={2}>Create a new journal entry for a specific date:</Typography>
                     <Box display="flex" justifyContent="center">
@@ -186,7 +219,7 @@ const JournalPage = () => {
                                 value={newJournalEntryDate}
                                 onChange={(newDate) => setNewJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
                                 renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
-                                disabled={isLoading || isFetchingCount || isFetching}
+                                disabled={isLoadingNewEntryDate || isFetchingCount || isFetching}
                                 disableFuture
                             />
                         </LocalizationProvider>
@@ -196,7 +229,7 @@ const JournalPage = () => {
                                 color="success"
                                 onClick={handleCreateNewEntryByDate}
                                 endIcon={<NoteAddIcon />}
-                                disabled={isLoading || isFetchingCount || isFetching || !newJournalEntryDate}
+                                disabled={isLoadingNewEntryDate || isFetchingCount || isFetching || !newJournalEntryDate}
                             >
                                 Create
                             </Button>
