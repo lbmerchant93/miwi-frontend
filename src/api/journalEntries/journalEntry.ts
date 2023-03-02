@@ -68,6 +68,8 @@ export const useFindFirstEntry = (authorId: string | undefined, date: string | u
       requestHeaders
     });
     return findFirstJournalEntry;
+  }, {
+    enabled: date !== undefined && date !== null
   })
 };
 
