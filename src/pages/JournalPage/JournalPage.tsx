@@ -20,7 +20,7 @@ import { useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
-import { useFindFirstEntrySearch } from '../../api/journalEntries/journalEntry';
+import { useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 
 const JournalPage = () => {
     // const { user } = useParams();
@@ -36,7 +36,7 @@ const JournalPage = () => {
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
-    const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntrySearch(user.id, searchJournalEntryDate, user.email);
+    const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
 
     const onPaginationClick = (direction: string) => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

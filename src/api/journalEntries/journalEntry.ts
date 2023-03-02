@@ -54,30 +54,13 @@ const firstEntry = gql`
   }
 `
 
-export const useFindFirstEntry = (authorId: string | undefined, date: string, email: string | null) => {
+export const useFindFirstEntry = (authorId: string | undefined, date: string | undefined, email: string | null) => {
   const token = getAuthToken();
   const requestHeaders = {
       authorization: `Bearer ${token}`
   }
 
-  return useQuery(['firstEntry', email], async () => {
-    const { findFirstJournalEntry } = await request({
-      url: endpoint,
-      document: firstEntry,
-      variables: { authorId, date },
-      requestHeaders
-    });
-    return findFirstJournalEntry;
-  })
-};
-
-export const useFindFirstEntrySearch = (authorId: string | undefined, date: string | undefined, email: string | null) => {
-  const token = getAuthToken();
-  const requestHeaders = {
-      authorization: `Bearer ${token}`
-  }
-
-  return useQuery(['firstEntrySearch', date, email], async () => {
+  return useQuery(['firstEntry', date, email], async () => {
     const { findFirstJournalEntry } = await request({
       url: endpoint,
       document: firstEntry,
