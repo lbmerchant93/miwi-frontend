@@ -20,6 +20,7 @@ import { useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
+import { useFindFirstEntrySearch } from '../../api/journalEntries/journalEntry';
 
 const JournalPage = () => {
     // const { user } = useParams();
@@ -27,7 +28,7 @@ const JournalPage = () => {
     const navigate = useNavigate();
     const [skipCount, setSkipCount] = useState<number>(0);
     const [newJournalEntryDate, setNewJournalEntryDate] = useState<string | null>(null);
-    const [searchJournalEntryDate, setSearchJournalEntryDate] = useState<string | null>(null);
+    const [searchJournalEntryDate, setSearchJournalEntryDate] = useState<string | undefined>(undefined);
     const [isLoadingNewEntryDate, setIsLoadingNewEntryDate] = useState<boolean>(false);
     const [isLoadingSearchEntryDate, setIsLoadingSearchEntryDate] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
@@ -35,6 +36,7 @@ const JournalPage = () => {
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
 
     const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
+    const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntrySearch(user.id, searchJournalEntryDate, user.email);
 
     const onPaginationClick = (direction: string) => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -100,6 +102,12 @@ const JournalPage = () => {
             });
         }
     };
+
+    const handleSearchEntriesByDate = () => {
+        setIsLoadingSearchEntryDate(true);
+        console.log(foundJournalEntry)
+        setIsLoadingSearchEntryDate(false);
+    }
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -213,7 +221,7 @@ const JournalPage = () => {
                     <LocalizationProvider dateAdapter={DateAdapter}>
                         <DatePicker
                             label="Search Entry Date"
-                            value={searchJournalEntryDate}
+                            value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
                             onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
                             renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                             disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching}
@@ -224,7 +232,7 @@ const JournalPage = () => {
                             <Button
                                 variant="contained"
                                 color="success"
-                                onClick={handleCreateNewEntryByDate}
+                                onClick={handleSearchEntriesByDate}
                                 endIcon={<NoteAddIcon />}
                                 disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching || !searchJournalEntryDate}
                             >

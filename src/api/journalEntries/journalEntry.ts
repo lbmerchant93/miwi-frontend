@@ -71,6 +71,23 @@ export const useFindFirstEntry = (authorId: string | undefined, date: string, em
   })
 };
 
+export const useFindFirstEntrySearch = (authorId: string | undefined, date: string | undefined, email: string | null) => {
+  const token = getAuthToken();
+  const requestHeaders = {
+      authorization: `Bearer ${token}`
+  }
+
+  return useQuery(['firstEntrySearch', date, email], async () => {
+    const { findFirstJournalEntry } = await request({
+      url: endpoint,
+      document: firstEntry,
+      variables: { authorId, date: (date === undefined) ? '' : date },
+      requestHeaders
+    });
+    return findFirstJournalEntry;
+  })
+};
+
 const firstEntryById = gql`
   query FindFirstJournalEntry($id: Int, $authorId: String) {
     findFirstJournalEntry(where: { AND: [{ id: { equals: $id } }, { authorId: { equals: $authorId } }] }) {
