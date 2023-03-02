@@ -29,7 +29,6 @@ const JournalPage = () => {
     const [newJournalEntryDate, setNewJournalEntryDate] = useState<string | null>(null);
     const [searchJournalEntryDate, setSearchJournalEntryDate] = useState<string | undefined>(undefined);
     const [isLoadingNewEntryDate, setIsLoadingNewEntryDate] = useState<boolean>(false);
-    const [isLoadingSearchEntryDate, setIsLoadingSearchEntryDate] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const createJournalEntry = useCreateJournalEntry();
     const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
@@ -179,6 +178,38 @@ const JournalPage = () => {
                 )}
 
                 <Divider variant="middle" />
+                <Box my={3} maxWidth={450} alignSelf="center">
+                    <Typography variant="h6" mb={2}>Search by a specific date:</Typography>
+                    <Box display="flex" justifyContent="center">
+                        <LocalizationProvider dateAdapter={DateAdapter}>
+                            <DatePicker
+                                label="Search Entry Date"
+                                value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
+                                onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                                renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                                disabled={isFetchingSearchDate || isFetchingCount || isFetching}
+                                disableFuture
+                            />
+                        </LocalizationProvider>
+                    </Box>
+                    {isFetchingSearchDate && <Typography variant="h6" mt={2}>Searching...</Typography>}
+                    {searchJournalEntryDate && !foundJournalEntry && 
+                        <Typography variant="h6" mt={2}>
+                            Sorry, we couldn't find an entry for that date. If you'd like, you can create one below!
+                        </Typography>
+                    }
+                    {foundJournalEntry && 
+                        <Box display="flex" justifyContent="center">
+                                <JournalEntryCard 
+                                    entry={foundJournalEntry}
+                                    email={user.email} 
+                                    key={foundJournalEntry.id} 
+                                />
+                        </Box>
+                    }
+                </Box>
+
+                <Divider variant="middle" />
                 <Box my={3}>
                     <Typography variant="h6" mb={2}>Create a new journal entry for a specific date:</Typography>
                     <Box display="flex" justifyContent="center">
@@ -204,33 +235,6 @@ const JournalPage = () => {
                             </Button>
                         </Box>
                     </Box>
-                </Box>
-
-                <Divider variant="middle" />
-                <Box my={3}>
-                    <Typography variant="h6" mb={2}>Search journal entries for a specific date:</Typography>
-                    <Box display="flex" justifyContent="center">
-                        <LocalizationProvider dateAdapter={DateAdapter}>
-                            <DatePicker
-                                label="Search Entry Date"
-                                value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
-                                onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
-                                renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
-                                disabled={isLoadingSearchEntryDate || isFetchingCount || isFetching}
-                                disableFuture
-                            />
-                        </LocalizationProvider>
-                    </Box>
-                    {isFetchingSearchDate && <Box my={2}>Searching...</Box>}
-                    {foundJournalEntry && 
-                        <Box display="flex" justifyContent="center">
-                                <JournalEntryCard 
-                                    entry={foundJournalEntry}
-                                    email={user.email} 
-                                    key={foundJournalEntry.id} 
-                                />
-                        </Box>
-                    }
                 </Box>
             </Box>
         </>
