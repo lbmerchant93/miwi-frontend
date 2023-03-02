@@ -54,7 +54,7 @@ const firstEntry = gql`
   }
 `
 
-export const useFindFirstEntry = (authorId: string | undefined, date: string, email: string | null) => {
+export const useFindFirstEntry = (authorId: string | undefined, date: string | null, email: string | null) => {
   const token = getAuthToken();
   const requestHeaders = {
       authorization: `Bearer ${token}`
