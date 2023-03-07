@@ -17,7 +17,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import './AppBar.css';
+import './AppBar.styled.ts';
 
 // const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
 //     const { children } = props;
