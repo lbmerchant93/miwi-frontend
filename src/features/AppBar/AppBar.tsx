@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PossibleRoutes } from '../../utils/constants';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -9,15 +9,19 @@ import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../shared/auth-context';
 import LoginModal from '../LoginModal/LoginModal';
 import { getAuth, signOut } from 'firebase/auth';
-import Typography from '@mui/material/Typography';
 import MUIAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 // import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import './AppBar.css';
+import { 
+    ToolBar,
+    ToolBarContainer,
+    TitleLink,
+    TitleText,
+    LogoutLink
+ } from './AppBar.styled';
 
 // const ElevationScroll: React.FC<{ children: React.ReactElement }> = props => {
 //     const { children } = props;
@@ -58,11 +62,11 @@ const AppBar: React.FC = () => {
 
     return (
         <MUIAppBar elevation={0} position="sticky" color="inherit">
-            <Toolbar className="header" disableGutters>
-                <Box display="flex" justifyContent="space-between" alignItems="center" maxWidth="1232px" width={"100%"} py={1} px={2}>
-                    <Link to={`${PossibleRoutes.ROOT}`} className="title-link">
-                        <Typography variant="h1" sx={{ fontSize: "3rem" }}>MiWi</Typography>
-                    </Link>
+            <ToolBar className="header" disableGutters>
+                <ToolBarContainer py={1} px={2}>
+                    <TitleLink to={`${PossibleRoutes.ROOT}`} className="title-link">
+                        <TitleText variant="h1">MiWi</TitleText>
+                    </TitleLink>
                     <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250} justifyContent={'flex-end'}>
                         {!user.isLoggedIn ? (
                             <Button
@@ -127,16 +131,16 @@ const AppBar: React.FC = () => {
                                 onClick={onListItemClick(() => navigate(`/profile/${user.email?.split('@')[0]}`))}>
                                     Profile
                             </MenuItem>
-                            <Link to={`${PossibleRoutes.ROOT}`} className="logout-link">
+                            <LogoutLink to={`${PossibleRoutes.ROOT}`} className="logout-link">
                                 <MenuItem 
                                     onClick={onListItemClick(() => signOut(auth))}>
                                         Log out
                                 </MenuItem>
-                            </Link>
+                            </LogoutLink>
                         </Menu>
                     </Box>   
-                </Box>
-            </Toolbar> 
+                </ToolBarContainer>
+            </ToolBar> 
         </MUIAppBar>
     );
 };
