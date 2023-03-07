@@ -29,7 +29,7 @@ export const TitleLink = styled(Link)`
 `
 
 export const TitleText = styled(Typography)`
-    font-size: 2rem !important;
+    font-size: 3rem !important;
 `
 
 export const LogoutLink = styled(Link)`
