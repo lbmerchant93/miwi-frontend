@@ -30,7 +30,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const loginUser = useLoginUser();
     const navigate = useNavigate();
 
-    const loginWithEmailAndPassword = async (email: string, password: string) => {
+    const loginWithEmailAndPassword = async (event: { preventDefault: () => void; }) => {
+        event.preventDefault()
         setIsLoading(true)
         try {
             const userLogin = await signInWithEmailAndPassword(auth, email, password)
@@ -85,7 +86,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         <>
             <Box className="login-form-options">
                 <Box className="login-form-container">
-                    <form className="login-form">
+                    <form className="login-form" onSubmit={loginWithEmailAndPassword}>
                         <FormLabel component="legend">Login Form</FormLabel>
                         <Box className="login-form-input" mt={1}>
                             <TextField 
@@ -114,7 +115,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                             />
                         </Box>
                         <Box className="login-form-button">
-                            <LoadingButton variant="outlined" color="inherit" onClick={() => loginWithEmailAndPassword(email, password)} loading={isLoading}>Submit</LoadingButton>  
+                            <LoadingButton type="submit" variant="outlined" color="inherit" loading={isLoading}>Submit</LoadingButton>  
                         </Box>
                     </form>
                     <Typography variant="caption">
