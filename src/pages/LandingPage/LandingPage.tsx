@@ -14,7 +14,7 @@ const MainPage:React.FC = () => {
   }, [pathname]);
 
   return (
-    <Box>
+    <Box mb={2}>
       <Box display="flex" flexDirection="column" alignItems="center" color="#6d0f93">
         <Typography variant="h2">
           <strong>
@@ -24,16 +24,16 @@ const MainPage:React.FC = () => {
         <Typography variant="subtitle1">*Your personal Midwifery App*</Typography>
       </Box>
       <Box display="flex">
-        <Box className="landing-page-description-container" mt={4} color="#6d0f93">
-          <Box>
-             <Typography variant='h5'><strong>Why MiWi?</strong></Typography>
-            <Typography variant="body1" mt={1} mb={4}>Preparing for your empowered, healthy birth and postpartum period takes focus. This journal guides you through the daily activities that will have you ready to rock your birth!</Typography>
+        <Box className="landing-page-description-container" mt={5} color="#6d0f93">
+          <Box px={2} py={2} bgcolor="#6d0f93" color="white" mb={5} borderRadius={10} className="landing-page-description">
+            <Typography variant='h5'><strong>Why MiWi?</strong></Typography>
+            <Typography variant="body1" mt={1}>Preparing for your empowered, healthy birth and postpartum period takes focus. This journal guides you through the daily activities that will have you ready to rock your birth!</Typography>
           </Box>
-          <Box>
+          <Box px={2} py={2} mb={5} className="landing-page-description">
             <Typography variant="h5"><strong>Remember to allow yourself grace!</strong></Typography>
-            <Typography variant="body1" mt={1} mb={4}>You're going to have bad days. You're going to skip some activities. Checking off everything every single day is not sustainable. Don't trash yourself. This journal isn't intended for a perfection destination. It is a tool to visually guide you through the journey. While journaling try to think: <i>"What is something that made me laugh or made me grateful today?"</i></Typography>
+            <Typography variant="body1" mt={1}>You're going to have bad days. You're going to skip some activities. Checking off everything every single day is not sustainable. Don't trash yourself. This journal isn't intended for a perfection destination. It is a tool to visually guide you through the journey. While journaling try to think: <i>"What is something that made me laugh or made me grateful today?"</i></Typography>
           </Box>
-          <Box>
+          <Box px={2} py={2} bgcolor="#6d0f93" color="white" borderRadius={10} className="landing-page-description">
             <Typography variant="h5"><strong>Whenever you're ready</strong></Typography>
             <Typography variant="body1" mt={1}>Click the log in button at the top right corner of this page to sign in, where you will then be directed to your personal dashboard.</Typography>
           </Box>    
@@ -42,7 +42,6 @@ const MainPage:React.FC = () => {
           <PregnancyOutline />
         </Box>
       </Box>
-      
     </Box>
   )
 }
