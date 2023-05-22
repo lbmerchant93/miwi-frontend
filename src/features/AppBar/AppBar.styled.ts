@@ -28,7 +28,7 @@ export const TitleLink = styled(Link)`
 
 export const TitleText = styled(Typography)`
     font-size: 3rem !important;
-    color: #841aaf;
+    color: #6d0f93;
 `
 
 export const LogoutLink = styled(Link)`
