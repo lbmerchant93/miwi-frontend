@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import lotus from '../../images/Untitled.svg';
+import Lotus from '../../images/Lotus.svg';
 import { 
     ToolBar,
     ToolBarContainer,
@@ -66,9 +66,9 @@ const AppBar: React.FC = () => {
             <ToolBar className="header" disableGutters>
                 <ToolBarContainer py={1} px={2}>
                     <TitleLink to={`${PossibleRoutes.ROOT}`} className="title-link">
-                        <img src={lotus} alt="Lotus-flower" height={55} width={55} />
+                        <img src={Lotus} alt="Lotus-flower" height={55} width={55} />
                         <TitleText variant="h1">MiWi</TitleText>
-                        <img src={lotus} alt="Lotus-flower" height={55} width={55} />
+                        <img src={Lotus} alt="Lotus-flower" height={55} width={55} />
                     </TitleLink>
                     <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250} justifyContent={'flex-end'}>
                         {!user.isLoggedIn ? (

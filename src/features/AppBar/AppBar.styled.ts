@@ -22,14 +22,13 @@ export const TitleLink = styled(Link)`
     text-decoration: none;
     color: black;
     padding: 3px;
-    :hover {
-        border-radius: 5px;
-        background-color: #e0e0e0;
-    }
+    display: flex;
+    align-items: center;
 `
 
 export const TitleText = styled(Typography)`
     font-size: 3rem !important;
+    color: #841aaf;
 `
 
 export const LogoutLink = styled(Link)`
