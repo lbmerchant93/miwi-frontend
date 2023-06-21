@@ -10,8 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
 import { AuthContext } from '../../../shared/auth-context';
-
-import './CreateAccountForm.css';
+import {
+    FormCreateAccount,
+    CreateAccountFormOptions,
+    CreateAccountFormButtonsContainer
+} from './CreateAccountForm.styled';
 
 interface CreateAccountFormProps {
     auth: Auth;
@@ -79,10 +82,10 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
 
     return (
         <>
-            <Box className="create-account-form-options">
+            <CreateAccountFormOptions className="create-account-form-options">
                 <Box className="create-account-form-container">
-                    <form className="create-account-form">
-                        <Box className="create-account-form-input">
+                    <FormCreateAccount className="create-account-form">
+                        <Box className="create-account-form-input" mb={"10px"}>
                             <TextField 
                                 label="First Name" 
                                 id="FirstName" 
@@ -93,7 +96,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 disabled={isLoading}
                             />
                         </Box>
-                        <Box className="create-account-form-input">
+                        <Box className="create-account-form-input" mb={"10px"}>
                             <TextField 
                                 label="Last Name" 
                                 id="LastName" 
@@ -104,7 +107,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 disabled={isLoading}
                             />
                         </Box>
-                        <Box className="create-account-form-input">
+                        <Box className="create-account-form-input" mb={"10px"}>
                             <TextField 
                                 label="Email" 
                                 id="Email" 
@@ -115,7 +118,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                 disabled={isLoading}
                             />
                         </Box>
-                        <Box className="create-account-form-input">
+                        <Box className="create-account-form-input" mb={"10px"}>
                             <TextField 
                                 label="Password" 
                                 id="Password" 
@@ -139,20 +142,20 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = (props) => {
                                     Create Account
                             </LoadingButton>  
                         </Box>
-                    </form>
+                    </FormCreateAccount>
                     <Typography variant="caption">
                         Already have an account? <Link component="button" variant="caption" color="#0000EE" onClick={goBack}>Log in</Link>
                     </Typography>
                 </Box>
                 <Divider orientation="vertical" />
-                <Box className="create-account-form-buttons">
+                <CreateAccountFormButtonsContainer className="create-account-form-buttons">
                     <ProviderLoginButton 
                         message={"Register with Google"} 
                         isLoading={isLoading}
                         loginWithGoogle={loginWithGoogle}
                     />
-                </Box>
-            </Box>
+                </CreateAccountFormButtonsContainer>
+            </CreateAccountFormOptions>
         </>
     )
 }
