@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import LoginForm from './LoginForm/LoginForm';
 import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { Auth } from 'firebase/auth';
 import { User } from '../../shared/auth-context';
-import './LoginModal.css';
+import {
+    ModalLogin,
+    LoginModalContainer,
+    LoginModalTitle
+} from './LoginModal.styled';
 
 enum FormState {
     Login = 'Login',
@@ -44,27 +47,26 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
     }, [isOpen])
 
     return (
-        <Modal
+        <ModalLogin
             open={isOpen}
             onClose={onClose}
             aria-labelledby="Login Modal"
             aria-describedby="Login modal where you can log in or create an account."
-            className="login-modal"
         >
-            <Box className="login-modal-container">
+            <LoginModalContainer>
                 <Box alignSelf={'flex-end'} position={"relative"} top={4} right={-17}>
                     <IconButton onClick={onClose} edge="start" color="inherit" aria-label="exit">
                         <CloseIcon />
                     </IconButton>
                 </Box>
-                <Box className="login-modal-title">
+                <LoginModalTitle>
                     <Typography variant="h5">
                         {modalState[formState].title}
                     </Typography>
                     <Typography variant="body1">
                         {modalState[formState].description}
                     </Typography>
-                </Box>
+                </LoginModalTitle>
                 {formState === FormState.Login && (
                     <LoginForm 
                         auth={auth}
@@ -80,8 +82,8 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
                         onClose={onClose}
                     />
                 )}
-            </Box>
-        </Modal>
+            </LoginModalContainer>
+        </ModalLogin>
     )
 };
 
