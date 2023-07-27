@@ -16,6 +16,7 @@ import Divider from '@mui/material/Divider';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Lotus from '../../images/Lotus.svg';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { 
     ToolBar,
     ToolBarContainer,
@@ -47,6 +48,7 @@ const AppBar: React.FC = () => {
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const isMobile = useMediaQuery('(max-width:499px)');
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -80,7 +82,26 @@ const AppBar: React.FC = () => {
                                 Log In
                             </Button>
                         ) : (
-                            <Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
+                            <>
+                            {isMobile && (<Button
+                                id="menu-button"
+                                aria-controls={open ? 'menu-button' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}
+                                color="inherit"
+                                variant='outlined'
+                            >
+                                <Avatar
+                                    src={undefined}
+                                    alt="User Photo"
+                                    style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
+                                    {user.displayName?.toUpperCase()[0]}
+                                </Avatar>
+                                <MenuIcon />
+                            </Button>)
+                            }
+                            {!isMobile && (<Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
                                 <Button onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))}>
                                     <HomeIcon />
                                 </Button>
@@ -106,8 +127,8 @@ const AppBar: React.FC = () => {
                                     </Avatar>
                                     <MenuIcon />
                                 </Button>
-                            </Box>
-                            
+                            </Box>)}
+                            </>
                         )}
                         <LoginModal 
                             isOpen={isLoginOpen} 
