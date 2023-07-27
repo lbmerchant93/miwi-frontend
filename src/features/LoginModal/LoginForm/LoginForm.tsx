@@ -34,7 +34,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const loginUser = useLoginUser();
     const navigate = useNavigate();
 
-    const loginWithEmailAndPassword = async (email: string, password: string) => {
+    const loginWithEmailAndPassword = async (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
         setIsLoading(true)
         try {
             const userLogin = await signInWithEmailAndPassword(auth, email, password)
@@ -61,6 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 
     const loginWithGoogle = async () => {
         setIsLoading(true)
+        console.log(email, password)
         try {
             const userLogin = await signInWithPopup(auth, new GoogleAuthProvider());
             loginUser.mutate({ id: userLogin.user.uid, email: userLogin.user.email, displayName: userLogin.user.displayName }, {
@@ -89,7 +91,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         <>
             <LoginFormOptions className="login-form-options">
                 <Box className="login-form-container">
-                    <FormLogin className="login-form">
+                    <FormLogin className="login-form" onSubmit={loginWithEmailAndPassword}>
                         <FormLabel component="legend">Login Form</FormLabel>
                         <Box className="login-form-input" mt={1} mb={"10px"}>
                             <TextField 
@@ -118,7 +120,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                             />
                         </Box>
                         <Box className="login-form-button">
-                            <LoadingButton variant="outlined" color="inherit" onClick={() => loginWithEmailAndPassword(email, password)} loading={isLoading}>Submit</LoadingButton>  
+                            <LoadingButton type="submit" variant="outlined" color="inherit" loading={isLoading}>Submit</LoadingButton>  
                         </Box>
                     </FormLogin>
                     <Typography variant="caption">
