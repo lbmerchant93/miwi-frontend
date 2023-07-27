@@ -18,7 +18,8 @@ export const JournalEntryCardContainer = styled(Box)`
 `;
 
 export const JournalEntryCardStyled = styled(Box)`
-    border: 1px solid grey;
+    border: rgb(0 0 0 / 20%) solid 1px;
+    box-shadow: 11px 11px 7px -4px rgb(0 0 0 / 20%);
     border-radius: 20px;
     padding: 16px;
     margin: 16px;
