@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import JournalPage from './pages/JournalPage/JournalPage';
 import JournalEntryPage from './pages/JournalEntryPage/JournalEntryPage';
 import HowMiWiWorksDashboard from './pages/HowMiWiWorks/HowMiWiWorksDashboard';
+import Divider from '@mui/material/Divider';
 
 export const endpoint: string = process.env.NODE_ENV === 'production' ? (process.env.REACT_APP_GQL_ENDPOINT_PRODUCTION as string) : (process.env.REACT_APP_GQL_ENDPOINT_DEVELOPMENT as string)
 
@@ -56,6 +57,7 @@ const App = () => {
             <main>
               {routes}
             </main>
+            <Divider variant="middle" />
             <AppFooter />
           </Router>
         </ThemeProvider>

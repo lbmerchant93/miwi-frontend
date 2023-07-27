@@ -26,7 +26,8 @@ export const CheckBoxContainer = styled(Box)`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid black;
+    border: rgb(0 0 0 / 20%) solid 1px;
+    box-shadow: 11px 11px 7px -4px rgb(0 0 0 / 20%);
 
     :hover {
         cursor: pointer;
@@ -48,7 +49,8 @@ export const CheckBoxSection = styled(Box)`
 `;
 
 export const MoodContainer = styled(Box)`
-    border: 1px solid black;
+    border: rgb(0 0 0 / 20%) solid 1px;
+    box-shadow: 11px 11px 7px -4px rgb(0 0 0 / 20%);
 
     :hover {
         cursor: pointer;
@@ -88,6 +90,11 @@ export const WritingContainer = styled(Box)`
 export const WritingSection = styled(Box)`
     height: 325px;
     width: 325px;
+`;
+
+export const WritingSectionContainer = styled(Box)`
+    border: rgb(0 0 0 / 20%) solid 1px;
+    box-shadow: 11px 11px 7px -4px rgb(0 0 0 / 20%);
 `;
 
 export const EditButtonContainer = styled(Box)`

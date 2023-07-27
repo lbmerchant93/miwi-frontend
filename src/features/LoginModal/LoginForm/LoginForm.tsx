@@ -12,7 +12,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
 import FormLabel from '@mui/material/FormLabel';
 import { User } from '../../../shared/auth-context';
-import './LoginForm.css';
+import {
+    FormLogin,
+    LoginFormButtonContainer,
+    LoginFormOptions
+} from './LoginForm.styled';
 
 interface LoginFormProps {
     auth: Auth;
@@ -31,7 +35,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const navigate = useNavigate();
 
     const loginWithEmailAndPassword = async (event: { preventDefault: () => void; }) => {
-        event.preventDefault()
+        event.preventDefault();
         setIsLoading(true)
         try {
             const userLogin = await signInWithEmailAndPassword(auth, email, password)
@@ -58,6 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 
     const loginWithGoogle = async () => {
         setIsLoading(true)
+        console.log(email, password)
         try {
             const userLogin = await signInWithPopup(auth, new GoogleAuthProvider());
             loginUser.mutate({ id: userLogin.user.uid, email: userLogin.user.email, displayName: userLogin.user.displayName }, {
@@ -84,11 +89,11 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 
     return (
         <>
-            <Box className="login-form-options">
+            <LoginFormOptions className="login-form-options">
                 <Box className="login-form-container">
-                    <form className="login-form" onSubmit={loginWithEmailAndPassword}>
+                    <FormLogin className="login-form" onSubmit={loginWithEmailAndPassword}>
                         <FormLabel component="legend">Login Form</FormLabel>
-                        <Box className="login-form-input" mt={1}>
+                        <Box className="login-form-input" mt={1} mb={"10px"}>
                             <TextField 
                                 label="Email" 
                                 id="Email" 
@@ -100,7 +105,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                 disabled={isLoading}
                             />
                         </Box>
-                        <Box className="login-form-input">
+                        <Box className="login-form-input" mb={"10px"}>
                             <TextField 
                                 label="Password" 
                                 id="Password" 
@@ -117,13 +122,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                         <Box className="login-form-button">
                             <LoadingButton type="submit" variant="outlined" color="inherit" loading={isLoading}>Submit</LoadingButton>  
                         </Box>
-                    </form>
+                    </FormLogin>
                     <Typography variant="caption">
                         Need an account? <Link component="button" variant="caption" color="#0000EE" onClick={onRegisterClick}>Register</Link>
                     </Typography>
                 </Box>
                 <Divider orientation="vertical" />
-                <Box className="login-form-buttons">
+                <LoginFormButtonContainer className="login-form-buttons">
                     <ProviderLoginButton 
                         message={"Sign in with Google"} 
                         isLoading={isLoading}
@@ -136,8 +141,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                         loginWithEmailAndPassword={loginWithEmailAndPassword} 
                         isLoading={isLoading}
                     /> */}
-                </Box>
-            </Box>
+                </LoginFormButtonContainer>
+            </LoginFormOptions>
         </>
     )
 }
