@@ -9,5 +9,11 @@ export const LandingPageContainer = styled(Box)`
 `;
 
 export const LandingPageDescriptionContainer = styled(Box)`
-    max-width: min(80ch, 100%);
+    border: rgb(0 0 0 / 20%) solid 1px;
+    box-shadow: -11px 11px 3px -4px rgb(0 0 0 / 20%);
+`;
+
+export const LandingPageDescriptionMiddleContainer = styled(Box)`
+    border: rgb(0 0 0 / 20%) solid 1px;
+    box-shadow: 11px 11px 7px -4px rgb(0 0 0 / 20%);
 `;

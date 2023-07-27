@@ -4,7 +4,7 @@ function PregnancyOutline() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="350"
+      width="250"
       height="100%"
       version="1.1"
       viewBox="0 0 600 800"
