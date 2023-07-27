@@ -72,7 +72,7 @@ const AppBar: React.FC = () => {
                         <TitleText variant="h1">MiWi</TitleText>
                         <img src={Lotus} alt="Lotus-flower" height={55} width={55} />
                     </TitleLink>
-                    <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250} justifyContent={'flex-end'}>
+                    <Box className={!user.isLoggedIn ? 'login-button' : 'user-menu'} display={'flex'} width={250} justifyContent={'flex-end'} mr={1}>
                         {!user.isLoggedIn ? (
                             <Button
                                 onClick={() => setIsLoginOpen(true)}
@@ -82,34 +82,15 @@ const AppBar: React.FC = () => {
                                 Log In
                             </Button>
                         ) : (
-                            <>
-                            {isMobile && (<Button
-                                id="menu-button"
-                                aria-controls={open ? 'menu-button' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}
-                                color="inherit"
-                                variant='outlined'
-                            >
-                                <Avatar
-                                    src={undefined}
-                                    alt="User Photo"
-                                    style={{ fontSize: '12px', height: 24, width: 24, marginRight: '8px' }}>
-                                    {user.displayName?.toUpperCase()[0]}
-                                </Avatar>
-                                <MenuIcon />
-                            </Button>)
-                            }
-                            {!isMobile && (<Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
-                                <Button onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))}>
+                            <Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} maxWidth={'100%'}>
+                                {!isMobile && <Button onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))}>
                                     <HomeIcon />
-                                </Button>
-                                <Divider orientation="vertical" />
-                                <Button onClick={onListItemClick(() => navigate(`/journal/entries`))}>
+                                </Button>}
+                                {!isMobile && <Divider orientation="vertical" />}
+                                {!isMobile && <Button onClick={onListItemClick(() => navigate(`/journal/entries`))}>
                                     <MenuBookIcon />
-                                </Button>
-                                <Divider orientation="vertical" />
+                                </Button>}
+                                {!isMobile && <Divider orientation="vertical" />}
                                 <Button
                                     id="menu-button"
                                     aria-controls={open ? 'menu-button' : undefined}
@@ -127,8 +108,7 @@ const AppBar: React.FC = () => {
                                     </Avatar>
                                     <MenuIcon />
                                 </Button>
-                            </Box>)}
-                            </>
+                            </Box>
                         )}
                         <LoginModal 
                             isOpen={isLoginOpen} 
@@ -144,17 +124,25 @@ const AppBar: React.FC = () => {
                             onClose={handleClose}
                             anchorOrigin={{
                                 vertical: 'bottom',
-                                horizontal: 'right',
+                                horizontal: 'center',
                             }}
                             transformOrigin={{
                                 vertical: 'top',
-                                horizontal: 'right',
+                                horizontal: 'center',
                             }}
                         >
                             <MenuItem 
                                 onClick={onListItemClick(() => navigate(`/profile/${user.email?.split('@')[0]}`))}>
                                     Profile
                             </MenuItem>
+                            {isMobile && <MenuItem 
+                                onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))}>
+                                    Home
+                            </MenuItem>}
+                            {isMobile && <MenuItem 
+                                onClick={onListItemClick(() => navigate(`/journal/entries`))}>
+                                    Journal
+                            </MenuItem>}
                             <LogoutLink to={`${PossibleRoutes.ROOT}`} className="logout-link">
                                 <MenuItem 
                                     onClick={onListItemClick(() => signOut(auth))}>
