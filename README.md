@@ -1,6 +1,6 @@
 # MiWi - Frontend
 #### Midwifery Application Prototype
-This project is designed as a prototype for a midwifery application. The project is used by the developer to demonstrate and expand on his knowledge/use of React, TypeScript, GraphQL, Firebase, and Material-UI.
+This project is designed as a prototype for a midwifery application. The project is used by the developer to demonstrate and expand on his knowledge/use of React, TypeScript, GraphQL, Firebase, Material-UI and testing using Cypress.io and Jest/React Testing Library.
 
 ### Contributors
 - Lucas Merchant - Software Developer: [github profile](https://github.com/lbmerchant93)
@@ -8,50 +8,21 @@ This project is designed as a prototype for a midwifery application. The project
 
 ### Stack
 
-**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI, Moment
+**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI, Moment, Styled Components, React Circular Progressbar
 
-**Testing**: Cypress.js (Currently implementing)
+**Testing**: Cypress.js, Jest/React Testing Library
 
 **Deployment**: Vercel
 
 ## Table of Contents
 1. [Introduction](#introduction)
-2. [Instructions](#setup-instructions)
-3. [How-To](#using-miwi)
-4. [Challenges & Wins](#challenges-&-wins)
+2. [App Features](#app-features)
 
 ## Introduction
-Currently the app's main feature is a journal that guides you through the daily activities that will have you ready to rock your birth. 
+Currently the app's main feature is a journal that guides you through the daily activities that will have you ready to rock your birth.  
 
-## Setup Instructions
-To run the project locally:
-- `git clone` this repo 
-- `cd` into the miwi-frontend repo
-- run `npm i` to install dependencies
-- run `npm run start` to run the React App in your browser
-
-OR
-
-The App has been deployed using Vercel. This way you don't have to clone it locally in order to use it! To visit, click the link below!
+To visit, click the link below!
 - [https://miwi-frontend.vercel.app/](https://miwi-frontend.vercel.app/)
-
-### Testing
-#### *Currently working on fully testing all current features, then will utilize a more Test Driven Development approach*
-Cypress.js is being used to implement end-to-end-tests of the user flow. To run these tests, `cd` into the project repository and install Cypress by typing `npm i -D cypress` on the command line and adding 
-```
-"scripts": {
-    "cypress:open": "cypress open"
-  }
-  ```
- to your `package.json` file if it does not already contain the command.
-
- Then run `npm run cypress:open`
-
- Cypress.js should open a window with a list of test files. Click on a file name to run the tests in that file.
- 
- 
-
-[Back to Top of Page](#table-of-contents)
 
 ---
 
@@ -78,16 +49,6 @@ Included in the footer are links to an About Us and How MiWi Works. These links 
 
 ### Mobile Friendly Responsive Design
 
-Currently working to make the application completely responsive for mobile, tablet and large screens. This will be achieved through the use of the useMediaQuery feature from Material-UI.
-
-[Back to Top of Page](#table-of-contents)
-
----
-
-
-### Future Features
-- **One:** Search functionality for a specific journal date. 
-- **Two:** Better design/layout. Things such as adding images, color scheming, responsive design, and skeletal loading.
-
+Currently working to make the application completely responsive for mobile, tablet and large screens. This will be achieved through the use of the useMediaQuery feature from Material-UI and Styled Components
 
 [Back to Top of Page](#table-of-contents)
