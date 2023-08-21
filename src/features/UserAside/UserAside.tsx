@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { AuthContext } from '../../shared/auth-context';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import moment from 'moment';
+import dayjs from 'dayjs';
 // import Button from '@mui/material/Button';
 // import EditIcon from '@mui/icons-material/Edit';
 
@@ -25,7 +25,7 @@ const UserAside = () => {
             {user.expectedDueDate && (
                 <>
                     <Typography variant="h6">Expected due date:</Typography>
-                    <Typography variant="h6"><b>{moment(user.expectedDueDate).format("MMMM Do YYYY")}</b></Typography>
+                    <Typography variant="h6"><b>{dayjs(user.expectedDueDate).format("MMMM D YYYY")}</b></Typography>
                 </>
             )}
             {/* <Button 

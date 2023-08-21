@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import JournalEntryDisplay from '../../features/JournalEntryDisplay/JournalEntryDisplay';
 import MessagePage from '../../components/MessagePage/MessagePage';
 import { AuthContext } from '../../shared/auth-context';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import { useFindFirstEntryById } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
@@ -67,7 +67,7 @@ const JournalEntryPage = () => {
                     </SnackBar>
                     <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                         <Typography variant="h4"><strong>Journal Entry</strong></Typography>
-                        <Typography variant="body1"><strong>{moment(journalEntryData.date).format("MMMM Do YYYY")}</strong></Typography>
+                        <Typography variant="body1"><strong>{dayjs(journalEntryData.date).format("MMMM D YYYY")}</strong></Typography>
                         <JournalEntryDisplay journalEntry={journalEntryData} user={user} refetch={refetch} triggerSnackBar={triggerSnackBar}/>
                     </Box>
                 </>

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import JournalEntryDisplay from '../../features/JournalEntryDisplay/JournalEntryDisplay';
 import { useFindFirstEntry } from '../../api/journalEntries/journalEntry';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import MessagePage from '../../components/MessagePage/MessagePage';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
@@ -32,7 +32,7 @@ export interface JournalEntry {
 const HomePage = () => {
     // const { user } = useParams();
     const user = useContext(AuthContext);
-    const { data: firstJournalEntry, refetch, isFetching } = useFindFirstEntry(user.id, moment().startOf('day').toISOString(true), user.email);
+    const { data: firstJournalEntry, refetch, isFetching } = useFindFirstEntry(user.id, dayjs().startOf('day').toISOString(), user.email);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
 
     const triggerSnackBar = (err: boolean, message: string) => {
@@ -63,7 +63,7 @@ const HomePage = () => {
     return (user.isLoadingUser || isFetching) ? (
         <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
             <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
-            <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
+            <Typography variant="body1"><strong>{dayjs().format("MMMM D YYYY")}</strong></Typography>
             <JournalEntryDisplaySkeleton />
         </Box>
     ) : (
@@ -75,7 +75,7 @@ const HomePage = () => {
             </SnackBar>
             <Box width={'100%'} display="flex" flexDirection="column" textAlign="center" mt={2}>
                 <Typography variant="h4"><strong>Today's Journal Entry</strong></Typography>
-                <Typography variant="body1"><strong>{moment().format("MMMM Do YYYY")}</strong></Typography>
+                <Typography variant="body1"><strong>{dayjs().format("MMMM D YYYY")}</strong></Typography>
                 <JournalEntryDisplay journalEntry={firstJournalEntry} user={user} refetch={refetch} triggerSnackBar={triggerSnackBar}/>
             </Box>
         </>

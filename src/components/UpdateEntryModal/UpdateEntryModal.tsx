@@ -9,7 +9,7 @@ import DoughnutGraph from '../DoughnutGraph/DoughnutGraph';
 import { JournalEntry } from '../../pages/HomePage/HomePage';
 import { User } from '../../shared/auth-context';
 import { useUpdateJournalEntry, useCreateJournalEntry } from '../../api/journalEntries/journalEntry';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
@@ -48,7 +48,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const {
         id,
         authorId = user.id,
-        date = moment().startOf('day').toISOString(true),
+        date = dayjs().startOf('day').toISOString(),
         waterIntake = 0, 
         proteinIntake = 0, 
         exercise = 0, 

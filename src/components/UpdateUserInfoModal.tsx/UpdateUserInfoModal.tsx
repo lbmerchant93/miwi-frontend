@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 interface UpdateUserInfoModalProps {
     isOpen: boolean;
@@ -121,7 +121,7 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
                             <DatePicker
                             label="Expected Due Date"
                                 value={updateExpectedDueDate}
-                                onChange={(newDate) => setUpdateExpectedDueDate(moment(newDate).startOf('day').toISOString(true))}
+                                onChange={(newDate) => setUpdateExpectedDueDate(dayjs(newDate).startOf('day').toISOString())}
                                 renderInput={(params) => <TextField sx={{width: "300px"}} {...params} />}
                                 disabled={isLoading}
                             />

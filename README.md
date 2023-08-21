@@ -8,7 +8,7 @@ This project is designed as a prototype for a midwifery application. The project
 
 ### Stack
 
-**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI, Moment
+**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI
 
 **Testing**: Cypress.js (Currently implementing)
 
