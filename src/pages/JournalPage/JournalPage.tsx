@@ -13,7 +13,7 @@ import Divider from '@mui/material/Divider';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useCreateJournalEntry, useFindFirstEntry } from '../../api/journalEntries/journalEntry';
@@ -65,7 +65,7 @@ const JournalPage = () => {
     const handleCreateNewEntryByDate = () => {
         setIsLoadingNewEntryDate(true);
 
-        if (newJournalEntryDate === moment().startOf('day').toISOString(true)) {
+        if (newJournalEntryDate === dayjs().startOf('day').toISOString()) {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
             navigate(`/home/${user.email?.split('@')[0]}`)
         } else {
@@ -185,7 +185,7 @@ const JournalPage = () => {
                             <DatePicker
                                 label="Search Entry Date"
                                 value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
-                                onChange={(newDate) => setSearchJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                                onChange={(newDate) => setSearchJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
                                 renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                                 disabled={isFetchingSearchDate || isFetchingCount || isFetching}
                                 disableFuture
@@ -217,7 +217,7 @@ const JournalPage = () => {
                             <DatePicker
                                 label="New Entry Date"
                                 value={newJournalEntryDate}
-                                onChange={(newDate) => setNewJournalEntryDate(moment(newDate).startOf('day').toISOString(true))}
+                                onChange={(newDate) => setNewJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
                                 renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                                 disabled={isLoadingNewEntryDate || isFetchingCount || isFetching}
                                 disableFuture

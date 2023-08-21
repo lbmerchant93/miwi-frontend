@@ -28,7 +28,7 @@ import UpdateEntryModal from '../../components/UpdateEntryModal/UpdateEntryModal
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
@@ -102,7 +102,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                 },
                 onSuccess: () => {
                     triggerSnackBar(false, 'Journal entry deletion successful!');
-                    if (date === moment().startOf('day').toISOString(true)) {
+                    if (date === dayjs().startOf('day').toISOString()) {
                         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                     } else {
                         setTimeout(() => {

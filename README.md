@@ -8,7 +8,7 @@ This project is designed as a prototype for a midwifery application. The project
 
 ### Stack
 
-**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI, Moment, Styled Components, React Circular Progressbar
+**Build**: React, TypeScript, GraphQL, GraphQL-Request, Firebase, Material-UI, Styled Components, React Circular Progressbar
 
 **Testing**: Cypress.js, Jest/React Testing Library
 

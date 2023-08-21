@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { JournalEntry } from '../../pages/HomePage/HomePage';
 import { JournalEntryCardContainer, JournalEntryCardStyled, EditButtonContainer } from './JournalEntryCard.styled';
 import EditIcon from '@mui/icons-material/Edit';
@@ -17,7 +17,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
   const navigate = useNavigate();
 
   const navigateToEntry = () => {
-    if (entry.date === moment().startOf('day').toISOString(true)) {
+    if (entry.date === dayjs().startOf('day').toISOString()) {
       navigate(`/home/${email?.split('@')[0]}`)
     } else {
       navigate(`/journal/entries/${entry.id}`)
@@ -33,7 +33,7 @@ const JournalEntryCard: React.FC<JournalEntryCardProps> = (props) => {
         </IconButton>
       </EditButtonContainer>
       <JournalEntryCardStyled className="journalEntryCard">
-        <Typography variant="h5"><b>{moment(entry.date).format("dddd, MMMM Do YYYY ")}</b></Typography>
+        <Typography variant="h5"><b>{dayjs(entry.date).format("dddd, MMMM D YYYY ")}</b></Typography>
       </JournalEntryCardStyled>
     </JournalEntryCardContainer>
   );
