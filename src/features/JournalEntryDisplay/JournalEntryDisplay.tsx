@@ -29,6 +29,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useDeleteJournalEntry } from '../../api/journalEntries/journalEntry';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface JournalEntryDisplayProps {
     journalEntry: JournalEntry | null;
@@ -44,6 +45,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const deleteJournalEntry = useDeleteJournalEntry();
     const navigate = useNavigate();
+    const isMobile = useMediaQuery('(max-width:450px)');
 
     const { 
         // id: goalsId,
@@ -164,7 +166,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </EditButtonContainer>
                     </GraphContainer>
                 </Box>
-                <CheckBoxContainer mt={7} mx={3} height={150} onClick={() => editSection("checkbox")}>
+                <CheckBoxContainer mt={7} mx={3} height={isMobile ? 200 : 150} flexDirection={isMobile ? 'column' : 'row'} onClick={() => editSection("checkbox")}>
                     <CheckBoxSection className="checkBoxSection">
                         <Typography variant="body1" pr={2}><strong>Prenatal Vitamins</strong></Typography>
                         {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
