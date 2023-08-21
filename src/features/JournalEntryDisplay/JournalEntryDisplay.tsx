@@ -46,6 +46,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const deleteJournalEntry = useDeleteJournalEntry();
     const navigate = useNavigate();
     const isMobile = useMediaQuery('(max-width:450px)');
+    const isTablet = useMediaQuery('max-width:800px');
 
     const { 
         // id: goalsId,
@@ -121,9 +122,9 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
 
     return (
         <>
-            <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
+            <Box display="flex" flexDirection="column" mt={3}>
                 <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                    <GraphContainer onClick={() => editSection("waterIntake")} mx={2} mt={2}>
+                    <GraphContainer onClick={() => editSection("waterIntake")} mx={2} mt={3}>
                         <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -131,7 +132,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("proteinIntake")} mx={2} mt={2}>
+                    <GraphContainer onClick={() => editSection("proteinIntake")} mx={2} mt={3}>
                         <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -139,7 +140,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("exercise")} mx={2} mt={2}>
+                    <GraphContainer onClick={() => editSection("exercise")} mx={2} mt={3}>
                         <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -149,7 +150,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                     </GraphContainer>
                 </Box>    
                 <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
-                    <GraphContainer onClick={() => editSection("kegels")} mx={2} mt={2}>
+                    <GraphContainer onClick={() => editSection("kegels")} mx={2} mt={3}>
                         <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -157,7 +158,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("garlandPose")} mx={2} mt={2}>
+                    <GraphContainer onClick={() => editSection("garlandPose")} mx={2} mt={3}>
                         <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -166,7 +167,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </EditButtonContainer>
                     </GraphContainer>
                 </Box>
-                <CheckBoxContainer mt={7} mx={3} height={isMobile ? 200 : 150} flexDirection={isMobile ? 'column' : 'row'} onClick={() => editSection("checkbox")}>
+                <CheckBoxContainer mt={7} mx={3} height={100} flexDirection={isMobile ? 'column' : 'row'} onClick={() => editSection("checkbox")}>
                     <CheckBoxSection className="checkBoxSection">
                         <Typography variant="body1" pr={2}><strong>Prenatal Vitamins</strong></Typography>
                         {prenatalVitamins ? <CheckBoxIcon color="disabled" /> : <CheckBoxOutlineBlankIcon color="disabled" />}
@@ -181,12 +182,12 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </IconButton>
                     </EditButtonContainer>
                 </CheckBoxContainer>    
-                <Box mt={7} mx={3} height={"100%"}>
-                    <Box display="flex" flexDirection="row" justifyContent="space-evenly">
-                        <WritingContainer onClick={() => editSection("childbirthEducation")}>
+                <Box mt={7} mx={3} display="flex">
+                    <Box display="flex" flexDirection="row" justifyContent="space-around" flexWrap={"wrap"}>
+                        <WritingContainer onClick={() => editSection("childbirthEducation")} mt={3} mx={2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
-                                <WritingSectionContainer borderRadius={5} height={"100%"} width={"100%"} p={1}>
+                                <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
                                     <Typography variant="body1">{childbirthEducation}</Typography>
                                 </WritingSectionContainer>
                             </WritingSection>
@@ -196,10 +197,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </IconButton>
                             </EditButtonContainer>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("selfCare")}>
+                        <WritingContainer onClick={() => editSection("selfCare")} mt={3} mx={2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Self Care</strong></Typography>
-                                <WritingSectionContainer borderRadius={5} height={"100%"} width={"100%"} p={1}>
+                                <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
                                     <Typography variant="body1">{selfCare}</Typography>
                                 </WritingSectionContainer> 
                                 <EditButtonContainer className="editButton" top={-15}>
@@ -209,12 +210,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </EditButtonContainer>
                             </WritingSection>
                         </WritingContainer>
-                    </Box>
-                    <Box display="flex" flexDirection="row"  justifyContent="space-evenly" mt={7}>
-                        <WritingContainer onClick={() => editSection("postpartumPrep")}>
+                        <WritingContainer onClick={() => editSection("postpartumPrep")} mt={3} mx={2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
-                                <WritingSectionContainer borderRadius={5} height={"100%"} width={"100%"} p={1}>
+                                <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
                                     <Typography variant="body1">{postpartumPrep}</Typography>
                                 </WritingSectionContainer>
                                 <EditButtonContainer className="editButton" top={-15}>
@@ -224,10 +223,10 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </EditButtonContainer>
                             </WritingSection>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("fetalLoveBreak")}>
+                        <WritingContainer onClick={() => editSection("fetalLoveBreak")} mt={3} mx={2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
-                                <WritingSectionContainer borderRadius={5} height={"100%"} width={"100%"} p={1}>
+                                <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
                                     <Typography variant="body1">{fetalLoveBreak}</Typography>
                                 </WritingSectionContainer>
                                 <EditButtonContainer className="editButton" top={-15}>
