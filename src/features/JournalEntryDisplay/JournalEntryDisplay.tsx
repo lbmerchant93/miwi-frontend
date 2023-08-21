@@ -121,7 +121,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
         <>
             <Box width={"100%"} display="flex" flexDirection="column" mt={3}>
                 <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
-                    <GraphContainer onClick={() => editSection("waterIntake")}>
+                    <GraphContainer onClick={() => editSection("waterIntake")} mx={2} mt={2}>
                         <DoughnutGraph name={'Water'} completed={waterIntake} goal={waterIntakeGoal} color={"#1ca3ec"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -129,7 +129,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("proteinIntake")}>
+                    <GraphContainer onClick={() => editSection("proteinIntake")} mx={2} mt={2}>
                         <DoughnutGraph name={'Protein'} completed={proteinIntake} goal={proteinIntakeGoal} color={"#FF6961"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -137,7 +137,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("exercise")}>
+                    <GraphContainer onClick={() => editSection("exercise")} mx={2} mt={2}>
                         <DoughnutGraph name={'Exercise'} completed={exercise} goal={exerciseGoal} color={"#7FFFD4"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -146,8 +146,8 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </EditButtonContainer>
                     </GraphContainer>
                 </Box>    
-                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly" mt={7}>
-                    <GraphContainer onClick={() => editSection("kegels")}>
+                <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="space-evenly">
+                    <GraphContainer onClick={() => editSection("kegels")} mx={2} mt={2}>
                         <DoughnutGraph name={'Kegels'} completed={kegels} goal={kegelsGoal} color={"#C27BA0"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
@@ -155,7 +155,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                             </IconButton>
                         </EditButtonContainer>
                     </GraphContainer>
-                    <GraphContainer onClick={() => editSection("garlandPose")}>
+                    <GraphContainer onClick={() => editSection("garlandPose")} mx={2} mt={2}>
                         <DoughnutGraph name={'Garland Pose'} completed={garlandPose} goal={garlandPoseGoal} color={"#9966CC"}/>
                         <EditButtonContainer className="editButton">
                             <IconButton color="inherit">
