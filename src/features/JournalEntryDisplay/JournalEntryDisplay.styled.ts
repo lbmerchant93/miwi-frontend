@@ -23,7 +23,6 @@ export const GraphContainer = styled(Box)`
 
 export const CheckBoxContainer = styled(Box)`
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     border: rgb(0 0 0 / 20%) solid 1px;
