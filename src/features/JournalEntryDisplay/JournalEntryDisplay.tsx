@@ -46,7 +46,8 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const deleteJournalEntry = useDeleteJournalEntry();
     const navigate = useNavigate();
     const isMobile = useMediaQuery('(max-width:450px)');
-    const isTablet = useMediaQuery('max-width:800px');
+    const isDesktop = useMediaQuery('(min-width:900px)');
+    console.log(isDesktop)
 
     const { 
         // id: goalsId,
@@ -182,9 +183,9 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </IconButton>
                     </EditButtonContainer>
                 </CheckBoxContainer>    
-                <Box mt={7} mx={3} display="flex">
+                <Box mt={7} mx={3} display="flex" justifyContent="center">
                     <Box display="flex" flexDirection="row" justifyContent="space-around" flexWrap={"wrap"}>
-                        <WritingContainer onClick={() => editSection("childbirthEducation")} mt={3} mx={2}>
+                        <WritingContainer onClick={() => editSection("childbirthEducation")} mt={3} mx={isDesktop ? 5 : 2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Childbirth Education</strong></Typography>
                                 <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
@@ -197,7 +198,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </IconButton>
                             </EditButtonContainer>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("selfCare")} mt={3} mx={2}>
+                        <WritingContainer onClick={() => editSection("selfCare")} mt={3} mx={isDesktop ? 5 : 2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Self Care</strong></Typography>
                                 <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
@@ -210,7 +211,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </EditButtonContainer>
                             </WritingSection>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("postpartumPrep")} mt={3} mx={2}>
+                        <WritingContainer onClick={() => editSection("postpartumPrep")} mt={3} mx={isDesktop ? 5 : 2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Postpartum Prep</strong></Typography>
                                 <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
@@ -223,7 +224,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                                 </EditButtonContainer>
                             </WritingSection>
                         </WritingContainer>
-                        <WritingContainer onClick={() => editSection("fetalLoveBreak")} mt={3} mx={2}>
+                        <WritingContainer onClick={() => editSection("fetalLoveBreak")} mt={3} mx={isDesktop ? 5 : 2}>
                             <WritingSection className="writingSection">
                                 <Typography variant="body1"><strong>Fetal Love Break</strong></Typography>
                                 <WritingSectionContainer borderRadius={5} height={"282px"} p={1}>
