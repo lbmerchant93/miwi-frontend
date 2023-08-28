@@ -13,9 +13,9 @@ const GuestLoginButton: React.FC<GuestLoginButtonsProps> = (props) => {
     const { loginAsGuest, isLoading } = props;
     
     return (
-        <Box className="guest-login-button-wrapper">
+        <Box className="guest-login-button-wrapper" ml={"10px"}>
             <LoadingButton variant="outlined" onClick={() => loginAsGuest()} color="inherit" className="guest-login-button" loading={isLoading}>
-                <Box className="guest-login-text-wrapper">
+                <Box className="guest-login-text-wrapper" display="flex" alignItems="center" height={"30px"} ml={"5px"}>
                     <Typography variant="body1">Sign in as guest</Typography>
                 </Box>
             </LoadingButton>
