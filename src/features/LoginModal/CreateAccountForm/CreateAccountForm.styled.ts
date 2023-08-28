@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 
 export const CreateAccountFormOptions = styled(Box)`
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 `;
 
