@@ -47,7 +47,6 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
     const navigate = useNavigate();
     const isMobile = useMediaQuery('(max-width:450px)');
     const isDesktop = useMediaQuery('(min-width:900px)');
-    console.log(isDesktop)
 
     const { 
         // id: goalsId,

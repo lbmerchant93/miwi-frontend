@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import ProviderLoginButton from '../../../components/ProviderLoginButton/ProviderLoginButton';
-// import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
+import GuestLoginButton from '../../../components/GuestLoginButton/GuestLoginButton';
 import { Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLoginUser } from '../../../api/users/user';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -60,9 +60,33 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
         }
     };
 
+    const loginAsGuest = async () => {
+        setIsLoading(true)
+        try {
+            const userLogin = await signInWithEmailAndPassword(auth, "guestviewer@guest.com", "guestviewer")
+            loginUser.mutate({ id: userLogin.user.uid, email: userLogin.user.email, displayName: userLogin.user.displayName }, {
+                onError: (err: any) => {
+                    setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    setIsLoading(false)
+                    console.log(err)
+                },
+                onSuccess: (data) => {
+                    user.setUserId(userLogin.user.uid)
+                    user.setGoals(data.goals)
+                    setIsLoading(false)
+                    onClose()
+                    navigate(`/home/${userLogin.user.email?.split('@')[0]}`)
+                }
+            })
+        } catch (err: any) {
+            setError(err.message)
+            setIsLoading(false)
+            console.log(err.message)
+        }
+    };
+
     const loginWithGoogle = async () => {
         setIsLoading(true)
-        console.log(email, password)
         try {
             const userLogin = await signInWithPopup(auth, new GoogleAuthProvider());
             loginUser.mutate({ id: userLogin.user.uid, email: userLogin.user.email, displayName: userLogin.user.displayName }, {
@@ -134,13 +158,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                         isLoading={isLoading}
                         loginWithGoogle={loginWithGoogle}
                     />
-                    {/* <Typography variant="caption" my={3}>
+                    <Typography variant="caption" my={3}>
                         OR
                     </Typography>
                     <GuestLoginButton 
-                        loginWithEmailAndPassword={loginWithEmailAndPassword} 
+                        loginAsGuest={loginAsGuest}
                         isLoading={isLoading}
-                    /> */}
+                    />
                 </LoginFormButtonContainer>
             </LoginFormOptions>
         </>
