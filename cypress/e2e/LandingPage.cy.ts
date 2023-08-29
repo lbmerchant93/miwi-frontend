@@ -26,4 +26,16 @@ describe('Landing page / baseUrl', () => {
     it('Displays the AppFooter', () => {
         cy.get('[data-cy="AppFooter"]').should('be.visible');
     });
+
+    it.skip('Allows a user to navigate to the AboutPage.', () => {
+
+    });
+
+    it.skip('Allows a user to navigate to the HowMiWiWorksPage.', () => {
+
+    });
+
+    it.skip('Allows a user to login and then is directed to their DashboardPage.', () => {
+
+    });
 });
