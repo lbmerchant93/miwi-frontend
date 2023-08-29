@@ -27,8 +27,9 @@ describe('Landing page / baseUrl', () => {
         cy.get('[data-cy="AppFooter"]').should('be.visible');
     });
 
-    it.skip('Allows a user to navigate to the AboutPage.', () => {
-
+    it('Allows a user to navigate to the AboutPage.', () => {
+        cy.get('[data-cy="AboutPage-link"]').click();
+        cy.url().should('eq', 'http://localhost:3000/about');
     });
 
     it.skip('Allows a user to navigate to the HowMiWiWorksPage.', () => {

@@ -11,7 +11,7 @@ const AppFooter: React.FC = () => {
       <Box maxWidth="1232px" width={"100%"} display="flex">
         <Box display="flex" flexDirection="column" alignItems="flex-start" py={3} px={2}>
           <Typography variant="body1" mb={1} color="primary.light">Support</Typography>
-          <FooterLink to={`${PossibleRoutes.ABOUT}`}>
+          <FooterLink to={`${PossibleRoutes.ABOUT}`} data-cy="AboutPage-link">
               <Typography variant="body1">About Us</Typography>
           </FooterLink>
           <FooterLink to={`${PossibleRoutes.HOW_MIWI_WORKS}`}>
