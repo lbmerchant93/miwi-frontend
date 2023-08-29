@@ -64,7 +64,7 @@ const AppBar: React.FC = () => {
     };
 
     return (
-        <MUIAppBar elevation={0} position="sticky" color="inherit">
+        <MUIAppBar elevation={0} position="sticky" color="inherit" data-cy="AppBar">
             <ToolBar className="header" disableGutters>
                 <ToolBarContainer py={1} px={2}>
                     <TitleLink to={`${PossibleRoutes.ROOT}`} className="title-link">
