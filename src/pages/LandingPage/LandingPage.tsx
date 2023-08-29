@@ -23,12 +23,12 @@ const MainPage:React.FC = () => {
   return (
     <Box mb={2}>
       <Box display="flex" flexDirection="column" alignItems="center" color="#6d0f93" mb={2} textAlign="center">
-        <Typography variant="h2">
+        <Typography variant="h2" data-cy="welcome-message">
           <strong>
             Welcome to MiWi!
           </strong>
         </Typography>
-        <Typography variant="subtitle1"><i>*Your personal Midwifery App*</i></Typography>
+        <Typography variant="subtitle1" data-cy="app-description"><i>*Your personal Midwifery App*</i></Typography>
       </Box>
       <LandingPageContainer mt={5} color="#6d0f93">
         <Box display="flex" justifyContent="center">
