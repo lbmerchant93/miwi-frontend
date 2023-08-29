@@ -7,7 +7,7 @@ import { Footer, FooterLink } from './AppFooter.styled';
 const AppFooter: React.FC = () => {
 
   return (
-    <Footer>
+    <Footer data-cy="AppFooter">
       <Box maxWidth="1232px" width={"100%"} display="flex">
         <Box display="flex" flexDirection="column" alignItems="flex-start" py={3} px={2}>
           <Typography variant="body1" mb={1} color="primary.light">Support</Typography>

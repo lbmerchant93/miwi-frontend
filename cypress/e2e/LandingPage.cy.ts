@@ -22,4 +22,8 @@ describe('Landing page / baseUrl', () => {
         cy.get('[data-cy="LandingPage-description-section"]').eq(1).children('[data-cy="LandingPage-description-section-description"]').should('be.visible');
         cy.get('[data-cy="LandingPage-description-section"]').eq(2).children('[data-cy="LandingPage-description-section-description"]').should('be.visible');
     });
+
+    it('Displays the AppFooter', () => {
+        cy.get('[data-cy="AppFooter"]').should('be.visible');
+    });
 });
