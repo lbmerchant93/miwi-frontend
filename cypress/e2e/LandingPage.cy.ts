@@ -12,4 +12,14 @@ describe('Landing page / baseUrl', () => {
       cy.get('[data-cy="welcome-message"]').contains('Welcome to MiWi!');
       cy.get('[data-cy="app-description"]').contains('*Your personal Midwifery App*');
     });
+
+    it('Displays 3 LandingPage description sections, each with a section title and description.', () => {
+        cy.get('[data-cy="LandingPage-description-section"]').should('have.length', '3');
+        cy.get('[data-cy="LandingPage-description-section"]').eq(0).children('[data-cy="LandingPage-description-section-title"]').should('be.visible');
+        cy.get('[data-cy="LandingPage-description-section"]').eq(1).children('[data-cy="LandingPage-description-section-title"]').should('be.visible');
+        cy.get('[data-cy="LandingPage-description-section"]').eq(2).children('[data-cy="LandingPage-description-section-title"]').should('be.visible');
+        cy.get('[data-cy="LandingPage-description-section"]').eq(0).children('[data-cy="LandingPage-description-section-description"]').should('be.visible');
+        cy.get('[data-cy="LandingPage-description-section"]').eq(1).children('[data-cy="LandingPage-description-section-description"]').should('be.visible');
+        cy.get('[data-cy="LandingPage-description-section"]').eq(2).children('[data-cy="LandingPage-description-section-description"]').should('be.visible');
+    });
 });
