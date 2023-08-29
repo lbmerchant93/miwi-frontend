@@ -14,7 +14,7 @@ const AppFooter: React.FC = () => {
           <FooterLink to={`${PossibleRoutes.ABOUT}`} data-cy="AboutPage-link">
               <Typography variant="body1">About Us</Typography>
           </FooterLink>
-          <FooterLink to={`${PossibleRoutes.HOW_MIWI_WORKS}`}>
+          <FooterLink to={`${PossibleRoutes.HOW_MIWI_WORKS}`} data-cy="HowMiWiWorksPage-link">
               <Typography variant="body1">How MiWi Works</Typography>
           </FooterLink>
           {/* <FooterLink to={`${PossibleRoutes.ROOT}`}>

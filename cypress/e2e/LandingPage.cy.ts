@@ -32,8 +32,9 @@ describe('Landing page / baseUrl', () => {
         cy.url().should('eq', 'http://localhost:3000/about');
     });
 
-    it.skip('Allows a user to navigate to the HowMiWiWorksPage.', () => {
-
+    it('Allows a user to navigate to the HowMiWiWorksPage.', () => {
+        cy.get('[data-cy="HowMiWiWorksPage-link"]').click();
+        cy.url().should('eq', 'http://localhost:3000/how-miwi-works');
     });
 
     it.skip('Allows a user to login and then is directed to their DashboardPage.', () => {
