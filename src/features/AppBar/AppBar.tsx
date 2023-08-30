@@ -64,10 +64,10 @@ const AppBar: React.FC = () => {
     };
 
     return (
-        <MUIAppBar elevation={0} position="sticky" color="inherit">
+        <MUIAppBar elevation={0} position="sticky" color="inherit" data-cy="AppBar">
             <ToolBar className="header" disableGutters>
                 <ToolBarContainer py={1} px={2}>
-                    <TitleLink to={`${PossibleRoutes.ROOT}`} className="title-link">
+                    <TitleLink to={`${PossibleRoutes.ROOT}`} className="title-link" data-cy="Title-link">
                         <img src={Lotus} alt="Lotus-flower" height={55} width={55} />
                         <TitleText variant="h1">MiWi</TitleText>
                         <img src={Lotus} alt="Lotus-flower" height={55} width={55} />
@@ -83,7 +83,7 @@ const AppBar: React.FC = () => {
                             </Button>
                         ) : (
                             <Box display={'flex'} flexDirection={'row'} justifyContent={'space-evenly'} maxWidth={'100%'}>
-                                {!isMobile && <Button onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))}>
+                                {!isMobile && <Button onClick={onListItemClick(() => navigate(`/home/${user.email?.split('@')[0]}`))} data-cy="Home-link">
                                     <HomeIcon />
                                 </Button>}
                                 {!isMobile && <Divider orientation="vertical" />}
