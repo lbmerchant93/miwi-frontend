@@ -12,7 +12,7 @@ jobs:
       - name: Run E2E tests
         uses: cypress-io/github-action@v5
         with:
-          env: REACT_APP_SERVICE_ACCOUNT: ${{ secrets.REACT_APP_SERVICE_ACCOUNT }}
+          REACT_APP_SERVICE_ACCOUNT: ${{ secrets.REACT_APP_SERVICE_ACCOUNT }}
           browser: chrome
           build: npm run build
           start: npm run start
