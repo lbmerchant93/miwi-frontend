@@ -35,3 +35,14 @@
 //     }
 //   }
 // }
+
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/database';
+import 'firebase/compat/firestore';
+import { attachCustomCommands } from 'cypress-firebase';
+import firebaseConfig from '../../src/configs/firebase.configs';
+
+firebase.initializeApp(firebaseConfig);
+
+attachCustomCommands({ Cypress, cy, firebase });
