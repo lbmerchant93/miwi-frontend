@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { AuthContext, Goals } from './shared/auth-context';
 import { 
     getAuth, 
@@ -11,7 +11,9 @@ import { useUser } from './api/users/user';
 
 export const getAuthToken = () => localStorage.getItem('token');
 
-interface AuthProviderProps {}
+interface AuthProviderProps {
+    children: ReactNode;
+}
 
 const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const auth = getAuth();

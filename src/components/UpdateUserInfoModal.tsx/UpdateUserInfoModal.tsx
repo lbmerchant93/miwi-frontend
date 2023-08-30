@@ -7,11 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { User } from '../../shared/auth-context';
 import { useUpdateUser } from '../../api/users/user';
-import TextField from '@mui/material/TextField';
+import TextField, { FilledTextFieldProps, OutlinedTextFieldProps, StandardTextFieldProps, TextFieldVariants } from '@mui/material/TextField';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import dayjs from 'dayjs';
+import { JSX } from 'react/jsx-runtime';
 
 interface UpdateUserInfoModalProps {
     isOpen: boolean;
@@ -122,8 +123,8 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
                             <DatePicker
                             label="Expected Due Date"
                                 value={updateExpectedDueDate}
-                                onChange={(newDate) => setUpdateExpectedDueDate(dayjs(newDate).startOf('day').toISOString())}
-                                renderInput={(params) => <TextField sx={{width: "300px"}} {...params} />}
+                                onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setUpdateExpectedDueDate(dayjs(newDate).startOf('day').toISOString())}
+                                renderInput={(params: JSX.IntrinsicAttributes & { variant?: TextFieldVariants | undefined; } & Omit<FilledTextFieldProps | StandardTextFieldProps | OutlinedTextFieldProps, "variant">) => <TextField sx={{width: "300px"}} {...params} />}
                                 disabled={isLoading}
                             />
                         </LocalizationProvider>
