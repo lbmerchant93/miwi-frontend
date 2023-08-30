@@ -36,4 +36,12 @@ describe('Landing page / baseUrl', () => {
         cy.get('[data-cy="HowMiWiWorksPage-link"]').click();
         cy.url().should('eq', 'http://localhost:3000/how-miwi-works');
     });
+
+    it.skip('Allows a user to login and then is directed to their DashboardPage.', () => {
+
+    });
+
+    it.skip('Allows a user to sign up which they are then directed to their DashboardPage.', () => {
+
+    });
 });
