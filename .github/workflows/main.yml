@@ -12,11 +12,12 @@ jobs:
       - name: Run E2E tests
         uses: cypress-io/github-action@v5
         with:
-          REACT_APP_SERVICE_ACCOUNT: ${{ secrets.REACT_APP_SERVICE_ACCOUNT }}
           browser: chrome
           build: npm run build
           start: npm run start
           wait-on: "http://localhost:3000"
+        env: 
+          REACT_APP_SERVICE_ACCOUNT: ${{ secrets.REACT_APP_SERVICE_ACCOUNT }}
 
       - name: Run Component Testing
         uses: cypress-io/github-action@v3
