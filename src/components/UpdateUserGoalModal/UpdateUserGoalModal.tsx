@@ -90,6 +90,7 @@ const UpdateUserGoalModal: React.FC<UpdateUserGoalModalProps> = (props) => {
             updateGoals.mutate(updateGoalsInput, {
                 onError: (err: any) => {
                     setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    console.log(error)
                     triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
                 onSuccess: async () => {

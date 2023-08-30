@@ -31,9 +31,9 @@ const JournalPage = () => {
     const [isLoadingNewEntryDate, setIsLoadingNewEntryDate] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const createJournalEntry = useCreateJournalEntry();
-    const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
-    const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
-    const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
+    const { data: count, isFetching: isFetchingCount} = useJournalEntriesCount(user.id, user.email);
+    const { data, isFetching } = useJournalEntries(user.id, 15, skipCount, count);
+    const { data: foundJournalEntry, isFetching: isFetchingSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
 
     const onPaginationClick = (direction: string) => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

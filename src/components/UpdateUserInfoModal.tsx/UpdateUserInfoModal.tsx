@@ -60,6 +60,7 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
             updateUser.mutate(updateUserInput, {
                 onError: (err: any) => {
                     setError(err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
+                    console.log(error)
                     triggerSnackBar(true, err.response.errors[0].message || 'Something went wrong, please try again or contact us for help.')
                 },
                 onSuccess: async () => {
