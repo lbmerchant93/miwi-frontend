@@ -14,12 +14,13 @@ import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import dayjs from 'dayjs';
-import TextField from '@mui/material/TextField';
+import TextField, { FilledTextFieldProps, OutlinedTextFieldProps, StandardTextFieldProps, TextFieldVariants } from '@mui/material/TextField';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useCreateJournalEntry, useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
+import { JSX } from 'react/jsx-runtime';
 
 const JournalPage = () => {
     // const { user } = useParams();
@@ -31,9 +32,9 @@ const JournalPage = () => {
     const [isLoadingNewEntryDate, setIsLoadingNewEntryDate] = useState<boolean>(false);
     const [snackBarDetails, setSnackBarDetails] = useState<SnackBarDetails>({} as SnackBarDetails);
     const createJournalEntry = useCreateJournalEntry();
-    const { data: count, isFetching: isFetchingCount, refetch: refetchCount } = useJournalEntriesCount(user.id, user.email);
-    const { data, isFetching, refetch } = useJournalEntries(user.id, 15, skipCount, count);
-    const { data: foundJournalEntry, isFetching: isFetchingSearchDate, refetch: refetchSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
+    const { data: count, isFetching: isFetchingCount} = useJournalEntriesCount(user.id, user.email);
+    const { data, isFetching } = useJournalEntries(user.id, 15, skipCount, count);
+    const { data: foundJournalEntry, isFetching: isFetchingSearchDate } = useFindFirstEntry(user.id, searchJournalEntryDate, user.email);
 
     const onPaginationClick = (direction: string) => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -185,8 +186,8 @@ const JournalPage = () => {
                             <DatePicker
                                 label="Search Entry Date"
                                 value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
-                                onChange={(newDate) => setSearchJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
-                                renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                                onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setSearchJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
+                                renderInput={(params: JSX.IntrinsicAttributes & { variant?: TextFieldVariants | undefined; } & Omit<FilledTextFieldProps | StandardTextFieldProps | OutlinedTextFieldProps, "variant">) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                                 disabled={isFetchingSearchDate || isFetchingCount || isFetching}
                                 disableFuture
                             />
@@ -217,8 +218,8 @@ const JournalPage = () => {
                             <DatePicker
                                 label="New Entry Date"
                                 value={newJournalEntryDate}
-                                onChange={(newDate) => setNewJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
-                                renderInput={(params) => <TextField size="small" sx={{width: "200px"}} {...params} />}
+                                onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setNewJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
+                                renderInput={(params: JSX.IntrinsicAttributes & { variant?: TextFieldVariants | undefined; } & Omit<FilledTextFieldProps | OutlinedTextFieldProps | StandardTextFieldProps, "variant">) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                                 disabled={isLoadingNewEntryDate || isFetchingCount || isFetching}
                                 disableFuture
                             />
