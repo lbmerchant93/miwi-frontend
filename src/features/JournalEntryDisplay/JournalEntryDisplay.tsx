@@ -238,7 +238,7 @@ const JournalEntryDisplay: React.FC<JournalEntryDisplayProps> = (props) => {
                         </WritingContainer>
                     </Box>
                 </Box>
-                <MoodContainer my={3} mx={3}>
+                <MoodContainer mt={7} mb={3} mx={3}>
                     <MoodSection className="moodSection" onClick={() => editSection("mood")}>
                         <Typography variant="body1" mb={1}><strong>Mood</strong></Typography>
                         <Box display="flex" flexDirection="row" justifyContent="space-around" >
