@@ -19,6 +19,7 @@ import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import InputAdornment from '@mui/material/InputAdornment';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface UpdateEntryModalProps {
     isOpen: boolean;
@@ -87,6 +88,7 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
     const [updateMood, setUpdateMood] = useState(mood);
     const updateJournalEntry = useUpdateJournalEntry();
     const createJournalEntry = useCreateJournalEntry();
+    const isMobile = useMediaQuery('(max-width:499px)');
 
     const handleUpdateEntry = () => {
         setIsLoading(true)
@@ -397,32 +399,34 @@ const UpdateEntryModal: React.FC<UpdateEntryModalProps> = (props) => {
             aria-describedby={`${modalDescription}`}
             className="update-entry-modal"
         >
-            <Box bgcolor="white" width={450} height={450} position={"relative"} p={3} left={"50%"} top={"50%"} style={{ transform: 'translate(-50%, -50%)' }}>
-                <Box position={"absolute"} left={"92%"} top={"1%"}>
-                    <IconButton onClick={closeModal} edge="start" color="inherit" aria-label="exit">
-                        <CloseIcon />
-                    </IconButton>
-                </Box>
-                <Box 
-                    display="flex" 
-                    flexDirection="column" 
-                    textAlign="center"
-                    alignItems="center" 
-                    height={"100%"} 
-                    justifyContent="space-between"
-                >
-                   <Typography variant="h4" mb={3}>Update Journal Entry</Typography>
-                    {renderCurrentInputType()}
-                    <Box display="flex" justifyContent={"center"} mt={3}>
-                        <LoadingButton
-                            onClick={() => handleUpdateEntry()} 
-                            variant='contained' 
-                            color='success'
-                            loading={isLoading}
-                        >
-                                Update
-                        </LoadingButton>
-                    </Box> 
+            <Box width={isMobile ? "100%" : 500} height={isMobile ? "100%" : 500} bgcolor="white" position={"relative"} left={"50%"} top={"50%"} style={{ transform: 'translate(-50%, -50%)' }} display="flex" alignItems="center">
+                <Box width={450} height={450} m={3}>
+                    <Box position={"absolute"} left={"92%"} top={"1%"}>
+                        <IconButton onClick={closeModal} edge="start" color="inherit" aria-label="exit">
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
+                    <Box 
+                        display="flex" 
+                        flexDirection="column" 
+                        textAlign="center"
+                        alignItems="center" 
+                        height={"100%"} 
+                        justifyContent="space-between"
+                    >
+                    <Typography variant="h4" mb={3}>Update Journal Entry</Typography>
+                        {renderCurrentInputType()}
+                        <Box display="flex" justifyContent={"center"} mt={3}>
+                            <LoadingButton
+                                onClick={() => handleUpdateEntry()} 
+                                variant='contained' 
+                                color='success'
+                                loading={isLoading}
+                            >
+                                    Update
+                            </LoadingButton>
+                        </Box> 
+                    </Box>
                 </Box>
             </Box>
         </Modal>
