@@ -28,11 +28,11 @@ interface LoginModalProps {
 const modalState = {
     [FormState.Creation]: {
       title: 'Create an account',
-      description: `Please fill out this form so we can create a dashboard for you or register an account through your google account.`,
+      description: `Please fill out this form so we can create a dashboard for you or register an account through your google account. If loading persists, please allow up to 5 minutes for the server to start.`,
     },
     [FormState.Login]: {
       title: 'Welcome back!',
-      description: `Please log in to access your dashboard! You can log in through your Google account or enter your email/password to access your dashboard.`,
+      description: `Please log in to access your dashboard! You can log in through your Google account or enter your email/password to access your dashboard. If loading persists, please allow up to 5 minutes for the server to start.`,
     }
   };
 
