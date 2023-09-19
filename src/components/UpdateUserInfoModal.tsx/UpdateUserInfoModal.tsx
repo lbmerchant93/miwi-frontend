@@ -121,7 +121,7 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 label="Expected Due Date"
-                                value={updateExpectedDueDate}
+                                value={dayjs(updateExpectedDueDate)}
                                 onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setUpdateExpectedDueDate(dayjs(newDate).startOf('day').toISOString())}
                                 disabled={isLoading}
                             />
