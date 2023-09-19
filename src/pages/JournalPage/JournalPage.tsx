@@ -10,17 +10,15 @@ import { useNavigate } from 'react-router-dom';
 import JournalEntryCard from '../../components/JournalEntryCard/JournalEntryCard';
 import { JournalEntry } from '../HomePage/HomePage';
 import Divider from '@mui/material/Divider';
-import DateAdapter from '@mui/lab/AdapterMoment';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import TextField, { FilledTextFieldProps, OutlinedTextFieldProps, StandardTextFieldProps, TextFieldVariants } from '@mui/material/TextField';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useCreateJournalEntry, useFindFirstEntry } from '../../api/journalEntries/journalEntry';
 import { SnackBar, SnackBarDetails } from '../../components/SnackBar/SnackBar';
 import { Alert } from '@mui/material';
 import JournalEntryCardSkeletonGrid from '../../components/JournalEntryCardSkeleton/JournalEntryCardSkeleton';
-import { JSX } from 'react/jsx-runtime';
 
 const JournalPage = () => {
     // const { user } = useParams();
@@ -182,12 +180,11 @@ const JournalPage = () => {
                 <Box my={3} maxWidth={450} alignSelf="center">
                     <Typography variant="h6" mb={2}>Search by a specific date:</Typography>
                     <Box display="flex" justifyContent="center">
-                        <LocalizationProvider dateAdapter={DateAdapter}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 label="Search Entry Date"
                                 value={searchJournalEntryDate === undefined ? null : searchJournalEntryDate}
                                 onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setSearchJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
-                                renderInput={(params: JSX.IntrinsicAttributes & { variant?: TextFieldVariants | undefined; } & Omit<FilledTextFieldProps | StandardTextFieldProps | OutlinedTextFieldProps, "variant">) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                                 disabled={isFetchingSearchDate || isFetchingCount || isFetching}
                                 disableFuture
                             />
@@ -214,12 +211,11 @@ const JournalPage = () => {
                 <Box my={3}>
                     <Typography variant="h6" mb={2}>Create a new journal entry for a specific date:</Typography>
                     <Box display="flex" justifyContent="center">
-                        <LocalizationProvider dateAdapter={DateAdapter}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 label="New Entry Date"
                                 value={newJournalEntryDate}
                                 onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setNewJournalEntryDate(dayjs(newDate).startOf('day').toISOString())}
-                                renderInput={(params: JSX.IntrinsicAttributes & { variant?: TextFieldVariants | undefined; } & Omit<FilledTextFieldProps | OutlinedTextFieldProps | StandardTextFieldProps, "variant">) => <TextField size="small" sx={{width: "200px"}} {...params} />}
                                 disabled={isLoadingNewEntryDate || isFetchingCount || isFetching}
                                 disableFuture
                             />

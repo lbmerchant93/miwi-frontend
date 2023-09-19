@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import { AuthContext, Goals } from './shared/auth-context';
 import { 
     getAuth, 
@@ -37,35 +37,43 @@ const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true);
     const { data } = useUser(userId, email);
 
-    onAuthStateChanged(auth, async (user) => {
-        // conditional to check data from useUser to match user from firebase ?
-        if (user) {
-            try {
-                const bearerToken = await user.getIdToken();
-                localStorage.setItem('token', bearerToken);
-            } catch (e) {
-                console.log('getIdToken failure', e);
-                const newToken = await getAuth().currentUser?.getIdToken();
-                localStorage.setItem('token', newToken ?? '');
+    useEffect(() => {
+        const listen = onAuthStateChanged(auth, async (user) => {
+            // conditional to check data from useUser to match user from firebase ?
+            if (user) {
+                try {
+                    const bearerToken = await user.getIdToken();
+                    localStorage.setItem('token', bearerToken);
+                } catch (e) {
+                    console.log('getIdToken failure', e);
+                    const newToken = await getAuth().currentUser?.getIdToken();
+                    localStorage.setItem('token', newToken ?? '');
+                }
+                setProviderId(providerId);
+                setRefreshToken(refreshToken);
+                setUserId(user.uid);
+                setEmail(user.email);
+                setIsLoggedIn(true);
+                setPhotoURL(user.photoURL);
+            } else {
+                localStorage.setItem('token', '');
+                setUserId(undefined);
+                setEmail('');
+                setIsLoggedIn(false);
+                setIsLoadingUser(true);
+                setDisplayName('');
+                setPhotoURL('');
+                setExpectedDueDate(null);
+                signOut(auth);
             }
-            setProviderId(providerId);
-            setRefreshToken(refreshToken);
-            setUserId(user.uid);
-            setEmail(user.email);
-            setIsLoggedIn(true);
-            setPhotoURL(user.photoURL);
-        } else {
-            localStorage.setItem('token', '');
-            setUserId(undefined);
-            setEmail('');
-            setIsLoggedIn(false);
-            setIsLoadingUser(true);
-            setDisplayName('');
-            setPhotoURL('');
-            setExpectedDueDate(null);
-            signOut(auth);
+        })
+
+        return () => {
+            listen();
         }
-    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
 
     React.useEffect(() => {
         if (data && data.id === userId) {

@@ -7,12 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { User } from '../../shared/auth-context';
 import { useUpdateUser } from '../../api/users/user';
-import TextField, { FilledTextFieldProps, OutlinedTextFieldProps, StandardTextFieldProps, TextFieldVariants } from '@mui/material/TextField';
-import DateAdapter from '@mui/lab/AdapterMoment';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import { JSX } from 'react/jsx-runtime';
 
 interface UpdateUserInfoModalProps {
     isOpen: boolean;
@@ -119,12 +118,11 @@ const UpdateUserInfoModal: React.FC<UpdateUserInfoModalProps> = (props) => {
                             /> 
                         </Box>
                         
-                        <LocalizationProvider dateAdapter={DateAdapter}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
-                            label="Expected Due Date"
+                                label="Expected Due Date"
                                 value={updateExpectedDueDate}
                                 onChange={(newDate: string | number | dayjs.Dayjs | Date | null | undefined) => setUpdateExpectedDueDate(dayjs(newDate).startOf('day').toISOString())}
-                                renderInput={(params: JSX.IntrinsicAttributes & { variant?: TextFieldVariants | undefined; } & Omit<FilledTextFieldProps | StandardTextFieldProps | OutlinedTextFieldProps, "variant">) => <TextField sx={{width: "300px"}} {...params} />}
                                 disabled={isLoading}
                             />
                         </LocalizationProvider>
