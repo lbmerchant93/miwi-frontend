@@ -1,4 +1,9 @@
 # MiWi - Frontend
+# *APP DEMO CURRENTLY UNDER CONSTRUCTION -> PLEASE VIEW SCREENSHOTS BELOW DEMONSTRATING HOW THE APP LOOKS/WORKS*
+# [Jump to Demo Images](#demo-images)
+
+
+
 #### Midwifery Application Prototype
 This project is designed as a prototype for a midwifery application. The project is used by the developer to demonstrate and expand on his knowledge/use of React, TypeScript, GraphQL, Firebase, Material-UI and testing using Cypress.io and Jest/React Testing Library.
 
@@ -20,9 +25,6 @@ This project is designed as a prototype for a midwifery application. The project
 
 ## Introduction
 Currently the app's main feature is a journal that guides you through the daily activities that will have you ready to rock your birth.  
-
-To visit, click the link below!
-- [https://miwi-frontend.vercel.app/](https://miwi-frontend.vercel.app/)
 
 ---
 
@@ -50,5 +52,19 @@ Included in the footer are links to an About Us and How MiWi Works. These links 
 ### Mobile Friendly Responsive Design
 
 Currently working to make the application completely responsive for mobile, tablet and large screens. This will be achieved through the use of the useMediaQuery feature from Material-UI and Styled Components
+
+
+## Demo Images
+![Screenshot 2023-09-18 at 2 11 35 PM](https://github.com/user-attachments/assets/b24a1aba-7b32-4491-9d4e-f6dd0835cde6)
+
+
+<img width="1438" alt="Screenshot 2024-09-23 at 11 59 42 AM" src="https://github.com/user-attachments/assets/8745bc06-ea73-4655-94e3-104b33e2984f">
+&nbsp;
+
+![Screenshot 2023-09-19 at 12 12 43 PM](https://github.com/user-attachments/assets/01ef372b-5b33-4c3c-91a7-4bab70beaabe)
+
+![Screenshot 2023-09-19 at 12 05 44 PM](https://github.com/user-attachments/assets/9ac6a707-9c01-4106-b72e-21df0e8472b3)
+
+![Screenshot 2023-09-19 at 12 07 14 PM](https://github.com/user-attachments/assets/c574832f-aff4-4051-a8ad-64803ef8b568)
 
 [Back to Top of Page](#table-of-contents)
